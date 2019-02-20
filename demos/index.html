@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>floreysoft components</title>
+    <style>
+        html,
+        body,
+        vaadin-split-layout {
+            margin: 0;
+            height: 100%;
+        }
+    </style>
+    <!-- Include the "lumo-color" style module -->
+    <custom-style>
+        <style include="lumo-color lumo-typography"></style>
+    </custom-style>
+</head>
+
+<body>
+    <vaadin-split-layout>
+        <section theme="light">
+            <div style="text-align:center">
+                <h3>floreysoft components</h3>
+                <p>All components are ready to use, but also play nicely with Vaadin lumo styles</p>
+            </div>
+            <fs-demo></fs-demo>
+        </section>
+        <section theme="dark">
+            <div style="text-align:center">
+                <h3>floreysoft components</h3>
+                <p>All components are ready to use, but also play nicely with Vaadin lumo styles</p>
+            </div>
+            <fs-demo></fs-demo>
+        </section>
+    </vaadin-split-layout>
+</body>
+
+</html>

@@ -3,8 +3,6 @@
   "version": "0.0.2",
   "description": "Native fields",
   "files": [
-    "/dist/",
-    "/src/",
     "!/test/"
   ],
   "dependencies": {
