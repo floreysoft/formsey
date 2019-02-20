@@ -1,2 +1,2 @@
 # Formsey
-This repo contains all components required form formsey forms
+This repo contains all components required for formsey forms
