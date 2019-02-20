@@ -1,6 +1,6 @@
 import { LitElement, customElement, property, html, css, CSSResult } from "lit-element";
 import { Dialog } from '@floreysoft/dialog'
-import { VaadinFieldFactory as Factory } from '@floreysoft/formsey-fields-vaadin'
+import { VaadinFieldFactory as Factory } from '@formsey/fields-vaadin'
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
