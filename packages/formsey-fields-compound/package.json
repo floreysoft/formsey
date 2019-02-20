@@ -1,0 +1,22 @@
+{
+  "name": "@formsey/fields-compound",
+  "version": "0.2.11",
+  "description": "Compound fields",
+  "files": [
+    "/dist/",
+    "/src/",
+    "!/test/"
+  ],
+  "dependencies": {
+    "@formsey/core": "^0.2.11",
+    "lit-element": "^2.0.1"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}
