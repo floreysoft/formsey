@@ -1,2 +1,2 @@
-# lerna-wc-ts-monorepo-demo
-Playground Monorepo using lerna, web components, lit element, typescript
+# Formsey
+This repo contains all components required form formsey forms
