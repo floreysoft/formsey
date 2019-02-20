@@ -1,5 +1,5 @@
 import '@vaadin/vaadin-icons/vaadin-icons.js';
-import { LitElement, TemplateResult, html, property, query, queryAll, customElement } from 'lit-element';
+import { LitElement, TemplateResult, html, property, customElement } from 'lit-element';
 import { ValueChangedEvent, ComplexField, FieldFactory, FieldDefinition, FormDefinition, EditorDefinition } from '@formsey/core';
 
 class ChangeEvent extends Event {
@@ -46,9 +46,6 @@ export class FormFieldCell extends LitElement {
   row: number
   column: number
 
-  @query(".fs-preview")
-  private preview: HTMLElement;
-
   private readonly MIN_COLS: number = 2;
   private readonly splitDelay: number = 1000;
   private _definition: FieldDefinition;
@@ -59,8 +56,6 @@ export class FormFieldCell extends LitElement {
   private requestId;
   private start;
   private splitEvent: SplitEvent;
-  private insertRowIndex: number;
-  private insertRowBelow: boolean;
 
   constructor() {
     super()

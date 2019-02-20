@@ -10,7 +10,7 @@
       "inlineSources": true,
       "strict": false,
       "noUnusedLocals": true,
-      "noUnusedParameters": true,
+      "noUnusedParameters": false,
       "noImplicitReturns": true,
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": false,

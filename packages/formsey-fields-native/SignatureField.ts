@@ -16,7 +16,9 @@ export class SignatureField extends Field<SignatureFieldDefinition, string> {
   signaturePad: SignaturePad;
 
   renderField() {
-    return html`<canvas id="signature-pad" width="${this.width}px" height="${this.height}px"></canvas><button @click="${(event) => this.clear(event)}">Clear</button>`;
+    return html`<canvas id="signature-pad" width="${this.width}px" height="${this.height}px"></canvas><button @click="${(event : Event) => {
+      return this.clear(event);
+    }}">Clear</button>`;
   }
 
   firstUpdated() {
