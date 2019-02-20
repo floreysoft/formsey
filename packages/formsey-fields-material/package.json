@@ -1,0 +1,23 @@
+{
+  "name": "@formsey/fields-material",
+  "version": "0.0.1",
+  "description": "Material design fields",
+  "files": [
+    "/dist/",
+    "/src/",
+    "!/test/"
+  ],
+  "dependencies": {
+    "@formsey/core": "^0.0.1",
+    "@material/mwc-checkbox": "^0.3.3",
+    "lit-element": "^2.0.1"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}

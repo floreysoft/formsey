@@ -1,0 +1,33 @@
+{
+  "name": "@formsey/fields-vaadin",
+  "version": "0.2.19",
+  "description": "Vaadin fields",
+  "files": [
+    "/dist/",
+    "/src/",
+    "!/test/"
+  ],
+  "dependencies": {
+    "@formsey/core": "^0.0.1",
+    "@formsey/fields-compound": "^0.0.1",
+    "@vaadin/vaadin-checkbox": "^2.2.4",
+    "@vaadin/vaadin-combo-box": "^4.2.5",
+    "@vaadin/vaadin-date-picker": "^3.3.2",
+    "@vaadin/vaadin-icons": "^4.2.1",
+    "@vaadin/vaadin-radio-button": "^1.1.5",
+    "@vaadin/vaadin-rich-text-editor": "^1.0.1",
+    "@vaadin/vaadin-text-field": "^2.3.2",
+    "@vaadin/vaadin-upload": "^4.2.1",
+    "ace-builds": "^1.4.2",
+    "lit-element": "^2.0.1"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "tsc": "tsc && yarn copy-lib",
+    "copy-lib": "copyfiles -f ./src/webpack-resolver.js dist"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}
