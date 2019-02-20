@@ -13,6 +13,7 @@
     "pub": "lerna run tsc && lerna publish"
   },
   "devDependencies": {
+    "copyfiles": "^2.1.0",
     "del-cli": "^1.1.0",
     "lerna": "^3.13.0",
     "polyserve": "^0.27.15",
