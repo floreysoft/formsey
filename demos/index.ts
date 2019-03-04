@@ -7,4 +7,4 @@ import '@vaadin/vaadin-split-layout/vaadin-split-layout.js';
 import '@vaadin/vaadin-button/vaadin-button.js';
 import '@floreysoft/dialog'
 import '@formsey/core'
-import './Demo.ts'
+import './Demo'
