@@ -47,7 +47,7 @@ export class SourceCodeField extends Field<FieldDefinition, string> {
       margin: var(--lumo-space-xs) 0;
     }
     #editor {
-      height: 100%;
+      height: 100px;
     }`
   }
 
