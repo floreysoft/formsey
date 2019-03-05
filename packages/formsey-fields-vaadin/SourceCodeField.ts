@@ -19,7 +19,7 @@ export class SourceCodeField extends Field<FieldDefinition, string> {
   mode : string = "javascript"
 
   @property()
-  theme : string = "tomorrow_night.css"
+  theme : string = "tomorrow_night"
 
   @property({ type: Number })
   width: Number;
