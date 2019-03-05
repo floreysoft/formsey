@@ -10,7 +10,7 @@
     "lit-element": "^2.0.1",
     "signature_pad": "^3.0.0-beta.3"
   },
-  "main": "./dist/index.js",
+  "main": "./index.js",
   "scripts": {
     "tsc": "tsc"
   },

@@ -10,7 +10,7 @@
     "@material/mwc-checkbox": "^0.3.3",
     "lit-element": "^2.0.1"
   },
-  "main": "./dist/index.js",
+  "main": "./index.js",
   "scripts": {
     "tsc": "tsc"
   },

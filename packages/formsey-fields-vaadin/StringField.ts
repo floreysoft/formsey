@@ -2,7 +2,7 @@ import { html, property, customElement } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { Field, StringFieldDefinition } from '@formsey/core';
 
-@customElement("'formsey-string'")
+@customElement("formsey-string")
 export class StringField extends Field<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;

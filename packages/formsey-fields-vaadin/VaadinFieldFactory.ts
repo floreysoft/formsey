@@ -17,9 +17,9 @@ import './MarkupField';
 import './ImageField';
 import './YouTubeField';
 import './UploadField';
-import '@floreysoft/formsey-fields-compound/dist/AddressField'
-import '@floreysoft/formsey-fields-compound/dist/CreditCardField'
-import '@floreysoft/formsey-fields-compound/dist/NameField'
+import '@formsey/fields-compound/AddressField'
+import '@formsey/fields-compound/CreditCardField'
+import '@formsey/fields-compound/NameField'
 
 import { FieldFactory, FieldDefinition } from '@formsey/core';
 

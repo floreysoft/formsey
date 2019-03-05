@@ -9,7 +9,7 @@
     "@formsey/core": "^0.0.2",
     "lit-element": "^2.0.1"
   },
-  "main": "./dist/index.js",
+  "main": "./index.js",
   "scripts": {
     "tsc": "tsc"
   },

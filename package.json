@@ -2,23 +2,16 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "demos"
   ],
   "scripts": {
     "watch": "tsc -w",
     "compile": "tsc",
     "clean": "node_modules/.bin/del packages/**/*.js packages/**/*.js.map packages/**/*.d.ts packages/**/*.d.ts.map demos/**/*.js demos/**/*.js.map demos/**/*.d.ts demos/**/*.d.ts.map",
     "dev": "polyserve",
-    "prpl": "prpl-server --root packages/pkg1 --config polymer.json",
-    "pub": "lerna run tsc && lerna publish"
-  },
-  "dependencies": {
-    "@floreysoft/dialog": "^0.2.11",
-    "@formsey/core": "^0.0.2",
-    "@formsey/fields-vaadin": "^0.0.2",
-    "@vaadin/vaadin-button": "^2.1.3",
-    "@vaadin/vaadin-context-menu": "^4.3.1",
-    "@vaadin/vaadin-split-layout": "^4.1.0"
+    "pub": "lerna run tsc && lerna publish",
+    "prod": "yarn clean && yarn compile && cross-env NODE_ENV=production parcel build demos/index.html"
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",
