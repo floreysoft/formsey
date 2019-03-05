@@ -3,6 +3,7 @@
 /.cache
 
 *.js
+!packages/formsey-fields-vaadin/webpack-resolver.js
 *.js.map
 *.d.ts
 *.d.ts.map
