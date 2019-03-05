@@ -3,24 +3,33 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "demos"
+    "demo"
   ],
   "scripts": {
-    "watch": "tsc -w",
+    "dependencies": "lerna bootstrap",
     "compile": "tsc",
     "clean": "node_modules/.bin/del packages/**/*.js packages/**/*.js.map packages/**/*.d.ts packages/**/*.d.ts.map demos/**/*.js demos/**/*.js.map demos/**/*.d.ts demos/**/*.d.ts.map",
     "dev": "polyserve",
     "pub": "lerna run tsc && lerna publish",
-    "prod": "yarn clean && yarn compile && cross-env NODE_ENV=production parcel build --no-minify demos/index.html"
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack-dev-server --open  --config webpack.dev.js",
+    "test": "karma start",
+    "test:watch": "karma start --auto-watch=true --single-run=false"
   },
   "devDependencies": {
+    "babel-loader": "^8.0.5",
     "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
     "del-cli": "^1.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "karma": "^4.0.1",
     "lerna": "^3.13.0",
-    "parcel": "^1.11.0",
-    "polyserve": "^0.27.15",
-    "prpl-server": "^1.4.0",
-    "typescript": "^3.3.3"
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1",
+    "webpack-merge": "^4.2.1"
   }
 }
