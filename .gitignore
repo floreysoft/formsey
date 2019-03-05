@@ -4,6 +4,7 @@
 
 *.js
 !packages/formsey-fields-vaadin/webpack-resolver.js
+!webpack*.js
 *.js.map
 *.d.ts
 *.d.ts.map
