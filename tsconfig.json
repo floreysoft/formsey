@@ -15,7 +15,8 @@
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": false,
       "noImplicitThis": true,
-      "experimentalDecorators": true
+      "experimentalDecorators": true,
+      "pretty": true
     },
     "include": [
       "custom_typings/**/*.ts",

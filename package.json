@@ -11,12 +11,14 @@
     "clean": "node_modules/.bin/del packages/**/*.js packages/**/*.js.map packages/**/*.d.ts packages/**/*.d.ts.map demos/**/*.js demos/**/*.js.map demos/**/*.d.ts demos/**/*.d.ts.map",
     "dev": "polyserve",
     "pub": "lerna run tsc && lerna publish",
-    "prod": "yarn clean && yarn compile && cross-env NODE_ENV=production parcel build demos/index.html"
+    "prod": "yarn clean && yarn compile && cross-env NODE_ENV=production parcel build --no-minify demos/index.html"
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",
+    "cross-env": "^5.2.0",
     "del-cli": "^1.1.0",
     "lerna": "^3.13.0",
+    "parcel": "^1.11.0",
     "polyserve": "^0.27.15",
     "prpl-server": "^1.4.0",
     "typescript": "^3.3.3"
