@@ -9,7 +9,13 @@ export class StringField extends Field<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
-  renderField() {
+  protected checkProperties(): void {
+    if (!this.definition) {
+      throw new Error("property 'definition' required");
+    }
+  }
+
+  protected renderField() {
     return html`<input type="text" @keyup="${(event) => this.valueChanged(event)}" name="${this.definition.name}" placeholder="${this.definition.placeholder}" .value="${this.value}">`
   }
 }

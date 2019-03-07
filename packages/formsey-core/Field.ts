@@ -2,13 +2,13 @@ import { LitElement, TemplateResult, html, property } from 'lit-element';
 import { FieldFactory, FieldDefinition } from './FieldDefinitions';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
-export class Field<T extends FieldDefinition, V> extends LitElement {
+export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   definition: T
 
   value: V;
 
-  render() : void | TemplateResult {
+  protected render() : void | TemplateResult {
     if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.definition.name) {
@@ -56,7 +56,14 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
       ${this.definition.helpText ? html`<div class="fs-help-text">${this.definition.helpText}</div>` : html``}`;
   }
 
-  protected renderField(): TemplateResult | void {
+  protected abstract renderField(): TemplateResult | void;
+
+  protected checkProperties(): void {
+  }
+
+  protected update(changedProperties: never) {
+    this.checkProperties();
+    super.update(changedProperties);
   }
 
   protected valueChanged(e: any) {
@@ -67,11 +74,11 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 }
 
-export class ComplexField<T extends FieldDefinition, V> extends Field<T, V> {
+export abstract class ComplexField<T extends FieldDefinition, V> extends Field<T, V> {
   factory: FieldFactory
 }
 
-export class CompoundField<T extends FieldDefinition, V> extends ComplexField<T, V> {
+export abstract class CompoundField<T extends FieldDefinition, V> extends ComplexField<T, V> {
   protected renderHeader() {
   }
 
