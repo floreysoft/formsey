@@ -2,7 +2,8 @@
   "name": "@formsey/core",
   "version": "0.0.6",
   "files": [
-    "/",
+    "/*.js",
+    "/*.d.ts",
     "!/test/"
   ],
   "description": "Formsey core components",

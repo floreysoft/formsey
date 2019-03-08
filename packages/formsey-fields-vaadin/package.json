@@ -3,7 +3,8 @@
   "version": "0.0.6",
   "description": "Vaadin fields",
   "files": [
-    "/",
+    "/*.js",
+    "/*.d.ts",
     "!/test/"
   ],
   "dependencies": {
