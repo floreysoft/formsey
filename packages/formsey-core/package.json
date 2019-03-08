@@ -1,10 +1,7 @@
 {
   "name": "@formsey/core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Formsey core components",
-  "files": [
-    "!/test/"
-  ],
   "dependencies": {
     "lit-element": "^2.0.1"
   },

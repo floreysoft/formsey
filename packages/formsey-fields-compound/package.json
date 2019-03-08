@@ -1,8 +1,9 @@
 {
   "name": "@formsey/fields-compound",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Compound fields",
   "files": [
+    "/",
     "!/test/"
   ],
   "dependencies": {
