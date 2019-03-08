@@ -1,13 +1,13 @@
 {
   "name": "@formsey/fields-vaadin",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Vaadin fields",
   "files": [
     "!/test/"
   ],
   "dependencies": {
     "@formsey/core": "^0.0.2",
-    "@formsey/fields-compound": "^0.0.3",
+    "@formsey/fields-compound": "^0.0.4",
     "@vaadin/vaadin-checkbox": "^2.2.4",
     "@vaadin/vaadin-combo-box": "^4.2.5",
     "@vaadin/vaadin-date-picker": "^3.3.2",
