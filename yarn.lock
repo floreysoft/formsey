@@ -629,6 +629,39 @@
   dependencies:
     lit-element "^2.0.1"
 
+"@formsey/core@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@formsey/core/-/core-0.0.2.tgz#88ba5425c86738aabb2d9e48a094b785d709374d"
+  integrity sha512-ojuGViKKxsmTPQgl3k6yVfYEDzfBKW1t1WcX3tfcg8wT1sA6xJbLxw5gO4YVK0VVNKvhyFUv4TTCnC/7NRhuVQ==
+  dependencies:
+    lit-element "^2.0.1"
+
+"@formsey/fields-compound@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@formsey/fields-compound/-/fields-compound-0.0.4.tgz#152510ba31eda3c160d722db065a58cc53a0e42e"
+  integrity sha512-fzG/BcMLz3QQ9DXGWKmkiPGp510vbHEJkqNcteBlDPDWEwZb9Eb8YrbOexE5vgCxPntQp3YI5+gbvIxy7tAk5w==
+  dependencies:
+    "@formsey/core" "^0.0.2"
+    lit-element "^2.0.1"
+
+"@formsey/fields-vaadin@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@formsey/fields-vaadin/-/fields-vaadin-0.0.4.tgz#c069c03843cdd23f6e1d0fd75d49adbbc1f7a680"
+  integrity sha512-WBaUbuAPmIFMUdneJisUMclwU2flRMueqDQfixM6KbDH6+deU2sm2cDg2yhCh0LF6g9/Kgy/dRKxv+ziMKEy8Q==
+  dependencies:
+    "@formsey/core" "^0.0.2"
+    "@formsey/fields-compound" "^0.0.4"
+    "@vaadin/vaadin-checkbox" "^2.2.4"
+    "@vaadin/vaadin-combo-box" "^4.2.5"
+    "@vaadin/vaadin-date-picker" "^3.3.2"
+    "@vaadin/vaadin-icons" "^4.2.1"
+    "@vaadin/vaadin-radio-button" "^1.1.5"
+    "@vaadin/vaadin-rich-text-editor" "^1.0.1"
+    "@vaadin/vaadin-text-field" "^2.3.2"
+    "@vaadin/vaadin-upload" "^4.2.1"
+    ace-builds "^1.4.2"
+    lit-element "^2.0.1"
+
 "@lerna/add@3.13.1":
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.13.1.tgz#2cd7838857edb3b43ed73e3c21f69a20beb9b702"
