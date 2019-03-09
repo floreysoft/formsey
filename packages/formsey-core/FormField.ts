@@ -124,13 +124,9 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected valueChanged(e: any) {
     if (e.name) {
-      const newValue = {
-        ...this.value,
-        [e.name]: e.value
-      };
-      this.value = newValue;
+      this.value[e.name] = e.value;
       if (this.definition.name) {
-        this.dispatchEvent(new ValueChangedEvent(this.definition.name, newValue));
+        this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
       }
     }
   }
