@@ -1,8 +1,8 @@
 import { html, property, query } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat';
-import { FormDefinition, ComplexField, ValueChangedEvent } from '@formsey/core';
+import { FormDefinition, Field, ValueChangedEvent } from '@formsey/core';
 
-export class FormField extends ComplexField<FormDefinition, Object> {
+export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
   set value(value: Object) {
     this._value = value;
@@ -25,8 +25,24 @@ export class FormField extends ComplexField<FormDefinition, Object> {
     return this._definition;
   }
 
+  async fetchDefinition(url: string) {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      this.definition = data
+      this.requestUpdate();
+    } catch (reason) {
+      console.error(reason.message)
+    }
+  }
+
+  @property()
+  set src(url: string) {
+    this.fetchDefinition(url);
+  }
+
   @query("section")
-  private section
+  private section : HTMLElement
 
   private _value: Object
   private _definition: FormDefinition
@@ -92,7 +108,7 @@ export class FormField extends ComplexField<FormDefinition, Object> {
     return html`<section class="fs-form">
       ${repeat(this.definition.fields, field => html`
       <div class='fs-form-field ${field.colspan ? "colspan-" + field.colspan : "colspan-12"}'>
-      ${this.factory.create(field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event))}`)}
+      ${this.createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event))}`)}
       </section>`;
   }
 

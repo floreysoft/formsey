@@ -1,27 +1,37 @@
 import { LitElement, TemplateResult, html, property } from 'lit-element';
-import { FieldFactory, FieldDefinition } from './FieldDefinitions';
+import { FieldDefinition } from './FieldDefinitions';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
+export interface FormConfiguration {
+  [index: string]: string
+}
+
 export abstract class Field<T extends FieldDefinition, V> extends LitElement {
+  @property({ converter: Object })
+  configuration: FormConfiguration
+
   @property({ type: Object })
   definition: T
 
   value: V;
 
-  protected render() : void | TemplateResult {
-    if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
+  protected render(): void | TemplateResult {
+    if (typeof this.definition === "undefined") {
+      return;
+    } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.definition.name) {
         this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
       }
     }
     if (this.definition.hidden) {
-      return html``;
+      return;
+    } else {
+      return html`${this.renderHeader()}${this.renderField()}`
     }
-    return html`${this.renderHeader()}${this.renderField()}`
   }
 
-  protected renderStyles() : string | void {
+  protected renderStyles(): string | void {
   }
 
   protected renderHeader(): TemplateResult | void {
@@ -58,6 +68,21 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected abstract renderField(): TemplateResult | void;
 
+  protected createField(configuration: FormConfiguration, definition: FieldDefinition, value: Object, handler: any) {
+    const tag = this.configuration[definition.type];
+    if (tag) {
+      let field = document.createElement(tag) as Field<FieldDefinition, any>
+      field.configuration = configuration
+      field.definition = definition
+      field.value = value
+      field.addEventListener("valueChanged", handler)
+      return field;
+    } else {
+      console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
+      return null;
+    }
+  }
+
   protected checkProperties(): void {
   }
 
@@ -74,11 +99,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   }
 }
 
-export abstract class ComplexField<T extends FieldDefinition, V> extends Field<T, V> {
-  factory: FieldFactory
-}
-
-export abstract class CompoundField<T extends FieldDefinition, V> extends ComplexField<T, V> {
+export abstract class CompoundField<T extends FieldDefinition, V> extends Field<T, V> {
   protected renderHeader() {
   }
 

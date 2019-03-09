@@ -1,19 +1,3 @@
-import { TemplateResult } from 'lit-element';
-
-export abstract class FieldFactory {
-  editors : Object = {}
-
-  registerEditor(type: string, definition: EditorDefinition) {
-    this.editors[type] = definition;
-  }
-
-  edit(type: string): EditorDefinition {
-    return this.editors[type] as EditorDefinition
-  }
-
-  abstract create(fieldDefinition: FieldDefinition, value: Object, handler): TemplateResult
-}
-
 export interface FieldDefinition {
   name?: string
   colspan?: number
@@ -74,11 +58,6 @@ export interface CheckboxesFieldDefinition extends FieldDefinition {
 
 export interface FormDefinition extends FieldDefinition {
   fields: FieldDefinition[]
-}
-
-export interface EditorDefinition extends FieldDefinition {
-  fields: FieldDefinition[]
-  named?: boolean
 }
 
 export interface RepeatingFieldDefinition extends FieldDefinition {

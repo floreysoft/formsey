@@ -1,6 +1,26 @@
 import { LitElement, customElement, property, html, css, CSSResult } from "lit-element";
 import { Dialog } from '@floreysoft/dialog'
-import { VaadinFieldFactory as Factory } from '@formsey/fields-vaadin'
+import { FormConfiguration } from "@formsey/core/Field";
+
+import '@formsey/core/FormField';
+import '@formsey/fields-vaadin/ListField';
+import '@formsey/fields-vaadin/BooleanField';
+import '@formsey/fields-vaadin/StringField';
+import '@formsey/fields-vaadin/TextField';
+import '@formsey/fields-vaadin/DateField';
+import '@formsey/fields-vaadin/RepeatingField';
+import '@formsey/fields-vaadin/OptionalSectionField';
+import '@formsey/fields-vaadin/SelectableSectionField';
+import '@formsey/fields-vaadin/CheckboxesField';
+import '@formsey/fields-vaadin/MultipleChoiceField';
+import '@formsey/fields-vaadin/SourceCodeField';
+import '@formsey/fields-vaadin/MarkupField';
+import '@formsey/fields-vaadin/ImageField';
+import '@formsey/fields-vaadin/YouTubeField';
+import '@formsey/fields-vaadin/UploadField';
+import '@formsey/fields-compound/AddressField'
+import '@formsey/fields-compound/CreditCardField'
+import '@formsey/fields-compound/NameField'
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
@@ -43,6 +63,32 @@ export class DemoSection extends LitElement {
     }
 }
 
+const CONFIG : FormConfiguration = {
+    'boolean': 'formsey-boolean',
+    'string': 'formsey-string',
+    'text': 'formsey-text',
+    'number': 'formsey-number',
+    'date': 'formsey-date',
+    'list': 'formsey-list',
+    'multipleChoice': 'formsey-multiple-choice',
+    'checkboxes': 'formsey-checkboxes',
+    'signature': 'formsey-signature',
+    'repeatingSection': 'formsey-repeating-section',
+    'optionalSection': 'formsey-optional-section',
+    'seletableSection': 'formsey-selectable-section',
+    'form': 'formsey-form',
+    'fields': 'formsey-fields',
+    'address': 'formsey-address',
+    'name': 'formsey-name',
+    'creditCard': 'formsey-creditcard',
+    'richText': 'formsey-rich-text',
+    'sourceCode': 'formsey-sourcecode',
+    'markup': 'formsey-markup',
+    'image': 'formsey-image',
+    'youtube': 'formsey-youtube',
+    'upload': 'formsey-upload'
+}
+
 @customElement("fs-demo")
 export class Demo extends LitElement {
     static get styles(): CSSResult[] {
@@ -57,9 +103,9 @@ export class Demo extends LitElement {
         return html`
           <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <fs-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .factory="${new Factory()}"></fs-form>
+        <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
-           <fs-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .factory="${new Factory()}"></fs-form>
+           <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
         </fs-dialog>
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
         </fs-demo-section>
