@@ -77,7 +77,6 @@ const CONFIG : FormConfiguration = {
     'optionalSection': 'formsey-optional-section',
     'seletableSection': 'formsey-selectable-section',
     'form': 'formsey-form',
-    'fields': 'formsey-fields',
     'address': 'formsey-address',
     'name': 'formsey-name',
     'creditCard': 'formsey-creditcard',
