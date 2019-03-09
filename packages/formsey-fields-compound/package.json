@@ -1,13 +1,13 @@
 {
   "name": "@formsey/fields-compound",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Compound fields",
   "files": [
     "/",
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.1.0",
+    "@formsey/core": "^0.1.2",
     "lit-element": "^2.0.1"
   },
   "main": "./index.js",
