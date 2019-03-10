@@ -3,16 +3,19 @@
   "version": "0.1.2",
   "description": "Compound fields",
   "files": [
-    "/",
+    "/*.js.map",
+    "/*.d.ts.map",
+    "/*.js",
+    "/*.d.ts",
     "!/test/"
   ],
   "dependencies": {
     "@formsey/core": "^0.1.2",
     "lit-element": "^2.0.1"
   },
-  "main": "./index.js",
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "pub:check": "npm publish --dry-run"
   },
   "license": "Apache-2.0",
   "publishConfig": {

@@ -3,6 +3,8 @@
   "version": "0.1.2",
   "description": "Native fields",
   "files": [
+    "/*.js.map",
+    "/*.d.ts.map",
     "/*.js",
     "/*.d.ts",
     "!/test/"
@@ -12,9 +14,9 @@
     "lit-element": "^2.0.1",
     "signature_pad": "^3.0.0-beta.3"
   },
-  "main": "./index.js",
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "pub:check": "npm publish --dry-run"
   },
   "license": "Apache-2.0",
   "publishConfig": {
