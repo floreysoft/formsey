@@ -1,24 +1,22 @@
 import { LitElement, TemplateResult, html, property } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
 import { ValueChangedEvent } from './ValueChangedEvent';
+import { unsafeStatic, withUnsafeStatic } from './unsafeStatic';
 
 export interface FormConfiguration {
   [index: string]: string
 }
 
-export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, handler: any) : Field<any,any> => {
+const staticHtml = withUnsafeStatic(html);
+
+export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, handler: any) : TemplateResult => {
   const tag = configuration[definition.type];
   if (tag) {
-    let field = document.createElement(tag) as Field<FieldDefinition, any>
-    field.configuration = configuration
-    field.definition = definition
-    field.value = value
-    field.addEventListener("valueChanged", handler)
-    return field;
+    return staticHtml`<${unsafeStatic(tag)} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${handler}></${unsafeStatic(tag)}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
-    return null;
   }
+  return html``;
 }
 
 export abstract class Field<T extends FieldDefinition, V> extends LitElement {
