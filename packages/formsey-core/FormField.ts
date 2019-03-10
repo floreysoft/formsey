@@ -1,6 +1,6 @@
 import { html, property, query } from 'lit-element';
 import { repeat } from 'lit-html/directives/repeat';
-import { FormDefinition, Field, ValueChangedEvent } from '@formsey/core';
+import { createField, FormDefinition, Field, ValueChangedEvent } from '@formsey/core';
 
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
@@ -108,7 +108,7 @@ export class FormField extends Field<FormDefinition, Object> {
     return html`<section class="fs-form">
       ${repeat(this.definition.fields, field => html`
       <div class='fs-form-field ${field.colspan ? "colspan-" + field.colspan : "colspan-12"}'>
-      ${this.createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event))}`)}
+      ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event))}`)}
       </section>`;
   }
 

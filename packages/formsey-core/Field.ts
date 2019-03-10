@@ -6,6 +6,21 @@ export interface FormConfiguration {
   [index: string]: string
 }
 
+export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, handler: any) : Field<any,any> => {
+  const tag = configuration[definition.type];
+  if (tag) {
+    let field = document.createElement(tag) as Field<FieldDefinition, any>
+    field.configuration = configuration
+    field.definition = definition
+    field.value = value
+    field.addEventListener("valueChanged", handler)
+    return field;
+  } else {
+    console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
+    return null;
+  }
+}
+
 export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ converter: Object })
   configuration: FormConfiguration
@@ -67,21 +82,6 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected abstract renderField(): TemplateResult | void;
-
-  protected createField(configuration: FormConfiguration, definition: FieldDefinition, value: Object, handler: any) {
-    const tag = this.configuration[definition.type];
-    if (tag) {
-      let field = document.createElement(tag) as Field<FieldDefinition, any>
-      field.configuration = configuration
-      field.definition = definition
-      field.value = value
-      field.addEventListener("valueChanged", handler)
-      return field;
-    } else {
-      console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
-      return null;
-    }
-  }
 
   protected checkProperties(): void {
   }

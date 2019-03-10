@@ -1,5 +1,5 @@
 import { html, property } from 'lit-element';
-import { ValueChangedEvent, CompoundField, FieldDefinition } from '@formsey/core';
+import { createField, ValueChangedEvent, CompoundField, FieldDefinition } from '@formsey/core';
 
 export interface AddressFieldDefinition extends FieldDefinition {
   includeAddressLine1 : boolean
@@ -36,7 +36,7 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${this.createField(this.configuration, form, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event))}</div>`;
+    return html`<div class="fs-nested-form">${createField(this.configuration, form, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event))}</div>`;
   }
 }
 
