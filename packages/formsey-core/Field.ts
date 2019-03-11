@@ -1,18 +1,23 @@
 import { LitElement, TemplateResult, html, property } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
 import { ValueChangedEvent } from './ValueChangedEvent';
-import { unsafeStatic, withUnsafeStatic } from './unsafeStatic';
 
 export interface FormConfiguration {
   [index: string]: string
 }
 
-const staticHtml = withUnsafeStatic(html);
+export function hacktml(parts, ...args) {
+  const newArgs = args.concat().slice(1, -1)
+  const newParts = parts.concat().slice(1, -1)
+  newParts[0] = "<" + args[0] + newParts[0]
+  newParts[newParts.length-1] = newParts[newParts.length-1] + args[0] + ">";
+  return html(newParts, ...newArgs);
+}
 
 export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, handler: any) : TemplateResult => {
   const tag = configuration[definition.type];
   if (tag) {
-    return staticHtml`<${unsafeStatic(tag)} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${handler}></${unsafeStatic(tag)}>`;
+    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${handler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
   }
