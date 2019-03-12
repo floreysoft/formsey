@@ -622,6 +622,14 @@
   resolved "https://registry.yarnpkg.com/@bundled-es-modules/parse5/-/parse5-5.1.1.tgz#eaaa6e43e41e3aa73f3e7e3fba74dbd958e7778c"
   integrity sha512-TMTmOErc/XVKE6LDOeUg3+XQPenwIksbYH18ofVz/Y894zrJ+m9uekJK3z36whLl3nZDbsYp0n/8AIr4Q8HFgQ==
 
+"@floreysoft/ace@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@floreysoft/ace/-/ace-0.3.5.tgz#e9f731b17540976ce47c5db664aacf96f3cdc374"
+  integrity sha512-aljMJpCpb692eKnKTi8q5ZUDO7W3kM+NOONecPf99LtXK9XJS7Kf7vCFUkoqSf+pOobT0bGzY/o/tXwb/OCgPA==
+  dependencies:
+    ace-builds "^1.4.2"
+    lit-element "^2.0.1"
+
 "@floreysoft/dialog@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@floreysoft/dialog/-/dialog-0.1.1.tgz#596b5772276eca6d9363a2f82aeda903a04568a6"

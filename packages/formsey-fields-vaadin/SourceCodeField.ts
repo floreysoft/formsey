@@ -1,91 +1,37 @@
-import { html, property, query, customElement, PropertyValues } from 'lit-element';
-import ace from 'ace-builds/src-min-noconflict/ace.js'
-import "./webpack-resolver";
-import "ace-builds/src-min-noconflict/mode-javascript";
-import { Field, ValueChangedEvent, FieldDefinition } from '@formsey/core';
+import { html, property, query, customElement } from 'lit-element';
+import '@floreysoft/ace';
+import { Ace } from '@floreysoft/ace';
+import { Field, FieldDefinition, ValueChangedEvent } from '@formsey/core';
 
 @customElement("formsey-sourcecode")
 export class SourceCodeField extends Field<FieldDefinition, string> {
   @property({ type: String })
-  set value(value: string) {
-    if (this.editor) {
-      this.silent = true
-      this.editor.setValue(value, -1)
-      this.silent = false
-    }
-  }
+  value : string
 
-  @property()
-  mode : string = "javascript"
-
-  @property()
-  theme : string = "tomorrow_night"
-
-  @property({ type: Number })
-  width: Number;
-
-  @property({ type: Number })
-  height: Number;
-
-  @property({ type: Boolean })
-  gutter : boolean = false
-
-  @query("#editor")
-  private div: HTMLElement
-
-  private editor: ace
-  private silent: boolean = false
+  @query("floreysoft-ace")
+  editor : Ace
 
   protected renderStyles() {
     return `
-    :host {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: var(--lumo-border-radius);
-      border: 1px solid var(--lumo-contrast-20pct);
-      margin: var(--lumo-space-xs) 0;
-    }
-    #editor {
+    floreysoft-ace {
       height: 100px;
     }`
   }
 
   protected renderField() {
-    return html`<div id="editor"></div>`;
+    return html`<floreysoft-ace .value=${this.value} @changed=${this.valueChanged}></floreysoft-ace>`;
   }
 
-  firstUpdated() {
-    this.editor = ace.edit(this.div)
-    this.editor.renderer.attachToShadowRoot()
-    if (this.value) {
-      this.editor.setValue(this.value)
-      this.editor.clearSelection()
+  protected valueChanged(e: any) {
+    this.value = e.detail.value;
+    if (this.definition.name) {
+      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
-    this.editor.getSession().on('change', (event: any) => this.valueChanged())
-  }
-
-  updated(changedProperties : PropertyValues) {
-    this.updateOptions()
   }
 
   resize() {
     if (this.editor) {
       this.editor.resize()
-    }
-  }
-
-  protected valueChanged() {
-    if (this.definition.name && !this.silent) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.editor.getValue()));
-    }
-  }
-
-  protected updateOptions() {
-    if (this.editor) {
-        this.editor.renderer.setShowGutter(this.gutter)
-        this.editor.setTheme("ace/theme/"+this.theme)
-        this.editor.session.setMode("ace/mode/"+this.mode)
     }
   }
 }
