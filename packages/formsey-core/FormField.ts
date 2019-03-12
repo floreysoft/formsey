@@ -44,7 +44,7 @@ export class FormField extends Field<FormDefinition, Object> {
   @query("section")
   private section : HTMLElement
 
-  private _value: Object
+  private _value: Object = {}
   private _definition: FormDefinition
 
   renderStyles() {

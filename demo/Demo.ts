@@ -1,4 +1,4 @@
-import { LitElement, customElement, property, html, css, CSSResult } from "lit-element";
+import { LitElement, customElement, property, html, css, CSSResult, query } from "lit-element";
 import { Dialog } from '@floreysoft/dialog'
 import { FormConfiguration } from "@formsey/core/Field";
 
@@ -21,6 +21,7 @@ import '@formsey/fields-vaadin/UploadField';
 import '@formsey/fields-compound/AddressField'
 import '@formsey/fields-compound/CreditCardField'
 import '@formsey/fields-compound/NameField'
+import { ValueChangedEvent, FormField } from "@formsey/core";
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
@@ -98,11 +99,15 @@ export class Demo extends LitElement {
         `]
     }
 
+    @query("#demoForm")
+    demoForm: FormField
+
     render() {
         return html`
           <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
+        <formsey-form id="demoForm" src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG} @valueChanged=${this.valueChanged}></formsey-form>
+        <pre id="formValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
            <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
         </fs-dialog>
@@ -116,5 +121,10 @@ export class Demo extends LitElement {
             (<Dialog>this.shadowRoot.getElementById(id)).open = true
         }
 
+    }
+
+    valueChanged(e: ValueChangedEvent<Object>) {
+        console.log("Value="+JSON.stringify(e.value))
+        this.demoForm.value=e.value
     }
 }
