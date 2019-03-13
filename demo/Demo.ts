@@ -102,12 +102,15 @@ export class Demo extends LitElement {
     @query("#demoForm")
     demoForm: FormField
 
+    @query("#demoFormValue")
+    demoFormValue: HTMLElement
+
     render() {
         return html`
-          <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
+        <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
         <formsey-form id="demoForm" src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG} @valueChanged=${this.valueChanged}></formsey-form>
-        <pre id="formValue"></pre>
+        <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
            <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
         </fs-dialog>
@@ -120,11 +123,9 @@ export class Demo extends LitElement {
         if (this.shadowRoot) {
             (<Dialog>this.shadowRoot.getElementById(id)).open = true
         }
-
     }
 
     valueChanged(e: ValueChangedEvent<Object>) {
-        console.log("Value="+JSON.stringify(e.value))
-        this.demoForm.value=e.value
-    }
+        this.demoFormValue.innerHTML = JSON.stringify(e.value)
+   }
 }
