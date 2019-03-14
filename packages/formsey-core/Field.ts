@@ -61,10 +61,6 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
           margin: var(--lumo-space-m) 0 0 0;
           font-family: var(--lumo-font-family);
           font-size: var(--lumo-font-size-m);
-          color: green;
-        }
-        .fs-prompt:focus-within {
-          color: red;
         }
         .fs-help-text {
           flex: 1 0;
