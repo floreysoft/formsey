@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-material",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Material design fields",
   "files": [
     "/*.js.map",
@@ -10,7 +10,7 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.1.8",
+    "@formsey/core": "^0.1.9",
     "@material/mwc-checkbox": "^0.3.3",
     "lit-element": "^2.0.1"
   },
