@@ -82,14 +82,12 @@ export class FormField extends Field<FormDefinition, Object> {
         grid-column-end: span 12;
       }
 
-      .sd .colspan-1, .sd .colspan-2, .sd .colspan-3, .sd .colspan-4, .sd .colspan-5, .sd .colspan-6, .sd .colspan-7, .sd .colspan-8, .sd .colspan-9, .sd .colspan-10, .sd .colspan-12 {
-        grid-column-end: span 12;
+      .sd .colspan-1, .sd .colspan-2, .sd .colspan-3, .sd .colspan-4, .sd .colspan-5, .sd .colspan-6, .sd .colspan-7, .sd .colspan-8, .sd .colspan-9, .sd .colspan-10 {
+        grid-column-end: span 6;
       }
 
-      @media only screen and (max-width: 720px) {
-        .colspan-1, .colspan-2, .colspan-3, .colspan-4, .colspan-5, .colspan-6, .colspan-7, .colspan-8, .colspan-9, .colspan-10, .colspan-12 {
-          grid-column-end: span 12;
-        }
+      .sd .colspan-12 {
+        grid-column-end: span 12;
       }
 
       .fs-form {
@@ -120,7 +118,8 @@ export class FormField extends Field<FormDefinition, Object> {
     return html`<section class="fs-form">
       ${repeat(this.definition.fields, field => html`
       <div class='fs-form-field ${field.colspan ? "colspan-" + field.colspan : "colspan-12"}'>
-      ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event))}`)}
+      ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event))}
+      </div>`)}
       </section>`;
   }
 
