@@ -47,6 +47,8 @@ export class FormField extends Field<FormDefinition, Object> {
   private _value: Object = {}
   private _definition: FormDefinition
 
+  private resizeHandler = ( (e : Event) => this.resize() )
+
   renderStyles() {
     return `
       .colspan-2 {
@@ -104,6 +106,16 @@ export class FormField extends Field<FormDefinition, Object> {
       }`;
   }
 
+  connectedCallback() {
+    super.connectedCallback()
+    window.addEventListener("resize",  this.resizeHandler)
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener("resize", this.resizeHandler)
+    super.disconnectedCallback()
+  }
+
   renderField() {
     return html`<section class="fs-form">
       ${repeat(this.definition.fields, field => html`
@@ -113,6 +125,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   resize() {
+    console.log("Resize triggered")
     if (this.section) {
       if (this.section.clientWidth < 720) {
         this.section.classList.add("sd");
