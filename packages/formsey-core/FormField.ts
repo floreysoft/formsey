@@ -1,7 +1,12 @@
-import { html, property, query } from 'lit-element';
-import { repeat } from 'lit-html/directives/repeat';
+import { html, property, query, customElement, TemplateResult } from 'lit-element';
 import { createField, FormDefinition, Field, ValueChangedEvent } from '@formsey/core';
 
+class Layout {
+  ld: number
+  sd?: number
+}
+
+@customElement("formsey-form")
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
   set value(value: Object) {
@@ -42,51 +47,78 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   @query("section")
-  private section : HTMLElement
+  private section: HTMLElement
 
   private _value: Object = {}
   private _definition: FormDefinition
 
-  private resizeHandler = ( (e : Event) => this.resize() )
+  private resizeHandler = ((e: Event) => this.resize())
 
   renderStyles() {
     return `
-      .colspan-2 {
+      .ld-2 {
         grid-column-end: span 2;
       }
-      .colspan-3 {
+      .ld-3 {
         grid-column-end: span 3;
       }
-      .colspan-4 {
+      .ld-4 {
         grid-column-end: span 4;
       }
-      .colspan-5 {
+      .ld-5 {
         grid-column-end: span 5;
       }
-      .colspan-6 {
+      .ld-6 {
         grid-column-end: span 6;
       }
-      .colspan-7 {
+      .ld-7 {
         grid-column-end: span 7;
       }
-      .colspan-8 {
+      .ld-8 {
         grid-column-end: span 8;
       }
-      .colspan-9 {
+      .ld-9 {
         grid-column-end: span 9;
       }
-      .colspan-10 {
+      .ld-10 {
         grid-column-end: span 10;
       }
-      .colspan-12 {
+      .ld-12 {
         grid-column-end: span 12;
       }
 
-      .sd .colspan-1, .sd .colspan-2, .sd .colspan-3, .sd .colspan-4, .sd .colspan-5, .sd .colspan-6, .sd .colspan-7, .sd .colspan-8, .sd .colspan-9, .sd .colspan-10 {
+      .md .md-2 {
+        grid-column-end: span 2;
+      }
+      .md .md-3 {
+        grid-column-end: span 3;
+      }
+      .md .md-4 {
+        grid-column-end: span 4;
+      }
+      .md .md-5 {
+        grid-column-end: span 5;
+      }
+      .md .md-6 {
         grid-column-end: span 6;
       }
+      .md .md-7 {
+        grid-column-end: span 7;
+      }
+      .md .md-8 {
+        grid-column-end: span 8;
+      }
+      .md .md-9 {
+        grid-column-end: span 9;
+      }
+      .md .md-10 {
+        grid-column-end: span 10;
+      }
+      .md .md-12 {
+        grid-column-end: span 12;
+      }
 
-      .sd .colspan-12 {
+      .sd .sd-12 {
         grid-column-end: span 12;
       }
 
@@ -106,30 +138,113 @@ export class FormField extends Field<FormDefinition, Object> {
 
   connectedCallback() {
     super.connectedCallback()
-    window.addEventListener("resize",  this.resizeHandler)
+    window.addEventListener("resizeForm", this.resizeHandler)
   }
 
   disconnectedCallback() {
-    window.removeEventListener("resize", this.resizeHandler)
+    window.removeEventListener("resizeForm", this.resizeHandler)
     super.disconnectedCallback()
   }
 
   renderField() {
-    return html`<section class="fs-form">
-      ${repeat(this.definition.fields, field => html`
-      <div class='fs-form-field ${field.colspan ? "colspan-" + field.colspan : "colspan-12"}'>
-      ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event))}
-      </div>`)}
-      </section>`;
+    // Create different layouts for various sizes
+    let cols = 0
+    let row: Layout[] = []
+    let layout: Layout[] = []
+    for (let field of this.definition.fields) {
+      let colspan = field.colspan ? field.colspan : 12;
+      row.push({ 'ld': colspan })
+      cols += colspan
+      if (cols == 12) {
+        cols = 0
+        let hasSmallColumns = false
+        for (let i = 0; i < row.length; i++) {
+          if (row[i]['ld'] < 4) {
+            hasSmallColumns = true
+            break
+          }
+        }
+        if (hasSmallColumns) {
+          // Try to double sizes and split across two rows
+          let mdCols = 0
+          for (let i = 0; i < row.length; i++) {
+            let mdColspan = row[i]['ld'] * 2
+            mdCols += mdColspan
+            row[i]['md'] = mdColspan
+            if (mdCols == 12) {
+              mdCols = 0
+            } else if (mdCols > 12) {
+              // Unable to evenly split into two rows
+              if (row.length == 2) {
+                this.adjustTwoCells(row);
+              } else if (row.length == 3) {
+                this.adjustThreeCells(row)
+              } else if (row.length == 4) {
+                this.adjustTwoCells([row[0], row[1]])
+                this.adjustTwoCells([row[2], row[3]])
+              } else if (row.length == 5) {
+                if (mdCols > 14) {
+                  this.adjustTwoCells([row[0], row[1]])
+                  this.adjustThreeCells([row[2], row[3], row[4]])
+                } else {
+                  this.adjustThreeCells([row[0], row[1], row[2]])
+                  this.adjustTwoCells([row[3], row[4]])
+                }
+              }
+              break
+            }
+          }
+        }
+        layout.push(...row)
+        row = []
+      }
+    }
+    layout.push(...row)
+    const itemTemplates: TemplateResult[] = [];
+    for (let i = 0; i < this.definition.fields.length; i++) {
+      const field = this.definition.fields[i]
+      let layoutClasses = "sd-12"
+      if (layout[i]['md']) {
+        layoutClasses += " md-" + layout[i]['md']
+      }
+      if (layout[i]['ld']) {
+        layoutClasses += " ld-" + layout[i]['ld']
+      }
+      itemTemplates.push(html`<div class='fs-form-field ${layoutClasses}'>
+  ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event:
+  ValueChangedEvent<any>) => this.valueChanged(event))}
+</div>`);
+    }
+    return html`<section class="fs-form">${itemTemplates}</section>`;
+  }
+
+  adjustThreeCells(row: Layout[]) {
+    row[0]['md'] = 4
+    row[1]['md'] = 4
+    row[2]['md'] = 4
+  }
+
+  adjustTwoCells(row: Layout[]) {
+    if (row[0]['ld'] < 4 && row[1]['ld'] > 4) {
+      row[0]['md'] = 4
+      row[1]['md'] = 8
+    } else if (row[0]['ld'] > 4 && row[1]['ld'] < 4) {
+      row[0]['md'] = 8
+      row[1]['md'] = 4
+    } else {
+      row[0]['md'] = 6
+      row[1]['md'] = 6
+    }
   }
 
   resize() {
-    console.log("Resize triggered")
     if (this.section) {
-      if (this.section.clientWidth < 720) {
+      this.section.classList.remove("sd");
+      this.section.classList.remove("md");
+      if (this.section.clientWidth < 576) {
         this.section.classList.add("sd");
-      } else {
-        this.section.classList.remove("sd");
+      } else if (this.section.clientWidth < 768) {
+        this.section.classList.add("md");
       }
     }
   }
@@ -155,5 +270,3 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 }
-
-customElements.define('formsey-form', FormField);
