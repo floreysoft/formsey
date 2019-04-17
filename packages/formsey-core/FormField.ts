@@ -139,6 +139,7 @@ export class FormField extends Field<FormDefinition, Object> {
   connectedCallback() {
     super.connectedCallback()
     window.addEventListener("resizeForm", this.resizeHandler)
+    this.resize()
   }
 
   disconnectedCallback() {
@@ -218,37 +219,6 @@ export class FormField extends Field<FormDefinition, Object> {
     return html`<section class="fs-form">${itemTemplates}</section>`;
   }
 
-  adjustThreeCells(row: Layout[]) {
-    row[0]['md'] = 4
-    row[1]['md'] = 4
-    row[2]['md'] = 4
-  }
-
-  adjustTwoCells(row: Layout[]) {
-    if (row[0]['ld'] < 4 && row[1]['ld'] > 4) {
-      row[0]['md'] = 4
-      row[1]['md'] = 8
-    } else if (row[0]['ld'] > 4 && row[1]['ld'] < 4) {
-      row[0]['md'] = 8
-      row[1]['md'] = 4
-    } else {
-      row[0]['md'] = 6
-      row[1]['md'] = 6
-    }
-  }
-
-  resize() {
-    if (this.section) {
-      this.section.classList.remove("sd");
-      this.section.classList.remove("md");
-      if (this.section.clientWidth < 576) {
-        this.section.classList.add("sd");
-      } else if (this.section.clientWidth < 768) {
-        this.section.classList.add("md");
-      }
-    }
-  }
-
   protected valueChanged(e: any) {
     if (e.name) {
       this.value[e.name] = e.value;
@@ -267,6 +237,25 @@ export class FormField extends Field<FormDefinition, Object> {
           }
         }
       }
+    }
+  }
+
+  private adjustThreeCells(row: Layout[]) {
+    row[0]['md'] = 4
+    row[1]['md'] = 4
+    row[2]['md'] = 4
+  }
+
+  private adjustTwoCells(row: Layout[]) {
+    if (row[0]['ld'] < 4 && row[1]['ld'] > 4) {
+      row[0]['md'] = 4
+      row[1]['md'] = 8
+    } else if (row[0]['ld'] > 4 && row[1]['ld'] < 4) {
+      row[0]['md'] = 8
+      row[1]['md'] = 4
+    } else {
+      row[0]['md'] = 6
+      row[1]['md'] = 6
     }
   }
 }
