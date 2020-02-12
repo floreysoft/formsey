@@ -11,8 +11,8 @@
   ],
   "dependencies": {
     "@formsey/core": "^0.1.11",
-    "@material/mwc-checkbox": "^0.3.3",
-    "lit-element": "^2.0.1"
+    "@material/mwc-checkbox": "^0.13.0",
+    "lit-element": "^2.1.0"
   },
   "scripts": {
     "tsc": "tsc",

@@ -258,4 +258,16 @@ export class FormField extends Field<FormDefinition, Object> {
       row[1]['md'] = 6
     }
   }
+
+  private resize() {
+    if (this.section) {
+      this.section.classList.remove("sd");
+      this.section.classList.remove("md");
+      if (this.section.clientWidth < 576) {
+        this.section.classList.add("sd");
+      } else if (this.section.clientWidth < 768) {
+        this.section.classList.add("md");
+      }
+    }
+  }
 }
