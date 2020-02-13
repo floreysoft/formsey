@@ -48,7 +48,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, Multip
     for (let i = 0; i < this.definition.options.length; i++) {
       let option = this.definition.options[i];
       if (typeof option === "string") {
-        templates.push(html`<vaadin-radio-button value="${<string>option} .checked="${this.value.option === <string>option}">${option}</vaadin-radio-button>`);
+        templates.push(html`<vaadin-radio-button value="${<string>option}" .checked="${this.value.option === <string>option}">${option}</vaadin-radio-button>`);
       } else {
         let checked = this.value.option === ((<Option>option).value ? (<Option>option).value : (<Option>option).label);
         templates.push(html`<vaadin-radio-button value="${(<Option>option).value ? (<Option>option).value : (<Option>option).label}" .checked="${checked}">${(<Option>option).label ? (<Option>option).label : (<Option>option).value}</vaadin-radio-button>`);
