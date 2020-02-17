@@ -1,6 +1,7 @@
 import { LitElement, TemplateResult, html, property } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
 import { ValueChangedEvent } from './ValueChangedEvent';
+import { InvalidEvent } from './InvalidEvent';
 
 export interface FormConfiguration {
   [index: string]: string
@@ -14,10 +15,10 @@ export function hacktml(parts, ...args) {
   return html(newParts, ...newArgs);
 }
 
-export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, handler: any) : TemplateResult => {
+export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, valueChangedHandler: any, invalidHandler: any) : TemplateResult => {
   const tag = configuration[definition.type];
   if (tag) {
-    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${handler}></${tag}>`;
+    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${valueChangedHandler} @invalid=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
   }
@@ -32,6 +33,10 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   definition: T
 
   value: V;
+
+  public checkValidity() : boolean {
+    return true;
+  }
 
   protected render(): void | TemplateResult {
     if (typeof this.definition === "undefined") {
@@ -94,6 +99,13 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     this.value = e.currentTarget.value;
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+    }
+  }
+
+  protected invalid(e: InvalidEvent) {
+    if (this.definition.name) {
+      console.log("FIRE INVALID EVENT FROM="+this.definition.name, JSON.stringify(e));
+      this.dispatchEvent(e);
     }
   }
 }

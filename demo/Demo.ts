@@ -5,7 +5,7 @@ import { FormConfiguration } from "@formsey/core/Field";
 import '@formsey/core/FormField';
 import '@formsey/fields-vaadin/ListField';
 import '@formsey/fields-vaadin/BooleanField';
-import '@formsey/fields-vaadin/StringField';
+import '@formsey/fields-native/StringField';
 import '@formsey/fields-vaadin/TextField';
 import '@formsey/fields-vaadin/DateField';
 import '@formsey/fields-vaadin/RepeatingField';
@@ -110,6 +110,7 @@ export class Demo extends LitElement {
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
         <formsey-form id="demoForm" src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG} @valueChanged=${this.valueChanged}></formsey-form>
+        <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
            <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
@@ -117,6 +118,10 @@ export class Demo extends LitElement {
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
         </fs-demo-section>
         `
+    }
+
+    validate(e: Event) {
+        this.demoForm.checkValidity()
     }
 
     openDialog(id: string) {

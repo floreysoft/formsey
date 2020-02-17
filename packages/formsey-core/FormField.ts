@@ -1,5 +1,6 @@
-import { html, property, query, customElement, TemplateResult } from 'lit-element';
+import { html, property, query, customElement, TemplateResult, queryAll } from 'lit-element';
 import { createField, FormDefinition, Field, ValueChangedEvent } from '@formsey/core';
+import { InvalidEvent } from './InvalidEvent';
 
 class Layout {
   ld: number
@@ -53,6 +54,21 @@ export class FormField extends Field<FormDefinition, Object> {
   private _definition: FormDefinition
 
   private resizeHandler = ((e: Event) => this.resize())
+
+  @queryAll(".fs-form-field")
+  private _fields: HTMLElement[]
+
+  public checkValidity() {
+    let validity = true;
+    for (let field of this._fields) {
+      let child = field.firstElementChild as Field<any,any>
+      let valid = child.checkValidity();
+      if (!valid) {
+        validity = false;
+      }
+    }
+    return validity;
+  }
 
   renderStyles() {
     return `
@@ -213,7 +229,7 @@ export class FormField extends Field<FormDefinition, Object> {
       }
       itemTemplates.push(html`<div class='fs-form-field ${layoutClasses}'>
   ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event:
-  ValueChangedEvent<any>) => this.valueChanged(event))}
+        ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
 </div>`);
     }
     return html`<section class="fs-form">${itemTemplates}</section>`;
