@@ -1,7 +1,6 @@
 import { LitElement, TemplateResult, html, property } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
 import { ValueChangedEvent } from './ValueChangedEvent';
-import { InvalidEvent } from './InvalidEvent';
 
 export interface FormConfiguration {
   [index: string]: string

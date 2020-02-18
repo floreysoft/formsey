@@ -1,7 +1,6 @@
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { html, property } from 'lit-element';
 import { createField, ValueChangedEvent, SelectableSectionFieldDefinition, Field } from '@formsey/core';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
 
 export class SelectableSectionValue {
   selection: string;
@@ -31,7 +30,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
     let selectedForm = this.definition.forms[index];
     let selection = selectedForm.prompt ? selectedForm.prompt : selectedForm.name;
     return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.prompt ? form.prompt : form.name))}" .value="${selection}"></vaadin-combo-box>
-    <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+    <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
   }
 
   protected selectionChanged(e: any) {

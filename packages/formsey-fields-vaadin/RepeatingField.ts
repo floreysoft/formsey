@@ -1,7 +1,6 @@
 import '@vaadin/vaadin-icons/vaadin-icons.js';
 import { TemplateResult, html, property } from 'lit-element';
 import { createField, FormDefinition, ValueChangedEvent, RepeatingFieldDefinition, Field } from '@formsey/core';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
 
 export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
@@ -74,7 +73,7 @@ export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
           'name': "" + i,
           'fields': this.definition.form.fields
         }
-        const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
+        const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><iron-icon class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" icon="vaadin:close-small"></iron-icon></div>` : html ``}</div>`;
         itemTemplates.push(template);
       }

@@ -1,6 +1,5 @@
 import { html, property } from 'lit-element';
 import { createField, ValueChangedEvent, CompoundField, FieldDefinition } from '@formsey/core';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
 
 export interface NameFieldDefinition extends FieldDefinition {
   includePrefix : boolean
@@ -26,7 +25,7 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField(this.configuration, form, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+    return html`<div class="fs-nested-form">${createField(this.configuration, form, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
   }
 }
 
