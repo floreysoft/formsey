@@ -17,10 +17,10 @@ export class StringField extends Field<StringFieldDefinition, string> {
   }
 
   checkValidity() {
-    if ( !this.vaadinTextField.checkValidity() ) {
-      this.invalid(new InvalidEvent(this.definition.name, undefined))
-      return false;
+    let valid = this.vaadinTextField.checkValidity() as boolean
+    if ( !valid ) {
+      this.dispatchEvent(new InvalidEvent(this.definition.name, "valueMissing"))
     }
-    return true;
+    return valid;
   }
 }

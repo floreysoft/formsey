@@ -18,7 +18,7 @@ export function hacktml(parts, ...args) {
 export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, valueChangedHandler: any, invalidHandler: any) : TemplateResult => {
   const tag = configuration[definition.type];
   if (tag) {
-    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${valueChangedHandler} @invalid=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${valueChangedHandler} @validationFailed=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
   }
@@ -99,13 +99,6 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     this.value = e.currentTarget.value;
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
-    }
-  }
-
-  protected invalid(e: InvalidEvent) {
-    if (this.definition.name) {
-      console.log("FIRE INVALID EVENT FROM="+this.definition.name, JSON.stringify(e));
-      this.dispatchEvent(e);
     }
   }
 }

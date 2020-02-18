@@ -5,7 +5,7 @@ import { FormConfiguration } from "@formsey/core/Field";
 import '@formsey/core/FormField';
 import '@formsey/fields-vaadin/ListField';
 import '@formsey/fields-vaadin/BooleanField';
-import '@formsey/fields-native/StringField';
+import '@formsey/fields-vaadin/StringField';
 import '@formsey/fields-vaadin/TextField';
 import '@formsey/fields-vaadin/DateField';
 import '@formsey/fields-vaadin/RepeatingField';
@@ -22,6 +22,7 @@ import '@formsey/fields-compound/AddressField'
 import '@formsey/fields-compound/CreditCardField'
 import '@formsey/fields-compound/NameField'
 import { ValueChangedEvent, FormField } from "@formsey/core";
+import { InvalidEvent } from "@formsey/core/InvalidEvent";
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
@@ -109,7 +110,7 @@ export class Demo extends LitElement {
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <formsey-form id="demoForm" src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG} @valueChanged=${this.valueChanged}></formsey-form>
+        <formsey-form id="demoForm" src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
@@ -122,6 +123,10 @@ export class Demo extends LitElement {
 
     validate(e: Event) {
         this.demoForm.checkValidity()
+    }
+
+    validationFailed(e: InvalidEvent) {
+        console.log(JSON.stringify(e))
     }
 
     openDialog(id: string) {

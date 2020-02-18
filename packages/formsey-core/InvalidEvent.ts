@@ -19,6 +19,6 @@ export class InvalidEvent extends Event {
         } else {
             this.errors = []
         }
-        errors.push(new InvalidError(name, errorMessage))
+        this.errors.push(new InvalidError(name, errorMessage))
     }
 }

@@ -1,6 +1,6 @@
 import { html, property, query, customElement, TemplateResult, queryAll } from 'lit-element';
 import { createField, FormDefinition, Field, ValueChangedEvent } from '@formsey/core';
-import { InvalidEvent } from './InvalidEvent';
+import { InvalidEvent, InvalidError } from './InvalidEvent';
 
 class Layout {
   ld: number
@@ -58,7 +58,10 @@ export class FormField extends Field<FormDefinition, Object> {
   @queryAll(".fs-form-field")
   private _fields: HTMLElement[]
 
+  private errors : InvalidError[]
+
   public checkValidity() {
+    this.errors = []
     let validity = true;
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any,any>
@@ -66,6 +69,9 @@ export class FormField extends Field<FormDefinition, Object> {
       if (!valid) {
         validity = false;
       }
+    }
+    if ( !validity ) {
+      this.dispatchEvent(new InvalidEvent(this.definition.name, "fieldIncorrect", this.errors))
     }
     return validity;
   }
@@ -253,6 +259,13 @@ export class FormField extends Field<FormDefinition, Object> {
           }
         }
       }
+    }
+  }
+
+  private invalid(e : InvalidEvent) {
+    for ( let error of e.errors ) {
+      error.path = this.definition.name + "." + error.path
+      this.errors.push(error)
     }
   }
 
