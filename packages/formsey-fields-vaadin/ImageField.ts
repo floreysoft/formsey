@@ -1,4 +1,4 @@
-import { customElement, html, property } from 'lit-element';
+import { customElement, html, property, css } from 'lit-element';
 import { Field, ImageFieldDefinition } from '@formsey/core';
 
 @customElement("formsey-image")
@@ -6,8 +6,8 @@ export class ImageField extends Field<ImageFieldDefinition, string> {
   @property({ converter: Object })
   definition: ImageFieldDefinition;
 
-  renderStyles() {
-    return `
+  static get styles() {
+    return [...super.styles, css`
     div {
       width: 100%;
     }
@@ -15,7 +15,7 @@ export class ImageField extends Field<ImageFieldDefinition, string> {
       max-width: 100%;
       height: auto;
     }
-    `
+    `]
   }
 
   renderField() {

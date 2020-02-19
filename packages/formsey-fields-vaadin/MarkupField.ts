@@ -1,4 +1,4 @@
-import { html, property } from 'lit-element';
+import { html, property, css } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { Field, FieldDefinition } from '@formsey/core';
 
@@ -6,11 +6,11 @@ export class MarkupField extends Field<FieldDefinition, string> {
   @property({ converter: Object })
   definition: FieldDefinition;
 
-  renderStyles() {
-    return `
+  static get styles() {
+    return [...super.styles, css`
     * {
       font-family: var(--lumo-font-family);
-    }`
+    }`]
   }
 
   renderField() {

@@ -1,5 +1,5 @@
 import { createField, ValueChangedEvent } from '@formsey/core';
-import { customElement, html, property } from 'lit-element';
+import { css, customElement, html, property } from 'lit-element';
 import { FieldsField } from './FieldsField';
 import { InvalidEvent } from './InvalidEvent';
 
@@ -21,8 +21,8 @@ export class FormField extends FieldsField {
     this.fetchDefinition(url);
   }
 
-  renderStyles() {
-    return `
+  static get styles() {
+    return [...super.styles, css`
       :host {
         display: inline-grid;
         width: 100%;
@@ -31,7 +31,7 @@ export class FormField extends FieldsField {
 
       .fs-form-field {
         width: 100%;
-      }`;
+      }`];
   }
 
   renderField() {

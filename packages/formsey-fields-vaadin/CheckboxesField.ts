@@ -1,7 +1,7 @@
+import { CheckboxesFieldDefinition, Field, Option, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { TemplateResult, html, property, customElement } from 'lit-element';
-import { ValueChangedEvent, Field, CheckboxesFieldDefinition, Option } from '@formsey/core';
 import { TextfieldElement } from '@vaadin/vaadin-text-field';
+import { customElement, html, property, TemplateResult, css } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 class CheckboxesValue {
@@ -20,8 +20,8 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, Checkboxes
   @property({ converter: Object })
   value: CheckboxesValue;
 
-  renderStyles() {
-    return `:host {
+  static get styles() {
+    return [...super.styles, css`:host {
       display: flex;
       flex-direction: column;
       font-family: var(--lumo-font-family);
@@ -30,7 +30,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, Checkboxes
       display: flex;
       flex-direction: row;
       align-items: center;
-     }`;
+     }`]
   }
 
   renderField() {

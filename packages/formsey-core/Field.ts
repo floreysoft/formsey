@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, property } from 'lit-element';
+import { LitElement, TemplateResult, html, property, css } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -37,6 +37,29 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     return true;
   }
 
+  static get styles() {
+    return [ css`
+    .fs-prompt {
+      flex: 0 0;
+      margin: var(--lumo-space-m) 0 0 0;
+      font-family: var(--lumo-font-family);
+      font-size: var(--lumo-font-size-m);
+    }
+    .fs-help-text {
+      flex: 1 0;
+      font-family: var(--lumo-font-family);
+      font-size: var(--lumo-font-size-xs);
+      color: var(--lumo-secondary-text-color);
+    }
+    .fs-field {
+      flex: 0 0;
+      margin-bottom: 6px;
+    }
+    .hidden {
+      display: none;
+    }`]
+  }
+
   protected render(): void | TemplateResult {
     if (typeof this.definition === "undefined") {
       return;
@@ -53,33 +76,8 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     }
   }
 
-  protected renderStyles(): string | void {
-  }
-
   protected renderHeader(): TemplateResult | void {
     return html`
-      <style>
-        ${this.renderStyles()}
-        .fs-prompt {
-          flex: 0 0;
-          margin: var(--lumo-space-m) 0 0 0;
-          font-family: var(--lumo-font-family);
-          font-size: var(--lumo-font-size-m);
-        }
-        .fs-help-text {
-          flex: 1 0;
-          font-family: var(--lumo-font-family);
-          font-size: var(--lumo-font-size-xs);
-          color: var(--lumo-secondary-text-color);
-        }
-        .fs-field {
-          flex: 0 0;
-          margin-bottom: 6px;
-        }
-        .hidden {
-          display: none;
-        }
-      </style>
       ${this.definition.prompt ? html`<div class="fs-prompt">${this.definition.prompt}</div>` : html``}
       ${this.definition.helpText ? html`<div class="fs-help-text">${this.definition.helpText}</div>` : html``}`;
   }

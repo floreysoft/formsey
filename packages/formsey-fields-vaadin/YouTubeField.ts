@@ -1,4 +1,4 @@
-import { html, property } from 'lit-element';
+import { html, property, css } from 'lit-element';
 import { Field, FieldDefinition } from '@formsey/core';
 
 interface YouTubeFieldDefinition extends FieldDefinition {
@@ -14,8 +14,8 @@ export class YouTubeField extends Field<YouTubeFieldDefinition, string> {
   private readonly WATCH_PARAMETER = "watch?v=";
 	private readonly YOUTU_PARAMETER = "youtu.be/";
 
-  renderStyles() {
-    return `
+  static get styles() {
+    return [...super.styles, css`
     :host {
       display: table;
       width: 100%;
@@ -34,8 +34,7 @@ export class YouTubeField extends Field<YouTubeFieldDefinition, string> {
       left: 0;
       width: 100%;
       height: 100%;
-    }
-    `
+    }`]
   }
 
   renderField() {

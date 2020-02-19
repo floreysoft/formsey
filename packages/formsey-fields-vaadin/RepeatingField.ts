@@ -1,13 +1,13 @@
 import '@vaadin/vaadin-icons/vaadin-icons.js';
-import { TemplateResult, html, property } from 'lit-element';
+import { TemplateResult, html, property, css } from 'lit-element';
 import { createField, FormDefinition, ValueChangedEvent, RepeatingFieldDefinition, Field } from '@formsey/core';
 
 export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
   value: Object[] = [];
 
-  renderStyles() {
-    return `
+  static get styles() {
+    return [...super.styles, css`
     .fs-nested-form {
       position: relative;
       margin: 5px 0 0 11px;
@@ -52,7 +52,7 @@ export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
     .fs-add {
       display: block;
       margin: 6px 0 0 3px;
-    }`;
+    }`]
   }
 
   renderField() {

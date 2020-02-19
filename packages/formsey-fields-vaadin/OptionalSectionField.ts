@@ -1,5 +1,5 @@
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { html, property } from 'lit-element';
+import { html, property, css } from 'lit-element';
 import { createField, Field, ValueChangedEvent, OptionalSectionFieldDefinition } from '@formsey/core';
 
 export class OptionalSectionValue {
@@ -11,14 +11,14 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   @property({ converter: Object })
   value: OptionalSectionValue;
 
-  renderStyles() {
-    return `vaadin-checkbox {
+  static get styles() {
+    return [...super.styles, css`vaadin-checkbox {
       font-family: var(--lumo-font-family);
       font-size: var(--lumo-font-size-m);
     }
     .fs-nested-form {
       margin-top: 5px;
-    }`;
+    }`];
   }
 
   renderField() {

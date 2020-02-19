@@ -1,5 +1,5 @@
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { customElement, html, property, query } from 'lit-element';
+import { customElement, html, property, query, css } from 'lit-element';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
 import { Field, ValueChangedEvent, BooleanFieldDefinition } from '@formsey/core';
 
@@ -11,11 +11,12 @@ export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
   @query("vaadin-checkbox")
   private checkbox: CheckboxElement;
 
-  renderStyles() {
-    return `vaadin-checkbox {
+  static get styles() {
+    return [...super.styles, css`
+    vaadin-checkbox {
       font-family: var(--lumo-font-family);
       font-size: var(--lumo-font-size-m);
-    }`
+    }`]
   }
 
   renderField() {

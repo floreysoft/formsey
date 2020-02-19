@@ -1,6 +1,6 @@
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
-import { TemplateResult, html, property } from 'lit-element';
+import { TemplateResult, html, property, css } from 'lit-element';
 import { Field, ValueChangedEvent, CheckboxesFieldDefinition, Option } from '@formsey/core';
 import { TextfieldElement } from '@vaadin/vaadin-text-field';
 
@@ -15,8 +15,8 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, Multip
   @property({ converter: Object })
   value: MultipleChoiceValue;
 
-  renderStyles() {
-    return `
+  static get styles() {
+    return [...super.styles, css`
     :host {
       width: 100%;
     }
@@ -27,7 +27,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, Multip
       display: flex;
       flex-direction: row;
       align-items: center;
-    }`
+    }`]
   }
 
   renderField() {

@@ -1,5 +1,5 @@
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { html, property } from 'lit-element';
+import { html, property, css } from 'lit-element';
 import { createField, ValueChangedEvent, SelectableSectionFieldDefinition, Field } from '@formsey/core';
 
 export class SelectableSectionValue {
@@ -11,10 +11,10 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
   @property({ converter: Object })
   value: SelectableSectionValue;
 
-  renderStyles() {
-    return `.fs-nested-form {
+  static get styles() {
+    return [...super.styles, css`.fs-nested-form {
       margin-top: 5px;
-    }`;
+    }`]
   }
 
   renderField() {
