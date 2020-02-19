@@ -112,8 +112,7 @@ export abstract class CompoundField<T extends FieldDefinition, V> extends Field<
         type: type,
         name: name,
         helpText: helpText,
-        autofill: autofill,
-        colspan: colspan
+        autofill: autofill
       })
       return colspan;
     }

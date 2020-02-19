@@ -1,6 +1,5 @@
 export interface FieldDefinition {
   name?: string
-  colspan?: number
   type?: string
   prompt?: string
   helpText?: string
