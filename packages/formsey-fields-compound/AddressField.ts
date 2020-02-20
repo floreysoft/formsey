@@ -22,13 +22,12 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
 
   renderField() {
     let fields: FieldDefinition[] = [];
-    this.includeOptionalField(fields, this.definition.includeAddressLine1, "string", "addressLine1", this.definition.labelAddressLine1, "street-address address-line1", 12 - (this.definition.includeAddressLine2 ? 6 : 0));
-    this.includeOptionalField(fields, this.definition.includeAddressLine2, "string", "addressLine2", this.definition.labelAddressLine2, "street-address address-line2", 12 - (this.definition.includeAddressLine1 ? 6 : 0));
-    let colspan = 0;
-    colspan += this.includeOptionalField(fields, this.definition.includeCity, "string", "city", this.definition.labelCity, "address-level2", 3);
-    colspan += this.includeOptionalField(fields, this.definition.includePostalCode, "string", "postalCode", this.definition.labelPostalCode, "postal-code", 3);
-    colspan += this.includeOptionalField(fields, this.definition.includeState, "string", "state", this.definition.labelState, "address-level1", 3);
-    this.includeOptionalField(fields, this.definition.includeCountry, "string", "country", this.definition.labelCountry, "country-name", 12-colspan);
+    this.includeOptionalField(fields, this.definition.includeAddressLine1, "string", "addressLine1", this.definition.labelAddressLine1, "street-address address-line1");
+    this.includeOptionalField(fields, this.definition.includeAddressLine2, "string", "addressLine2", this.definition.labelAddressLine2, "street-address address-line2");
+    this.includeOptionalField(fields, this.definition.includeCity, "string", "city", this.definition.labelCity, "address-level2");
+    this.includeOptionalField(fields, this.definition.includePostalCode, "string", "postalCode", this.definition.labelPostalCode, "postal-code");
+    this.includeOptionalField(fields, this.definition.includeState, "string", "state", this.definition.labelState, "address-level1");
+    this.includeOptionalField(fields, this.definition.includeCountry, "string", "country", this.definition.labelCountry, "country-name");
     let form = {
       type: "form",
       name: this.definition.name,

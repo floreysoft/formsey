@@ -57,6 +57,9 @@ export interface CheckboxesFieldDefinition extends FieldDefinition {
 
 export interface FormDefinition extends FieldDefinition {
   fields: FieldDefinition[]
+  gridSmall? : string
+  gridMedium? : string
+  gridLarge? : string
 }
 
 export interface RepeatingFieldDefinition extends FieldDefinition {

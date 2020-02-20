@@ -21,16 +21,16 @@ import '@formsey/fields-vaadin/UploadField';
 import '@formsey/fields-compound/AddressField'
 import '@formsey/fields-compound/CreditCardField'
 import '@formsey/fields-compound/NameField'
-import { ValueChangedEvent, FormField } from "@formsey/core";
+import { ValueChangedEvent, FormField, FieldDefinition } from "@formsey/core";
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
     @property() title: string
-    @property() npm : string
-    @property() github : string
-    @property() minified : string
-    @property() gzipped : string
+    @property() npm: string
+    @property() github: string
+    @property() minified: string
+    @property() gzipped: string
 
     static get styles(): CSSResult[] {
         return [css`
@@ -65,7 +65,7 @@ export class DemoSection extends LitElement {
     }
 }
 
-const CONFIG : FormConfiguration = {
+const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
     'string': 'formsey-string',
     'text': 'formsey-text',
@@ -79,6 +79,7 @@ const CONFIG : FormConfiguration = {
     'optionalSection': 'formsey-optional-section',
     'seletableSection': 'formsey-selectable-section',
     'form': 'formsey-form',
+    'grid': 'formsey-grid',
     'address': 'formsey-address',
     'name': 'formsey-name',
     'creditCard': 'formsey-creditcard',
@@ -106,11 +107,29 @@ export class Demo extends LitElement {
     @query("#demoFormValue")
     demoFormValue: HTMLElement
 
+    private resizeHandler = ((e: Event) => this.resize())
+
+    connectedCallback() {
+        super.connectedCallback()
+        window.addEventListener("resize", this.resizeHandler)
+    }
+
+    disconnectedCallback() {
+        window.removeEventListener("resize", this.resizeHandler)
+        super.disconnectedCallback()
+    }
+
     render() {
+        let simpleDemo = { name: "Vertical", type: "form", fields: this.createFields(3) }
+        let cols2Demo = { name: "2Cols", type: "form", gridMedium: "grid-template-columns:50% 50%", fields: this.createFields(4) }
+        let cols3Demo = { name: "3Cols", type: "form", gridMedium: "grid-template-columns:33% 33% 33%", fields: this.createFields(6) }
+        let rowsDemo = { name: "2Cols", type: "form", gridSmall: "grid-template-columns:100%", gridMedium: "grid-template-columns:50% 50%", gridLarge: "grid-template-rows: 1fr 1fr 1fr 1fr;grid-auto-flow: column", fields: this.createFields(4) }
+        let responsiveDemo = { name: "2Cols", type: "form", gridSmall: "grid-template-columns:100%", gridMedium: "grid-template-columns:50% 50%", gridLarge: "grid-template-columns: 1fr 1fr 1fr 1fr", fields: this.createFields(4) }
+        let areaDemo = { name: "2Cols", type: "form", gridMedium: "grid-template-columns:1fr 1fr 1fr 1fr;grid-template-areas: 'a a c d' 'b b b b", fields: this.createFields(4) }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <formsey-form id="demoForm" src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
+        <formsey-form .definition=${responsiveDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
@@ -119,6 +138,14 @@ export class Demo extends LitElement {
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
         </fs-demo-section>
         `
+    }
+
+    createFields(count: number): FieldDefinition[] {
+        let fields: FieldDefinition[] = []
+        for (let i = 0; i < count; i++) {
+            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string" })
+        }
+        return fields;
     }
 
     validate(e: Event) {
@@ -137,5 +164,9 @@ export class Demo extends LitElement {
 
     valueChanged(e: ValueChangedEvent<Object>) {
         this.demoFormValue.innerHTML = JSON.stringify(e.value)
-   }
+    }
+
+    resize() {
+        window.dispatchEvent(new Event("resizeForm"))
+    }
 }

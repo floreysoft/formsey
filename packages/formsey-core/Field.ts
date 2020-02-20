@@ -104,7 +104,7 @@ export abstract class CompoundField<T extends FieldDefinition, V> extends Field<
   protected renderHeader() {
   }
 
-  protected includeOptionalField(fields: FieldDefinition[], include: boolean, type: string, name: string, helpText: string, autofill: string, colspan: number): number {
+  protected includeOptionalField(fields: FieldDefinition[], include: boolean, type: string, name: string, helpText: string, autofill: string) {
     if (include) {
       fields.push({
         type: type,
@@ -112,8 +112,6 @@ export abstract class CompoundField<T extends FieldDefinition, V> extends Field<
         helpText: helpText,
         autofill: autofill
       })
-      return colspan;
     }
-    return 0;
   }
 }
