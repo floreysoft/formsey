@@ -57,7 +57,7 @@ export class FormField extends Field<FormDefinition, Object> {
     return [...super.styles, css`
       .grid {
         display: inline-grid;
-        grid-column-gap: var(--lumo-space-s, 0.5em);
+        grid-column-gap: var(--lumo-space-xs, 0.2em);
         width: 100%;
       }
 
