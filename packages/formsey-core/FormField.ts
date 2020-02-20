@@ -2,7 +2,7 @@ import { createField, Field, FormDefinition, ValueChangedEvent } from '@formsey/
 import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { InvalidError, InvalidEvent } from './InvalidEvent';
 
-enum Size {
+export enum GridSize {
   SMALL, MEDIUM, LARGE
 }
 
@@ -68,17 +68,17 @@ export class FormField extends Field<FormDefinition, Object> {
 
   @query(".grid")
   private grid : HTMLElement
-  private size : Size
+  private size : GridSize
   private resizeHandler = ((e: Event) => this.resize())
 
   renderField() {
     let templates: TemplateResult[] = []
     let grid = "grid-column-templates:100%"
-    if ( this.size == Size.LARGE && this.definition.gridLarge ) {
+    if ( this.size == GridSize.LARGE && this.definition.gridLarge ) {
       grid = this.definition.gridLarge
-    } else if ( this.size == Size.MEDIUM && this.definition.gridMedium ) {
+    } else if ( this.size == GridSize.MEDIUM && this.definition.gridMedium ) {
       grid = this.definition.gridMedium
-    } else if ( this.size == Size.SMALL && this.definition.gridSmall ) {
+    } else if ( this.size == GridSize.SMALL && this.definition.gridSmall ) {
       grid = this.definition.gridSmall
     }
     for (let field of this.definition.fields) {
@@ -153,13 +153,13 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   private resize() {
-    let size = Size.LARGE
+    let size = GridSize.LARGE
     if (this.grid) {
       let width = this.grid.clientWidth;
       if (width < 576) {
-        size = Size.SMALL
+        size = GridSize.SMALL
       } else if (width < 768) {
-        size = Size.MEDIUM
+        size = GridSize.MEDIUM
       }
     }
     if ( this.size != size ) {
