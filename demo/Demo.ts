@@ -124,12 +124,15 @@ export class Demo extends LitElement {
         let cols2Demo = { name: "2Cols", type: "form", gridMedium: "grid-template-columns:50% 50%", fields: this.createFields(4) }
         let cols3Demo = { name: "3Cols", type: "form", gridMedium: "grid-template-columns:33% 33% 33%", fields: this.createFields(6) }
         let rowsDemo = { name: "2Cols", type: "form", gridSmall: "grid-template-columns:100%", gridMedium: "grid-template-columns:50% 50%", gridLarge: "grid-template-rows: 1fr 1fr 1fr 1fr;grid-auto-flow: column", fields: this.createFields(4) }
-        let responsiveDemo = { name: "2Cols", type: "form", gridSmall: "grid-template-columns:100%", gridMedium: "grid-template-columns:50% 50%", gridLarge: "grid-template-columns: 1fr 1fr 1fr 1fr", fields: this.createFields(4) }
         let areaDemo = { name: "2Cols", type: "form", gridMedium: "grid-template-columns:1fr 1fr 1fr 1fr;grid-template-areas: 'a a c d' 'b b b b", fields: this.createFields(4) }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <formsey-form .definition=${responsiveDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
+        <formsey-form .definition=${rowsDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
+        <formsey-form id="demoForm" .definition=${simpleDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
+        <formsey-form .definition=${cols2Demo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
+        <formsey-form .definition=${cols3Demo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
+        <formsey-form .definition=${areaDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
