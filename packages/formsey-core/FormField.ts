@@ -83,7 +83,7 @@ export class FormField extends Field<FormDefinition, Object> {
     }
     for (let field of this.definition.fields) {
       if (grid && grid.indexOf('grid-template-areas') >= 0 ) {
-        templates.push(html`<div class='fs-form-field' style="grid-area:${field.name}">
+        templates.push(html`<div class='fs-form-field' style="grid-area:_${field.name}">
         ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
         </div>`)
       } else {
