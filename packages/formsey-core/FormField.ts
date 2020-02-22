@@ -3,7 +3,9 @@ import { css, customElement, html, property, query, queryAll, TemplateResult } f
 import { InvalidError, InvalidEvent } from './InvalidEvent';
 
 export enum GridSize {
-  SMALL, MEDIUM, LARGE
+  SMALL = "gridSmall",
+  MEDIUM = "gridMedium",
+  LARGE = "gridLarge"
 }
 
 @customElement("formsey-form")
@@ -59,6 +61,7 @@ export class FormField extends Field<FormDefinition, Object> {
         display: inline-grid;
         grid-column-gap: var(--lumo-space-xs, 0.2em);
         width: 100%;
+        box-sizing: border-box;
       }
 
       .fs-form-field {
@@ -68,17 +71,17 @@ export class FormField extends Field<FormDefinition, Object> {
 
   @query(".grid")
   private grid : HTMLElement
-  private size : GridSize
+  private gridSize : GridSize
   private resizeHandler = ((e: Event) => this.resize())
 
   renderField() {
     let templates: TemplateResult[] = []
     let grid = "grid-column-templates:100%"
-    if ( this.size == GridSize.LARGE && this.definition.gridLarge ) {
+    if ( this.gridSize == GridSize.LARGE && this.definition.gridLarge ) {
       grid = this.definition.gridLarge
-    } else if ( this.size == GridSize.MEDIUM && this.definition.gridMedium ) {
+    } else if ( this.gridSize == GridSize.MEDIUM && this.definition.gridMedium ) {
       grid = this.definition.gridMedium
-    } else if ( this.size == GridSize.SMALL && this.definition.gridSmall ) {
+    } else if ( this.gridSize == GridSize.SMALL && this.definition.gridSmall ) {
       grid = this.definition.gridSmall
     }
     for (let field of this.definition.fields) {
@@ -123,6 +126,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected valueChanged(e: any) {
+    e.stopPropagation()
     if (e.name) {
       this.value[e.name] = e.value;
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
@@ -160,8 +164,8 @@ export class FormField extends Field<FormDefinition, Object> {
         size = GridSize.MEDIUM
       }
     }
-    if ( this.size != size ) {
-      this.size = size
+    if ( this.gridSize != size ) {
+      this.gridSize = size
       this.requestUpdate()
     }
   }
