@@ -11,11 +11,8 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   }
 
   renderField() {
-    if ( this.value ) {
-      this.value = this.definition.default
-      if ( !this.value ) {
-        this.value = {}
-      }
+    if ( !this.value ) {
+      this.value = this.definition.default ? this.definition.default : {}
     }
     return createField(this.configuration, this.definition.form, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null);
   }
