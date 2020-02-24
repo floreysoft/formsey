@@ -16,4 +16,12 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   renderField() {
     return createField(this.configuration, this.definition.form, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null);
   }
+
+  protected valueChanged(e: any) {
+    e.stopPropagation()
+    if (e.name) {
+      this.value[e.name] = e.value;
+      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+    }
+  }
 }
