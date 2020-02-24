@@ -14,7 +14,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     if ( !this.value ) {
       this.value = this.definition.default ? this.definition.default : {}
     }
-    const formDefinition: FormDefinition = { ...this.definition.form, name: this.definition.name }
+    const formDefinition: FormDefinition = { ...this.definition.form, name: "form" }
     return createField(this.configuration, formDefinition, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null);
   }
 
