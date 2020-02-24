@@ -1,4 +1,4 @@
-import { createField, Field, ValueChangedEvent, NestedFormDefinition } from '@formsey/core';
+import { createField, Field, ValueChangedEvent, NestedFormDefinition, FormDefinition } from '@formsey/core';
 import { css, customElement } from 'lit-element';
 
 @customElement("formsey-nested-form")
@@ -14,7 +14,8 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     if ( !this.value ) {
       this.value = this.definition.default ? this.definition.default : {}
     }
-    return createField(this.configuration, { ...this.definition.form, name: this.definition.name }, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null);
+    const formDefinition: FormDefinition = { ...this.definition.form, name: this.definition.name }
+    return createField(this.configuration, formDefinition, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null);
   }
 
   protected valueChanged(e: any) {
