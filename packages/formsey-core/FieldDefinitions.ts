@@ -62,10 +62,13 @@ export interface FormDefinition extends FieldDefinition {
   gridLarge? : string
 }
 
-export interface RepeatingFieldDefinition extends FieldDefinition {
+export interface NestedFormDefinition extends FieldDefinition {
+  form: FormDefinition
+}
+
+export interface RepeatingFieldDefinition extends NestedFormDefinition {
   min: number
   max: number
-  form : FormDefinition
 }
 
 export interface SelectableSectionFieldDefinition extends FieldDefinition {
