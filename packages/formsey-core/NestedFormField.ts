@@ -4,7 +4,7 @@ import { css, property, customElement } from 'lit-element';
 @customElement("formsey-nested-form")
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
   @property({ converter: Object })
-  value: Object;
+  value: Object = {}
 
   static get styles() {
     return [...super.styles, css`
