@@ -37,7 +37,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   @queryAll(".fs-form-field")
   protected _fields: HTMLElement[]
-  protected errors : InvalidError[]
+  protected errors: InvalidError[]
 
   async fetchDefinition(url: string) {
     try {
@@ -70,29 +70,31 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   @query(".grid")
-  private grid : HTMLElement
-  private gridSize : GridSize
+  private grid: HTMLElement
+  private gridSize: GridSize
   private resizeHandler = ((e: Event) => this.resize())
 
   renderField() {
     let templates: TemplateResult[] = []
     let grid = "grid-column-templates:100%"
-    if ( this.gridSize == GridSize.LARGE && this.definition.gridLarge ) {
+    if (this.gridSize == GridSize.LARGE && this.definition.gridLarge) {
       grid = this.definition.gridLarge
-    } else if ( this.gridSize == GridSize.MEDIUM && this.definition.gridMedium ) {
+    } else if (this.gridSize == GridSize.MEDIUM && this.definition.gridMedium) {
       grid = this.definition.gridMedium
-    } else if ( this.gridSize == GridSize.SMALL && this.definition.gridSmall ) {
+    } else if (this.gridSize == GridSize.SMALL && this.definition.gridSmall) {
       grid = this.definition.gridSmall
     }
-    for (let field of this.definition.fields) {
-      if (grid && grid.indexOf('grid-template-areas') >= 0 ) {
-        templates.push(html`<div class='fs-form-field' style="grid-area:_${field.name}">
+    if (this.definition.fields) {
+      for (let field of this.definition.fields) {
+        if (grid && grid.indexOf('grid-template-areas') >= 0) {
+          templates.push(html`<div class='fs-form-field' style="grid-area:_${field.name}">
         ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
         </div>`)
-      } else {
-        templates.push(html`<div class='fs-form-field'>
+        } else {
+          templates.push(html`<div class='fs-form-field'>
         ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
         </div>`)
+        }
       }
     }
     return html`<div class="grid" style="${grid}">${templates}</div>`
@@ -113,13 +115,13 @@ export class FormField extends Field<FormDefinition, Object> {
     this.errors = []
     let validity = true;
     for (let field of this._fields) {
-      let child = field.firstElementChild as Field<any,any>
+      let child = field.firstElementChild as Field<any, any>
       let valid = child.checkValidity();
       if (!valid) {
         validity = false;
       }
     }
-    if ( !validity ) {
+    if (!validity) {
       this.dispatchEvent(new InvalidEvent(this.definition.name, "fieldIncorrect", this.errors))
     }
     return validity;
@@ -134,7 +136,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected applyHiddenFields() {
-    if (this._definition && this._definition.fields && this._value  ) {
+    if (this._definition && this._definition.fields && this._value) {
       for (let field of this._definition.fields) {
         if (field.type == "hidden") {
           if (field.name && field.default) {
@@ -145,9 +147,9 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected invalid(e : InvalidEvent) {
-    for ( let error of e.errors ) {
-      if ( this.definition.name ) {
+  protected invalid(e: InvalidEvent) {
+    for (let error of e.errors) {
+      if (this.definition.name) {
         error.path = this.definition.name + "." + error.path
       }
       this.errors.push(error)
@@ -164,7 +166,7 @@ export class FormField extends Field<FormDefinition, Object> {
         size = GridSize.MEDIUM
       }
     }
-    if ( this.gridSize != size ) {
+    if (this.gridSize != size) {
       this.gridSize = size
       this.requestUpdate()
     }
