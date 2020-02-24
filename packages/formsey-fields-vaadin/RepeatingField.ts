@@ -68,11 +68,7 @@ export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
     if (this.value) {
       for (let i: number = 0; i < this.value.length; i++) {
         const value = this.value[i];
-        const fieldDefinition: FormDefinition = {
-          'type': "form",
-          'name': "" + i,
-          'fields': this.definition.form.fields
-        }
+        const fieldDefinition: FormDefinition = { ...this.definition.form, name: ""+i }
         const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><iron-icon class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" icon="vaadin:close-small"></iron-icon></div>` : html ``}</div>`;
         itemTemplates.push(template);
@@ -84,17 +80,13 @@ export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
   protected addForm() {
     this.value.push({});
     this.requestUpdate();
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
 
   protected removeForm(index: number) {
     this.value.splice(index, 1);
     this.requestUpdate();
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
 
   protected drag(e, from: number) {
