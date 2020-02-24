@@ -134,7 +134,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected applyHiddenFields() {
-    if (this._definition && this._value) {
+    if (this._definition && this._definition.fields && this._value  ) {
       for (let field of this._definition.fields) {
         if (field.type == "hidden") {
           if (field.name && field.default) {
