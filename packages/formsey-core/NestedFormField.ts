@@ -1,5 +1,5 @@
 import { createField, Field, ValueChangedEvent, NestedFormDefinition } from '@formsey/core';
-import { css, property, customElement } from 'lit-element';
+import { css, customElement } from 'lit-element';
 
 @customElement("formsey-nested-form")
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
