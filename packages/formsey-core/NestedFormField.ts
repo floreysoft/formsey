@@ -20,8 +20,8 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
 
   protected valueChanged(e: any) {
     e.stopPropagation()
-    if (e.name) {
-      this.value[e.name] = e.value;
+    if (e.name == "form") {
+      this.value = e.value;
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
   }
