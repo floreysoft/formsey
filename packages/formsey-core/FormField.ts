@@ -12,9 +12,10 @@ export enum GridSize {
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
   set value(value: Object) {
-    this._value = value;
-    this.applyHiddenFields();
-    this.requestUpdate();
+    this._value = value
+    this.applyHiddenFields()
+    this.removeDeletedFields()
+    this.requestUpdate()
   }
 
   get value() {
@@ -25,6 +26,7 @@ export class FormField extends Field<FormDefinition, Object> {
   set definition(definition: FormDefinition) {
     this._definition = definition;
     this.applyHiddenFields();
+    this.removeDeletedFields()
     this.requestUpdate();
   }
 
@@ -131,8 +133,20 @@ export class FormField extends Field<FormDefinition, Object> {
     e.stopPropagation()
     if (e.name) {
       this.value[e.name] = e.value;
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
+    this.removeDeletedFields()
+    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+  }
+
+  protected removeDeletedFields() {
+      // Remove values from fields that have been removed from the definition
+      let newValue = {}
+      for (let field of this._definition.fields) {
+        if ( typeof field.name != "undefined" ) {
+          newValue[field.name] = this.value[field.name]
+        }
+      }
+      this._value = newValue
   }
 
   protected applyHiddenFields() {
