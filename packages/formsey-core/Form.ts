@@ -12,4 +12,8 @@ export class Form extends Field<FieldDefinition, Object> {
   renderField() {
     return createField(this.configuration, this.definition, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null);
   }
+
+  renderHeader() {
+    return
+  }
 }
