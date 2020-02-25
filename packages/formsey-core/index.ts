@@ -1,4 +1,5 @@
 export { createField, Field, CompoundField } from './Field'
+export { Form } from './Form'
 export { FormField, GridSize } from './FormField'
 export { NestedFormField } from './NestedFormField'
 export { ValueChangedEvent } from './ValueChangedEvent'

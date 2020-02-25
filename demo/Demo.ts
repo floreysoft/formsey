@@ -2,7 +2,7 @@ import { LitElement, customElement, property, html, css, CSSResult, query } from
 import { Dialog } from '@floreysoft/dialog'
 import { FormConfiguration } from "@formsey/core/Field";
 
-import '@formsey/core/FormField';
+import '@formsey/core/Form';
 import '@formsey/fields-vaadin/ListField';
 import '@formsey/fields-vaadin/BooleanField';
 import '@formsey/fields-vaadin/StringField';
@@ -78,7 +78,7 @@ const CONFIG: FormConfiguration = {
     'repeatingSection': 'formsey-repeating-section',
     'optionalSection': 'formsey-optional-section',
     'seletableSection': 'formsey-selectable-section',
-    'form': 'formsey-form',
+    'form': 'formsey-form-field',
     'grid': 'formsey-grid',
     'address': 'formsey-address',
     'name': 'formsey-name',
