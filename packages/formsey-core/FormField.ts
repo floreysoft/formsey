@@ -28,7 +28,7 @@ export class FormField extends Field<FormDefinition, Object> {
     this.applyHiddenFields();
     this.removeDeletedFields()
     this.requestUpdate();
-    if ( definition.name && this.value ) {
+    if (definition.name && this.value) {
       this.dispatchEvent(new ValueChangedEvent(definition.name, this.value));
     }
   }
@@ -142,10 +142,11 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected removeDeletedFields() {
+    if (this._definition && this._definition.fields && this._value) {
       // Remove values from fields that have been removed from the definition
       let newValue = {}
       for (let field of this._definition.fields) {
-        if ( typeof field.name != "undefined" ) {
+        if (typeof field.name != "undefined") {
           newValue[field.name] = this.value[field.name]
         }
       }
@@ -154,10 +155,11 @@ export class FormField extends Field<FormDefinition, Object> {
       this.addMemberValueIfPresent("gridMedium", newValue)
       this.addMemberValueIfPresent("gridLarge", newValue)
       this._value = newValue
+    }
   }
 
-  protected addMemberValueIfPresent(name : string, newValue : Object) {
-    if ( typeof this.value[name] != "undefined" ) {
+  protected addMemberValueIfPresent(name: string, newValue: Object) {
+    if (typeof this.value[name] != "undefined") {
       newValue[name] = this.value[name]
     }
   }
