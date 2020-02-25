@@ -146,7 +146,17 @@ export class FormField extends Field<FormDefinition, Object> {
           newValue[field.name] = this.value[field.name]
         }
       }
+      this.addMemberValueIfPresent("type", newValue)
+      this.addMemberValueIfPresent("gridSmall", newValue)
+      this.addMemberValueIfPresent("gridMedium", newValue)
+      this.addMemberValueIfPresent("gridLarge", newValue)
       this._value = newValue
+  }
+
+  protected addMemberValueIfPresent(name : string, newValue : Object) {
+    if ( typeof this.value[name] != "undefined" ) {
+      newValue[name] = this.value[name]
+    }
   }
 
   protected applyHiddenFields() {
