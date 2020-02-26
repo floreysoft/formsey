@@ -28,9 +28,11 @@ export class FormField extends Field<FormDefinition, Object> {
     this.applyHiddenFields();
     this.removeDeletedFields()
     this.requestUpdate();
+    /*
     if (definition && definition.name && this.value) {
       this.dispatchEvent(new ValueChangedEvent(definition.name, this.value));
     }
+    */
   }
 
   get definition() {
