@@ -131,11 +131,13 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected valueChanged(e: any) {
     e.stopPropagation()
-    if (e.name) {
-      this.value[e.name] = e.value;
+    if (this.value ) {
+      if (e.name) {
+        this.value[e.name] = e.value;
+      }
+      this.removeDeletedFields()
+      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
-    this.removeDeletedFields()
-    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
 
   protected removeDeletedFields() {
@@ -143,7 +145,7 @@ export class FormField extends Field<FormDefinition, Object> {
       // Remove values from fields that have been removed from the definition
       let newValue = {}
       for (let field of this._definition.fields) {
-        if (typeof field.name != "undefined") {
+        if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
           newValue[field.name] = this.value[field.name]
         }
       }
