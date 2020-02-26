@@ -16,4 +16,9 @@ export class Form extends Field<FieldDefinition, Object> {
   renderHeader() {
     return
   }
+
+  protected valueChanged(e: any) {
+    this.value = e.currentTarget.value;
+    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+  }
 }
