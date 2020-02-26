@@ -65,7 +65,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
       return;
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
-      if (this.definition.name) {
+      if (this.value && this.definition.name) {
         this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
       }
     }
