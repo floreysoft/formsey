@@ -14,7 +14,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   materialTextField : TextField
 
   renderField() {
-    return html`<mwc-textfield style="display:flex" fullwidth="true" helper="${this.definition.helpText}" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
+    return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText}" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
   }
 
   checkValidity() {
