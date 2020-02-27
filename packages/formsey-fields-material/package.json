@@ -12,6 +12,7 @@
   "dependencies": {
     "@formsey/core": "^0.1.49",
     "@material/mwc-checkbox": "^0.13.0",
+    "@material/mwc-textfield": "^0.13.0",
     "lit-element": "^2.1.0"
   },
   "scripts": {
