@@ -11,5 +11,3 @@ export class UploadField extends LabeledField<DateFieldDefinition, string> {
         return html`<vaadin-upload target="formsey-upload.storage.googleapis.com" method="PUT" timeout="300000" style="display:flex" @change="${this.valueChanged}"></vaadin-upload>`
     }
 }
-
-customElements.define('', UploadField);
