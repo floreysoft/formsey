@@ -39,30 +39,14 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   static get styles() {
     return [ css`
-    .fs-prompt {
-      flex: 0 0;
-      margin: var(--lumo-space-m) 0 0 0;
-      font-family: var(--lumo-font-family);
-      font-size: var(--lumo-font-size-m);
-    }
-    .fs-help-text {
-      flex: 1 0;
-      font-family: var(--lumo-font-family);
-      font-size: var(--lumo-font-size-xs);
-      color: var(--lumo-secondary-text-color);
-    }
-    .fs-field {
-      flex: 0 0;
-      margin-bottom: 6px;
-    }
     .hidden {
       display: none;
     }`]
   }
 
-  protected render(): void | TemplateResult {
+  protected shouldUpdate() : boolean {
     if (typeof this.definition === "undefined") {
-      return;
+      return false
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.value && this.definition.name) {
@@ -70,16 +54,13 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
       }
     }
     if (this.definition.hidden) {
-      return;
-    } else {
-      return html`${this.renderHeader()}${this.renderField()}`
+      return false
     }
+   return true
   }
 
-  protected renderHeader(): TemplateResult | void {
-    return html`
-      ${this.definition.prompt ? html`<div class="fs-prompt">${this.definition.prompt}</div>` : html``}
-      ${this.definition.helpText ? html`<div class="fs-help-text">${this.definition.helpText}</div>` : html``}`;
+  protected render(): void | TemplateResult {
+     return html`${this.renderField()}`
   }
 
   protected abstract renderField(): TemplateResult | void;

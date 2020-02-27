@@ -1,10 +1,10 @@
-import { html, property, query, customElement, css } from 'lit-element';
 import '@floreysoft/ace';
 import { Ace } from '@floreysoft/ace';
-import { Field, FieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { FieldDefinition, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { css, customElement, html, property, query } from 'lit-element';
 
 @customElement("formsey-sourcecode")
-export class SourceCodeField extends Field<FieldDefinition, string> {
+export class SourceCodeField extends LabeledField<FieldDefinition, string> {
   @property({ type: String })
   value : string
 

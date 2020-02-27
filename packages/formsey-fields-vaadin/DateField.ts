@@ -1,10 +1,10 @@
-import '@vaadin/vaadin-date-picker'
-import { html, property, customElement } from 'lit-element';
-import { Field, DateFieldDefinition } from '@formsey/core';
-import { ifDefined} from 'lit-html/directives/if-defined.js';
+import { DateFieldDefinition, LabeledField } from '@formsey/core';
+import '@vaadin/vaadin-date-picker';
+import { customElement, html, property } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-date")
-export class DateField extends Field<DateFieldDefinition, string> {
+@customElement("formsey-date-vaadin")
+export class DateField extends LabeledField<DateFieldDefinition, string> {
     @property({ type: String })
     value: string;
 

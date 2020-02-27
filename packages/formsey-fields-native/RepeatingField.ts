@@ -1,8 +1,8 @@
-import '@vaadin/vaadin-icons/vaadin-icons.js';
-import { TemplateResult, html, property, css } from 'lit-element';
-import { createField, FormDefinition, ValueChangedEvent, RepeatingFieldDefinition, Field } from '@formsey/core';
+import { createField, FormDefinition, LabeledField, RepeatingFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { css, customElement, html, property, TemplateResult } from 'lit-element';
 
-export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
+@customElement("formsey-repeating-section")
+export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
   value: Object[] = [];
 
@@ -120,4 +120,3 @@ export class RepeatingField extends Field<RepeatingFieldDefinition, Object[]> {
     }
   }
 }
-customElements.define('formsey-repeating-section', RepeatingField);

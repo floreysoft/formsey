@@ -1,15 +1,16 @@
+import { CheckboxesFieldDefinition, LabeledField, Option, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
-import { TemplateResult, html, property, css } from 'lit-element';
-import { Field, ValueChangedEvent, CheckboxesFieldDefinition, Option } from '@formsey/core';
 import { TextfieldElement } from '@vaadin/vaadin-text-field';
+import { css, customElement, html, property, TemplateResult } from 'lit-element';
 
 class MultipleChoiceValue {
   other: string
   option: string;
 }
 
-export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, MultipleChoiceValue> {
+@customElement("formsey-multiple-choice-vaadin")
+export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition, MultipleChoiceValue> {
   private static readonly other: string = "other";
 
   @property({ converter: Object })
@@ -84,5 +85,3 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, Multip
     }
   }
 }
-
-customElements.define('formsey-multiple-choice', MultipleChoiceField);

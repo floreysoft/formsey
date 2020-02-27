@@ -1,5 +1,5 @@
-import { html, property, css } from 'lit-element';
-import { Field, FieldDefinition } from '@formsey/core';
+import { FieldDefinition, LabeledField } from '@formsey/core';
+import { css, customElement, html, property } from 'lit-element';
 
 interface YouTubeFieldDefinition extends FieldDefinition {
   url: string
@@ -7,7 +7,8 @@ interface YouTubeFieldDefinition extends FieldDefinition {
   align: string
 }
 
-export class YouTubeField extends Field<YouTubeFieldDefinition, string> {
+@customElement("formsey-youtube")
+export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
   @property({ converter: Object })
   definition: YouTubeFieldDefinition;
 
@@ -77,5 +78,3 @@ export class YouTubeField extends Field<YouTubeFieldDefinition, string> {
 		return videoId;
   }
 }
-
-customElements.define('formsey-youtube', YouTubeField);

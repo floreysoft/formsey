@@ -1,13 +1,14 @@
+import { createField, LabeledField, OptionalSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { html, property, css } from 'lit-element';
-import { createField, Field, ValueChangedEvent, OptionalSectionFieldDefinition } from '@formsey/core';
+import { css, customElement, html, property } from 'lit-element';
 
 export class OptionalSectionValue {
   option: boolean;
   value: Object = {}
 }
 
-export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, OptionalSectionValue> {
+@customElement("formsey-optional-section-vaadin")
+export class OptionalSectionField extends LabeledField<OptionalSectionFieldDefinition, OptionalSectionValue> {
   @property({ converter: Object })
   value: OptionalSectionValue;
 
@@ -57,5 +58,3 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     }
   }
 }
-
-customElements.define('formsey-optional-section', OptionalSectionField);

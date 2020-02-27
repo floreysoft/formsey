@@ -1,8 +1,8 @@
 import { customElement, html, property, css } from 'lit-element';
-import { Field, ImageFieldDefinition } from '@formsey/core';
+import { ImageFieldDefinition, LabeledField } from '@formsey/core';
 
 @customElement("formsey-image")
-export class ImageField extends Field<ImageFieldDefinition, string> {
+export class ImageField extends LabeledField<ImageFieldDefinition, string> {
   @property({ converter: Object })
   definition: ImageFieldDefinition;
 

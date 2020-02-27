@@ -1,11 +1,11 @@
-import { html, property, customElement, query } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { Field, StringFieldDefinition } from '@formsey/core';
-import { VaadinTextField } from '@vaadin/vaadin-text-field'
+import { LabeledField, StringFieldDefinition } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { VaadinTextField } from '@vaadin/vaadin-text-field';
+import { customElement, html, property, query } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-string")
-export class StringField extends Field<StringFieldDefinition, string> {
+@customElement("formsey-string-vaadin")
+export class StringField extends LabeledField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
 

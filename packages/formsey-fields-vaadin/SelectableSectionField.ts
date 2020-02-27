@@ -1,5 +1,5 @@
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { html, property, css } from 'lit-element';
+import { html, property, css, customElement } from 'lit-element';
 import { createField, ValueChangedEvent, SelectableSectionFieldDefinition, Field } from '@formsey/core';
 
 export class SelectableSectionValue {
@@ -7,6 +7,7 @@ export class SelectableSectionValue {
   value: Object = {}
 }
 
+@customElement("formsey-selectable-section-vaadin")
 export class SelectableSectionField extends Field<SelectableSectionFieldDefinition, SelectableSectionValue> {
   @property({ converter: Object })
   value: SelectableSectionValue;
@@ -54,5 +55,3 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
     }
   }
 }
-
-customElements.define('formsey-selectable-section', SelectableSectionField);

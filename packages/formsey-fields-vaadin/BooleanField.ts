@@ -1,10 +1,10 @@
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { customElement, html, property, query, css } from 'lit-element';
+import { BooleanFieldDefinition, LabeledField, ValueChangedEvent } from '@formsey/core';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
-import { Field, ValueChangedEvent, BooleanFieldDefinition } from '@formsey/core';
+import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
+import { css, customElement, html, property, query } from 'lit-element';
 
-@customElement("formsey-boolean")
-export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
+@customElement("formsey-boolean-vaadin")
+export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 

@@ -1,7 +1,7 @@
-import { CheckboxesFieldDefinition, Field, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, LabeledField, Option, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { TextfieldElement } from '@vaadin/vaadin-text-field';
-import { customElement, html, property, TemplateResult, css } from 'lit-element';
+import { css, customElement, html, property, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 class CheckboxesValue {
@@ -13,8 +13,8 @@ class CheckboxesValue {
   }
 }
 
-@customElement("formsey-checkboxes")
-export class CheckboxesField extends Field<CheckboxesFieldDefinition, CheckboxesValue> {
+@customElement("formsey-checkboxes-vaadin")
+export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, CheckboxesValue> {
   private static readonly other: string = "other";
 
   @property({ converter: Object })

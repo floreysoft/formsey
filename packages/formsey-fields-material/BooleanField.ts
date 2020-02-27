@@ -1,8 +1,9 @@
+import { BooleanFieldDefinition, LabeledField } from '@formsey/core';
 import "@material/mwc-checkbox/mwc-checkbox.js";
-import { html, property } from 'lit-element';
-import { Field, BooleanFieldDefinition } from '@formsey/core';
+import { customElement, html, property } from 'lit-element';
 
-export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
+@customElement("formsey-boolean-material")
+export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
@@ -10,5 +11,3 @@ export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
     return html`<mwc-checkbox @click="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" .value="${this.value}"></mwc-checkbox>`;
   }
 }
-
-customElements.define('formsey-boolean', BooleanField);

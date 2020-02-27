@@ -1,8 +1,9 @@
+import { DateFieldDefinition, LabeledField } from '@formsey/core';
 import '@vaadin/vaadin-upload/vaadin-upload.js';
-import { html, property } from 'lit-element';
-import { Field, DateFieldDefinition } from '@formsey/core';
+import { customElement, html, property } from 'lit-element';
 
-export class UploadField extends Field<DateFieldDefinition, string> {
+@customElement("formsey-upload-vaadin")
+export class UploadField extends LabeledField<DateFieldDefinition, string> {
     @property({ type: String })
     value: string;
 
@@ -11,4 +12,4 @@ export class UploadField extends Field<DateFieldDefinition, string> {
     }
 }
 
-customElements.define('formsey-upload', UploadField);
+customElements.define('', UploadField);
