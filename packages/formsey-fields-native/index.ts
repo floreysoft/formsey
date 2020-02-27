@@ -7,3 +7,5 @@ export { ImageField } from './ImageField'
 export { MarkupField } from './MarkupField'
 export { YouTubeField } from './YouTubeField'
 export { SourceCodeField } from './SourceCodeField'
+export { RepeatingField } from './RepeatingField'
+
