@@ -13,8 +13,9 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       color: var(--formsey-prompt-color, var(--lumo-secondary-text-color));
     }
     .required {
-      margin: var(--formey-required-margin, 0 0 0 var(--lumo-space-xs));
-      vertical-align: var(--formsey-required-vertical-align, super);
+      position: relative;
+      top: var(--formey-required-top, -6px);
+      margin: var(--formsey-required-margin, 0 0 0 var(--lumo-space-xs));
       font-family: var(--formey-required-font-family, var(--lumo-font-family));
       font-size: var(--formey-required-font-size, var(--lumo-font-size-xs));
       line-height: var(--formsey-required-line-height, var(--lumo-line-height-xs));
