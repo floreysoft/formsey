@@ -14,7 +14,7 @@ export class TextField extends LabeledField<StringFieldDefinition, string> {
   materialTextArea : TextArea
 
   protected renderHeader() {
-    return html`${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}</div>` : html``}`;
+    return html`${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : html``}`
   }
 
   renderField() {
