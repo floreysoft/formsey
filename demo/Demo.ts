@@ -3,10 +3,10 @@ import { Dialog } from '@floreysoft/dialog'
 import { FormConfiguration } from "@formsey/core/Field";
 
 import '@formsey/core/Form';
-import '@formsey/fields-vaadin/ListField';
-import '@formsey/fields-vaadin/BooleanField';
-import '@formsey/fields-vaadin/StringField';
-import '@formsey/fields-vaadin/TextField';
+import '../packages/formsey-fields-vaadin/ListField';
+import '../packages/formsey-fields-vaadin/BooleanField';
+import '../packages/formsey-fields-vaadin/StringField';
+import '../packages/formsey-fields-vaadin/TextField';
 import '@formsey/fields-vaadin/DateField';
 import '../packages/formsey-fields-native/RepeatingField';
 import '@formsey/fields-vaadin/OptionalSectionField';
@@ -67,7 +67,7 @@ export class DemoSection extends LitElement {
 
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
-    'string': 'formsey-string',
+    'string': 'formsey-string-vaadin',
     'text': 'formsey-text',
     'number': 'formsey-number',
     'date': 'formsey-date',
@@ -146,7 +146,7 @@ export class Demo extends LitElement {
     createFields(count: number): FieldDefinition[] {
         let fields: FieldDefinition[] = []
         for (let i = 0; i < count; i++) {
-            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string" })
+            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true })
         }
         return fields;
     }
