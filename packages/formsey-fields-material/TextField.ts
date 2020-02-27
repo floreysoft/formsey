@@ -5,7 +5,7 @@ import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-string-material")
+@customElement("formsey-text-material")
 export class TextField extends LabeledField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
