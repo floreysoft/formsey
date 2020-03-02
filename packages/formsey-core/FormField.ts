@@ -179,7 +179,7 @@ export class FormField extends Field<FormDefinition, Object> {
     }
     let errors : InvalidError[] = []
     for ( let key in this.errors ) {
-      errors.push(new InvalidError(this.definition.name+"."+key, this.errors[key]))
+      errors.push(new InvalidError(this.definition.name ? this.definition.name+"."+key : key, this.errors[key]))
     }
     this.dispatchEvent(new InvalidEvent(errors))
   }
