@@ -32,11 +32,11 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
     .fs-add, .fs-remove {
       width: 1em;
       height: 1em;
-      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
       padding: 0.3em;
-      fill: var(--lumo-primary-contrast-color);
+      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
+      fill: var(--formsey-repeating-section-icon-fill-color, var(--lumo-primary-contrast-color));
       border-radius: var(--lumo-border-radius);
-      background-color: var(--lumo-contrast-30pct);
+      background-color: var(--formsey-repeating-section-icon-background-color, var(--lumo-contrast-30pct));
       transition: transform 0.2s cubic-bezier(.12, .32, .54, 2), background-color 0.15s;
     }
 
@@ -45,7 +45,7 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
     }
 
     .fs-add:hover, .fs-remove:hover {
-      background-color: var(--lumo-primary-color);
+      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--lumo-primary-color));
     }
 
     .fs-add {
