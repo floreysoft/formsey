@@ -33,12 +33,10 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
       width: 1em;
       height: 1em;
       padding: 2px;
-      font-size: 14px;
-      color: var(--lumo-primary-contrast-color);
+      fill: var(--lumo-primary-contrast-color);
       border-radius: var(--lumo-border-radius);
       background-color: var(--lumo-contrast-30pct);
       transition: transform 0.2s cubic-bezier(.12, .32, .54, 2), background-color 0.15s;
-      line-height: 1.2;
     }
 
     .fs-nested-form:hover .fs-remove-wrapper {
@@ -70,11 +68,12 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
         const value = this.value[i];
         const fieldDefinition: FormDefinition = { ...this.definition.form, name: ""+i }
         const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}
-        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><iron-icon class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" icon="vaadin:close-small"></iron-icon></div>` : html ``}</div>`;
+        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><svg class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" viewBox="0 0 32 32"><title>Remove section</title><path d="M0 13v6c0 0.552 0.448 1 1 1h30c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1h-30c-0.552 0-1 0.448-1 1z"></path>
+</svg></div>` : html ``}</div>`;
         itemTemplates.push(template);
       }
     }
-    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<iron-icon class="fs-add" @click="${(e: Event) => this.addForm()}" icon="vaadin:plus"></iron-icon>`: html``}`;
+    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<svg viewBox="0 0 32 32" class="fs-add" @click="${(e: Event) => this.addForm()}"><title>Add section</title><path d="M31 12h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552 0-1 0.448-1 1v11h-11c-0.552 0-1 0.448-1 1v6c0 0.552 0.448 1 1 1h11v11c0 0.552 0.448 1 1 1h6c0.552 0 1-0.448 1-1v-11h11c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1z"></path></svg>`: html``}`;
   }
 
   protected addForm() {
