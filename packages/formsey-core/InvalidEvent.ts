@@ -12,14 +12,17 @@ export class InvalidEvent extends Event {
     errors: InvalidError[];
     name: string | undefined;
 
-    constructor(name: string | undefined, errorMessage: string, errors? : InvalidError[]) {
+    constructor(errors? : InvalidError[]) {
         super("validationFailed");
         if ( errors ) {
             this.errors = errors
         } else {
             this.errors = []
         }
-        this.errors.push(new InvalidError(name, errorMessage))
+    }
+
+    public addError(error : InvalidError) {
+        this.errors.push(error)
     }
 
     public prependPath(path : string) {

@@ -181,7 +181,7 @@ export class FormField extends Field<FormDefinition, Object> {
     for ( let key in this.errors ) {
       errors.push(new InvalidError(this.definition.name+"."+key, this.errors[key]))
     }
-    this.dispatchEvent(new InvalidEvent(this.definition.name, "formInvalid", errors))
+    this.dispatchEvent(new InvalidEvent(errors))
   }
 
   private resize() {

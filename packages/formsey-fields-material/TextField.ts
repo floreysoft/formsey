@@ -1,5 +1,5 @@
 import { LabeledField, StringFieldDefinition } from '@formsey/core';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
 import { customElement, html, property, query } from 'lit-element';
@@ -24,7 +24,8 @@ export class TextField extends LabeledField<StringFieldDefinition, string> {
   checkValidity() {
     let valid = this.materialTextArea.checkValidity() as boolean
     if ( !valid ) {
-      this.dispatchEvent(new InvalidEvent(this.definition.name, "valueMissing"))
+      console.log("Material text field invalid, throwing event")
+      this.dispatchEvent(new InvalidEvent([new InvalidError(this.definition.name, "valueMissing")]))
     }
     return valid;
   }

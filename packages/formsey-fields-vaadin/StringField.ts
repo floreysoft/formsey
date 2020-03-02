@@ -1,5 +1,5 @@
 import { LabeledField, StringFieldDefinition } from '@formsey/core';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidEvent, InvalidError } from '@formsey/core/InvalidEvent';
 import { VaadinTextField } from '@vaadin/vaadin-text-field';
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
@@ -19,7 +19,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   checkValidity() {
     let valid = this.vaadinTextField.checkValidity() as boolean
     if ( !valid ) {
-      this.dispatchEvent(new InvalidEvent(this.definition.name, "valueMissing"))
+      this.dispatchEvent(new InvalidEvent([new InvalidError(this.definition.name, "valueMissing")]))
     }
     return valid;
   }

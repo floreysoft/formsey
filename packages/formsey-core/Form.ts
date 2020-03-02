@@ -18,16 +18,19 @@ export class Form extends Field<FieldDefinition, Object> {
     return
   }
 
+  public checkValidity() {
+    let child = this.renderRoot.firstElementChild as Field<any, any>
+    return child.checkValidity();
+  }
+
   protected valueChanged(e: any) {
     this.value = e.currentTarget.value;
     this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
 
   protected invalid(e: InvalidEvent) {
+    console.log("Form received invalid event, combining events and throws event")
     e.stopPropagation()
-    if ( this.definition.name ) {
-      e.prependPath(this.definition.name)
-    }
-    this.dispatchEvent(e);
+    this.dispatchEvent(new InvalidEvent(e.errors));
   }
 }
