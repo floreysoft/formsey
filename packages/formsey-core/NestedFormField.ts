@@ -19,6 +19,11 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     return createField(this.configuration, formDefinition, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
   }
 
+  public checkValidity() {
+    let child = this.renderRoot.firstElementChild as Field<any, any>
+    return child.checkValidity();
+  }
+
   protected valueChanged(e: any) {
     e.stopPropagation()
     if (e.name == "form") {
