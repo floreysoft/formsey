@@ -39,7 +39,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   @queryAll(".fs-form-field")
   protected _fields: HTMLElement[]
-  protected errors: InvalidError[]
+  protected errors: {}
 
   async fetchDefinition(url: string) {
     try {
@@ -123,9 +123,6 @@ export class FormField extends Field<FormDefinition, Object> {
         validity = false;
       }
     }
-    if (!validity) {
-      this.dispatchEvent(new InvalidEvent(this.definition.name, "fieldIncorrect", this.errors))
-    }
     return validity;
   }
 
@@ -176,12 +173,15 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected invalid(e: InvalidEvent) {
-    for (let error of e.errors) {
-      if (this.definition.name) {
-        error.path = this.definition.name + "." + error.path
-      }
-      this.errors.push(error)
+    e.stopPropagation()
+    for ( let error of e.errors ) {
+      this.errors[error.path] = error.errorMessage
     }
+    let errors : InvalidError[] = []
+    for ( let key in this.errors ) {
+      errors.push(new InvalidError(this.definition.name+"."+key, this.errors[key]))
+    }
+    this.dispatchEvent(new InvalidEvent(this.definition.name, "formInvalid", errors))
   }
 
   private resize() {

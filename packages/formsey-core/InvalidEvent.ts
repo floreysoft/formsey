@@ -21,4 +21,12 @@ export class InvalidEvent extends Event {
         }
         this.errors.push(new InvalidError(name, errorMessage))
     }
+
+    public prependPath(path : string) {
+        if ( this.errors ) {
+            for ( let error of this.errors ) {
+                error.path = path + "."+error.path
+            }
+        }
+    }
 }
