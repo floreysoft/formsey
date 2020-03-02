@@ -124,10 +124,6 @@ export class Demo extends LitElement {
 
     render() {
         let simpleDemo = { name: "verticalForm", type: "form", fields: this.createFields(3) }
-        let cols2Demo = { name: "2Cols", type: "form", gridMedium: "grid-template-columns:50% 50%", fields: this.createFields(4) }
-        let cols3Demo = { name: "3Cols", type: "form", gridMedium: "grid-template-columns:33% 33% 33%", fields: this.createFields(6) }
-        let rowsDemo = { name: "2Cols", type: "form", gridSmall: "grid-template-columns:100%", gridMedium: "grid-template-columns:50% 50%", gridLarge: "grid-template-rows: 1fr 1fr 1fr 1fr;grid-auto-flow: column", fields: this.createFields(4) }
-        let areaDemo = { name: "2Cols", type: "form", gridMedium: "grid-template-columns:1fr 1fr 1fr 1fr;grid-template-areas: 'a a c d' 'b b b b", fields: this.createFields(4) }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>

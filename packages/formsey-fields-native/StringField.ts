@@ -1,6 +1,6 @@
-import { html, property, customElement, query } from 'lit-element';
 import { Field, StringFieldDefinition } from '@formsey/core';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { customElement, html, property, query } from 'lit-element';
 
 @customElement("formsey-string")
 export class StringField extends Field<StringFieldDefinition, string> {
@@ -16,7 +16,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
   public checkValidity(): boolean {
     let validityState = this.input.validity as ValidityState
     if ( validityState.valueMissing ) {
-      this.dispatchEvent(new InvalidEvent(this.definition.name, "valueMissing"))
+      this.dispatchEvent(new InvalidEvent([new InvalidError(this.definition.name, "valueMissing")]))
     }
     return this.input.checkValidity()
   }
