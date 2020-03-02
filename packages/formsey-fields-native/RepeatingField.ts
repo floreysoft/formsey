@@ -32,7 +32,8 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
     .fs-add, .fs-remove {
       width: 1em;
       height: 1em;
-      padding: 2px;
+      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
+      padding: 0.3em;
       fill: var(--lumo-primary-contrast-color);
       border-radius: var(--lumo-border-radius);
       background-color: var(--lumo-contrast-30pct);
