@@ -1,5 +1,5 @@
 import { LabeledField, StringFieldDefinition } from '@formsey/core';
-import { InvalidEvent, InvalidError } from '@formsey/core/InvalidEvent';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from "@material/mwc-textfield/mwc-textfield.js";
 import { customElement, html, property, query } from 'lit-element';
@@ -11,21 +11,24 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   value: string;
 
   @query("mwc-textfield")
-  materialTextField : TextField
+  materialTextField: TextField
 
   renderHeader() {
     return html`${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : html``}`
   }
 
   renderField() {
-    return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText ? this.definition.helpText : ''}" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
+    return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText ? this.definition.helpText : ''}" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" validationmessage="${ifDefined(this.errorMessage)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
   }
 
   checkValidity() {
-    let valid = this.materialTextField.checkValidity() as boolean
-    if ( !valid ) {
-      this.dispatchEvent(new InvalidEvent([new InvalidError(this.definition.name, "valueMissing")]))
-    }
-    return valid;
+    this.errors = {}
+    return this.materialTextField.reportValidity() as boolean
+  }
+
+  invalid() {
+    let validityState : ValidityState = this.materialTextField.validity
+    this.errors[this.definition.name] = new InvalidError("invalidInput", validityState)
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

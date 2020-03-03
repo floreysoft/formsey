@@ -1,35 +1,30 @@
 export class InvalidError {
-    path: string
     errorMessage: string
+    details: any
 
-    constructor(path: string, errorMessage: string) {
-        this.path = path
+    constructor(errorMessage: string, details?: any) {
         this.errorMessage = errorMessage
+        this.details = details
     }
 }
 
-export class InvalidEvent extends Event {
-    errors: InvalidError[];
-    name: string | undefined;
+export interface InvalidErrors {
+    [index: string]: InvalidError
+  }
 
-    constructor(errors? : InvalidError[]) {
+export class InvalidEvent extends Event {
+    errors: InvalidErrors;
+
+    constructor(errors : InvalidErrors) {
         super("validationFailed");
         if ( errors ) {
             this.errors = errors
         } else {
-            this.errors = []
+            this.errors = {}
         }
     }
 
-    public addError(error : InvalidError) {
-        this.errors.push(error)
-    }
-
-    public prependPath(path : string) {
-        if ( this.errors ) {
-            for ( let error of this.errors ) {
-                error.path = path + "."+error.path
-            }
-        }
+    public addError(path: string, error : InvalidError) {
+        this.errors[path] = error
     }
 }

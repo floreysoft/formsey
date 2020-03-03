@@ -5,7 +5,7 @@ import { FormConfiguration } from "@formsey/core/Field";
 import '@formsey/core/Form';
 import '../packages/formsey-fields-vaadin/ListField';
 import '../packages/formsey-fields-vaadin/BooleanField';
-import '../packages/formsey-fields-vaadin/StringField';
+import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-vaadin/TextField';
 import '@formsey/fields-vaadin/DateField';
 import '../packages/formsey-fields-native/RepeatingField';
@@ -67,7 +67,7 @@ export class DemoSection extends LitElement {
 
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
-    'string': 'formsey-string-vaadin',
+    'string': 'formsey-string-material',
     'text': 'formsey-text',
     'number': 'formsey-number',
     'date': 'formsey-date',
@@ -129,6 +129,7 @@ export class Demo extends LitElement {
         <p>Formsey</p>
         <formsey-form id="demoForm" .definition=${simpleDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
+        <vaadin-button @click=${this.error}>Error</vaadin-button>
         <pre id="demoFormValidation"></pre>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
@@ -149,6 +150,10 @@ export class Demo extends LitElement {
 
     validate(e: Event) {
         this.demoForm.checkValidity()
+    }
+
+    error(e : Event) {
+        this.demoForm.errors = { "verticalForm.a" : { "errorMessage" : "Blabla", "details" : undefined } }
     }
 
     validationFailed(e: InvalidEvent) {

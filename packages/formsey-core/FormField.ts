@@ -1,6 +1,6 @@
 import { createField, Field, FormDefinition, ValueChangedEvent } from '@formsey/core';
 import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
-import { InvalidError, InvalidEvent } from './InvalidEvent';
+import { InvalidEvent } from './InvalidEvent';
 
 export enum GridSize {
   SMALL = "gridSmall",
@@ -39,7 +39,6 @@ export class FormField extends Field<FormDefinition, Object> {
 
   @queryAll(".fs-form-field")
   protected _fields: HTMLElement[]
-  protected errors: {}
 
   async fetchDefinition(url: string) {
     try {
@@ -88,13 +87,21 @@ export class FormField extends Field<FormDefinition, Object> {
     }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
+        let fieldErrors = {}
+        if (this.errors) {
+          for (let error in this.errors) {
+            if (error == this.definition.name+"."+field.name || error.startsWith(this.definition.name+"." + field.name + ".")) {
+              fieldErrors[error.substring((this.definition.name+".").length)] = this.errors[error]
+            }
+          }
+        }
         if (grid && grid.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fs-form-field' style="grid-area:_${field.name}">
-        ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
+        ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, fieldErrors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
         </div>`)
         } else {
           templates.push(html`<div class='fs-form-field'>
-        ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
+        ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, fieldErrors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
         </div>`)
         }
       }
@@ -114,7 +121,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   public checkValidity() {
-    this.errors = []
+    this.errors = {}
     let validity = true;
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
@@ -128,7 +135,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected valueChanged(e: any) {
     e.stopPropagation()
-    if (this.value ) {
+    if (this.value) {
       if (e.name) {
         this.value[e.name] = e.value;
       }
@@ -174,14 +181,10 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()
-    for ( let error of e.errors ) {
-      this.errors[error.path] = error.errorMessage
+    for (let error in e.errors) {
+      this.errors[this.definition.name ? this.definition.name + "." + error : error] = e.errors[error]
     }
-    let errors : InvalidError[] = []
-    for ( let key in this.errors ) {
-      errors.push(new InvalidError(this.definition.name ? this.definition.name+"."+key : key, this.errors[key]))
-    }
-    this.dispatchEvent(new InvalidEvent(errors))
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 
   private resize() {

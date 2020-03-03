@@ -1,5 +1,6 @@
-import { LitElement, TemplateResult, html, property, css } from 'lit-element';
+import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
+import { InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export interface FormConfiguration {
@@ -14,10 +15,10 @@ export function hacktml(parts, ...args) {
   return html(newParts, ...newArgs);
 }
 
-export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, valueChangedHandler: any, invalidHandler: any) : TemplateResult => {
+export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, errors: InvalidErrors, valueChangedHandler: any, invalidHandler: any) : TemplateResult => {
   const tag = configuration[definition.type];
   if (tag) {
-    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} @valueChanged=${valueChangedHandler} @validationFailed=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @validationFailed=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
   }
@@ -32,6 +33,25 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   definition: T
 
   value: V;
+
+  protected _errors: InvalidErrors
+  protected errorMessage : string
+
+  @property({ converter: Object })
+  set errors(errors: InvalidErrors) {
+    if (errors && this.definition.name) {
+      let error = errors[this.definition.name ]
+      if ( error ) {
+        this.errorMessage = error.errorMessage
+      }
+    }
+    this._errors = errors;
+    this.requestUpdate();
+  }
+
+  get errors() {
+    return this._errors
+  }
 
   public checkValidity() : boolean {
     return true;

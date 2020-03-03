@@ -35,7 +35,8 @@ export class OptionalSectionField extends LabeledField<OptionalSectionFieldDefin
       }
     }
     let selectedForm = this.value.option ? this.definition.onForm : this.definition.offForm
-    let form = selectedForm ? html`<div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>` : html``;
+    let errors = {}
+    let form = selectedForm ? html`<div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value.value, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>` : html``;
     return html`<vaadin-checkbox style="display:flex" @change="${(event) => this.selectionChanged(event)}" .checked="${this.value.option}">${this.definition.label}</vaadin-checkbox>
     ${form}
     `;

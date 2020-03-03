@@ -11,7 +11,7 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   renderField() {
-    return createField(this.configuration, this.definition, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
+    return createField(this.configuration, this.definition, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
   }
 
   renderHeader() {
@@ -29,8 +29,9 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   protected invalid(e: InvalidEvent) {
-    console.log("Form received invalid event, combining events and throws event")
+    console.log("Form received invalid event, combining events and throws event="+JSON.stringify(e))
     e.stopPropagation()
+    this.errors = e.errors
     this.dispatchEvent(new InvalidEvent(e.errors));
   }
 }

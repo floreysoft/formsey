@@ -68,7 +68,8 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
       for (let i: number = 0; i < this.value.length; i++) {
         const value = this.value[i];
         const fieldDefinition: FormDefinition = { ...this.definition.form, name: ""+i }
-        const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}
+        let errors = {}
+        const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><svg class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" viewBox="0 0 32 32"><title>Remove section</title><path d="M0 13v6c0 0.552 0.448 1 1 1h30c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1h-30c-0.552 0-1 0.448-1 1z"></path>
 </svg></div>` : html ``}</div>`;
         itemTemplates.push(template);

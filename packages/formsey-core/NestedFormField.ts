@@ -16,7 +16,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
       this.value = this.definition.default ? this.definition.default : {}
     }
     this.definition.form.name = this.definition.name
-    return createField(this.configuration, this.definition.form, this.value, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
+    return createField(this.configuration, this.definition.form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
   }
 
   public checkValidity() {
