@@ -34,9 +34,6 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   value: V;
 
-  protected _errors: InvalidErrors
-  protected errorMessage : string
-
   @property({ converter: Object })
   set errors(errors: InvalidErrors) {
     if (errors && this.definition.name) {
@@ -52,6 +49,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   get errors() {
     return this._errors
   }
+
+  _errors: InvalidErrors
+  errorMessage : string
 
   public checkValidity() : boolean {
     return true;
