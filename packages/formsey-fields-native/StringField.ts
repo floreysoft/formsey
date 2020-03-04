@@ -23,14 +23,14 @@ export class StringField extends Field<StringFieldDefinition, string> {
     return html`<input type="text" ?required="${this.definition.required}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${this.definition.placeholder}" .value="${this.value}">`
   }
 
-  checkValidity() {
+  validate() {
     return this.input.checkValidity() as boolean
   }
 
   invalid() {
     let validityState : ValidityState = this.input.validity
     let errors: InvalidErrors = {}
-    errors[this.definition.name] = new InvalidError("invalidInput", validityState)
+    errors[this.definition.name] = new InvalidError("invalidInput", false, validityState)
     this.dispatchEvent(new InvalidEvent(errors))
   }
 }

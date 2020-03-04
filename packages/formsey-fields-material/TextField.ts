@@ -25,14 +25,14 @@ export class TextField extends LabeledField<StringFieldDefinition, string> {
     return;
   }
 
-  checkValidity() {
+  validate() {
     return this.materialTextArea.checkValidity() as boolean
   }
 
   invalid() {
     let validityState: ValidityState = this.materialTextArea.validity
     let errors: InvalidErrors = {}
-    errors[this.definition.name] = new InvalidError("invalidInput", validityState)
+    errors[this.definition.name] = new InvalidError("invalidInput", false, validityState)
     this.dispatchEvent(new InvalidEvent(errors))
   }
 }

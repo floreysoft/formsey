@@ -1,9 +1,11 @@
 export class InvalidError {
     errorMessage: string
+    customError: boolean
     details: any
 
-    constructor(errorMessage: string, details?: any) {
+    constructor(errorMessage: string, customError?: boolean, details?: any) {
         this.errorMessage = errorMessage
+        this.customError = customError
         this.details = details
     }
 }

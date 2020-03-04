@@ -18,8 +18,7 @@ export class Form extends Field<FieldDefinition, Object> {
     return
   }
 
-  public checkValidity() {
-    this.errors = {}
+  public validate() {
     let child = this.renderRoot.firstElementChild as Field<any, any>
     return child.checkValidity();
   }

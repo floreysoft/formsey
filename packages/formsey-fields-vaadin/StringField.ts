@@ -1,5 +1,5 @@
 import { LabeledField, StringFieldDefinition } from '@formsey/core';
-import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { VaadinTextField } from '@vaadin/vaadin-text-field';
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
@@ -12,9 +12,6 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   @query("vaadin-text-field")
   vaadinTextField: VaadinTextField
 
-  test: InvalidErrors
-
-
   renderField() {
     return html`<vaadin-text-field style="display:flex" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(this.errorMessage)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}">`;
   }
@@ -23,12 +20,10 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     return
   }
 
-  checkValidity() {
-    this.errors = {}
+  validate() {
     let validity = this.vaadinTextField.validate() as boolean
     if (!validity) {
-      let validityState: ValidityState = this.vaadinTextField.validity
-      this.errors[this.definition.name] = new InvalidError("invalidInput", validityState)
+      this.errors[this.definition.name] = new InvalidError("invalidInput", false, this.vaadinTextField.validity)
       this.dispatchEvent(new InvalidEvent(this.errors))
     }
     return validity

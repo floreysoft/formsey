@@ -154,7 +154,7 @@ export class Demo extends LitElement {
     }
 
     error(e : Event) {
-        this.demoForm.errors = { "verticalForm.a" : { "errorMessage" : "Blabla", "details" : undefined } }
+        this.demoForm.errors = { "verticalForm.a" : { "errorMessage" : "Blabla", customError: true, "details" : undefined } }
     }
 
     validationFailed(e: InvalidEvent) {
