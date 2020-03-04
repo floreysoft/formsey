@@ -37,6 +37,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   @property({ converter: Object })
   set errors(errors: InvalidErrors) {
+    this.errorMessage = undefined
     if (errors && this.definition.name) {
       let error = errors[this.definition.name ]
       if ( error ) {
