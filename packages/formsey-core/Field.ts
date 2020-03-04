@@ -11,11 +11,11 @@ export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
   const newParts = parts.concat().slice(1, -1)
   newParts[0] = "<" + args[0] + newParts[0]
-  newParts[newParts.length-1] = newParts[newParts.length-1] + args[0] + ">";
+  newParts[newParts.length - 1] = newParts[newParts.length - 1] + args[0] + ">";
   return html(newParts, ...newArgs);
 }
 
-export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, errors: InvalidErrors, valueChangedHandler: any, invalidHandler: any) : TemplateResult => {
+export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, errors: InvalidErrors, valueChangedHandler: any, invalidHandler: any): TemplateResult => {
   const tag = configuration[definition.type];
   if (tag) {
     return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @validationFailed=${invalidHandler}></${tag}>`;
@@ -39,8 +39,8 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   set errors(errors: InvalidErrors) {
     this.errorMessage = undefined
     if (errors && this.definition.name) {
-      let error = errors[this.definition.name ]
-      if ( error ) {
+      let error = errors[this.definition.name]
+      if (error) {
         this.errorMessage = error.errorMessage
       }
     }
@@ -53,20 +53,20 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   _errors: InvalidErrors
-  errorMessage : string
+  errorMessage: string
 
-  public checkValidity() : boolean {
+  public checkValidity(): boolean {
     return true;
   }
 
   static get styles() {
-    return [ css`
+    return [css`
     .hidden {
       display: none;
     }`]
   }
 
-  protected shouldUpdate() : boolean {
+  protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
       return false
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
@@ -78,11 +78,11 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     if (this.definition.hidden) {
       return false
     }
-   return true
+    return true
   }
 
   protected render(): void | TemplateResult {
-     return html`${this.renderField()}`
+    return html`${this.renderField()}`
   }
 
   protected abstract renderField(): TemplateResult | void;

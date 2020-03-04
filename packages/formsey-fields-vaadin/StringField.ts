@@ -24,6 +24,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   }
 
   checkValidity() {
+    this.errors = {}
     let validity = this.vaadinTextField.checkValidity() as boolean
     if (!validity) {
       let validityState: ValidityState = this.vaadinTextField.validity
