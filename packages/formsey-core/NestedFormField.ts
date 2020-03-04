@@ -20,6 +20,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   }
 
   public checkValidity() {
+    this.errors = {}
     let child = this.renderRoot.firstElementChild as Field<any, any>
     return child.checkValidity();
   }
