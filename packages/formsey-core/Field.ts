@@ -1,6 +1,6 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
-import { InvalidErrors, InvalidEvent } from './InvalidEvent';
+import { InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export interface FormConfiguration {
@@ -67,12 +67,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     } else {
       this.errors = {}
     }
-    if (this.errors[this.definition.name]) {
-      this.dispatchEvent(new InvalidEvent(this.errors))
-      return false
-    } else {
-       return this.validate()
-    }
+    return this.validate()
   }
 
   public validate(): boolean {

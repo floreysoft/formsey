@@ -68,7 +68,7 @@ export class DemoSection extends LitElement {
 
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
-    'string': 'formsey-string-vaadin',
+    'string': 'formsey-string-material',
     'text': 'formsey-text',
     'number': 'formsey-number',
     'date': 'formsey-date',

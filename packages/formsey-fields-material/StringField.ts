@@ -25,6 +25,19 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     return;
   }
 
+  firstUpdated() {
+    this.materialTextField.validityTransform = (newValue, nativeValidity) => {
+      if (this.errors[this.definition.name] && this.errors[this.definition.name].customError ) {
+        return {
+          valid: false,
+          errorMessage: this.errors[this.definition.name].errorMessage,
+          ...this.errors[this.definition.name].details
+        };
+      }
+      return nativeValidity;
+    }
+  }
+
   validate() {
     return this.materialTextField.reportValidity() as boolean
   }
@@ -36,7 +49,14 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
         delete validityState[key]
       }
     }
-    this.errors[this.definition.name] = new InvalidError("invalidInput", false, validityState)
+    let errorMessage = "invalidInput"
+    let customError = false
+    if ( validityState['errorMessage'] ) {
+      errorMessage = validityState['errorMessage']
+      delete validityState['errorMessage']
+      customError = true
+    }
+    this.errors[this.definition.name] = new InvalidError(errorMessage, customError, validityState)
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
