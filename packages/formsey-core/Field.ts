@@ -32,6 +32,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   definition: T
 
+  @property({ type: Object })
   value: V;
 
   @property({ converter: Object })
