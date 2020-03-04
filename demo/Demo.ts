@@ -6,6 +6,7 @@ import '@formsey/core/Form';
 import '../packages/formsey-fields-vaadin/ListField';
 import '../packages/formsey-fields-vaadin/BooleanField';
 import '../packages/formsey-fields-material/StringField';
+import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-vaadin/TextField';
 import '@formsey/fields-vaadin/DateField';
 import '../packages/formsey-fields-native/RepeatingField';
@@ -67,7 +68,7 @@ export class DemoSection extends LitElement {
 
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
-    'string': 'formsey-string-material',
+    'string': 'formsey-string-vaadin',
     'text': 'formsey-text',
     'number': 'formsey-number',
     'date': 'formsey-date',

@@ -13,10 +13,6 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   @query("mwc-textfield")
   materialTextField: TextField
 
-  renderFooter() {
-    return;
-  }
-
   renderHeader() {
     return html`${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : html``}`
   }
@@ -25,13 +21,17 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText ? this.definition.helpText : ''}" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" validationmessage="${ifDefined(this.errorMessage)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
   }
 
+  renderFooter() {
+    return;
+  }
+
   checkValidity() {
     this.errors = {}
     return this.materialTextField.reportValidity() as boolean
   }
 
   invalid() {
-    let validityState : ValidityState = this.materialTextField.validity
+    let validityState: ValidityState = this.materialTextField.validity
     this.errors[this.definition.name] = new InvalidError("invalidInput", validityState)
     this.dispatchEvent(new InvalidEvent(this.errors))
   }

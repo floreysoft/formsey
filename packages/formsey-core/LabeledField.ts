@@ -7,6 +7,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   static get styles() {
     return [ ...super.styles, css`
     .wrapper {
+      box-sizing: border-box;
       transition: all 0.2s ease-out;
     }
 
@@ -54,9 +55,8 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
 
   protected renderHeader(): TemplateResult | void {
     return html`
-      ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : html``}
-      ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : html``}
-      ${this.errorMessage ? html`<div class="error-text">${this.errorMessage}</div>` : html``}`;
+      ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : undefined}
+      ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined}`
   }
 
   protected renderFooter(): TemplateResult | void {
