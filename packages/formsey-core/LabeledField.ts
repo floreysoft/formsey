@@ -1,17 +1,36 @@
 import { TemplateResult, html, css } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map';
 import { FieldDefinition } from './FieldDefinitions';
 import { Field } from '.';
 
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
   static get styles() {
     return [ ...super.styles, css`
+    .wrapper {
+      transition: all 0.2s ease-out;
+    }
+
+    .invalid {
+      background-color: var(--formsey-invalod_color, var(--lumo-error-color-10pct, #ff000005));
+      padding: 0.05rem 0.5rem 0.2rem;
+      margin: 0.1rem -0.5rem;
+      border-radius: var(--formsey-invalid-border-radius, var(--lumo-border-radius-m, 0.2em));
+    }
+
+    .error-text {
+      color: var(--formsey-error-text-color, var(--lumo-error-text-color, #ff0000));
+      font-size: var(--formsey-error-font-size, var(--lumo-font-size-s));
+      line-height: var(--formsey-error-line-height, var(--lumo-line-height-s));
+    }
+
     .prompt {
-      margin: var(--formey-prompt-margin, var(--lumo-space-m) 0 0 0);
-      font-family: var(--formey-prompt-font-family, var(--lumo-font-family));
-      font-size: var(--formey-prompt-font-size, var(--lumo-font-size-m));
+      margin: var(--formsey-prompt-margin, var(--lumo-space-m) 0 0 0);
+      font-family: var(--formsey-prompt-font-family, var(--lumo-font-family));
+      font-size: var(--formsey-prompt-font-size, var(--lumo-font-size-m));
       line-height: var(--formsey-prompt-line-height, var(--lumo-line-height-m));
       color: var(--formsey-prompt-color, var(--lumo-secondary-text-color));
     }
+
     .required {
       position: relative;
       top: var(--formey-required-top, -6px);
@@ -30,12 +49,17 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   }
 
   protected render(): void | TemplateResult {
-     return html`${this.renderHeader()}${this.renderField()}`
+     return html`<div class="${classMap({wrapper: true, invalid : this.definition.name in this._errors })}">${this.renderHeader()}${this.renderField()}${this.renderFooter()}</div>`
   }
 
   protected renderHeader(): TemplateResult | void {
     return html`
       ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : html``}
-      ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : html``}`;
+      ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : html``}
+      ${this.errorMessage ? html`<div class="error-text">${this.errorMessage}</div>` : html``}`;
+  }
+
+  protected renderFooter(): TemplateResult | void {
+    return this.errorMessage ? html`<div class="error-text">${this.errorMessage}</div>` : undefined
   }
 }

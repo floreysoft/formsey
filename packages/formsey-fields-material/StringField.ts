@@ -13,6 +13,10 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   @query("mwc-textfield")
   materialTextField: TextField
 
+  renderFooter() {
+    return;
+  }
+
   renderHeader() {
     return html`${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : html``}`
   }
