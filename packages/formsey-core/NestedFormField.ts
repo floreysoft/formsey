@@ -1,15 +1,14 @@
 import { createField, Field, NestedFormDefinition, ValueChangedEvent } from '@formsey/core';
-import { css, customElement } from 'lit-element';
+import { customElement } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
 @customElement("formsey-nested-form")
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
   static get styles() {
-    return [...super.styles, css`
-      :host {
-
-      }`];
+    return [...super.styles];
   }
+
+  value: Object = {}
 
   renderField() {
     if ( !this.value ) {
@@ -19,9 +18,13 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     return createField(this.configuration, this.definition.form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
   }
 
-  public validate() {
+  public validate(report : boolean ) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
-    return child.checkValidity();
+    if ( report ) {
+      return child.reportValidity();
+    } else {
+      return child.checkValidity();
+    }
   }
 
   protected valueChanged(e: any) {
