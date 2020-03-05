@@ -18,7 +18,7 @@ export function hacktml(parts, ...args) {
 export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, errors: InvalidErrors, valueChangedHandler: any, invalidHandler: any): TemplateResult => {
   const tag = configuration[definition.type];
   if (tag) {
-    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @validationFailed=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @invalid=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
   }
@@ -43,11 +43,11 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   @property({ converter: Object })
   set errors(errors: InvalidErrors) {
-    this.errorMessage = undefined
+    this.validityMessage = undefined
     if (errors && this.definition.name) {
       let error = errors[this.definition.name]
       if (error) {
-        this.errorMessage = error.errorMessage
+        this.validityMessage = error.validityMessage
       }
     }
     this._errors = errors;
@@ -59,7 +59,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   _errors: InvalidErrors = {}
-  errorMessage: string
+  validityMessage: string
 
   public reportValidity(): boolean {
     this.clearErrors()
@@ -140,7 +140,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     if ( this.errors ) {
       for ( let key in this.errors ) {
         let error = this.errors[key]
-        if ( !error.customError ) {
+        if ( !error.custom ) {
           delete this.errors[key]
         }
       }

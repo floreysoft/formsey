@@ -29,7 +29,17 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.input.validationMessage, false, { ...this.input.validity })
+    let validityState = {}
+    for ( let key in this.input.validity ) {
+      if ( this.input.validity[key] ) {
+        validityState[key] = this.input.validity[key]
+      }
+    }
+    if ( this.validityMessage ) {
+      this.errors[this.definition.name] = new InvalidError(this.validityMessage, true, validityState )
+    } else {
+      this.errors[this.definition.name] = new InvalidError(this.input.validationMessage, false, validityState )
+    }
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

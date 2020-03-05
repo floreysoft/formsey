@@ -1,12 +1,16 @@
 export class InvalidError {
-    errorMessage: string
-    customError: boolean
-    details: any
+    validityMessage: string
+    custom: boolean
+    validityState: any
 
-    constructor(errorMessage: string, customError?: boolean, details?: any) {
-        this.errorMessage = errorMessage
-        this.customError = customError
-        this.details = details
+    constructor(validityMessage: string, custom?: boolean, validityState?: any) {
+        this.validityMessage = validityMessage
+        if ( custom ) {
+            this.custom = custom
+        }
+        if ( validityState ) {
+            this.validityState = validityState
+        }
     }
 }
 
@@ -18,7 +22,7 @@ export class InvalidEvent extends Event {
     errors: InvalidErrors;
 
     constructor(errors : InvalidErrors) {
-        super("validationFailed");
+        super("invalid");
         if ( errors ) {
             this.errors = errors
         } else {

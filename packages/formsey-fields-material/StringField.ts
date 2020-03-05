@@ -18,7 +18,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   }
 
   renderField() {
-    return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText ? this.definition.helpText : ''}" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" validationmessage="${ifDefined(this.errorMessage)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
+    return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText ? this.definition.helpText : ''}" ?autofocus="${this.definition.focus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" validationmessage="${ifDefined(this.validityMessage)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
   }
 
   renderFooter() {
@@ -27,11 +27,11 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
 
   firstUpdated() {
     this.materialTextField.validityTransform = (newValue, nativeValidity) => {
-      if (this.errors[this.definition.name] && this.errors[this.definition.name].customError ) {
+      if (this.errors[this.definition.name] && this.errors[this.definition.name].custom ) {
         return {
           valid: false,
-          errorMessage: this.errors[this.definition.name].errorMessage,
-          ...this.errors[this.definition.name].details
+          validityMessage: this.errors[this.definition.name].validityMessage,
+          ...this.errors[this.definition.name].validityState
         };
       }
       return nativeValidity;
@@ -53,14 +53,14 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
         delete validityState[key]
       }
     }
-    let errorMessage = this.materialTextField.validationMessage
+    let validityMessage = this.materialTextField.validationMessage
     let customError = false
-    if ( validityState['errorMessage'] ) {
-      errorMessage = validityState['errorMessage']
-      delete validityState['errorMessage']
+    if ( validityState['validityMessage'] ) {
+      validityMessage = validityState['validityMessage']
+      delete validityState['validityMessage']
       customError = true
     }
-    this.errors[this.definition.name] = new InvalidError(errorMessage, customError, validityState)
+    this.errors[this.definition.name] = new InvalidError(validityMessage, customError, validityState)
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
