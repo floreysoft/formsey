@@ -122,11 +122,16 @@ export class FormField extends Field<FormDefinition, Object> {
     super.disconnectedCallback()
   }
 
-  public validate() {
+  public validate(report : boolean) {
     let validity = true;
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
-      let valid = child.checkValidity();
+      let valid : boolean
+      if ( report ) {
+        valid = child.reportValidity();
+      } else {
+        valid = child.checkValidity();
+      }
       if (!valid) {
         validity = false;
       }

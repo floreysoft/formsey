@@ -50,7 +50,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   }
 
   protected render(): void | TemplateResult {
-     return html`<div class="${classMap({wrapper: true, invalid : !this.valid })}">${this.renderHeader()}${this.renderField()}${this.renderFooter()}</div>`
+     return html`<div class="${classMap({wrapper: true, invalid : !this.valid && this.report })}">${this.renderHeader()}${this.renderField()}${this.renderFooter()}</div>`
   }
 
   protected renderHeader(): TemplateResult | void {
@@ -60,6 +60,6 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   }
 
   protected renderFooter(): TemplateResult | void {
-    return this.errorMessage ? html`<div class="error-text">${this.errorMessage}</div>` : undefined
+    return this.report && typeof this.errorMessage !== "undefined" ? html`<div class="error-text">${this.errorMessage}</div>` : undefined
   }
 }

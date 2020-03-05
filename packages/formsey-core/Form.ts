@@ -20,9 +20,13 @@ export class Form extends Field<FieldDefinition, Object> {
     return
   }
 
-  public validate() {
+  public validate(report : boolean) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
-    return child.checkValidity();
+    if ( report ) {
+      return child.reportValidity();
+    } else {
+      return child.checkValidity();
+    }
   }
 
   protected valueChanged(e: ValueChangedEvent<any>) {

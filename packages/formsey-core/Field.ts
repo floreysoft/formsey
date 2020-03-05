@@ -38,6 +38,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type : Boolean })
   valid: boolean = true
 
+  @property({ type : Boolean })
+  report: boolean = false
+
   @property({ converter: Object })
   set errors(errors: InvalidErrors) {
     this.errorMessage = undefined
@@ -58,23 +61,21 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   _errors: InvalidErrors = {}
   errorMessage: string
 
-  public checkValidity(): boolean {
-    // Keep custom errors
-    if ( this.errors ) {
-      for ( let key in this.errors ) {
-        let error = this.errors[key]
-        if ( !error.customError ) {
-          delete this.errors[key]
-        }
-      }
-    } else {
-      this.errors = {}
-    }
-    this.valid = this.validate()
+  public reportValidity(): boolean {
+    this.clearErrors()
+    this.report = true
+    this.valid = this.validate(true)
     return this.valid
   }
 
-  public validate(): boolean {
+  public checkValidity(): boolean {
+    this.clearErrors()
+    this.report = false
+    this.valid = this.validate(false)
+    return this.valid
+  }
+
+  public validate(report: boolean): boolean {
     return true
   }
 
@@ -132,6 +133,20 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected prependPath(path: string) {
     return this.definition.name ? this.definition.name+"."+path : path
+  }
+
+  private clearErrors() {
+    // Keep custom errors
+    if ( this.errors ) {
+      for ( let key in this.errors ) {
+        let error = this.errors[key]
+        if ( !error.customError ) {
+          delete this.errors[key]
+        }
+      }
+    } else {
+      this.errors = {}
+    }
   }
 }
 

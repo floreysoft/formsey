@@ -38,8 +38,12 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     }
   }
 
-  validate() {
-    return this.materialTextField.reportValidity() as boolean
+  validate(report : boolean) {
+    if ( report ) {
+      return this.materialTextField.reportValidity() as boolean
+    } else {
+      return this.materialTextField.checkValidity() as boolean
+    }
   }
 
   invalid() {

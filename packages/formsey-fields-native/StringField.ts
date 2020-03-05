@@ -24,7 +24,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     return html`<input type="text" ?required="${this.definition.required}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .value="${ifDefined(this.value)}">`
   }
 
-  validate() {
+  validate(report : boolean) {
     return this.input.checkValidity() as boolean
   }
 

@@ -1,28 +1,29 @@
-import { LitElement, customElement, property, html, css, CSSResult, query } from "lit-element";
-import { Dialog } from '@floreysoft/dialog'
+import { Dialog } from '@floreysoft/dialog';
+import { FieldDefinition, Form, ValueChangedEvent } from "@formsey/core";
 import { FormConfiguration } from "@formsey/core/Field";
-
 import '@formsey/core/Form';
-import '../packages/formsey-fields-vaadin/ListField';
-import '../packages/formsey-fields-vaadin/BooleanField';
-import '../packages/formsey-fields-vaadin/StringField';
-import '../packages/formsey-fields-vaadin/TextField';
+import { InvalidEvent } from "@formsey/core/InvalidEvent";
+import '@formsey/fields-compound/AddressField';
+import '@formsey/fields-compound/CreditCardField';
+import '@formsey/fields-compound/NameField';
+import '@formsey/fields-vaadin/CheckboxesField';
 import '@formsey/fields-vaadin/DateField';
-import '../packages/formsey-fields-native/RepeatingField';
+import '@formsey/fields-vaadin/MultipleChoiceField';
 import '@formsey/fields-vaadin/OptionalSectionField';
 import '@formsey/fields-vaadin/SelectableSectionField';
-import '@formsey/fields-vaadin/CheckboxesField';
-import '@formsey/fields-vaadin/MultipleChoiceField';
-import '../packages/formsey-fields-native/SourceCodeField';
-import '../packages/formsey-fields-native/MarkupField';
-import '../packages/formsey-fields-native/ImageField';
-import '../packages/formsey-fields-native/YouTubeField';
 import '@formsey/fields-vaadin/UploadField';
-import '@formsey/fields-compound/AddressField'
-import '@formsey/fields-compound/CreditCardField'
-import '@formsey/fields-compound/NameField'
-import { ValueChangedEvent, FormField, FieldDefinition } from "@formsey/core";
-import { InvalidEvent } from "@formsey/core/InvalidEvent";
+import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
+import '../packages/formsey-fields-material/StringField';
+import '../packages/formsey-fields-native/StringField';
+import '../packages/formsey-fields-native/ImageField';
+import '../packages/formsey-fields-native/MarkupField';
+import '../packages/formsey-fields-native/RepeatingField';
+import '../packages/formsey-fields-native/SourceCodeField';
+import '../packages/formsey-fields-native/YouTubeField';
+import '../packages/formsey-fields-vaadin/BooleanField';
+import '../packages/formsey-fields-vaadin/ListField';
+import '../packages/formsey-fields-vaadin/TextField';
+
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
@@ -67,7 +68,7 @@ export class DemoSection extends LitElement {
 
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
-    'string': 'formsey-string-vaadin',
+    'string': 'formsey-string',
     'text': 'formsey-text',
     'number': 'formsey-number',
     'date': 'formsey-date',
@@ -102,7 +103,7 @@ export class Demo extends LitElement {
     }
 
     @query("#demoForm")
-    demoForm: FormField
+    demoForm: Form
 
     @query("#demoFormValue")
     demoFormValue: HTMLElement
@@ -132,6 +133,7 @@ export class Demo extends LitElement {
         <p>Formsey</p>
         <formsey-form id="demoForm" .definition=${simpleDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @validationFailed=${this.validationFailed}></formsey-form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
+        <vaadin-button @click=${this.reportValidity}>Validate and report</vaadin-button>
         <vaadin-button @click=${this.error}>Error</vaadin-button>
         <pre id="demoFormValidation"></pre>
         <pre id="demoFormPath"></pre>
@@ -154,6 +156,10 @@ export class Demo extends LitElement {
 
     validate(e: Event) {
         this.demoForm.checkValidity()
+    }
+
+    reportValidity(e: Event) {
+        this.demoForm.reportValidity()
     }
 
     error(e : Event) {
