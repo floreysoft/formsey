@@ -21,11 +21,15 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   }
 
   validate() {
-    let validity = this.vaadinTextField.validate() as boolean
+    let validity = this.vaadinTextField.checkValidity() as boolean
     if (!validity) {
-      this.errors[this.definition.name] = new InvalidError("invalidInput", false, this.vaadinTextField.validity)
-      this.dispatchEvent(new InvalidEvent(this.errors))
+      this.invalid()
     }
     return validity
+  }
+
+  invalid() {
+    this.errors[this.definition.name] = new InvalidError(this.vaadinTextField.validationMessage, false, { ...this.vaadinTextField.validity })
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

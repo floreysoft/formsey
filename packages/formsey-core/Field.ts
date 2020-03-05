@@ -55,7 +55,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     return this._errors
   }
 
-  _errors: InvalidErrors
+  _errors: InvalidErrors = {}
   errorMessage: string
 
   public checkValidity(): boolean {
@@ -119,6 +119,19 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
+  }
+
+  protected firstPathElement(path: string) {
+    let index = path.indexOf('.')
+    if ( index > 0 ) {
+      return path.substring(0, index)
+    } else {
+      return path;
+    }
+  }
+
+  protected prependPath(path: string) {
+    return this.definition.name ? this.definition.name+"."+path : path
   }
 }
 

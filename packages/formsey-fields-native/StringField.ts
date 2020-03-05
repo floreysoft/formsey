@@ -1,9 +1,10 @@
-import { Field, StringFieldDefinition } from '@formsey/core';
-import { InvalidError, InvalidEvent, InvalidErrors } from '@formsey/core/InvalidEvent';
+import { LabeledField, StringFieldDefinition } from '@formsey/core';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { customElement, html, property, query } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 @customElement("formsey-string")
-export class StringField extends Field<StringFieldDefinition, string> {
+export class StringField extends LabeledField<StringFieldDefinition, string> {
   @property({ converter: Object })
   definition: StringFieldDefinition;
 
@@ -20,7 +21,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
   }
 
   protected renderField() {
-    return html`<input type="text" ?required="${this.definition.required}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${this.definition.placeholder}" .value="${this.value}">`
+    return html`<input type="text" ?required="${this.definition.required}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .value="${ifDefined(this.value)}">`
   }
 
   validate() {
@@ -28,9 +29,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
   }
 
   invalid() {
-    let validityState : ValidityState = this.input.validity
-    let errors: InvalidErrors = {}
-    errors[this.definition.name] = new InvalidError("invalidInput", false, validityState)
-    this.dispatchEvent(new InvalidEvent(errors))
+    this.errors[this.definition.name] = new InvalidError(this.input.validationMessage, false, { ...this.input.validity })
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

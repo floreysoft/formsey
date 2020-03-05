@@ -5,7 +5,6 @@ import { FormConfiguration } from "@formsey/core/Field";
 import '@formsey/core/Form';
 import '../packages/formsey-fields-vaadin/ListField';
 import '../packages/formsey-fields-vaadin/BooleanField';
-import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-vaadin/TextField';
 import '@formsey/fields-vaadin/DateField';
@@ -68,7 +67,7 @@ export class DemoSection extends LitElement {
 
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
-    'string': 'formsey-string-material',
+    'string': 'formsey-string-vaadin',
     'text': 'formsey-text',
     'number': 'formsey-number',
     'date': 'formsey-date',
@@ -108,6 +107,9 @@ export class Demo extends LitElement {
     @query("#demoFormValue")
     demoFormValue: HTMLElement
 
+    @query("#demoFormPath")
+    demoFormPath: HTMLElement
+
     @query("#demoFormValidation")
     demoFormValidation: HTMLElement
 
@@ -132,6 +134,7 @@ export class Demo extends LitElement {
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <vaadin-button @click=${this.error}>Error</vaadin-button>
         <pre id="demoFormValidation"></pre>
+        <pre id="demoFormPath"></pre>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
            <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
@@ -159,7 +162,6 @@ export class Demo extends LitElement {
 
     validationFailed(e: InvalidEvent) {
         this.demoFormValidation.innerText = JSON.stringify(e.errors, null, 2)
-        console.log(JSON.stringify(e))
     }
 
     openDialog(id: string) {
@@ -169,6 +171,7 @@ export class Demo extends LitElement {
     }
 
     valueChanged(e: ValueChangedEvent<Object>) {
+        this.demoFormPath.innerText = e.name
         this.demoFormValue.innerHTML = JSON.stringify(e.value)
     }
 

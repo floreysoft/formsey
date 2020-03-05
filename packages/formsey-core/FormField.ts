@@ -137,11 +137,9 @@ export class FormField extends Field<FormDefinition, Object> {
   protected valueChanged(e: any) {
     e.stopPropagation()
     if (this.value) {
-      if (e.name) {
-        this.value[e.name] = e.value;
-      }
+      this.value[this.firstPathElement(e.name)] = e.value;
       this.removeDeletedFields()
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.name), this.value));
     }
   }
 
