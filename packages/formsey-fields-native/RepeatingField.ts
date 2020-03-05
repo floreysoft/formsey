@@ -1,10 +1,14 @@
-import { createField, FormDefinition, LabeledField, RepeatingFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { css, customElement, html, property, TemplateResult } from 'lit-element';
+import { createField, FormDefinition, LabeledField, RepeatingFieldDefinition, ValueChangedEvent, Field } from '@formsey/core';
+import { css, customElement, html, property, TemplateResult, queryAll } from 'lit-element';
+import { InvalidEvent } from '@formsey/core/InvalidEvent';
 
 @customElement("formsey-repeating-section")
 export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
   value: Object[] = [];
+
+  @queryAll(".fs-nested-form")
+  protected _fields: HTMLElement[]
 
   static get styles() {
     return [...super.styles, css`
@@ -68,14 +72,34 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
       for (let i: number = 0; i < this.value.length; i++) {
         const value = this.value[i];
         const fieldDefinition: FormDefinition = { ...this.definition.form, name: ""+i }
-        let errors = {}
-        const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}
+        let fieldErrors = {}
+        if (this.errors) {
+          for (let error in this.errors) {
+            let path = this.definition.name + "[" + i + "]."
+            if (this.definition.name && (error.startsWith(path))) {
+                fieldErrors[error.substring(path.length)] = this.errors[error]
+            }
+          }
+        }
+        const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.configuration, fieldDefinition, value, fieldErrors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><svg class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" viewBox="0 0 32 32"><title>Remove section</title><path d="M0 13v6c0 0.552 0.448 1 1 1h30c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1h-30c-0.552 0-1 0.448-1 1z"></path>
 </svg></div>` : html ``}</div>`;
         itemTemplates.push(template);
       }
     }
     return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<svg viewBox="0 0 32 32" class="fs-add" @click="${(e: Event) => this.addForm()}"><title>Add section</title><path d="M31 12h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552 0-1 0.448-1 1v11h-11c-0.552 0-1 0.448-1 1v6c0 0.552 0.448 1 1 1h11v11c0 0.552 0.448 1 1 1h6c0.552 0 1-0.448 1-1v-11h11c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1z"></path></svg>`: html``}`;
+  }
+
+  public validate(report : boolean) {
+    for (let field of this._fields) {
+      let child = field.firstElementChild as Field<any, any>
+      if ( report ) {
+        child.reportValidity();
+      } else {
+        child.checkValidity();
+      }
+    }
+    return true;
   }
 
   protected addForm() {
@@ -119,5 +143,14 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
+  }
+
+  protected invalid(e: InvalidEvent) {
+    e.stopPropagation()
+    for (let error in e.errors) {
+      let index = error.indexOf('.')
+      this.errors[this.definition.name + "[" + error.substring(0, index) +"]."+error.substring(index+1)] = e.errors[error]
+    }
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
