@@ -31,12 +31,12 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
 
   firstUpdated() {
     this.materialTextField.validityTransform = (newValue, nativeValidity) => {
-      if ( this.errors ) {
+      if ( this.error ) {
         return {
           valid: false,
           validityMessage: this.error.validityMessage,
           ...this.error.validityState
-        };
+        }
       }
       return nativeValidity;
     }
