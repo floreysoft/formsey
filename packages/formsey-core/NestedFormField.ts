@@ -4,10 +4,6 @@ import { InvalidEvent } from './InvalidEvent';
 
 @customElement("formsey-nested-form")
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
-  static get styles() {
-    return [...super.styles];
-  }
-
   value: Object = {}
 
   renderField() {

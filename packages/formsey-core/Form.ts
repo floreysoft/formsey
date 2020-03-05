@@ -1,15 +1,26 @@
-import { createField, NestedFormField, ValueChangedEvent } from '@formsey/core';
+import { createField, Field, FieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { customElement } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
 @customElement("formsey-form")
-export class Form extends NestedFormField {
+export class Form extends Field<FieldDefinition, Object> {
+  value: Object = {}
+
   renderField() {
     return createField(this.configuration, this.definition, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
   }
 
   renderHeader() {
     return
+  }
+
+  public validate(report : boolean) {
+    let child = this.renderRoot.firstElementChild as Field<any, any>
+    if ( report ) {
+      return child.reportValidity();
+    } else {
+      return child.checkValidity();
+    }
   }
 
   protected valueChanged(e: ValueChangedEvent<any>) {
