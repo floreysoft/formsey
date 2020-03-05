@@ -60,6 +60,10 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   }
 
   protected renderFooter(): TemplateResult | void {
-    return this.report && typeof this.validityMessage !== "undefined" ? html`<div class="error-text">${this.validityMessage}</div>` : undefined
+    let customValidity = this.definition.customValidity
+    if ( this.error ) {
+      customValidity = this.error.validityMessage
+    }
+    return this.report && typeof customValidity !== "undefined" ? html`<div class="error-text">${customValidity}</div>` : undefined
   }
 }

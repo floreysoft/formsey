@@ -1,6 +1,6 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { FieldDefinition } from './FieldDefinitions';
-import { InvalidErrors } from './InvalidEvent';
+import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export interface FormConfiguration {
@@ -43,12 +43,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   @property({ converter: Object })
   set errors(errors: InvalidErrors) {
-    this.validityMessage = undefined
+    this.error = undefined
     if (errors && this.definition.name) {
-      let error = errors[this.definition.name]
-      if (error) {
-        this.validityMessage = error.validityMessage
-      }
+      this.error = errors[this.definition.name];
     }
     this._errors = errors;
     this.requestUpdate();
@@ -59,7 +56,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   _errors: InvalidErrors = {}
-  validityMessage: string
+  error: InvalidError | undefined
 
   public reportValidity(): boolean {
     this.clearErrors()

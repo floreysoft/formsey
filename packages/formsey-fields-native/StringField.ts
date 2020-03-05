@@ -35,8 +35,8 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
         validityState[key] = this.input.validity[key]
       }
     }
-    if ( this.validityMessage ) {
-      this.errors[this.definition.name] = new InvalidError(this.validityMessage, true, validityState )
+    if ( this.error ) {
+      this.errors[this.definition.name] = this.error
     } else {
       this.errors[this.definition.name] = new InvalidError(this.input.validationMessage, false, validityState )
     }

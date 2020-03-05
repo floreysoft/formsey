@@ -8,6 +8,7 @@ export interface FieldDefinition {
   enabled?: boolean
   hidden?: boolean
   autofill? : string
+  customValidity? : string
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {
