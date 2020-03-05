@@ -1,6 +1,6 @@
 export class ValueChangedEvent<T> extends Event {
     value: T;
-    name: string | undefined;
+    name: string;
 
     constructor(name: string | undefined, value: T) {
         super("valueChanged");
