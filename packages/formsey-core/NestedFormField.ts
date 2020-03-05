@@ -28,7 +28,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     e.stopPropagation()
     if (this.firstPathElement(e.name) == this.definition.name) {
       this.value = e.value;
-      this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.name), this.value));
+      this.dispatchEvent(new ValueChangedEvent(e.name, this.value));
     }
   }
 
