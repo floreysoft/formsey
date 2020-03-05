@@ -35,6 +35,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   value: V;
 
+  @property({ type : Boolean })
+  valid: boolean = true
+
   @property({ converter: Object })
   set errors(errors: InvalidErrors) {
     this.errorMessage = undefined
@@ -67,7 +70,8 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     } else {
       this.errors = {}
     }
-    return this.validate()
+    this.valid = this.validate()
+    return this.valid
   }
 
   public validate(): boolean {

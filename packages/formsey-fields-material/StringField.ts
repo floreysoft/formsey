@@ -49,7 +49,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
         delete validityState[key]
       }
     }
-    let errorMessage = "invalidInput"
+    let errorMessage = this.materialTextField.validationMessage
     let customError = false
     if ( validityState['errorMessage'] ) {
       errorMessage = validityState['errorMessage']
