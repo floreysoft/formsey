@@ -62,6 +62,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     this.clearErrors()
     this.report = true
     this.valid = this.validate(true)
+    if ( this.valid && this.error ) {
+      this.valid = false
+    }
     return this.valid
   }
 
@@ -69,6 +72,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     this.clearErrors()
     this.report = false
     this.valid = this.validate(false)
+    if ( this.valid && this.error ) {
+      this.valid = false
+    }
     return this.valid
   }
 
@@ -143,6 +149,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
       }
     } else {
       this.errors = {}
+    }
+    if ( this.error && !this.error.custom ) {
+      this.error = undefined
     }
   }
 }

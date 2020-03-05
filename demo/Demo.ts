@@ -131,7 +131,7 @@ export class Demo extends LitElement {
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <formsey-form id="demoForm" .definition=${simpleDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @invalid=${this.validationFailed}></formsey-form>
+        <formsey-form id="demoForm" .definition=${simpleDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <vaadin-button @click=${this.reportValidity}>Validate and report</vaadin-button>
         <vaadin-button @click=${this.error}>Error</vaadin-button>
@@ -166,7 +166,7 @@ export class Demo extends LitElement {
         this.demoForm.errors = { "verticalForm.a" : { "validityMessage" : "Blabla", "custom": true, "validityState" : undefined } }
     }
 
-    validationFailed(e: InvalidEvent) {
+    invalid(e: InvalidEvent) {
         this.demoFormValidation.innerText = JSON.stringify(e.errors, null, 2)
     }
 

@@ -31,11 +31,11 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
 
   firstUpdated() {
     this.materialTextField.validityTransform = (newValue, nativeValidity) => {
-      if (this.errors[this.definition.name] && this.errors[this.definition.name].custom ) {
+      if ( this.errors ) {
         return {
           valid: false,
-          validityMessage: this.errors[this.definition.name].validityMessage,
-          ...this.errors[this.definition.name].validityState
+          validityMessage: this.error.validityMessage,
+          ...this.error.validityState
         };
       }
       return nativeValidity;
