@@ -92,6 +92,8 @@ export class FormField extends Field<FormDefinition, Object> {
           for (let error in this.errors) {
             if (this.definition.name && (error == this.definition.name + "." + field.name || error.startsWith(this.definition.name + "." + field.name + "."))) {
                 fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
+            } else if (error.startsWith(field.name + "[")) {
+                fieldErrors[error] = this.errors[error]
             } else if (error == field.name || error.startsWith(field.name + ".")) {
                 fieldErrors[error] = this.errors[error]
             }
