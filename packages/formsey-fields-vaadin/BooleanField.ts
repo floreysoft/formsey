@@ -20,7 +20,7 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   }
 
   renderField() {
-    return html`<vaadin-checkbox label="${this.definition.prompt}" @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value}>${this.definition.label}</vaadin-checkbox>`;
+    return html`<vaadin-checkbox-group label="${this.definition.prompt}" theme="vertical"><vaadin-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value}>${this.definition.prompt}</vaadin-checkbox></vaadin-checkbox-group>`;
   }
 
   renderHeader() {
