@@ -1,11 +1,12 @@
-import { BooleanFieldDefinition, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { BooleanFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
+import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { css, customElement, html, property, query } from 'lit-element';
+import { VaadinField } from '.';
 
 @customElement("formsey-boolean-vaadin")
-export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
+export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
@@ -22,14 +23,6 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
 
   renderField() {
     return html`<vaadin-checkbox-group label="${this.definition.prompt}" theme="vertical"><vaadin-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value}>${this.definition.prompt}</vaadin-checkbox></vaadin-checkbox-group>`;
-  }
-
-  renderHeader() {
-    return
-  }
-
-  renderFooter() {
-    return this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
   }
 
   protected valueChanged(e: any) {

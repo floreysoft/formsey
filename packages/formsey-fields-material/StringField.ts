@@ -22,7 +22,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     if ( this.error ) {
       customValidity = this.error.validityMessage
     }
-    return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autofill}" validationmessage="${customValidity}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${ifDefined(this.definition.disabled)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
+    return html`<mwc-textfield fullwidth="true" helper="${ifDefined(this.definition.helpText)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autofill}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${this.definition.disabled}" .value="${this.value}"></mwc-textfield>`;
   }
 
   renderFooter() {

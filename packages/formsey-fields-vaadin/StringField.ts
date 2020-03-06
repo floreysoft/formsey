@@ -1,11 +1,12 @@
-import { LabeledField, StringFieldDefinition } from '@formsey/core';
+import { StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { VaadinTextField } from '@vaadin/vaadin-text-field';
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { VaadinField } from '.';
 
 @customElement("formsey-string-vaadin")
-export class StringField extends LabeledField<StringFieldDefinition, string> {
+export class StringField extends VaadinField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
@@ -18,14 +19,6 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
       customValidity = this.error.validityMessage
     }
     return html`<vaadin-text-field style="display:flex" label="${this.definition.prompt}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`;
-  }
-
-  renderHeader() {
-    return
-  }
-
-  renderFooter() {
-    return this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
   }
 
   validate() {
