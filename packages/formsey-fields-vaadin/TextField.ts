@@ -2,7 +2,7 @@ import { TextFieldDefinition } from '@formsey/core';
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
 import { customElement, html, property } from 'lit-element';
 import { ifDefined } from "lit-html/directives/if-defined";
-import { VaadinField } from '.';
+import { VaadinField } from './VaadinField';
 
 @customElement("formsey-text-vaadin")
 export class TextField extends VaadinField<TextFieldDefinition, string> {

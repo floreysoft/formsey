@@ -3,7 +3,7 @@ import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { VaadinTextField } from '@vaadin/vaadin-text-field';
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { VaadinField } from '.';
+import { VaadinField } from './VaadinField';
 
 @customElement("formsey-string-vaadin")
 export class StringField extends VaadinField<StringFieldDefinition, string> {

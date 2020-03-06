@@ -8,11 +8,12 @@ export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T,
     .wrapper {
       box-sizing: border-box;
       transition: all 0.2s ease-out;
+      padding: 0 0 var(--lumo-space-xs) 0;
     }
 
     .invalid {
       background-color: var(--formsey-invalod_color, var(--lumo-error-color-10pct, #ff000005));
-      padding: 0 0.5rem 0.1rem;
+      padding: 0 0.5rem var(--lumo-space-xs);
       margin: 0.1rem 0;
       border-radius: var(--formsey-invalid-border-radius, var(--lumo-border-radius-m, 0.2em));
     }

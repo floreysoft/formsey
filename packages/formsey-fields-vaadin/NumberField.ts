@@ -4,7 +4,7 @@ import { VaadinNumberField } from '@vaadin/vaadin-text-field';
 import "@vaadin/vaadin-text-field/vaadin-number-field.js";
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { VaadinField } from '.';
+import { VaadinField } from './VaadinField';
 
 @customElement("formsey-number-vaadin")
 export class NumberField extends VaadinField<NumberFieldDefinition, string> {

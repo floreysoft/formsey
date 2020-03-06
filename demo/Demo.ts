@@ -71,7 +71,7 @@ export class DemoSection extends LitElement {
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean-vaadin',
     'string': 'formsey-string-vaadin',
-    'text': 'formsey-text',
+    'text': 'formsey-text-vaadin',
     'number': 'formsey-number',
     'date': 'formsey-date',
     'list': 'formsey-list',
@@ -129,7 +129,7 @@ export class Demo extends LitElement {
     }
 
     render() {
-        let simpleDemo = { name: "verticalForm", type: "form", fields: [ { "type" : "boolean", "name" : "boo", "prompt" : "Labelchen" }, ...this.createFields(2), { "type" : "repeatingSection", "name": "repeated", "min": 0, "max" : 5, "form" : { "type": "form", "fields": this.createFields(2) }} ] }
+        let simpleDemo = { name: "verticalForm", type: "form", fields: [ { "type" : "boolean", "name" : "boo", "prompt" : "Labelchen", "helpText" : "Some help here" }, ...this.createFields(2), { "type" : "repeatingSection", "name": "repeated", "min": 0, "max" : 5, "form" : { "type": "form", "fields": this.createFields(2) }} ] }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
@@ -151,7 +151,7 @@ export class Demo extends LitElement {
     createFields(count: number): FieldDefinition[] {
         let fields: StringFieldDefinition[] = []
         for (let i = 0; i < count; i++) {
-            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, pattern : "[a-z]*", minlength: 10 })
+            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, helpText : "Some more help" })
         }
         return fields;
     }
