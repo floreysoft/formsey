@@ -8,7 +8,7 @@ export interface FieldDefinition {
 }
 
 export interface InputFieldDefinition extends FieldDefinition {
-  focus? : boolean
+  autofocus? : boolean
   required?: boolean
   disabled?: boolean
   autofill? : string
