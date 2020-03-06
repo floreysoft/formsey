@@ -14,7 +14,7 @@ export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T,
     .invalid {
       background-color: var(--formsey-invalod_color, var(--lumo-error-color-10pct, #ff000005));
       padding: 0 0.5rem var(--lumo-space-xs);
-      margin: 0.1rem 0;
+      margin: 0 0 0.1rem 0;
       border-radius: var(--formsey-invalid-border-radius, var(--lumo-border-radius-m, 0.2em));
     }
 
