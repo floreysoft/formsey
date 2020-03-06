@@ -13,6 +13,7 @@ import '@formsey/fields-vaadin/OptionalSectionField';
 import '@formsey/fields-vaadin/SelectableSectionField';
 import '@formsey/fields-vaadin/UploadField';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
+import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-native/ImageField';
 import '../packages/formsey-fields-native/MarkupField';
@@ -68,7 +69,7 @@ export class DemoSection extends LitElement {
 
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean',
-    'string': 'formsey-string',
+    'string': 'formsey-string-vaadin',
     'text': 'formsey-text',
     'number': 'formsey-number',
     'date': 'formsey-date',
