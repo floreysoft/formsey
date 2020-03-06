@@ -1,8 +1,9 @@
 import { Dialog } from '@floreysoft/dialog';
 import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
+import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import { FormConfiguration } from "@formsey/core/Field";
-import '@formsey/core/Form';
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
+import '@formsey/core/Form';
 import '@formsey/fields-compound/AddressField';
 import '@formsey/fields-compound/CreditCardField';
 import '@formsey/fields-compound/NameField';
@@ -12,7 +13,7 @@ import '@formsey/fields-vaadin/MultipleChoiceField';
 import '@formsey/fields-vaadin/OptionalSectionField';
 import '@formsey/fields-vaadin/SelectableSectionField';
 import '@formsey/fields-vaadin/UploadField';
-import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
+import '../packages/formsey-fields-vaadin/BooleanField';
 import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-native/ImageField';
@@ -68,7 +69,7 @@ export class DemoSection extends LitElement {
 }
 
 const CONFIG: FormConfiguration = {
-    'boolean': 'formsey-boolean',
+    'boolean': 'formsey-boolean-vaadin',
     'string': 'formsey-string-vaadin',
     'text': 'formsey-text',
     'number': 'formsey-number',
@@ -128,7 +129,7 @@ export class Demo extends LitElement {
     }
 
     render() {
-        let simpleDemo = { name: "verticalForm", type: "form", fields: [ ...this.createFields(2), { "type" : "repeatingSection", "name": "repeated", "min": 0, "max" : 5, "form" : { "type": "form", "fields": this.createFields(2) }} ] }
+        let simpleDemo = { name: "verticalForm", type: "form", fields: [ { "type" : "boolean", "name" : "boo", "prompt" : "Labelchen" }, ...this.createFields(2), { "type" : "repeatingSection", "name": "repeated", "min": 0, "max" : 5, "form" : { "type": "form", "fields": this.createFields(2) }} ] }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
