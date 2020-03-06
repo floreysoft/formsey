@@ -22,7 +22,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     if ( this.error ) {
       customValidity = this.error.validityMessage
     }
-    return html`<mwc-textfield fullwidth="true" helper="${ifDefined(this.definition.helpText)}" ?autofocus="${ifDefined(this.definition.autofocus)}" ?required="${ifDefined(this.definition.required)}" autocomplete="${ifDefined(this.definition.autofill)}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${ifDefined(this.definition.disabled)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
+    return html`<mwc-textfield fullwidth="true" helper="${this.definition.helpText}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autofill}" validationmessage="${customValidity}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${ifDefined(this.definition.disabled)}" .value="${ifDefined(this.value)}"></mwc-textfield>`;
   }
 
   renderFooter() {
@@ -34,7 +34,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
       if ( this.error ) {
         return {
           valid: false,
-          validityMessage: this.error.validityMessage,
+          validationMessage: this.error.validityMessage,
           ...this.error.validityState
         }
       }
@@ -57,14 +57,12 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
         delete validityState[key]
       }
     }
-    let validityMessage = this.materialTextField.validationMessage
-    let customError = false
-    if ( validityState['validityMessage'] ) {
-      validityMessage = validityState['validityMessage']
-      delete validityState['validityMessage']
-      customError = true
+    let validationMessage = this.materialTextField.validationMessage
+    if ( validityState['validationMessage'] ) {
+      validationMessage = validityState['validationMessage']
+      delete validityState['validationMessage']
     }
-    this.errors[this.definition.name] = new InvalidError(validityMessage, customError, validityState)
+    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(validationMessage, false, validityState )
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

@@ -17,11 +17,15 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
     if ( this.error ) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-text-field style="display:flex" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`;
+    return html`<vaadin-text-field style="display:flex" label="${this.definition.prompt}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`;
+  }
+
+  renderHeader() {
+    return
   }
 
   renderFooter() {
-    return
+    return this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
   }
 
   validate() {
