@@ -18,7 +18,7 @@ export class NumberField extends LabeledField<NumberFieldDefinition, string> {
     if ( this.error ) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-number-field has-controls ?autofocus="${this.definition.autofocus}" ?required="${ifDefined(this.definition.required)}" ?autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" min="${ifDefined(this.definition.min)}" max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" error-message="${ifDefined(customValidity)}" ?disabled="${ifDefined(this.definition.disabled)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`
+    return html`<vaadin-number-field style="display:flex" has-controls ?autofocus="${this.definition.autofocus}" ?required="${ifDefined(this.definition.required)}" ?autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" min="${ifDefined(this.definition.min)}" max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" error-message="${ifDefined(customValidity)}" ?disabled="${ifDefined(this.definition.disabled)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`
   }
 
   renderFooter() {
