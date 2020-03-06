@@ -1,5 +1,5 @@
-import { LabeledField, TextFieldDefinition } from '@formsey/core';
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
+import { LabeledField, TextFieldDefinition } from '@formsey/core';
 import { customElement, html, property } from 'lit-element';
 import { ifDefined } from "lit-html/directives/if-defined";
 

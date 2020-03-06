@@ -1,3 +1,4 @@
+import "@vaadin/vaadin-text-field/vaadin-number-field.js";
 import { LabeledField, NumberFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { VaadinNumberField } from '@vaadin/vaadin-text-field';
