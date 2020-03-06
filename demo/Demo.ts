@@ -1,5 +1,5 @@
 import { Dialog } from '@floreysoft/dialog';
-import { FieldDefinition, Form, ValueChangedEvent } from "@formsey/core";
+import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
 import { FormConfiguration } from "@formsey/core/Field";
 import '@formsey/core/Form';
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
@@ -14,11 +14,11 @@ import '@formsey/fields-vaadin/SelectableSectionField';
 import '@formsey/fields-vaadin/UploadField';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import '../packages/formsey-fields-material/StringField';
-import '../packages/formsey-fields-native/StringField';
 import '../packages/formsey-fields-native/ImageField';
 import '../packages/formsey-fields-native/MarkupField';
 import '../packages/formsey-fields-native/RepeatingField';
 import '../packages/formsey-fields-native/SourceCodeField';
+import '../packages/formsey-fields-native/StringField';
 import '../packages/formsey-fields-native/YouTubeField';
 import '../packages/formsey-fields-vaadin/BooleanField';
 import '../packages/formsey-fields-vaadin/ListField';
@@ -127,7 +127,7 @@ export class Demo extends LitElement {
     }
 
     render() {
-        let simpleDemo = { name: "verticalForm", type: "form", fields: [ { "type" : "repeatingSection", "name": "repeated", "min": 0, "max" : 5, "form" : { "type": "form", "fields": this.createFields(2) }} ] }
+        let simpleDemo = { name: "verticalForm", type: "form", fields: [ ...this.createFields(2), { "type" : "repeatingSection", "name": "repeated", "min": 0, "max" : 5, "form" : { "type": "form", "fields": this.createFields(2) }} ] }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
@@ -147,9 +147,9 @@ export class Demo extends LitElement {
     }
 
     createFields(count: number): FieldDefinition[] {
-        let fields: FieldDefinition[] = []
+        let fields: StringFieldDefinition[] = []
         for (let i = 0; i < count; i++) {
-            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true })
+            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, pattern : "[a-z]*", minlength: 10 })
         }
         return fields;
     }

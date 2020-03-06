@@ -1,11 +1,11 @@
 import { TemplateResult, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
-import { FieldDefinition } from './FieldDefinitions';
+import { InputFieldDefinition, FieldDefinition } from './FieldDefinitions';
 import { Field } from '.';
 
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
   static get styles() {
-    return [ ...super.styles, css`
+    return [...super.styles, css`
     .wrapper {
       box-sizing: border-box;
       transition: all 0.2s ease-out;
@@ -50,20 +50,26 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   }
 
   protected render(): void | TemplateResult {
-     return html`<div class="${classMap({wrapper: true, invalid : !this.valid && this.report })}">${this.renderHeader()}${this.renderField()}${this.renderFooter()}</div>`
+    return html`<div class="${classMap({ wrapper: true, invalid: !this.valid && this.report })}">${this.renderHeader()}${this.renderField()}${this.renderFooter()}</div>`
   }
 
   protected renderHeader(): TemplateResult | void {
+    let required = false
+    if (this.definition.hasOwnProperty('required') ) {
+      required = (<InputFieldDefinition>this.definition).required
+    }
     return html`
-      ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${this.definition.required ? html`<span class="required">*</span>` : html``}</div>` : undefined}
+      ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${required ? html`<span class="required">*</span>` : html``}</div>` : undefined}
       ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined}`
   }
 
   protected renderFooter(): TemplateResult | void {
-    let customValidity = this.definition.customValidity
-    if ( this.error ) {
-      customValidity = this.error.validityMessage
+    if (this.definition.hasOwnProperty('customValidity') ) {
+      let validityMessage = (<InputFieldDefinition>this.definition).customValidity
+      if (this.error) {
+        validityMessage = this.error.validityMessage
+      }
+      return this.report && typeof validityMessage !== "undefined" ? html`<div class="error-text">${validityMessage}</div>` : undefined
     }
-    return this.report && typeof customValidity !== "undefined" ? html`<div class="error-text">${customValidity}</div>` : undefined
   }
 }

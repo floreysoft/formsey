@@ -1,5 +1,5 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
-import { FieldDefinition } from './FieldDefinitions';
+import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -160,7 +160,7 @@ export abstract class CompoundField<T extends FieldDefinition, V> extends Field<
   protected renderHeader() {
   }
 
-  protected includeOptionalField(fields: FieldDefinition[], include: boolean, type: string, name: string, helpText: string, autofill: string) {
+  protected includeOptionalField(fields: InputFieldDefinition[], include: boolean, type: string, name: string, helpText: string, autofill: string) {
     if (include) {
       fields.push({
         type: type,

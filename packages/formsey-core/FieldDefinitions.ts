@@ -3,10 +3,13 @@ export interface FieldDefinition {
   type?: string
   prompt?: string
   helpText?: string
-  required?: boolean
-  default? : any
-  enabled?: boolean
   hidden?: boolean
+  default? : any
+}
+
+export interface InputFieldDefinition extends FieldDefinition {
+  required?: boolean
+  disabled?: boolean
   autofill? : string
   customValidity? : string
 }
@@ -17,20 +20,22 @@ export interface ImageFieldDefinition extends FieldDefinition {
   align: string
 }
 
-export interface BooleanFieldDefinition extends FieldDefinition {
+export interface BooleanFieldDefinition extends InputFieldDefinition {
   label?: string
   indeterminate?: boolean
   default? : boolean
 }
 
-export interface NumberFieldDefinition extends FieldDefinition {
-  min: number
-  max: number
+export interface NumberFieldDefinition extends InputFieldDefinition {
+  min?: number
+  max?: number
 }
 
-export interface StringFieldDefinition extends FieldDefinition {
+export interface StringFieldDefinition extends InputFieldDefinition {
   focus? : boolean
   placeholder?: string
+  pattern? : string
+  minlength? : number
   maxlength? : number
   default? : string
 }
@@ -38,8 +43,8 @@ export interface StringFieldDefinition extends FieldDefinition {
 export interface TextFieldDefinition extends StringFieldDefinition {
 }
 
-export interface DateFieldDefinition extends FieldDefinition {
-  placeholder: string
+export interface DateFieldDefinition extends InputFieldDefinition {
+  placeholder?: string
 }
 
 export class Option {
@@ -47,11 +52,11 @@ export class Option {
   value: string
 }
 
-export interface ListFieldDefinition extends FieldDefinition {
+export interface ListFieldDefinition extends InputFieldDefinition {
   options : Option[] | string[]
 }
 
-export interface CheckboxesFieldDefinition extends FieldDefinition {
+export interface CheckboxesFieldDefinition extends InputFieldDefinition {
   options : Option[] | string[]
   other? : boolean
 }
@@ -83,7 +88,7 @@ export interface OptionalSectionFieldDefinition extends FieldDefinition {
   offForm : FormDefinition
 }
 
-export interface SignatureFieldDefinition extends FieldDefinition {
+export interface SignatureFieldDefinition extends InputFieldDefinition {
   width: number
   height: number
 }

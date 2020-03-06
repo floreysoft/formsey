@@ -1,7 +1,7 @@
 import { LabeledField, StringFieldDefinition } from '@formsey/core';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 
 @customElement("formsey-string")
 export class StringField extends LabeledField<StringFieldDefinition, string> {
@@ -21,7 +21,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   }
 
   protected renderField() {
-    return html`<input type="text" ?required="${this.definition.required}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .value="${ifDefined(this.value)}">`
+    return html`<input type="text" ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" pattern="${ifDefined(this.definition.pattern)}" minlength="${ifDefined(this.definition.minlength)}" maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}">`
   }
 
   validate(report : boolean) {
@@ -35,11 +35,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
         validityState[key] = this.input.validity[key]
       }
     }
-    if ( this.error ) {
-      this.errors[this.definition.name] = this.error
-    } else {
-      this.errors[this.definition.name] = new InvalidError(this.input.validationMessage, false, validityState )
-    }
+    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(this.input.validationMessage, false, validityState )
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
