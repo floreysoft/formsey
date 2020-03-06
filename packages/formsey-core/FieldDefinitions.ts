@@ -8,6 +8,7 @@ export interface FieldDefinition {
 }
 
 export interface InputFieldDefinition extends FieldDefinition {
+  focus? : boolean
   required?: boolean
   disabled?: boolean
   autofill? : string
@@ -29,10 +30,10 @@ export interface BooleanFieldDefinition extends InputFieldDefinition {
 export interface NumberFieldDefinition extends InputFieldDefinition {
   min?: number
   max?: number
+  step?: number
 }
 
 export interface StringFieldDefinition extends InputFieldDefinition {
-  focus? : boolean
   placeholder?: string
   pattern? : string
   minlength? : number
