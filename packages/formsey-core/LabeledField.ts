@@ -20,6 +20,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
 
     .error-text {
       color: var(--formsey-error-text-color, var(--lumo-error-text-color, #ff0000));
+      font-family: var(--formsey-prompt-font-family, var(--lumo-font-family));
       font-size: var(--formsey-error-font-size, var(--lumo-font-size-s));
       line-height: var(--formsey-error-line-height, var(--lumo-line-height-s));
     }
