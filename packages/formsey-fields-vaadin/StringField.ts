@@ -15,22 +15,22 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
 
   renderField() {
     let customValidity = this.definition.customValidity
-    if ( this.error ) {
+    if ( this.error && this.error.validityMessage ) {
       customValidity = this.error.validityMessage
     }
     return html`<vaadin-text-field style="display:flex" label="${this.definition.prompt}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`;
   }
 
   validate() {
-    let validity = this.vaadinTextField.checkValidity() as boolean
-    if (!validity) {
+    this.valid = this.vaadinTextField.checkValidity() as boolean
+    if (!this.valid) {
       this.invalid()
     }
-    return validity
+    return this.valid
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinTextField.validationMessage, false, { ...this.vaadinTextField.validity })
+    this.errors[this.definition.name] = new InvalidError(this.vaadinTextField.errorMessage, false, { ...this.vaadinTextField.validity })
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

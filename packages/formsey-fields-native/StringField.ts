@@ -20,7 +20,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
       width: 100%;
       box-sizing: border-box;
       border-radius: var(--formsey-input-border-radius, 4px);
-      border: var(--formsey-input-border, 1px solid -s#d5d5d5);
+      border: 1px solid var(--formsey-input-border-color, #d5d5d5);
       padding: var(--formsey-input-padding, 8px);
       outline: none;
       user-select: auto;

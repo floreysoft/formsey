@@ -151,7 +151,7 @@ export class Demo extends LitElement {
     createFields(count: number): FieldDefinition[] {
         let fields: StringFieldDefinition[] = []
         for (let i = 0; i < count; i++) {
-            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, helpText : "Some more help" })
+            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, helpText : "Some more help", customValidity: "Was los!" })
         }
         return fields;
     }

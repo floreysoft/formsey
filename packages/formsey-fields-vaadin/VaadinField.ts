@@ -35,6 +35,6 @@ export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T,
   }
 
   renderFooter() {
-    return this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
+    return this.definition.helpText && this.valid ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
   }
 }
