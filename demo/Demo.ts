@@ -129,7 +129,7 @@ export class Demo extends LitElement {
     }
 
     render() {
-        let simpleDemo = { name: "verticalForm", type: "form", fields: [ { "type" : "boolean", "name" : "boo", "prompt" : "Labelchen", "helpText" : "Some help here" }, ...this.createFields(2), { "type" : "repeatingSection", "name": "repeated", "min": 0, "max" : 5, "form" : { "type": "form", "fields": this.createFields(2) }} ] }
+        let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>

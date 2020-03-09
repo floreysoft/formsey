@@ -137,9 +137,9 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
     */
   }
 
-  protected valueChanged(e: any) {
-    const index: number = e.name;
-    this.value[index] = e.currentTarget.value;
+  protected valueChanged(e: ValueChangedEvent<any>) {
+    let index = this.firstPathElement(e.name);
+    this.value[index] = e.value;
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
