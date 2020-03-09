@@ -10,6 +10,6 @@ export class TextField extends VaadinField<TextFieldDefinition, string> {
   value: string;
 
   renderField() {
-    return html`<vaadin-text-area style="display:flex" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .value="${ifDefined(this.value)}"></vaadin-text-area>`;
+    return html`<vaadin-text-area style="display:flex" label="${this.definition.prompt}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .value="${ifDefined(this.value)}"></vaadin-text-area>`;
   }
 }

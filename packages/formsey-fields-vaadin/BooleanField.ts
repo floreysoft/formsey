@@ -22,7 +22,7 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
   }
 
   renderField() {
-    return html`<vaadin-checkbox-group label="${this.definition.prompt}" theme="vertical"><vaadin-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value}>${this.definition.prompt}</vaadin-checkbox></vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group label="${this.definition.prompt}" theme="vertical"><vaadin-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value}>${this.definition.label ? this.definition.label : this.definition.prompt}</vaadin-checkbox></vaadin-checkbox-group>`;
   }
 
   protected valueChanged(e: any) {

@@ -45,6 +45,9 @@ export interface TextFieldDefinition extends StringFieldDefinition {
 }
 
 export interface DateFieldDefinition extends InputFieldDefinition {
+  min?: string
+  max?: string
+  step?: number
   placeholder?: string
 }
 
