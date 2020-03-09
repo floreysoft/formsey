@@ -113,6 +113,10 @@ export class FormField extends Field<FormDefinition, Object> {
     return html`<div class="grid" style="${grid}">${templates}</div>`
   }
 
+  updated() {
+    this.updateComplete.then(() => {this.resize()})
+  }
+
   connectedCallback() {
     super.connectedCallback()
     window.addEventListener("resizeForm", this.resizeHandler)

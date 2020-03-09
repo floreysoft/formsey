@@ -1,15 +1,38 @@
-import { TextFieldDefinition } from '@formsey/core';
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
-import { customElement, html, property } from 'lit-element';
+import { TextFieldDefinition } from '@formsey/core';
+import { VaadinTextArea } from '@vaadin/vaadin-text-field';
+import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from "lit-html/directives/if-defined";
 import { VaadinField } from './VaadinField';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 
 @customElement("formsey-text-vaadin")
 export class TextField extends VaadinField<TextFieldDefinition, string> {
-  @property()
+  @property({ type: String })
   value: string;
 
+  @query("vaadin-text-area")
+  vaadinTextArea: VaadinTextArea
+
   renderField() {
-    return html`<vaadin-text-area style="display:flex" label="${this.definition.prompt}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .value="${ifDefined(this.value)}"></vaadin-text-area>`;
+    let customValidity = this.definition.customValidity
+    if ( this.error && this.error.validityMessage ) {
+      customValidity = this.error.validityMessage
+    }
+    return html`<vaadin-text-area style="display:flex" label="${this.definition.prompt}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}"></vaadin-text-area>`;
   }
+
+  validate() {
+    this.valid = this.vaadinTextArea.checkValidity() as boolean
+    if (!this.valid) {
+      this.invalid()
+    }
+    return this.valid
+  }
+
+  invalid() {
+    this.errors[this.definition.name] = new InvalidError(this.vaadinTextArea.errorMessage, false, { ...this.vaadinTextArea.validity })
+    this.dispatchEvent(new InvalidEvent(this.errors))
+  }
+
 }
