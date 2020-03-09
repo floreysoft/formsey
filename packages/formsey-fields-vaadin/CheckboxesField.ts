@@ -34,19 +34,21 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, Che
   }
 
   renderField() {
-    if ( !this.value ) {
+    if (!this.value) {
       this.value = new CheckboxesValue();
-      if ( this.definition.name ) {
+      if (this.definition.name) {
         this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
       }
     }
     let templates: TemplateResult[] = [];
-    for (let i = 0; i < this.definition.options.length; i++) {
-      let option = this.definition.options[i];
-      if (typeof option === "string") {
-        templates.push(html`<vaadin-checkbox @change="${(event) => this.optionChanged(event, <string>option)}" .checked="${this.value.values[<string>option]}">${option}</vaadin-checkbox>`);
-      } else {
-        templates.push(html`<vaadin-checkbox @change="${(event) => this.optionChanged(event, ((<Option>option).value ? (<Option>option).value : (<Option>option).label))}" .checked="${ifDefined(this.value ? this.value.values[((<Option>option).value ? (<Option>option).value : (<Option>option).label)] : this.value)}">${(<Option>option).label ? (<Option>option).label : (<Option>option).value}</vaadin-checkbox>`);
+    if (this.definition.options) {
+      for (let i = 0; i < this.definition.options.length; i++) {
+        let option = this.definition.options[i];
+        if (typeof option === "string") {
+          templates.push(html`<vaadin-checkbox @change="${(event) => this.optionChanged(event, <string>option)}" .checked="${this.value.values[<string>option]}">${option}</vaadin-checkbox>`);
+        } else {
+          templates.push(html`<vaadin-checkbox @change="${(event) => this.optionChanged(event, ((<Option>option).value ? (<Option>option).value : (<Option>option).label))}" .checked="${ifDefined(this.value ? this.value.values[((<Option>option).value ? (<Option>option).value : (<Option>option).label)] : this.value)}">${(<Option>option).label ? (<Option>option).label : (<Option>option).value}</vaadin-checkbox>`);
+        }
       }
     }
     if (this.definition.other) {
@@ -58,8 +60,8 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, Che
   protected otherChanged(e: any) {
     this.value.other = e.currentTarget.value;
     this.value.values[CheckboxesField.other] = this.value.other.length > 0;
-    if ( this.definition.name ) {
-       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+    if (this.definition.name) {
+      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
     this.requestUpdate();
   }
@@ -77,7 +79,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, Che
         textfield.focus();
       }
     }
-    if ( this.definition.name ) {
+    if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
   }
