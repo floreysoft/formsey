@@ -24,6 +24,13 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     vaadin-radio-group {
       width: 100%;
     }
+    vaadin-text-field {
+      position: relative;
+      top: -2.4em;
+      left: 5em;
+      flex-grow: 1;
+      width: calc(100% - 5em);
+    }
     .fs-other {
       display: flex;
       flex-direction: row;
@@ -56,7 +63,8 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
       }
     }
     if (this.definition.other) {
-      templates.push(html`<vaadin-radio-button class="fs-other" value="${MultipleChoiceField.other}" .checked="${this.value.option === MultipleChoiceField.other}">Other</radio-button><vaadin-text-field @change="${this.otherChanged}" @keyup="${this.otherChanged}" ?disabled="${!(this.value.option === MultipleChoiceField.other)}" .value="${this.value.other}"></vaadin-text-field>`);
+      templates.push(html`<vaadin-radio-button class="fs-other" value="${MultipleChoiceField.other}" .checked="${this.value.option === MultipleChoiceField.other}">Other</vaadin-radio-button>
+      <vaadin-text-field @change="${this.otherChanged}" @keyup="${this.otherChanged}" ?disabled="${this.definition.disabled || !(this.value.option === MultipleChoiceField.other)}" .value="${this.value.other}"></vaadin-text-field>`);
     }
     return html`<vaadin-radio-group @value-changed="${this.valueChanged}" theme="vertical">${templates}</vaadin-radio-group>`;
   }
