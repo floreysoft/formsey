@@ -169,7 +169,7 @@ export class FormField extends Field<FormDefinition, Object> {
         if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
           newValue[field.name] = this.value[field.name]
         }
-        if ( field.type == "nestedForm" && !field.name ) {
+        if ( field.hasOwnProperty('form') && !field.name ) {
           this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
         }
       }
@@ -186,7 +186,7 @@ export class FormField extends Field<FormDefinition, Object> {
       if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
         newValue[field.name] = this.value[field.name]
       }
-      if ( field.type == "nestedForm" && !field.name ) {
+      if ( field.hasOwnProperty('form') && !field.name ) {
         this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
       }
     }
