@@ -1,6 +1,7 @@
 import { createField, Field, FormDefinition, ValueChangedEvent } from '@formsey/core';
 import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
+import { NestedFormDefinition } from './FieldDefinitions';
 
 export enum GridSize {
   SMALL = "gridSmall",
@@ -91,11 +92,11 @@ export class FormField extends Field<FormDefinition, Object> {
         if (this.errors) {
           for (let error in this.errors) {
             if (this.definition.name && (error == this.definition.name + "." + field.name || error.startsWith(this.definition.name + "." + field.name + ".") || error.startsWith(this.definition.name + "." + field.name + "["))) {
-                fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
+              fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
             } else if (error.startsWith(field.name + "[")) {
-                fieldErrors[error] = this.errors[error]
+              fieldErrors[error] = this.errors[error]
             } else if (error == field.name || error.startsWith(field.name + ".")) {
-                fieldErrors[error] = this.errors[error]
+              fieldErrors[error] = this.errors[error]
             }
           }
         }
@@ -114,7 +115,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   updated() {
-    this.updateComplete.then(() => {this.resize()})
+    this.updateComplete.then(() => { this.resize() })
   }
 
   connectedCallback() {
@@ -128,12 +129,12 @@ export class FormField extends Field<FormDefinition, Object> {
     super.disconnectedCallback()
   }
 
-  public validate(report : boolean) {
+  public validate(report: boolean) {
     let validity = true;
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
-      let valid : boolean
-      if ( report ) {
+      let valid: boolean
+      if (report) {
         valid = child.reportValidity();
       } else {
         valid = child.checkValidity();
@@ -148,9 +149,15 @@ export class FormField extends Field<FormDefinition, Object> {
   protected valueChanged(e: any) {
     e.stopPropagation()
     if (this.value) {
-      this.value[this.firstPathElement(e.name)] = e.value;
-      this.removeDeletedFields()
-      this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.name), this.value));
+      if (e.name) {
+        let name = this.firstPathElement(e.name);
+        this.value[name] = e.value;
+        this.removeDeletedFields()
+        this.dispatchEvent(new ValueChangedEvent(name, this.value));
+      } else {
+        this.value = { ...this._value, ...e.value }
+        this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      }
     }
   }
 
@@ -162,12 +169,26 @@ export class FormField extends Field<FormDefinition, Object> {
         if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
           newValue[field.name] = this.value[field.name]
         }
+        if ( field.type == "nestedForm" && !field.name ) {
+          this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
+        }
       }
       this.addMemberValueIfPresent("type", newValue)
       this.addMemberValueIfPresent("gridSmall", newValue)
       this.addMemberValueIfPresent("gridMedium", newValue)
       this.addMemberValueIfPresent("gridLarge", newValue)
       this._value = newValue
+    }
+  }
+
+  protected addUnnamedNestedFormFields(newValue : Object, nestedFormField : NestedFormDefinition ) {
+    for (let field of nestedFormField.form.fields) {
+      if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
+        newValue[field.name] = this.value[field.name]
+      }
+      if ( field.type == "nestedForm" && !field.name ) {
+        this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
+      }
     }
   }
 

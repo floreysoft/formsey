@@ -82,6 +82,7 @@ const CONFIG: FormConfiguration = {
     'repeatingSection': 'formsey-repeating-section',
     'optionalSection': 'formsey-optional-section',
     'seletableSection': 'formsey-selectable-section',
+    'nestedForm': 'formsey-nested-form',
     'form': 'formsey-form-field',
     'grid': 'formsey-grid',
     'address': 'formsey-address',
@@ -131,52 +132,29 @@ export class Demo extends LitElement {
 
     render() {
         // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
-        let simpleDemo = { name: "verticalForm", type: "form", fields: [     {
-            "helpText": "Some help for multiple choice",
-            "name": "checkboxes",
-            "options": [
-              {
-                "label": "OptionA",
-                "value": "vA"
-              },
-              {
-                "label": "OptionBV",
-                "value": "valuebbb"
-              },
-              {
-                "label": "OptionC",
-                "value": "value3"
+        let simpleDemo = { name: "verticalForm", type: "form", fields: [
+            {
+                "name": "",
+                "form": {
+                  "fields": [
+                    {
+                      "name": "givenName",
+                      "prompt": "Given name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "familyName",
+                      "prompt": "Family name",
+                      "type": "string"
+                    }
+                  ],
+                  "gridLarge": "grid-template-columns:1fr",
+                  "name": "T",
+                  "type": "form"
+                },
+                "type": "nestedForm",
               }
-            ],
-            "required" : true,
-            "other": true,
-            "customValidity": "Huhu Error",
-            "prompt": "Checkboxes",
-            "type": "checkboxes"
-          },
-          {
-            "helpText": "Some help for multiple choice",
-            "name": "nzktu",
-            "options": [
-              {
-                "label": "OptionA",
-                "value": "vA"
-              },
-              {
-                "label": "OptionBV",
-                "value": "valuebbb"
-              },
-              {
-                "label": "OptionC",
-                "value": "value3"
-              }
-            ],
-            "required" : true,
-            "other": true,
-            "customValidity": "Huhu Error",
-            "prompt": "Checkboxes",
-            "type": "multipleChoice"
-          } ] }
+        ] }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
