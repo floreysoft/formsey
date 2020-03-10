@@ -77,7 +77,7 @@ const CONFIG: FormConfiguration = {
     'date': 'formsey-date',
     'list': 'formsey-list',
     'multipleChoice': 'formsey-multiple-choice-vaadin',
-    'checkboxes': 'formsey-checkboxes',
+    'checkboxes': 'formsey-checkboxes-vaadin',
     'signature': 'formsey-signature',
     'repeatingSection': 'formsey-repeating-section',
     'optionalSection': 'formsey-optional-section',
@@ -133,11 +133,11 @@ export class Demo extends LitElement {
         // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
         let simpleDemo = { name: "verticalForm", type: "form", fields: [     {
             "helpText": "Some help for multiple choice",
-            "name": "multipleChoise",
+            "name": "checkboxes",
             "options": [
               {
                 "label": "OptionA",
-                "value": ""
+                "value": "vA"
               },
               {
                 "label": "OptionBV",
@@ -151,7 +151,30 @@ export class Demo extends LitElement {
             "required" : true,
             "other": true,
             "customValidity": "Huhu Error",
-            "prompt": "Multiple Choice",
+            "prompt": "Checkboxes",
+            "type": "checkboxes"
+          },
+          {
+            "helpText": "Some help for multiple choice",
+            "name": "nzktu",
+            "options": [
+              {
+                "label": "OptionA",
+                "value": "vA"
+              },
+              {
+                "label": "OptionBV",
+                "value": "valuebbb"
+              },
+              {
+                "label": "OptionC",
+                "value": "value3"
+              }
+            ],
+            "required" : true,
+            "other": true,
+            "customValidity": "Huhu Error",
+            "prompt": "Checkboxes",
             "type": "multipleChoice"
           } ] }
         return html`

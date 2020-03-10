@@ -61,7 +61,7 @@ export interface ListFieldDefinition extends InputFieldDefinition {
 }
 
 export interface CheckboxesFieldDefinition extends InputFieldDefinition {
-  options : Option[] | string[]
+  options : Option[]
   other? : boolean
 }
 

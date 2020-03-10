@@ -39,7 +39,7 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
   }
 
   validate(report: boolean) {
-    this.valid = report ? this.vaadinCheckbox.validate() : this.vaadinCheckbox.checkValidity() as boolean
+    this.valid = !(!this.vaadinCheckbox.checked && this.definition.required)
     if (!this.valid) {
       this.invalid()
     }
