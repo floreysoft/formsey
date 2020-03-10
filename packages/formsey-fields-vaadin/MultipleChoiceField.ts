@@ -1,6 +1,7 @@
-import { CheckboxesFieldDefinition, LabeledField, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
+import { VaadinField } from './VaadinField';
 import { TextfieldElement } from '@vaadin/vaadin-text-field';
 import { css, customElement, html, property, TemplateResult } from 'lit-element';
 
@@ -10,7 +11,7 @@ class MultipleChoiceValue {
 }
 
 @customElement("formsey-multiple-choice-vaadin")
-export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition, MultipleChoiceValue> {
+export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, MultipleChoiceValue> {
   private static readonly other: string = "other";
 
   @property({ converter: Object })
@@ -66,7 +67,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
       templates.push(html`<vaadin-radio-button class="fs-other" value="${MultipleChoiceField.other}" .checked="${this.value.option === MultipleChoiceField.other}">Other</vaadin-radio-button>
       <vaadin-text-field @change="${this.otherChanged}" @keyup="${this.otherChanged}" ?disabled="${this.definition.disabled || !(this.value.option === MultipleChoiceField.other)}" .value="${this.value.other}"></vaadin-text-field>`);
     }
-    return html`<vaadin-radio-group @value-changed="${this.valueChanged}" theme="vertical">${templates}</vaadin-radio-group>`;
+    return html`<vaadin-radio-group @value-changed="${this.valueChanged}" label="${this.definition.prompt}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" >${templates}</vaadin-radio-group>`;
   }
 
   protected otherChanged(e: any) {
