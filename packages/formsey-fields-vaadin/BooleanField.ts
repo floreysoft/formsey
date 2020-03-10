@@ -38,8 +38,8 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
     }
   }
 
-  validate() {
-    this.valid = this.vaadinCheckbox.checkValidity() as boolean
+  validate(report: boolean) {
+    this.valid = report ? this.vaadinCheckbox.validate() : this.vaadinCheckbox.checkValidity() as boolean
     if (!this.valid) {
       this.invalid()
     }

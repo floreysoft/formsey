@@ -78,7 +78,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     if ( this.error && this.error.validityMessage ) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-radio-group @value-changed="${this.valueChanged}" label="${this.definition.prompt}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}  error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
+    return html`<vaadin-radio-group @value-changed="${this.valueChanged}" label="${this.definition.prompt}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
   protected otherChanged(e: any) {
@@ -105,8 +105,8 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     }
   }
 
-  validate() {
-    this.valid = this.vaadinRadioGroup.checkValidity() as boolean
+  validate(report: boolean) {
+    this.valid = report ? this.vaadinRadioGroup.validate() : this.vaadinRadioGroup.checkValidity() as boolean
     if (!this.valid) {
       this.invalid()
     }

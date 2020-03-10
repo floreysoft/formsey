@@ -22,8 +22,8 @@ export class TextField extends VaadinField<TextFieldDefinition, string> {
     return html`<vaadin-text-area style="display:flex" label="${this.definition.prompt}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}"></vaadin-text-area>`;
   }
 
-  validate() {
-    this.valid = this.vaadinTextArea.checkValidity() as boolean
+  validate(report: boolean) {
+    this.valid = report ? this.vaadinTextArea.validate() : this.vaadinTextArea.checkValidity() as boolean
     if (!this.valid) {
       this.invalid()
     }

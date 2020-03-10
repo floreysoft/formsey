@@ -148,7 +148,9 @@ export class Demo extends LitElement {
                 "value": "value3"
               }
             ],
+            "required" : true,
             "other": true,
+            "customValidity": "Huhu Error",
             "prompt": "Multiple Choice",
             "type": "multipleChoice"
           } ] }
