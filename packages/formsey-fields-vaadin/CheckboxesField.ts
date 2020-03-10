@@ -20,11 +20,12 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
   otherTextField: VaadinTextField
 
   static get styles() {
-    return [...super.styles, css`:host {
+    return [...super.styles, css`
+    :host {
       display: flex;
       flex-direction: column;
       font-family: var(--lumo-font-family);
-     }
+    }
     vaadin-text-field {
       position: relative;
       top: -2.4em;

@@ -22,7 +22,9 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
   static get styles() {
     return [...super.styles, css`
     :host {
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: var(--lumo-font-family);
     }
     vaadin-text-field {
       position: relative;
@@ -31,7 +33,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
       left: 5em;
       flex-grow: 1;
     }
-    #other {
+    .other {
       margin-top: 0.4em;
       display: flex;
       flex-direction: row;
@@ -51,7 +53,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     if (this.definition.other) {
       let filtered = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label))
       let checked = (typeof this.value != "undefined") && (filtered.length == 0)
-      templates.push(html`<vaadin-radio-button id="#other" value="__other" .checked="${checked}">Other</vaadin-radio-button>
+      templates.push(html`<vaadin-radio-button class="other" value="__other" .checked="${checked}">Other</vaadin-radio-button>
       <vaadin-text-field @input="${this.valueChanged}" ?disabled="${this.definition.disabled || !checked}" .value="${checked ? this.value : ""}"></vaadin-text-field>`);
     }
     let customValidity = this.definition.customValidity
