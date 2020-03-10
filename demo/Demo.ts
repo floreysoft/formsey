@@ -146,7 +146,29 @@ export class Demo extends LitElement {
                       "name": "familyName",
                       "prompt": "Family name",
                       "type": "string"
-                    }
+                    },
+                    {
+                        "name": "",
+                        "form": {
+                          "fields": [
+                            {
+                              "name": "a",
+                              "prompt": "A",
+                              "type": "string",
+                              required : true
+                            },
+                            {
+                              "name": "b",
+                              "prompt": "B",
+                              "type": "string"
+                            }
+                          ],
+                          "gridLarge": "grid-template-columns:1fr",
+                          "name": "T",
+                          "type": "form"
+                        },
+                        "type": "nestedForm",
+                      }
                   ],
                   "gridLarge": "grid-template-columns:1fr",
                   "name": "T",
