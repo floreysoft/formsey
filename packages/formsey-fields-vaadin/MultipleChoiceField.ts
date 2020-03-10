@@ -1,9 +1,12 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { VaadinField } from './VaadinField';
 import { TextfieldElement } from '@vaadin/vaadin-text-field';
-import { css, customElement, html, property, TemplateResult } from 'lit-element';
+import { css, customElement, html, property, TemplateResult, query } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 
 class MultipleChoiceValue {
   other: string
@@ -17,6 +20,9 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
   @property({ converter: Object })
   value: MultipleChoiceValue;
 
+  @query("vaadin-radio-group")
+  private vaadinRadioGroup: RadioGroupElement;
+
   static get styles() {
     return [...super.styles, css`
     :host {
@@ -27,7 +33,8 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     }
     vaadin-text-field {
       position: relative;
-      top: -2.4em;
+      top: -2.2em;
+      margin-bottom: -2.2em;
       left: 5em;
       flex-grow: 1;
       width: calc(100% - 5em);
@@ -67,7 +74,11 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
       templates.push(html`<vaadin-radio-button class="fs-other" value="${MultipleChoiceField.other}" .checked="${this.value.option === MultipleChoiceField.other}">Other</vaadin-radio-button>
       <vaadin-text-field @change="${this.otherChanged}" @keyup="${this.otherChanged}" ?disabled="${this.definition.disabled || !(this.value.option === MultipleChoiceField.other)}" .value="${this.value.other}"></vaadin-text-field>`);
     }
-    return html`<vaadin-radio-group @value-changed="${this.valueChanged}" label="${this.definition.prompt}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" >${templates}</vaadin-radio-group>`;
+    let customValidity = this.definition.customValidity
+    if ( this.error && this.error.validityMessage ) {
+      customValidity = this.error.validityMessage
+    }
+    return html`<vaadin-radio-group @value-changed="${this.valueChanged}" label="${this.definition.prompt}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}  error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
   protected otherChanged(e: any) {
@@ -92,5 +103,18 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     if ( this.definition.name ) {
        this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
+  }
+
+  validate() {
+    this.valid = this.vaadinRadioGroup.checkValidity() as boolean
+    if (!this.valid) {
+      this.invalid()
+    }
+    return this.valid
+  }
+
+  invalid() {
+    this.errors[this.definition.name] = new InvalidError(this.vaadinRadioGroup.errorMessage, false, { ...this.vaadinRadioGroup.validity })
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
