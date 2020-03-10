@@ -77,7 +77,7 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
         values.push(value)
       }
     }
-    if (!other) {
+    if (!other && this.otherTextField) {
       this.otherTextField.value = ""
     }
     this.value = values

@@ -70,7 +70,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
       other = true
       this.value = this.otherTextField.value
     }
-    if (!other) {
+    if (!other && this.otherTextField) {
       this.otherTextField.value = ""
     }
     this.requestUpdate()
