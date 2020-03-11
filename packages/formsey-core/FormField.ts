@@ -149,15 +149,16 @@ export class FormField extends Field<FormDefinition, Object> {
   protected valueChanged(e: any) {
     e.stopPropagation()
     if (this.value) {
-      if (e.name) {
-        let name = this.firstPathElement(e.name);
-        this.value[name] = e.value;
-        this.removeDeletedFields()
-        this.dispatchEvent(new ValueChangedEvent(name, this.value));
+      let name = this.firstPathElement(e.name);
+      if ( name.startsWith('.') ) {
+        name = name.substring(1)
+        e.name = e.name.substring(1)
+        this.value = { ...this.value, ...e.value}
       } else {
-        this.value = { ...this._value, ...e.value }
-        this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+        this.value[name] = e.value;
       }
+      this.removeDeletedFields()
+      this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.name), this.value));
     }
   }
 

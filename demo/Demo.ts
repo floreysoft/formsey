@@ -134,7 +134,7 @@ export class Demo extends LitElement {
         // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
         let simpleDemo = { name: "verticalForm", type: "form", fields: [
             {
-                "name": "",
+                "name": "first",
                 "form": {
                   "fields": [
                     {
@@ -148,7 +148,7 @@ export class Demo extends LitElement {
                       "type": "string"
                     },
                     {
-                        "name": "",
+                        "name": "second",
                         "form": {
                           "fields": [
                             {

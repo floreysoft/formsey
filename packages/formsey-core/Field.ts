@@ -135,7 +135,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected prependPath(path: string) {
-    return this.definition.name ? this.definition.name+"."+path : path
+    return this.definition.name+"."+path
   }
 
   private clearErrors() {

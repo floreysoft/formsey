@@ -24,15 +24,9 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   }
 
   protected valueChanged(e: any) {
-    e.stopPropagation()
-    let name = this.firstPathElement(e.name);
-    if (name == this.definition.name) {
+      e.stopPropagation()
       this.value = e.value;
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
-    } else {
-      this.value[name] = e.value[name];
-      this.dispatchEvent(new ValueChangedEvent(undefined, this.value));
-    }
+      this.dispatchEvent(new ValueChangedEvent(e.name, this.value));
   }
 
   protected invalid(e: InvalidEvent) {
