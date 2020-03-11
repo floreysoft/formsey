@@ -1,9 +1,10 @@
-import { LabeledField, ListFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { ListFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { html, property, customElement } from 'lit-element';
+import { customElement, html, property } from 'lit-element';
+import { VaadinField } from './VaadinField';
 
 @customElement("formsey-list-vaadin")
-export class ListField extends LabeledField<ListFieldDefinition, string> {
+export class ListField extends VaadinField<ListFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
