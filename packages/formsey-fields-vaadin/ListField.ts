@@ -10,7 +10,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
   value: string;
 
   renderField() {
-    return html`<vaadin-combo-box style="display:flex" @change="${event => this.valueChanged(event)}"label="${ifDefined(this.definition.prompt)}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}">
+    return html`<vaadin-combo-box style="display:flex" @change="${event => this.valueChanged(event)}" label="${ifDefined(this.definition.prompt)}" ?disabled="${this.definition.disabled}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}">
     <template>
     [[item.label]]
     </template>
