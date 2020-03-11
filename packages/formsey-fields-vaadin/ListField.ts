@@ -2,6 +2,7 @@ import { ListFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { customElement, html, property } from 'lit-element';
 import { VaadinField } from './VaadinField';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 @customElement("formsey-list-vaadin")
 export class ListField extends VaadinField<ListFieldDefinition, string> {
@@ -9,7 +10,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
   value: string;
 
   renderField() {
-    return html`<vaadin-combo-box style="display:flex" @change="${event => this.valueChanged(event)}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}">
+    return html`<vaadin-combo-box style="display:flex" @change="${event => this.valueChanged(event)}"label="${ifDefined(this.definition.prompt)}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}">
     <template>
     [[item.label]]
     </template>
