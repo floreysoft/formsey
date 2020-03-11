@@ -35,10 +35,10 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   value: V;
 
-  @property({ type : Boolean })
+  @property({ type: Boolean })
   valid: boolean = true
 
-  @property({ type : Boolean })
+  @property({ type: Boolean })
   report: boolean = false
 
   @property({ converter: Object })
@@ -62,7 +62,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     this.clearErrors()
     this.report = true
     this.valid = this.validate(true)
-    if ( this.valid && this.error ) {
+    if (this.valid && this.error) {
       this.valid = false
     }
     return this.valid
@@ -72,7 +72,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     this.clearErrors()
     this.report = false
     this.valid = this.validate(false)
-    if ( this.valid && this.error ) {
+    if (this.valid && this.error) {
       this.valid = false
     }
     return this.valid
@@ -127,7 +127,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected firstPathElement(path: string) {
     let index = path.indexOf('.')
-    if ( index > 0 ) {
+    if (index > 0) {
       return path.substring(0, index)
     } else {
       return path;
@@ -135,22 +135,22 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected prependPath(path: string) {
-    return this.definition.name+"."+path
+    return (this.definition.name ? this.definition.name : "") + "." + path
   }
 
   private clearErrors() {
     // Keep custom errors
-    if ( this.errors ) {
-      for ( let key in this.errors ) {
+    if (this.errors) {
+      for (let key in this.errors) {
         let error = this.errors[key]
-        if ( !error.custom ) {
+        if (!error.custom) {
           delete this.errors[key]
         }
       }
     } else {
       this.errors = {}
     }
-    if ( this.error && !this.error.custom ) {
+    if (this.error && !this.error.custom) {
       this.error = undefined
     }
   }
