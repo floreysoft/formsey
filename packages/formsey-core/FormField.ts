@@ -89,8 +89,8 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let fieldErrors = {}
-        let value : any
-        if ( field.hasOwnProperty('form') && !field.name ) {
+        let value: any
+        if (field.hasOwnProperty('form') && !field.name) {
           // Anonymous nested form, so let's copy all form fields
           value = {}
           this.applyNestedFields(value, <NestedFormDefinition>field)
@@ -152,18 +152,20 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected valueChanged(e: any) {
-    e.stopPropagation()
-    if (this.value) {
+    if (this.value && e.name) {
+      e.stopPropagation()
       let name = this.firstPathElement(e.name);
-      if ( name.startsWith('.') ) {
-        name = name.substring(1)
-        e.name = e.name.substring(1)
-        this.value = { ...this.value, ...e.value}
-      } else {
-        this.value[name] = e.value;
+      if (name) {
+        if (name.startsWith('.')) {
+          name = name.substring(1)
+          e.name = e.name.substring(1)
+          this.value = { ...this.value, ...e.value }
+        } else {
+          this.value[name] = e.value;
+        }
+        this.removeDeletedFields()
+        this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.name), this.value));
       }
-      this.removeDeletedFields()
-      this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.name), this.value));
     }
   }
 
@@ -175,7 +177,7 @@ export class FormField extends Field<FormDefinition, Object> {
         if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
           newValue[field.name] = this.value[field.name]
         }
-        if ( field.hasOwnProperty('form') && !field.name ) {
+        if (field.hasOwnProperty('form') && !field.name) {
           this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
         }
       }
@@ -187,12 +189,12 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected addUnnamedNestedFormFields(newValue : Object, nestedFormField : NestedFormDefinition ) {
+  protected addUnnamedNestedFormFields(newValue: Object, nestedFormField: NestedFormDefinition) {
     for (let field of nestedFormField.form.fields) {
       if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
         newValue[field.name] = this.value[field.name]
       }
-      if ( field.hasOwnProperty('form') && !field.name ) {
+      if (field.hasOwnProperty('form') && !field.name) {
         this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
       }
     }
@@ -216,10 +218,10 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected applyNestedFields(value : Object, field : NestedFormDefinition) {
-    for ( let nestedField of field.form.fields ) {
+  protected applyNestedFields(value: Object, field: NestedFormDefinition) {
+    for (let nestedField of field.form.fields) {
       value[nestedField.name] = this.value[nestedField.name]
-      if ( nestedField.hasOwnProperty('form') && !nestedField.name ) {
+      if (nestedField.hasOwnProperty('form') && !nestedField.name) {
         this.applyNestedFields(value, <NestedFormDefinition>nestedField)
       }
     }
