@@ -89,6 +89,14 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let fieldErrors = {}
+        let value : any
+        if ( field.hasOwnProperty('form') && !field.name ) {
+          // Anonymous nested form, so let's copy all form fields
+          value = {}
+          this.applyNestedFields(value, <NestedFormDefinition>field)
+        } else {
+          value = this.value && field.name ? this.value[field.name] : undefined
+        }
         if (this.errors) {
           for (let error in this.errors) {
             if (this.definition.name && (error == this.definition.name + "." + field.name || error.startsWith(this.definition.name + "." + field.name + ".") || error.startsWith(this.definition.name + "." + field.name + "["))) {
@@ -100,14 +108,11 @@ export class FormField extends Field<FormDefinition, Object> {
             }
           }
         }
+        let fieldTemplate = html`${createField(this.configuration, field, value, fieldErrors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}`
         if (grid && grid.indexOf('grid-template-areas') >= 0) {
-          templates.push(html`<div class='fs-form-field' style="grid-area:_${field.name}">
-        ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, fieldErrors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
-        </div>`)
+          templates.push(html`<div class='fs-form-field' style="grid-area:_${field.name}">${fieldTemplate}</div>`)
         } else {
-          templates.push(html`<div class='fs-form-field'>
-        ${createField(this.configuration, field, this.value && field.name ? this.value[field.name] : undefined, fieldErrors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}
-        </div>`)
+          templates.push(html`<div class='fs-form-field'>${fieldTemplate}</div>`)
         }
       }
     }
@@ -207,6 +212,15 @@ export class FormField extends Field<FormDefinition, Object> {
             this._value[field.name] = field.default;
           }
         }
+      }
+    }
+  }
+
+  protected applyNestedFields(value : Object, field : NestedFormDefinition) {
+    for ( let nestedField of field.form.fields ) {
+      value[nestedField.name] = this.value[nestedField.name]
+      if ( nestedField.hasOwnProperty('form') && !nestedField.name ) {
+        this.applyNestedFields(value, <NestedFormDefinition>nestedField)
       }
     }
   }

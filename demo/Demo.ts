@@ -132,51 +132,50 @@ export class Demo extends LitElement {
 
     render() {
         // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
-        let simpleDemo = { name: "verticalForm", type: "form", fields: [
-            {
-                "name": "first",
-                "form": {
-                  "fields": [
-                    {
-                      "name": "givenName",
-                      "prompt": "Given name",
-                      "type": "string"
-                    },
-                    {
-                      "name": "familyName",
-                      "prompt": "Family name",
-                      "type": "string"
-                    },
-                    {
-                        "name": "second",
-                        "form": {
-                          "fields": [
+        let simpleDemo = {
+            name: "verticalForm", type: "form", fields: [
+                {
+                    "form": {
+                        "fields": [
                             {
-                              "name": "a",
-                              "prompt": "A",
-                              "type": "string",
-                              required : true
+                                "name": "givenName",
+                                "prompt": "Given name",
+                                "type": "string"
                             },
                             {
-                              "name": "b",
-                              "prompt": "B",
-                              "type": "string"
+                                "name": "familyName",
+                                "prompt": "Family name",
+                                "type": "string"
+                            },
+                            {
+                                "form": {
+                                    "fields": [
+                                        {
+                                            "name": "a",
+                                            "prompt": "A",
+                                            "type": "string",
+                                            required: true
+                                        },
+                                        {
+                                            "name": "b",
+                                            "prompt": "B",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "gridLarge": "grid-template-columns:1fr",
+                                    "type": "form"
+                                },
+                                "type": "nestedForm"
                             }
-                          ],
-                          "gridLarge": "grid-template-columns:1fr",
-                          "name": "T",
-                          "type": "form"
-                        },
-                        "type": "nestedForm",
-                      }
-                  ],
-                  "gridLarge": "grid-template-columns:1fr",
-                  "name": "T",
-                  "type": "form"
-                },
-                "type": "nestedForm",
-              }
-        ] }
+                        ],
+                        "gridLarge": "grid-template-columns:1fr",
+                        "type": "form"
+                    },
+                    "type": "nestedForm",
+                    "name": "inner1"
+                }
+            ]
+        }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
@@ -184,6 +183,7 @@ export class Demo extends LitElement {
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <vaadin-button @click=${this.reportValidity}>Validate and report</vaadin-button>
         <vaadin-button @click=${this.error}>Error</vaadin-button>
+        <vaadin-button @click=${this.value}>Value</vaadin-button>
         <pre id="demoFormValidation"></pre>
         <pre id="demoFormPath"></pre>
         <pre id="demoFormValue"></pre>
@@ -198,7 +198,7 @@ export class Demo extends LitElement {
     createFields(count: number): FieldDefinition[] {
         let fields: StringFieldDefinition[] = []
         for (let i = 0; i < count; i++) {
-            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, helpText : "Some more help", customValidity: "Was los!" })
+            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, helpText: "Some more help", customValidity: "Was los!" })
         }
         return fields;
     }
@@ -211,8 +211,12 @@ export class Demo extends LitElement {
         this.demoForm.reportValidity()
     }
 
-    error(e : Event) {
-        this.demoForm.errors = { "verticalForm.a" : { "validityMessage" : "Blabla", "custom": true, "validityState" : undefined } }
+    error(e: Event) {
+        this.demoForm.errors = { "a": { "validityMessage": "Blabla", "custom": true, "validityState": undefined } }
+    }
+
+    value(e: Event) {
+        this.demoForm.value = { "verticalForm" : { "inner1" : { "familyName": "Florey", "a": "test" }}}
     }
 
     invalid(e: InvalidEvent) {

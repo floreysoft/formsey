@@ -7,7 +7,11 @@ export class Form extends Field<FieldDefinition, Object> {
   value: Object = {}
 
   renderField() {
-    return createField(this.configuration, this.definition, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
+    let value = this.value
+    if ( this.definition.name && this.value && this.value[this.definition.name] ) {
+      value = this.value[this.definition.name]
+    }
+    return createField(this.configuration, this.definition, value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
   }
 
   renderHeader() {
@@ -25,7 +29,17 @@ export class Form extends Field<FieldDefinition, Object> {
 
   protected valueChanged(e: ValueChangedEvent<any>) {
     this.value = e.value;
-    this.dispatchEvent(new ValueChangedEvent(e.name, this.value));
+    if ( e.name.startsWith('.') ) {
+      e.name = e.name.substring(1)
+    }
+    let value : any
+    if ( this.definition.name ) {
+      value = {}
+      value[this.definition.name] = this.value
+    } else {
+      value = this.value
+    }
+    this.dispatchEvent(new ValueChangedEvent(e.name, value));
   }
 
   protected invalid(e: InvalidEvent) {
