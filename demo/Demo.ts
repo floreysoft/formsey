@@ -1,9 +1,8 @@
 import { Dialog } from '@floreysoft/dialog';
 import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
-import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import { FormConfiguration } from "@formsey/core/Field";
-import { InvalidEvent } from "@formsey/core/InvalidEvent";
 import '@formsey/core/Form';
+import { InvalidEvent } from "@formsey/core/InvalidEvent";
 import '@formsey/fields-compound/AddressField';
 import '@formsey/fields-compound/CreditCardField';
 import '@formsey/fields-compound/NameField';
@@ -13,9 +12,7 @@ import '@formsey/fields-vaadin/MultipleChoiceField';
 import '@formsey/fields-vaadin/OptionalSectionField';
 import '@formsey/fields-vaadin/SelectableSectionField';
 import '@formsey/fields-vaadin/UploadField';
-import '../packages/formsey-fields-vaadin/BooleanField';
-import '../packages/formsey-fields-vaadin/StringField';
-import '../packages/formsey-fields-vaadin/MultipleChoiceField';
+import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-native/ImageField';
 import '../packages/formsey-fields-native/MarkupField';
@@ -25,6 +22,9 @@ import '../packages/formsey-fields-native/StringField';
 import '../packages/formsey-fields-native/YouTubeField';
 import '../packages/formsey-fields-vaadin/BooleanField';
 import '../packages/formsey-fields-vaadin/ListField';
+import '../packages/formsey-fields-vaadin/MultipleChoiceField';
+import '../packages/formsey-fields-vaadin/OptionalSectionField';
+import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-vaadin/TextField';
 
 
@@ -75,12 +75,12 @@ const CONFIG: FormConfiguration = {
     'text': 'formsey-text-vaadin',
     'number': 'formsey-number',
     'date': 'formsey-date',
-    'list': 'formsey-list',
+    'list': 'formsey-list-vaadin',
     'multipleChoice': 'formsey-multiple-choice-vaadin',
     'checkboxes': 'formsey-checkboxes-vaadin',
     'signature': 'formsey-signature',
     'repeatingSection': 'formsey-repeating-section',
-    'optionalSection': 'formsey-optional-section',
+    'optionalSection': 'formsey-optional-section-vaadin',
     'seletableSection': 'formsey-selectable-section',
     'nestedForm': 'formsey-nested-form',
     'form': 'formsey-form-field',
@@ -133,49 +133,32 @@ export class Demo extends LitElement {
     render() {
         // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
         let simpleDemo = {
-            name: "verticalForm", type: "form", fields: [
+            "form": {
+              "fields": [
                 {
-                    "form": {
-                        "fields": [
-                            {
-                                "name": "givenName",
-                                "prompt": "Given name",
-                                "type": "string"
-                            },
-                            {
-                                "name": "familyName",
-                                "prompt": "Family name",
-                                "type": "string"
-                            },
-                            {
-                                "form": {
-                                    "fields": [
-                                        {
-                                            "name": "a",
-                                            "prompt": "A",
-                                            "type": "string",
-                                            required: true
-                                        },
-                                        {
-                                            "name": "b",
-                                            "prompt": "B",
-                                            "type": "string"
-                                        }
-                                    ],
-                                    "gridLarge": "grid-template-columns:1fr",
-                                    "type": "form"
-                                },
-                                "type": "nestedForm"
-                            }
-                        ],
-                        "gridLarge": "grid-template-columns:1fr",
-                        "type": "form"
-                    },
-                    "type": "nestedForm",
-                    "name": "inner1"
+                  "name": "name",
+                  "prompt": "Namexy",
+                  "type": "string"
+                },
+                {
+                  "name": "Age",
+                  "prompt": "Age",
+                  "type": "string"
+                },
+                {
+                  "name": "village",
+                  "prompt": "Village",
+                  "type": "string"
                 }
-            ]
-        }
+              ],
+              "gridLarge": "grid-template-columns:1fr 1fr 1fr",
+              "type": "form"
+            },
+            "type": "optionalSection",
+            "label" : "Business customer",
+            "prompt" : "Enter contact details",
+            "name" : "optional"
+          }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
@@ -216,7 +199,37 @@ export class Demo extends LitElement {
     }
 
     value(e: Event) {
-        this.demoForm.value = { "verticalForm" : { "inner1" : { "familyName": "Florey", "a": "test" }}}
+        let definition = {
+            name: "verticalForm", type: "form", fields: [
+                {
+                    "default": "valuea",
+                    "disabled": false,
+                    "helpText": "feeeeee",
+                    "name": "Testeeeee",
+                    "options": [
+                      {
+                        "label": "OptionA",
+                        "value": "valuea"
+                      },
+                      {
+                        "label": "OptionV",
+                        "value": "valuev"
+                      },
+                      {
+                        "label": "Option3",
+                        "value": "value3"
+                      },
+                      {
+                        "label": "Option4",
+                        "value": "value4"
+                      }
+                    ],
+                    "prompt": "testeeeee",
+                    "type": "list"
+                  }
+            ]
+        }
+        this.demoForm.definition = definition
     }
 
     invalid(e: InvalidEvent) {

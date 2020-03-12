@@ -81,15 +81,14 @@ export interface RepeatingFieldDefinition extends NestedFormDefinition {
   max: number
 }
 
-export interface SelectableSectionFieldDefinition extends FieldDefinition {
+export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
   forms : FormDefinition[]
   multipleChoice? : boolean
 }
 
-export interface OptionalSectionFieldDefinition extends FieldDefinition {
+export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
   label : string
-  onForm : FormDefinition
-  offForm : FormDefinition
+  form : FormDefinition
 }
 
 export interface SignatureFieldDefinition extends InputFieldDefinition {
