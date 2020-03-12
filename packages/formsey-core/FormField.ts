@@ -78,7 +78,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   renderField() {
     let templates: TemplateResult[] = []
-    let grid = "grid-template-columns:1fr"
+    let grid = "grid-template-columns: 100%"
     if (this.gridSize == GridSize.LARGE && this.definition.gridLarge) {
       grid = this.definition.gridLarge
     } else if (this.gridSize == GridSize.MEDIUM && this.definition.gridMedium) {
