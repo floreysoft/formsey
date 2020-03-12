@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-vaadin",
-  "version": "0.1.133",
+  "version": "0.1.134",
   "description": "Vaadin fields",
   "files": [
     "/*.js",
