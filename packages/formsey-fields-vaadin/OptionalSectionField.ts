@@ -1,12 +1,13 @@
-import { createField, LabeledField, OptionalSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { createField, OptionalSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { customElement, html, property } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { VaadinField } from './VaadinField';
 
 @customElement("formsey-optional-section-vaadin")
-export class OptionalSectionField extends LabeledField<OptionalSectionFieldDefinition, Object> {
+export class OptionalSectionField extends VaadinField<OptionalSectionFieldDefinition, Object> {
   @property({ converter: Object })
   value: Object
 
