@@ -245,9 +245,7 @@ export class FormField extends Field<FormDefinition, Object> {
         size = GridSize.MEDIUM
       }
     }
-    if (this.gridSize != size) {
-      this.gridSize = size
-      this.requestUpdate()
-    }
+    this.gridSize = size
+    this.requestUpdate()
   }
 }
