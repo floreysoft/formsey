@@ -8,7 +8,7 @@ export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T,
     .wrapper {
       box-sizing: border-box;
       transition: all 0.2s ease-out;
-      padding: 0 0 var(--lumo-space-xs) 0;
+      padding: 0 1px var(--lumo-space-xs);
     }
 
     .invalid {
