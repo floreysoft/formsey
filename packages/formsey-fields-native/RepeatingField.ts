@@ -14,10 +14,11 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
     return [...super.styles, css`
     .fs-nested-form {
       position: relative;
-      margin: 5px 0 0 11px;
+      margin: 0.5em 0 0 0.8em;
       padding: 10px 0 5px 15px;
       border-left: 2px solid var(--lumo-contrast-10pct);
       transition: transform 0.2s cubic-bezier(.12, .32, .54, 2), opacity 0.15s;
+      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
     }
 
     .fs-nested-form:hover {
@@ -26,18 +27,19 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
 
     .fs-remove-wrapper {
       position: absolute;
-      line-height: 1em;
-      top: calc(50% - 15px);
-      left: -10px;
+      line-height: 0;
+      padding: 0.4em 0;
+      top: calc(50% - 1em);
+      left: -0.8em;
       background-color: var(--lumo-base-color);
-      opacity: 0;
     }
 
     .fs-add, .fs-remove {
+      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
       width: 1em;
       height: 1em;
-      padding: 0.3em;
-      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
+      padding: 0.2em;
+      stroke-width: 0;
       fill: var(--formsey-repeating-section-icon-fill-color, var(--lumo-primary-contrast-color));
       border-radius: var(--lumo-border-radius);
       background-color: var(--formsey-repeating-section-icon-background-color, var(--lumo-contrast-30pct));
@@ -53,8 +55,7 @@ export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Objec
     }
 
     .fs-add {
-      display: block;
-      margin: 6px 0 0 3px;
+      margin: 0.3em 0.2em 0;
     }`]
   }
 

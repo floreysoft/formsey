@@ -133,31 +133,58 @@ export class Demo extends LitElement {
     render() {
         // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
         let simpleDemo = {
-            "form": {
-              "fields": [
-                {
-                  "name": "name",
-                  "prompt": "Namexy",
-                  "type": "string"
+            "fields": [
+              {
+                "autofocus": false,
+                "helpText": "Enter your given name",
+                "name": "givenName",
+                "placeholder": "",
+                "prompt": "Given name",
+                "type": "text"
+              },
+              {
+                "form": {
+                  "fields": [
+                    {
+                      "name": "name",
+                      "prompt": "Name",
+                      "required": true,
+                      "type": "string"
+                    },
+                    {
+                      "name": "description",
+                      "prompt": "Beschreibung",
+                      "required": false,
+                      "type": "text"
+                    }
+                  ],
+                  "gridLarge": "grid-template-columns:1fr",
+                  "type": "form"
                 },
-                {
-                  "name": "Age",
-                  "prompt": "Age",
-                  "type": "string"
-                },
-                {
-                  "name": "village",
-                  "prompt": "Village",
-                  "type": "string"
-                }
-              ],
-              "gridLarge": "grid-template-columns:1fr 1fr 1fr",
-              "type": "form"
-            },
-            "type": "optionalSection",
-            "label" : "Business customer",
-            "prompt" : "Enter contact details",
-            "name" : "optional"
+                "helpText": "Bitte Mitarbeiter angeben",
+                "max": "5",
+                "min": "1",
+                "name": "employees",
+                "prompt": "Mitarbeiter",
+                "type": "repeatingSection"
+              },
+              {
+                "helpText": "Enter your given name",
+                "name": "givenName",
+                "placeholder": "",
+                "prompt": "Given name",
+                "type": "text"
+              },
+              {
+                "name": "bitte",
+                "prompt": "Bitte",
+                "type": "string"
+              }
+            ],
+            "gridLarge": "grid-template-columns:1fr",
+            "gridMedium": "grid-template-columns:1fr",
+            "gridSmall": "grid-template-columns:1fr",
+            "type": "form"
           }
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
