@@ -75,7 +75,7 @@ export class FormField extends Field<FormDefinition, Object> {
   @query(".grid")
   private grid: HTMLElement
   private gridSize: GridSize
-  private resizeHandler = ((e: CustomEvent) => { this.resize(); if ( e.detail ) { this.requestUpdate() }})
+  private resizeHandler = ((e: CustomEvent) => { this.resize(); if (e.detail) { this.requestUpdate() } })
 
   renderField() {
     let templates: TemplateResult[] = []
@@ -221,9 +221,11 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected applyNestedFields(value: Object, field: NestedFormDefinition) {
     for (let nestedField of field.form.fields) {
-      value[nestedField.name] = this.value[nestedField.name]
-      if (nestedField.hasOwnProperty('form') && !nestedField.name) {
-        this.applyNestedFields(value, <NestedFormDefinition>nestedField)
+      if (nestedField) {
+        value[nestedField.name] = this.value[nestedField.name]
+        if (nestedField.hasOwnProperty('form') && !nestedField.name) {
+          this.applyNestedFields(value, <NestedFormDefinition>nestedField)
+        }
       }
     }
   }
@@ -246,7 +248,7 @@ export class FormField extends Field<FormDefinition, Object> {
         size = GridSize.MEDIUM
       }
     }
-    if ( this.gridSize != size ) {
+    if (this.gridSize != size) {
       this.gridSize = size
       this.requestUpdate()
     }
