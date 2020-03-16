@@ -43,12 +43,14 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
 
   renderField() {
     let templates: TemplateResult[] = [];
-    for (let i = 0; i < this.definition.options.length; i++) {
-      let option = this.definition.options[i] as Option
-      let label = option.label ? option.label : option.value;
-      let value = option.value ? option.value : option.label;
-      let checked = value == this.value;
-      templates.push(html`<vaadin-radio-button value="${value}" .checked="${checked}">${label}</vaadin-radio-button>`);
+    if (this.definition.options) {
+      for (let i = 0; i < this.definition.options.length; i++) {
+        let option = this.definition.options[i] as Option
+        let label = option.label ? option.label : option.value;
+        let value = option.value ? option.value : option.label;
+        let checked = value == this.value;
+        templates.push(html`<vaadin-radio-button value="${value}" .checked="${checked}">${label}</vaadin-radio-button>`);
+      }
     }
     if (this.definition.other) {
       let filtered = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label))

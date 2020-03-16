@@ -64,6 +64,7 @@ export class FormField extends Field<FormDefinition, Object> {
         grid-column-gap: var(--lumo-space-xs, 0.2em);
         width: 100%;
         box-sizing: border-box;
+        overflow: hidden;
       }
 
       .fs-form-field {
