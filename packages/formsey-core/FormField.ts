@@ -74,7 +74,7 @@ export class FormField extends Field<FormDefinition, Object> {
   @query(".grid")
   private grid: HTMLElement
   private gridSize: GridSize
-  private resizeHandler = ((e: Event) => { this.resize(); this.requestUpdate() })
+  private resizeHandler = ((e: CustomEvent) => { this.resize(); if ( e.detail.update ) { this.requestUpdate() }})
 
   renderField() {
     let templates: TemplateResult[] = []
