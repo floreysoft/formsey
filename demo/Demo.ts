@@ -83,7 +83,7 @@ const CONFIG: FormConfiguration = {
     'optionalSection': 'formsey-optional-section-vaadin',
     'seletableSection': 'formsey-selectable-section',
     'nestedForm': 'formsey-nested-form',
-    'nestedLayout': 'formsey-nested-layout',
+    'nestedLayout': 'formsey-nested-form',
     'form': 'formsey-form-field',
     'grid': 'formsey-grid',
     'address': 'formsey-address',
