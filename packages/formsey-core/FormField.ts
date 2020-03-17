@@ -95,17 +95,18 @@ export class FormField extends Field<FormDefinition, Object> {
           // Anonymous nested form, so let's copy all form fields
           value = {}
           this.applyNestedFields(value, <NestedFormDefinition>field)
+          this.applyNestedErrors(fieldErrors, <NestedFormDefinition>field)
         } else {
           value = this.value && field.name ? this.value[field.name] : undefined
-        }
-        if (this.errors) {
-          for (let error in this.errors) {
-            if (this.definition.name && (error == this.definition.name + "." + field.name || error.startsWith(this.definition.name + "." + field.name + ".") || error.startsWith(this.definition.name + "." + field.name + "["))) {
-              fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
-            } else if (error.startsWith(field.name + "[")) {
-              fieldErrors[error] = this.errors[error]
-            } else if (error == field.name || error.startsWith(field.name + ".")) {
-              fieldErrors[error] = this.errors[error]
+          if (this.errors) {
+            for (let error in this.errors) {
+              if (this.definition.name && (error == this.definition.name + "." + field.name || error.startsWith(this.definition.name + "." + field.name + ".") || error.startsWith(this.definition.name + "." + field.name + "["))) {
+                fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
+              } else if (error.startsWith(field.name + "[")) {
+                fieldErrors[error] = this.errors[error]
+              } else if (error == field.name || error.startsWith(field.name + ".")) {
+                fieldErrors[error] = this.errors[error]
+              }
             }
           }
         }
@@ -225,6 +226,27 @@ export class FormField extends Field<FormDefinition, Object> {
         value[nestedField.name] = this.value[nestedField.name]
         if (nestedField.hasOwnProperty('form') && !nestedField.name) {
           this.applyNestedFields(value, <NestedFormDefinition>nestedField)
+        }
+      }
+    }
+  }
+
+  protected applyNestedErrors(fieldErrors: Object, field: NestedFormDefinition) {
+    for (let nestedField of field.form.fields) {
+      if (nestedField) {
+        if (this.errors) {
+          for (let error in this.errors) {
+            if (this.definition.name && (error == this.definition.name + "." + nestedField.name || error.startsWith(this.definition.name + "." + nestedField.name + ".") || error.startsWith(this.definition.name + "." + nestedField.name + "["))) {
+              fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
+            } else if (error.startsWith(nestedField.name + "[")) {
+              fieldErrors[error] = this.errors[error]
+            } else if (error == nestedField.name || error.startsWith(nestedField.name + ".")) {
+              fieldErrors[error] = this.errors[error]
+            }
+          }
+        }
+        if (nestedField.hasOwnProperty('form') && !nestedField.name) {
+          this.applyNestedErrors(fieldErrors, <NestedFormDefinition>nestedField)
         }
       }
     }

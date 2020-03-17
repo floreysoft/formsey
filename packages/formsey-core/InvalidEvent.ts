@@ -1,7 +1,7 @@
 export class InvalidError {
     validityMessage: string
-    custom: boolean
-    validityState: any
+    custom?: boolean
+    validityState?: any
 
     constructor(validityMessage: string, custom?: boolean, validityState?: any) {
         this.validityMessage = validityMessage

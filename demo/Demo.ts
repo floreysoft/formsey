@@ -83,6 +83,7 @@ const CONFIG: FormConfiguration = {
     'optionalSection': 'formsey-optional-section-vaadin',
     'seletableSection': 'formsey-selectable-section',
     'nestedForm': 'formsey-nested-form',
+    'nestedLayout': 'formsey-nested-layout',
     'form': 'formsey-form-field',
     'grid': 'formsey-grid',
     'address': 'formsey-address',
@@ -135,55 +136,130 @@ export class Demo extends LitElement {
         let simpleDemo = {
             "fields": [
               {
-                "autofocus": false,
-                "helpText": "Enter your given name",
-                "name": "givenName",
-                "placeholder": "",
-                "prompt": "Given name",
-                "type": "text"
+                "name": "topLevel",
+                "prompt": "Top Level",
+                "type": "string",
+                "required": true
               },
               {
                 "form": {
                   "fields": [
                     {
-                      "name": "name",
-                      "prompt": "Name",
-                      "required": true,
-                      "type": "string"
+                      "name": "nestedLayoutA",
+                      "prompt": "Nested Layout A",
+                      "type": "string",
+                      "autofocus": false,
+                      "required": true
                     },
                     {
-                      "name": "description",
-                      "prompt": "Beschreibung",
-                      "required": false,
-                      "type": "text"
+                      "name": "nestedLayoutB",
+                      "prompt": "Nested Layout B",
+                      "type": "string",
+                      "autofocus": false,
+                      "required": true
                     }
                   ],
                   "gridLarge": "grid-template-columns:1fr",
                   "type": "form"
                 },
-                "helpText": "Bitte Mitarbeiter angeben",
+                "type": "nestedLayout"
+              },
+              {
+                "name": "nestedForm",
+                "form": {
+                  "fields": [
+                    {
+                      "name": "nestedFormA",
+                      "prompt": "Nested Form A",
+                      "type": "string",
+                      "autofocus": false,
+                      "required": true
+                    },
+                    {
+                      "name": "nestedFormB",
+                      "prompt": "Nested Form B",
+                      "type": "string",
+                      "autofocus": false,
+                      "required": true
+                    }
+                  ],
+                  "gridLarge": "grid-template-columns:1fr",
+                  "name": "nestedForm",
+                  "type": "form"
+                },
+                "type": "nestedForm"
+              },
+              {
+                "name": "repeatingSection",
+                "prompt": "Repeating Section",
+                "min": "0",
                 "max": "5",
-                "min": "1",
-                "name": "employees",
-                "prompt": "Mitarbeiter",
+                "form": {
+                  "fields": [
+                    {
+                      "name": "inRepeatA",
+                      "prompt": "In Repeat A",
+                      "type": "string",
+                      "autofocus": false,
+                      "required": true
+                    },
+                    {
+                      "name": "inRepeatB",
+                      "prompt": "In Repeat B",
+                      "type": "string",
+                      "autofocus": false,
+                      "required": true
+                    },
+                    {
+                      "name": "nestedInRepeat",
+                      "form": {
+                        "fields": [
+                          {
+                            "name": "nestedInRepeatA",
+                            "prompt": "Nested In Repeat A",
+                            "type": "string",
+                            "autofocus": false,
+                            "required": true
+                          },
+                          {
+                            "form": {
+                              "fields": [
+                                {
+                                  "name": "layoutInRepeatA",
+                                  "prompt": "Layout In Repeat A",
+                                  "type": "string",
+                                  "autofocus": false,
+                                  "required": true
+                                },
+                                {
+                                  "name": "layoutInRepeatB",
+                                  "prompt": "Layout In Repeat B",
+                                  "type": "string",
+                                  "autofocus": false,
+                                  "required": true
+                                }
+                              ],
+                              "gridLarge": "grid-template-columns:1fr",
+                              "type": "form"
+                            },
+                            "type": "nestedLayout"
+                          }
+                        ],
+                        "gridLarge": "grid-template-columns:1fr",
+                        "type": "form",
+                        "name": "nestedInRepeat"
+                      },
+                      "type": "nestedForm"
+                    }
+                  ],
+                  "gridLarge": "grid-template-columns:1fr",
+                  "type": "form"
+                },
                 "type": "repeatingSection"
-              },
-              {
-                "helpText": "Enter your given name",
-                "name": "givenName",
-                "placeholder": "",
-                "prompt": "Given name",
-                "type": "text"
-              },
-              {
-                "name": "bitte",
-                "prompt": "Bitte",
-                "type": "string"
               }
             ],
             "gridLarge": "grid-template-columns:1fr",
             "gridMedium": "grid-template-columns:1fr",
-            "gridSmall": "grid-template-columns:1fr",
             "type": "form"
           }
         return html`
@@ -222,7 +298,52 @@ export class Demo extends LitElement {
     }
 
     error(e: Event) {
-        this.demoForm.errors = { "a": { "validityMessage": "Blabla", "custom": true, "validityState": undefined } }
+        this.demoForm.errors = {
+            "a": {
+              "validityMessage": "Blabla",
+              "custom": true
+            },
+            "topLevel": {
+              "validityMessage": "sdfsdf",
+              "validityState": {}
+            },
+            "nestedLayoutA": {
+              "validityMessage": "sdfsdf",
+              "validityState": {}
+            },
+            "nestedLayoutB": {
+              "validityMessage": "ffffff",
+              "validityState": {}
+            },
+            "nestedForm.nestedFormA": {
+              "validityMessage": "xxxxx",
+              "validityState": {}
+            },
+            "nestedForm.nestedFormB": {
+              "validityMessage": "aaaa",
+              "validityState": {}
+            },
+            "repeatingSection[1].inRepeatA": {
+              "validityMessage": "ssss",
+              "validityState": {}
+            },
+            "repeatingSection[1].inRepeatB": {
+              "validityMessage": "1c",
+              "validityState": {}
+            },
+            "repeatingSection[1].nestedInRepeat.nestedInRepeatA": {
+              "validityMessage": "21",
+              "validityState": {}
+            },
+            "repeatingSection[1].nestedInRepeat.layoutInRepeatA": {
+              "validityMessage": "123",
+              "validityState": {}
+            },
+            "repeatingSection[1].nestedInRepeat.layoutInRepeatB": {
+              "validityMessage": "1234",
+              "validityState": {}
+            }
+          }
     }
 
     value(e: Event) {
