@@ -63,7 +63,7 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-checkbox-group @change="${this.valueChanged}" label="${this.definition.prompt}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group @change="${this.valueChanged}" label="${ifDefined(this.definition.prompt)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
   }
 
   valueChanged(e: Event) {
