@@ -5,7 +5,7 @@ import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 
-@customElement("formsey-string-vaadin")
+@customElement("formsey-email-vaadin")
 export class EmailField extends VaadinField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
