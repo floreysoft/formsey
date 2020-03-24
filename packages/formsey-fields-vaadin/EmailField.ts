@@ -1,3 +1,4 @@
+import "@vaadin/vaadin-text-field/vaadin-email-field";
 import { StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { EmailFieldElement } from '@vaadin/vaadin-text-field/vaadin-email-field';
