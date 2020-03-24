@@ -13,6 +13,7 @@ export interface InputFieldDefinition extends FieldDefinition {
   disabled?: boolean
   autofill? : string
   customValidity? : string
+  readonly?: boolean
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {

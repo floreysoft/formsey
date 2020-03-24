@@ -1,10 +1,17 @@
 import '@floreysoft/ace';
 import { Ace } from '@floreysoft/ace';
-import { FieldDefinition, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { InputFieldDefinition, LabeledField, ValueChangedEvent } from '@formsey/core';
 import { css, customElement, html, property, query } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+
+export interface SourceCodeFieldDefinition extends InputFieldDefinition {
+  theme? : string
+  mode? : string
+  gutter? : boolean
+}
 
 @customElement("formsey-sourcecode")
-export class SourceCodeField extends LabeledField<FieldDefinition, string> {
+export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, string> {
   @property({ type: String })
   value : string
 
@@ -22,7 +29,7 @@ export class SourceCodeField extends LabeledField<FieldDefinition, string> {
   }
 
   protected renderField() {
-    return html`<floreysoft-ace .value=${this.value} @changed=${this.valueChanged}></floreysoft-ace>`;
+    return html`<floreysoft-ace .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" ?readonly="${this.definition.readonly}" @changed=${this.valueChanged}></floreysoft-ace>`;
   }
 
   protected valueChanged(e: any) {

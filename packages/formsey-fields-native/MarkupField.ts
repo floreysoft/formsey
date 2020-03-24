@@ -15,6 +15,6 @@ export class MarkupField extends LabeledField<FieldDefinition, string> {
   }
 
   renderField() {
-    return html`${unsafeHTML(this.definition.default)}`
+    return html`${unsafeHTML(this.definition.default ? this.definition.default : "")}`
   }
 }
