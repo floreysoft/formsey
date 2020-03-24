@@ -29,7 +29,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   }
 
   protected renderField() {
-    return html`<floreysoft-ace .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" ?readonly="${this.definition.readonly}" @changed=${this.valueChanged}></floreysoft-ace>`;
+    return html`<floreysoft-ace .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" .theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @changed=${this.valueChanged}></floreysoft-ace>`;
   }
 
   protected valueChanged(e: any) {
