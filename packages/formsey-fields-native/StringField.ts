@@ -34,7 +34,7 @@ export class StringField extends LabeledField<StringFieldDefinition, string> {
   }
 
   protected renderField() {
-    return html`<input type="text" ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" pattern="${ifDefined(this.definition.pattern)}" minlength="${ifDefined(this.definition.minlength)}" maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}">`
+    return html`<input type="text" ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(this.definition.pattern)}" minlength="${ifDefined(this.definition.minlength)}" maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}">`
   }
 
   validate(report : boolean) {

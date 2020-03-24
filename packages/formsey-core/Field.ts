@@ -161,13 +161,13 @@ export abstract class CompoundField<T extends FieldDefinition, V> extends Field<
   protected renderHeader() {
   }
 
-  protected includeOptionalField(fields: InputFieldDefinition[], include: boolean, type: string, name: string, helpText: string, autofill: string) {
+  protected includeOptionalField(fields: InputFieldDefinition[], include: boolean, type: string, name: string, helpText: string, autocomplete: string) {
     if (include) {
       fields.push({
         type: type,
         name: name,
         helpText: helpText,
-        autofill: autofill
+        autocomplete: autocomplete
       })
     }
   }

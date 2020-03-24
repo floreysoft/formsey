@@ -1,6 +1,6 @@
 import { StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { VaadinTextField } from '@vaadin/vaadin-text-field';
+import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
@@ -11,18 +11,18 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
   value: string;
 
   @query("vaadin-text-field")
-  vaadinTextField: VaadinTextField
+  vaadinTextField: TextFieldElement
 
   renderField() {
     let customValidity = this.definition.customValidity
     if ( this.error && this.error.validityMessage ) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-text-field style="display:flex" label="${ifDefined(this.definition.prompt)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autofill)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`;
+    return html`<vaadin-text-field style="display:flex" label="${ifDefined(this.definition.prompt)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${ifDefined(this.value)}">`;
   }
 
   validate(report: boolean) {
-    this.valid = report ? this.vaadinTextField.validate() : this.vaadinTextField.checkValidity() as boolean
+    this.valid = report ? this.vaadinTextField.validate2() : this.vaadinTextField.checkValidity() as boolean
     if (!this.valid) {
       this.invalid()
     }

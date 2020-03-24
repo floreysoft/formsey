@@ -11,9 +11,9 @@ export interface InputFieldDefinition extends FieldDefinition {
   autofocus? : boolean
   required?: boolean
   disabled?: boolean
-  autofill? : string
   customValidity? : string
   readonly?: boolean
+  autocomplete? : string
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {

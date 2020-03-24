@@ -15,6 +15,22 @@ export class OptionalSectionField extends VaadinField<OptionalSectionFieldDefini
 
   @query("vaadin-checkbox")
   private vaadinCheckbox: CheckboxElement;
+  private untouched : boolean = true
+
+  protected shouldUpdate(): boolean {
+    if (typeof this.definition === "undefined") {
+      return false
+    } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined" && this.untouched) {
+      this.value = this.definition.default
+      if (this.value && this.definition.name) {
+        this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      }
+    }
+    if (this.definition.hidden) {
+      return false
+    }
+    return true
+  }
 
   renderField() {
     let checked = false
@@ -29,6 +45,7 @@ export class OptionalSectionField extends VaadinField<OptionalSectionFieldDefini
 
   protected selectionChanged(e: any) {
     this.value = e.currentTarget.checked ? {} : undefined
+    this.untouched = false
     this.requestUpdate()
     this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
