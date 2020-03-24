@@ -11,7 +11,7 @@ export class EmailField extends VaadinField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
-  @query("vaadin-text-field")
+  @query("vaadin-email-field")
   vaadinEmailField: EmailFieldElement
 
   renderField() {
