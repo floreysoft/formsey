@@ -6,6 +6,6 @@ export { SignatureField } from './SignatureField'
 export { ImageField } from './ImageField'
 export { MarkupField } from './MarkupField'
 export { YouTubeField } from './YouTubeField'
-export { SourceCodeField } from './SourceCodeField'
+export { SourceCodeField, SourceCodeFieldDefinition } from './SourceCodeField'
 export { RepeatingField } from './RepeatingField'
 
