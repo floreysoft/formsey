@@ -82,8 +82,14 @@ export interface RepeatingFieldDefinition extends NestedFormDefinition {
   max: number
 }
 
+export class Selection {
+  label: string
+  value: string
+  form: FormDefinition
+}
+
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
-  forms : FormDefinition[]
+  selections : Selection[]
   multipleChoice? : boolean
 }
 

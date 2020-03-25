@@ -19,27 +19,26 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
   }
 
   renderField() {
-    if (this.definition && this.definition.forms) {
-      let values = this.definition.forms.map(form => ( form.name ? form.name : form.prompt));
+    if (this.definition && this.definition.selections) {
+      let values = this.definition.selections.map(selection => ( selection.value ? selection.value : selection.label));
       let index = 0
       if (this.value && this.value.selection) {
         index = values.indexOf(this.value.selection);
       } else {
         this.value = { selection: values[0], value : {}}
       }
-      let selectedForm = this.definition.forms[index];
-      selectedForm.type = "form"
-      let selection = selectedForm.name ? selectedForm.name : selectedForm.prompt;
+      let selection = this.definition.selections[index];
+      let value = selection.label ? selection.label : selection.value;
       let errors = {}
-      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.name ? form.name : form.prompt))}" .value="${selection}"></vaadin-combo-box>
-      <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
+      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.selections.map(selection => (selection.label ? selection.label : selection.valud))}" .value="${value}"></vaadin-combo-box>
+      <div class="fs-nested-form">${createField(this.configuration, selection.form, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
     }
     return undefined
   }
 
   protected selectionChanged(e: any) {
-    let selection = e.currentTarget.value;
-    let option = this.definition.forms.filter(form => (form.name ? form.name === selection : form.prompt === selection))[0].name;
+    let value = e.currentTarget.value;
+    let option = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label === value))[0].value;
     if (option) {
       this.value.selection = option;
       this.value.value = {}
