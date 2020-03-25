@@ -19,13 +19,19 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
   }
 
   renderField() {
-    let values = this.definition.forms.map(form => form.name);
-    let index = values.indexOf(this.value.selection);
-    let selectedForm = this.definition.forms[index];
-    let selection = selectedForm.prompt ? selectedForm.prompt : selectedForm.name;
-    let errors = {}
-    return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.prompt ? form.prompt : form.name))}" .value="${selection}"></vaadin-combo-box>
-    <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value.value, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
+    if (this.definition && this.definition.forms) {
+      let values = this.definition.forms.map(form => form.name);
+      let index = 0
+      if (this.value && this.value.selection) {
+        index = values.indexOf(this.value.selection);
+      }
+      let selectedForm = this.definition.forms[index];
+      let selection = selectedForm.prompt ? selectedForm.prompt : selectedForm.name;
+      let errors = {}
+      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.prompt ? form.prompt : form.name))}" .value="${selection}"></vaadin-combo-box>
+      <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value.value, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
+    }
+    return undefined
   }
 
   protected selectionChanged(e: any) {
