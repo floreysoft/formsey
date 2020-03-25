@@ -28,6 +28,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
         this.value = { selection: values[0], value : {}}
       }
       let selectedForm = this.definition.forms[index];
+      selectedForm.type = "form"
       let selection = selectedForm.name ? selectedForm.name : selectedForm.prompt;
       let errors = {}
       return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.name ? form.name : form.prompt))}" .value="${selection}"></vaadin-combo-box>
