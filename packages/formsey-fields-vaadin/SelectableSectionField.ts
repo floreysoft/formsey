@@ -20,15 +20,17 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
 
   renderField() {
     if (this.definition && this.definition.forms) {
-      let values = this.definition.forms.map(form => form.name);
+      let values = this.definition.forms.map(form => ( form.name ? form.name : form.prompt));
       let index = 0
       if (this.value && this.value.selection) {
         index = values.indexOf(this.value.selection);
+      } else {
+        this.value = { selection: values[0], value : {}}
       }
       let selectedForm = this.definition.forms[index];
-      let selection = selectedForm.prompt ? selectedForm.prompt : selectedForm.name;
+      let selection = selectedForm.name ? selectedForm.name : selectedForm.prompt;
       let errors = {}
-      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.prompt ? form.prompt : form.name))}" .value="${selection}"></vaadin-combo-box>
+      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.name ? form.name : form.prompt))}" .value="${selection}"></vaadin-combo-box>
       <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
     }
     return undefined
@@ -36,7 +38,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
 
   protected selectionChanged(e: any) {
     let selection = e.currentTarget.value;
-    let option = this.definition.forms.filter(form => (form.prompt ? form.prompt === selection : form.name === selection))[0].name;
+    let option = this.definition.forms.filter(form => (form.name ? form.name === selection : form.prompt === selection))[0].name;
     if (option) {
       this.value.selection = option;
       this.value.value = {}
