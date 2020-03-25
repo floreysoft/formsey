@@ -29,7 +29,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
       let selection = selectedForm.prompt ? selectedForm.prompt : selectedForm.name;
       let errors = {}
       return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.forms.map(form => (form.prompt ? form.prompt : form.name))}" .value="${selection}"></vaadin-combo-box>
-      <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value.value, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
+      <div class="fs-nested-form">${createField(this.configuration, selectedForm, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
     }
     return undefined
   }
