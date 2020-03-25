@@ -38,7 +38,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
 
   protected selectionChanged(e: any) {
     let value = e.currentTarget.value;
-    let option = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label === value))[0].value;
+    let option = this.definition.selections.filter(selection => (selection.label ? selection.label === value : selection.value === value))[0].value;
     if (option) {
       this.value.selection = option;
       this.value.value = {}
