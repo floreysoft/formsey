@@ -30,7 +30,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
       let selection = this.definition.selections[index];
       let value = selection.label ? selection.label : selection.value;
       let errors = {}
-      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.selections.map(selection => (selection.label ? selection.label : selection.valud))}" .value="${value}"></vaadin-combo-box>
+      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.selections.map(selection => (selection.label ? selection.label : selection.value))}" .value="${value}"></vaadin-combo-box>
       <div class="fs-nested-form">${createField(this.configuration, selection.form, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
     }
     return undefined
