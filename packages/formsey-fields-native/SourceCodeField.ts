@@ -25,6 +25,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
       border-radius: var(--lumo-border-radius);
       border: 1px solid var(--lumo-contrast-20pct);
       margin: var(--lumo-space-xs) 0;
+      overflow: hidden;
     }`]
   }
 

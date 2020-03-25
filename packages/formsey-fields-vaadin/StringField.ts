@@ -22,7 +22,7 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
   }
 
   validate(report: boolean) {
-    this.valid = report ? this.vaadinTextField.validate2() : this.vaadinTextField.checkValidity() as boolean
+    this.valid = report ? this.vaadinTextField.validate() : this.vaadinTextField.checkValidity() as boolean
     if (!this.valid) {
       this.invalid()
     }

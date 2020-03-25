@@ -19,13 +19,6 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
   }
 
   renderField() {
-    if (!this.value.selection) {
-      if (this.definition.default) {
-        this.value.selection = this.definition.default as string;
-      } else if (this.definition.forms[0].name) {
-        this.value.selection = this.definition.forms[0].name;
-      }
-    }
     let values = this.definition.forms.map(form => form.name);
     let index = values.indexOf(this.value.selection);
     let selectedForm = this.definition.forms[index];
