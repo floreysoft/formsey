@@ -3,7 +3,7 @@ import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-list/mwc-list-item";
 import { Select } from "@material/mwc-select";
 import "@material/mwc-select/mwc-select";
-import { customElement, html, property, query } from 'lit-element';
+import { customElement, html, property, query, css } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
@@ -14,6 +14,14 @@ export class ListField extends MaterialField<ListFieldDefinition, string> {
 
   @query("mwc-select")
   materialListField: Select
+
+  static get styles() {
+    return [...super.styles, css`
+    mwc-select {
+      width: 100%;
+    }
+  `]
+  }
 
   renderField() {
     let customValidity = this.definition.customValidity

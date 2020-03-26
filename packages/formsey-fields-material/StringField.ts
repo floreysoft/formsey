@@ -2,7 +2,7 @@ import { StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement, html, property, query } from 'lit-element';
+import { customElement, html, property, query, css } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
@@ -14,9 +14,17 @@ export class StringField extends MaterialField<StringFieldDefinition, string> {
   @query("mwc-textfield")
   materialTextField: TextField
 
+  static get styles() {
+    return [...super.styles, css`
+    mwc-textfield {
+      width: 100%;
+    }
+  `]
+  }
+
   renderField() {
     let customValidity = this.definition.customValidity
-    if ( this.error ) {
+    if (this.error) {
       customValidity = this.error.validityMessage
     }
     return html`<mwc-textfield ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${this.definition.disabled}" .value="${ifDefined(this.value)}" ?charCounter="${this.definition.maxlength}"></mwc-textfield>`;
@@ -28,7 +36,7 @@ export class StringField extends MaterialField<StringFieldDefinition, string> {
 
   firstUpdated() {
     this.materialTextField.validityTransform = (newValue, nativeValidity) => {
-      if ( this.error ) {
+      if (this.error) {
         return {
           valid: false,
           validationMessage: this.error.validityMessage,
@@ -39,8 +47,8 @@ export class StringField extends MaterialField<StringFieldDefinition, string> {
     }
   }
 
-  validate(report : boolean) {
-    if ( report ) {
+  validate(report: boolean) {
+    if (report) {
       return this.materialTextField.reportValidity() as boolean
     } else {
       return this.materialTextField.checkValidity() as boolean
@@ -55,11 +63,11 @@ export class StringField extends MaterialField<StringFieldDefinition, string> {
       }
     }
     let validationMessage = this.materialTextField.validationMessage
-    if ( validityState['validationMessage'] ) {
+    if (validityState['validationMessage']) {
       validationMessage = validityState['validationMessage']
       delete validityState['validationMessage']
     }
-    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(validationMessage, false, validityState )
+    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(validationMessage, false, validityState)
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

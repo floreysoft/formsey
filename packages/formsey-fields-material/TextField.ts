@@ -2,7 +2,7 @@ import { StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
-import { customElement, html, property, query } from 'lit-element';
+import { customElement, html, property, query, css } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
@@ -13,6 +13,14 @@ export class TextField extends MaterialField<StringFieldDefinition, string> {
 
   @query("mwc-textarea")
   materialTextArea: TextArea
+
+  static get styles() {
+    return [...super.styles, css`
+    mwc-textarea {
+      width: 100%;
+    }
+  `]
+  }
 
   renderField() {
     return html`<mwc-textarea fullwidth="true" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${ifDefined(this.value)}"></mwc-textarea>`;
