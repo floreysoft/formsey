@@ -1,9 +1,9 @@
-import { html, property, customElement } from 'lit-element';
+import { LabeledField, SignatureFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { customElement, html, property } from 'lit-element';
 import SignaturePad from 'signature_pad';
-import { Field, ValueChangedEvent, SignatureFieldDefinition } from '@formsey/core';
 
 @customElement("formsey-signature")
-export class SignatureField extends Field<SignatureFieldDefinition, string> {
+export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
