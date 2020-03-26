@@ -18,7 +18,8 @@ export class SectionField extends Field<FieldDefinition, void> {
       font-weight: normal;
       color: var(--lumo-primary-contrast-color);
       background-color: var(--lumo-primary-color);
-      padding: var(--lumo-space-xs) var(--lumo-space-s);
+      padding: var(--lumo-space-xs) var(--lumo-space-m);
+      clip-path: polygon(5px 0, 0 100%, 100% 100%, 100% 0);
     }
 
     footer {
