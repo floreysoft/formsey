@@ -1,6 +1,6 @@
 {
   "name": "demos",
-  "version": "0.1.147",
+  "version": "0.1.169",
   "private": true,
   "dependencies": {
     "@floreysoft/dialog": "^0.1.1",
