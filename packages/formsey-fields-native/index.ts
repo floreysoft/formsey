@@ -1,3 +1,4 @@
+export { SectionField } from './SectionField'
 export { BooleanField } from './BooleanField'
 export { DateField } from './DateField'
 export { NumberField } from './NumberField'
@@ -8,4 +9,3 @@ export { MarkupField } from './MarkupField'
 export { YouTubeField } from './YouTubeField'
 export { SourceCodeField, SourceCodeFieldDefinition } from './SourceCodeField'
 export { RepeatingField } from './RepeatingField'
-
