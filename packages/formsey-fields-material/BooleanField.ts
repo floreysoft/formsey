@@ -1,7 +1,7 @@
-import { customElement, html, property, query } from 'lit-element';
 import { BooleanFieldDefinition, LabeledField, ValueChangedEvent } from '@formsey/core';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox.js";
+import { customElement, html, property, query } from 'lit-element';
 
 @customElement("formsey-boolean-material")
 export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
@@ -12,13 +12,11 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   materialCheckbox: Checkbox
 
   renderField() {
-    return html`<mwc-checkbox @click="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" .value="${this.value}"></mwc-checkbox>`;
+    return html`<mwc-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled} ?checked="${this.value}"></mwc-checkbox>`;
   }
 
   protected valueChanged(e: any) {
     this.value = this.materialCheckbox.checked
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
 }
