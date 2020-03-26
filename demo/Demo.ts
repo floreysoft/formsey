@@ -20,7 +20,9 @@ import '../packages/formsey-fields-native/RepeatingSectionField';
 import '../packages/formsey-fields-native/SourceCodeField';
 import '../packages/formsey-fields-native/StringField';
 import '../packages/formsey-fields-native/YouTubeField';
-import '../packages/formsey-fields-vaadin/BooleanField';
+import '../packages/formsey-fields-material/BooleanField';
+import '../packages/formsey-fields-material/ListField';
+import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-vaadin/ListField';
 import '../packages/formsey-fields-vaadin/MultipleChoiceField';
 import '../packages/formsey-fields-native/OptionalSectionField';
@@ -70,12 +72,12 @@ export class DemoSection extends LitElement {
 }
 
 const CONFIG: FormConfiguration = {
-    'boolean': 'formsey-boolean-vaadin',
-    'string': 'formsey-string-vaadin',
+    'boolean': 'formsey-boolean-material',
+    'string': 'formsey-string-material',
     'text': 'formsey-text-vaadin',
     'number': 'formsey-number',
     'date': 'formsey-date',
-    'list': 'formsey-list-vaadin',
+    'list': 'formsey-list-material',
     'multipleChoice': 'formsey-multiple-choice-vaadin',
     'checkboxes': 'formsey-checkboxes-vaadin',
     'signature': 'formsey-signature',

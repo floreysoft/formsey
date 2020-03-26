@@ -30,7 +30,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     }
     this.definition.form.name = this.definition.name
     let form = checked ? html`<div class="fs-nested-form">${createField(this.configuration, this.definition.form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>` : undefined;
-    return html`${createField(this.configuration, { type: "boolean", prompt: this.definition.prompt, label: this.definition.label ? this.definition.label : this.definition.prompt, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), null)}
+    return html`${createField(this.configuration, { type: "boolean", prompt: this.definition.prompt, helpText: this.definition.helpText, label: this.definition.label ? this.definition.label : this.definition.prompt, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), null)}
       ${form}`;
   }
 

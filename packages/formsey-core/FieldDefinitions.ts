@@ -58,7 +58,7 @@ export class Option {
 }
 
 export interface ListFieldDefinition extends InputFieldDefinition {
-  options : Option[] | string[]
+  options : Option[]
 }
 
 export interface CheckboxesFieldDefinition extends InputFieldDefinition {
