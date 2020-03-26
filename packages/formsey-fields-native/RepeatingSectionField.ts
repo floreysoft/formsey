@@ -3,7 +3,7 @@ import { css, customElement, html, property, TemplateResult, queryAll } from 'li
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 
 @customElement("formsey-repeating-section")
-export class RepeatingField extends LabeledField<RepeatingFieldDefinition, Object[]> {
+export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
   value: Object[] = [];
 

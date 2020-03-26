@@ -1,5 +1,4 @@
-import { createField, LabeledField, SelectableSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
+import { createField, Field, ListFieldDefinition, SelectableSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { css, customElement, html, property } from 'lit-element';
 
 export class SelectableSectionValue {
@@ -7,8 +6,8 @@ export class SelectableSectionValue {
   value: Object = {}
 }
 
-@customElement("formsey-selectable-section-vaadin")
-export class SelectableSectionField extends LabeledField<SelectableSectionFieldDefinition, SelectableSectionValue> {
+@customElement("formsey-selectable-section")
+export class SelectableSectionField extends Field<SelectableSectionFieldDefinition, SelectableSectionValue> {
   @property({ converter: Object })
   value: SelectableSectionValue;
 
@@ -21,6 +20,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   renderField() {
     if (this.definition && this.definition.selections) {
       let values = this.definition.selections.map(selection => ( selection.value ? selection.value : selection.label));
+      let options = this.definition.selections.map(selection => { return {label: selection.label, value : selection.value}});
       let index = 0
       if (this.value && this.value.selection) {
         index = values.indexOf(this.value.selection);
@@ -30,15 +30,15 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       let selection = this.definition.selections[index];
       let value = selection.label ? selection.label : selection.value;
       let errors = {}
-      return html`<vaadin-combo-box style="display:flex" @change="${(event) => this.selectionChanged(event)}" name="${this.definition.name}" .items="${this.definition.selections.map(selection => (selection.label ? selection.label : selection.value))}" .value="${value}"></vaadin-combo-box>
+      return html`${createField(this.configuration, { type : "list", name: "selection", prompt: this.definition.prompt, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
       <div class="fs-nested-form">${createField(this.configuration, selection.form, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
     }
     return undefined
   }
 
-  protected selectionChanged(e: any) {
-    let value = e.currentTarget.value;
-    let option = this.definition.selections.filter(selection => (selection.label ? selection.label === value : selection.value === value))[0].value;
+  protected selectionChanged(e: ValueChangedEvent<string>) {
+    let value = e.value;
+    let option = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label=== value))[0].value;
     if (option) {
       this.value.selection = option;
       this.value.value = {}

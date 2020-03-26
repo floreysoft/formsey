@@ -9,21 +9,21 @@ import '@formsey/fields-compound/NameField';
 import '@formsey/fields-vaadin/CheckboxesField';
 import '@formsey/fields-vaadin/DateField';
 import '@formsey/fields-vaadin/MultipleChoiceField';
-import '@formsey/fields-vaadin/OptionalSectionField';
-import '@formsey/fields-vaadin/SelectableSectionField';
+import '../packages/formsey-fields-native/OptionalSectionField';
+import '../packages/formsey-fields-native/SelectableSectionField';
 import '@formsey/fields-vaadin/UploadField';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-native/ImageField';
 import '../packages/formsey-fields-native/MarkupField';
-import '../packages/formsey-fields-native/RepeatingField';
+import '../packages/formsey-fields-native/RepeatingSectionField';
 import '../packages/formsey-fields-native/SourceCodeField';
 import '../packages/formsey-fields-native/StringField';
 import '../packages/formsey-fields-native/YouTubeField';
 import '../packages/formsey-fields-vaadin/BooleanField';
 import '../packages/formsey-fields-vaadin/ListField';
 import '../packages/formsey-fields-vaadin/MultipleChoiceField';
-import '../packages/formsey-fields-vaadin/OptionalSectionField';
+import '../packages/formsey-fields-native/OptionalSectionField';
 import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-vaadin/TextField';
 
@@ -80,8 +80,8 @@ const CONFIG: FormConfiguration = {
     'checkboxes': 'formsey-checkboxes-vaadin',
     'signature': 'formsey-signature',
     'repeatingSection': 'formsey-repeating-section',
-    'optionalSection': 'formsey-optional-section-vaadin',
-    'seletableSection': 'formsey-selectable-section',
+    'optionalSection': 'formsey-optional-section',
+    'selectableSection': 'formsey-selectable-section',
     'nestedForm': 'formsey-nested-form',
     'nestedLayout': 'formsey-nested-form',
     'form': 'formsey-form-field',
@@ -134,130 +134,83 @@ export class Demo extends LitElement {
     render() {
         // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
         let simpleDemo = {
-            "fields": [
-              {
-                "name": "topLevel",
-                "prompt": "Top Level",
-                "type": "string",
-                "required": true
+          "fields": [
+            {
+              "name": "optional",
+              "prompt": "Optional",
+              "helpText": "Optional help",
+              "label": "My Label",
+              "form": {
+                "fields": [
+                  {
+                    "name": "aFieldInAForm",
+                    "prompt": "A field in a form",
+                    "autocomplete": "off",
+                    "type": "string"
+                  }
+                ],
+                "gridLarge": "grid-template-columns:1fr",
+                "name": "optional",
+                "type": "form"
               },
-              {
-                "form": {
-                  "fields": [
-                    {
-                      "name": "nestedLayoutA",
-                      "prompt": "Nested Layout A",
-                      "type": "string",
-                      "autofocus": false,
-                      "required": true
-                    },
-                    {
-                      "name": "nestedLayoutB",
-                      "prompt": "Nested Layout B",
-                      "type": "string",
-                      "autofocus": false,
-                      "required": true
-                    }
-                  ],
-                  "gridLarge": "grid-template-columns:1fr",
-                  "type": "form"
-                },
-                "type": "nestedLayout"
-              },
-              {
-                "name": "nestedForm",
-                "form": {
-                  "fields": [
-                    {
-                      "name": "nestedFormA",
-                      "prompt": "Nested Form A",
-                      "type": "string",
-                      "autofocus": false,
-                      "required": true
-                    },
-                    {
-                      "name": "nestedFormB",
-                      "prompt": "Nested Form B",
-                      "type": "string",
-                      "autofocus": false,
-                      "required": true
-                    }
-                  ],
-                  "gridLarge": "grid-template-columns:1fr",
-                  "name": "nestedForm",
-                  "type": "form"
-                },
-                "type": "nestedForm"
-              },
-              {
-                "name": "repeatingSection",
-                "prompt": "Repeating Section",
-                "min": "0",
-                "max": "5",
-                "form": {
-                  "fields": [
-                    {
-                      "name": "inRepeatA",
-                      "prompt": "In Repeat A",
-                      "type": "string",
-                      "autofocus": false,
-                      "required": true
-                    },
-                    {
-                      "name": "inRepeatB",
-                      "prompt": "In Repeat B",
-                      "type": "string",
-                      "autofocus": false,
-                      "required": true
-                    },
-                    {
-                      "name": "nestedInRepeat",
-                      "form": {
-                        "fields": [
-                          {
-                            "name": "nestedInRepeatA",
-                            "prompt": "Nested In Repeat A",
-                            "type": "string",
-                            "autofocus": false,
-                            "required": true
-                          },
-                          {
-                            "form": {
-                              "fields": [
-                                {
-                                  "name": "layoutInRepeatA",
-                                  "prompt": "Layout In Repeat A",
-                                  "type": "string",
-                                  "autofocus": false,
-                                  "required": true
-                                },
-                                {
-                                  "name": "layoutInRepeatB",
-                                  "prompt": "Layout In Repeat B",
-                                  "type": "string",
-                                  "autofocus": false,
-                                  "required": true
-                                }
-                              ],
-                              "gridLarge": "grid-template-columns:1fr",
-                              "type": "form"
-                            },
-                            "type": "nestedLayout"
-                          }
-                        ],
-                        "gridLarge": "grid-template-columns:1fr",
-                        "type": "form",
-                        "name": "nestedInRepeat"
-                      },
-                      "type": "nestedForm"
-                    }
-                  ],
-                  "gridLarge": "grid-template-columns:1fr",
-                  "type": "form"
-                },
-                "type": "repeatingSection"
+              "type": "optionalSection",
+              "gridLarge": {
+                "fields": [],
+                "gridLarge": "grid-template-columns:1fr",
+                "type": "form"
               }
-            ],
+            },
+            {
+              "name": "selection",
+              "prompt" : "Selection section",
+              "helpText" : "mit hilfe",
+              "selections": [
+                {
+                  "form": {
+                    "fields": [
+                      {
+                        "autocomplete": "off",
+                        "name": "inA",
+                        "prompt": "In A",
+                        "type": "string"
+                      }
+                    ],
+                    "gridLarge": "grid-template-columns:1fr",
+                    "type": "form"
+                  },
+                  "gridLarge": {
+                    "fields": [],
+                    "gridLarge": "grid-template-columns:1fr",
+                    "type": "form"
+                  },
+                  "label": "A",
+                  "value": "a"
+                },
+                {
+                  "label": "B",
+                  "value": "b",
+                  "form": {
+                    "fields": [
+                      {
+                        "name": "inB",
+                        "prompt": "In B",
+                        "autocomplete": "off",
+                        "type": "string"
+                      }
+                    ],
+                    "gridLarge": "grid-template-columns:1fr",
+                    "type": "form"
+                  },
+                  "gridLarge": {
+                    "fields": [],
+                    "gridLarge": "grid-template-columns:1fr",
+                    "type": "form"
+                  }
+                }
+              ],
+              "type": "selectableSection"
+            }
+          ],
             "gridLarge": "grid-template-columns:1fr",
             "gridMedium": "grid-template-columns:1fr",
             "type": "form"

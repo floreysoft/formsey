@@ -120,9 +120,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected valueChanged(e: any) {
     this.value = e.currentTarget.value;
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
 
   protected firstPathElement(path: string) {
