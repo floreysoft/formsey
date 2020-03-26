@@ -11,10 +11,25 @@ export class SectionField extends Field<FieldDefinition, void> {
     return [...super.styles, css`
     * {
       font-family: var(--lumo-font-family);
+    }
+
+    header {
+      font-size: var(--lumo-font-size-xl);
+      font-weight: normal;
+      color: var(--lumo-primary-contrast-color);
+      background-color: var(--lumo-primary-color);
+      padding: var(--lumo-space-xs) var(--lumo-space-s);
+    }
+
+    footer {
+      font-size: var(--lumo-font-size-l);
+      font-weight: normal;
+      color: var(--lumo-body-text-color);
+      padding: var(--lumo-space-xs) var(--lumo-space-s);
     }`]
   }
 
   renderField() {
-    return html`<h1>${ifDefined(this.definition.prompt)}</h1><h2>${ifDefined(this.definition.helpText)}</h2>`
+  return html`<header>${ifDefined(this.definition.prompt)}</header><footer>${ifDefined(this.definition.helpText)}</footer>`
   }
 }
