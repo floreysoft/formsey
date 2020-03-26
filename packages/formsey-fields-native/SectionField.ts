@@ -30,6 +30,6 @@ export class SectionField extends Field<FieldDefinition, void> {
   }
 
   renderField() {
-  return html`<header>${ifDefined(this.definition.prompt)}</header><footer>${ifDefined(this.definition.helpText)}</footer>`
+    return html`<header>${ifDefined(this.definition.prompt)}</header><footer>${ifDefined(this.definition.helpText)}</footer>`
   }
 }
