@@ -12,7 +12,7 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   materialCheckbox: Checkbox
 
   renderField() {
-    return html`<mwc-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled} ?checked="${this.value}"></mwc-checkbox>`;
+    return html`<mwc-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox>`;
   }
 
   protected valueChanged(e: any) {
