@@ -1,12 +1,16 @@
 import { BooleanFieldDefinition, createField, OptionalSectionFieldDefinition, ValueChangedEvent, Field } from '@formsey/core';
-import { customElement, html, property } from 'lit-element';
+import { customElement, html, property, query } from 'lit-element';
+import { InvalidEvent } from '@formsey/core/InvalidEvent';
 
 @customElement("formsey-optional-section")
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, Object> {
   @property({ converter: Object })
-  value: WebGLVertexArrayObjectOES
+  value: Object
 
-  private untouched : boolean = true
+  @query("#form")
+  form: HTMLElement
+
+  private untouched: boolean = true
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -25,13 +29,37 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
   renderField() {
     let checked = false
-    if ( this.value ) {
+    if (this.value) {
       checked = true
     }
     this.definition.form.name = this.definition.name
-    let form = checked ? html`<div class="fs-nested-form">${createField(this.configuration, this.definition.form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>` : undefined;
-    return html`${createField(this.configuration, { type: "boolean", prompt: this.definition.prompt, helpText: this.definition.helpText, label: this.definition.label ? this.definition.label : this.definition.prompt, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), null)}
+    let form = checked ? html`<div id="form">${createField(this.configuration, this.definition.form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
+    return html`${createField(this.configuration, { type: "boolean", name: this.definition.name, prompt: this.definition.prompt, helpText: this.definition.helpText, label: this.definition.label ? this.definition.label : this.definition.prompt, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
+  }
+
+  public validate(report: boolean) {
+    let checkbox = this.renderRoot.firstElementChild as Field<any, any>
+    let valid = true
+    if (report) {
+      valid = checkbox.reportValidity();
+    } else {
+      valid = checkbox.checkValidity();
+    }
+    if (this.form) {
+      let child = this.form.firstElementChild as Field<any, any>
+      if (report) {
+        valid = valid && child.reportValidity();
+      } else {
+        valid = valid && child.checkValidity();
+      }
+    }
+    return valid
+  }
+
+  protected invalid(e: InvalidEvent) {
+    e.stopPropagation()
+    this.dispatchEvent(new InvalidEvent(e.errors))
   }
 
   protected selectionChanged(e: ValueChangedEvent<boolean>) {

@@ -34,11 +34,9 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     }
 
     .required {
-      position: relative;
-      top: var(--formey-required-top, -6px);
       margin: var(--formsey-required-margin, 0 0 0 var(--lumo-space-xs));
       font-family: var(--formey-required-font-family, var(--lumo-font-family));
-      font-size: var(--formey-required-font-size, var(--lumo-font-size-xs));
+      font-size: var(--formey-required-font-size, var(--lumo-font-size-l));
       line-height: var(--formsey-required-line-height, var(--lumo-line-height-xs));
       color: var(--formsey-required-color, var(--lumo-error-text-color));
     }
@@ -56,21 +54,22 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
 
   protected renderHeader(): TemplateResult | void {
     let required = false
-    if (this.definition.hasOwnProperty('required') ) {
+    if (this.definition.hasOwnProperty('required')) {
       required = (<InputFieldDefinition>this.definition).required
     }
     return html`
-      ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${required ? html`<span class="required">*</span>` : html``}</div>` : undefined}
+      ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${required ? html`<span class="required">&#9679;</span>` : html``}</div>` : undefined}
       ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined}`
   }
 
   protected renderFooter(): TemplateResult | void {
-    if (this.definition.hasOwnProperty('customValidity') ) {
-      let validityMessage = (<InputFieldDefinition>this.definition).customValidity
-      if (this.error) {
-        validityMessage = this.error.validityMessage
-      }
-      return this.report && typeof validityMessage !== "undefined" ? html`<div class="error-text">${validityMessage}</div>` : undefined
+    let validityMessage = undefined
+    if (this.error) {
+      validityMessage = this.error.validityMessage
     }
+    if (this.definition.hasOwnProperty('customValidity')) {
+      validityMessage = (<InputFieldDefinition>this.definition).customValidity
+    }
+    return this.report && typeof validityMessage !== "undefined" ? html`<div class="error-text">${validityMessage}</div>` : undefined
   }
 }

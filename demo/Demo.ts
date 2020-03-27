@@ -9,23 +9,21 @@ import '@formsey/fields-compound/NameField';
 import '@formsey/fields-vaadin/CheckboxesField';
 import '@formsey/fields-vaadin/DateField';
 import '@formsey/fields-vaadin/MultipleChoiceField';
-import '../packages/formsey-fields-native/OptionalSectionField';
-import '../packages/formsey-fields-native/SelectableSectionField';
 import '@formsey/fields-vaadin/UploadField';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
-import '../packages/formsey-fields-material/StringField';
-import '../packages/formsey-fields-native/ImageField';
-import '../packages/formsey-fields-native/MarkupField';
-import '../packages/formsey-fields-native/RepeatingSectionField';
-import '../packages/formsey-fields-native/SourceCodeField';
-import '../packages/formsey-fields-native/StringField';
-import '../packages/formsey-fields-native/YouTubeField';
 import '../packages/formsey-fields-material/BooleanField';
 import '../packages/formsey-fields-material/ListField';
 import '../packages/formsey-fields-material/StringField';
+import '../packages/formsey-fields-native/ImageField';
+import '../packages/formsey-fields-native/MarkupField';
+import '../packages/formsey-fields-native/OptionalSectionField';
+import '../packages/formsey-fields-native/RepeatingSectionField';
+import '../packages/formsey-fields-native/SelectableSectionField';
+import '../packages/formsey-fields-native/SourceCodeField';
+import '../packages/formsey-fields-native/StringField';
+import '../packages/formsey-fields-native/YouTubeField';
 import '../packages/formsey-fields-vaadin/ListField';
 import '../packages/formsey-fields-vaadin/MultipleChoiceField';
-import '../packages/formsey-fields-native/OptionalSectionField';
 import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-vaadin/TextField';
 
@@ -138,17 +136,26 @@ export class Demo extends LitElement {
         let simpleDemo = {
           "fields": [
             {
+              "name": "simple",
+              "prompt": "Simple",
+              "autocomplete": "off",
+              "type": "string",
+              "required": true
+            },
+            {
               "name": "optional",
               "prompt": "Optional",
               "helpText": "Optional help",
               "label": "My Label",
+              "required": true,
               "form": {
                 "fields": [
                   {
                     "name": "aFieldInAForm",
                     "prompt": "A field in a form",
                     "autocomplete": "off",
-                    "type": "string"
+                    "type": "string",
+                    "required": true
                   }
                 ],
                 "gridLarge": "grid-template-columns:1fr",
