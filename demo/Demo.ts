@@ -14,6 +14,7 @@ import { css, CSSResult, customElement, html, LitElement, property, query } from
 import '../packages/formsey-fields-material/BooleanField';
 import '../packages/formsey-fields-material/ListField';
 import '../packages/formsey-fields-material/StringField';
+import '../packages/formsey-fields-material/SectionField';
 import '../packages/formsey-fields-native/ImageField';
 import '../packages/formsey-fields-native/MarkupField';
 import '../packages/formsey-fields-native/OptionalSectionField';
@@ -79,6 +80,7 @@ const CONFIG: FormConfiguration = {
     'multipleChoice': 'formsey-multiple-choice-vaadin',
     'checkboxes': 'formsey-checkboxes-vaadin',
     'signature': 'formsey-signature',
+    'section': 'formsey-section-material',
     'repeatingSection': 'formsey-repeating-section',
     'optionalSection': 'formsey-optional-section',
     'selectableSection': 'formsey-selectable-section',
@@ -141,6 +143,11 @@ export class Demo extends LitElement {
               "autocomplete": "off",
               "type": "string",
               "required": true
+            },
+            {
+              "prompt": "Simple section",
+              "type": "section",
+              "helpText": "Just some text in the section"
             },
             {
               "name": "optional",
