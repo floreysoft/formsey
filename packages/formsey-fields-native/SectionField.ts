@@ -24,7 +24,7 @@ export class SectionField extends Field<FieldDefinition, void> {
     }
 
     footer {
-      font-size: var(--lumo-font-size-l);
+      font-size: var(--lumo-font-size-m);
       font-weight: normal;
       color: var(--lumo-body-text-color);
       padding: var(--lumo-space-s) 0 0 0;
