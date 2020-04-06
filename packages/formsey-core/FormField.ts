@@ -72,9 +72,6 @@ export class FormField extends Field<FormDefinition, Object> {
       }`];
   }
 
-  @queryAll("formsey-form-field")
-  protected _forms: HTMLElement[]
-
   @query(".grid")
   private grid: HTMLElement
   private gridSize: GridSize
@@ -125,12 +122,10 @@ export class FormField extends Field<FormDefinition, Object> {
 
   updated() {
     this.updateComplete.then(() => {
-      // Resize nested forms
-      if (this._forms) {
-        for (let form of this._forms) {
-          (<FormField>form).resize()
-          console.log("Form field:  Resize nested form field")
-        }
+      for (let field of this._fields) {
+        let child = field.firstElementChild as Field<any, any>
+        child.resize()
+        console.log("Form field:  Resize nested form field")
       }
     })
   }
