@@ -39,7 +39,7 @@ export class Form extends Field<FieldDefinition, Object> {
       if (this._forms) {
         for (let form of this._forms) {
           (<FormField>form).resize()
-          console.log("Form: Resize nested form field")
+          console.log("Form: Resize nested forms")
         }
       }
     })
