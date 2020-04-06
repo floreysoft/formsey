@@ -72,10 +72,12 @@ export class FormField extends Field<FormDefinition, Object> {
       }`];
   }
 
+  @queryAll("formsey-form-field")
+  protected _forms: HTMLElement[]
+
   @query(".grid")
   private grid: HTMLElement
   private gridSize: GridSize
-  private resizeHandler = ((e: CustomEvent) => { this.resize(); if (e.detail) { this.requestUpdate() } })
 
   renderField() {
     let templates: TemplateResult[] = []
@@ -121,15 +123,16 @@ export class FormField extends Field<FormDefinition, Object> {
     return html`<div class="grid" style="${grid}">${templates}</div>`
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    window.addEventListener("resizeForm", this.resizeHandler)
-    this.resize()
-  }
-
-  disconnectedCallback() {
-    window.removeEventListener("resizeForm", this.resizeHandler)
-    super.disconnectedCallback()
+  updated() {
+    this.updateComplete.then(() => {
+      // Resize nested forms
+      if (this._forms) {
+        for (let form of this._forms) {
+          (<FormField>form).resize()
+          console.log("Form field: Resize nested form field")
+        }
+      }
+    })
   }
 
   public validate(report: boolean) {
@@ -147,6 +150,22 @@ export class FormField extends Field<FormDefinition, Object> {
       }
     }
     return validity;
+  }
+
+  public resize() {
+    let size = GridSize.LARGE
+    if (this.grid) {
+      let width = this.grid.clientWidth;
+      if (width < 576) {
+        size = GridSize.SMALL
+      } else if (width < 768) {
+        size = GridSize.MEDIUM
+      }
+    }
+    if (this.gridSize != size) {
+      this.gridSize = size
+      this.requestUpdate()
+    }
   }
 
   protected valueChanged(e: any) {
@@ -254,21 +273,5 @@ export class FormField extends Field<FormDefinition, Object> {
       this.errors[this.definition.name ? this.definition.name + "." + error : error] = e.errors[error]
     }
     this.dispatchEvent(new InvalidEvent(this.errors))
-  }
-
-  private resize() {
-    let size = GridSize.LARGE
-    if (this.grid) {
-      let width = this.grid.clientWidth;
-      if (width < 576) {
-        size = GridSize.SMALL
-      } else if (width < 768) {
-        size = GridSize.MEDIUM
-      }
-    }
-    if (this.gridSize != size) {
-      this.gridSize = size
-      this.requestUpdate()
-    }
   }
 }

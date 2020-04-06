@@ -365,6 +365,7 @@ export class Demo extends LitElement {
     }
 
     resize() {
+        console.log("resize...")
         window.dispatchEvent(new Event("resizeForm"))
     }
 }
