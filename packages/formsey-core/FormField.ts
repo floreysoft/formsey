@@ -37,7 +37,6 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected _value: Object = {}
   protected _definition: FormDefinition
-  private rc = 0
 
   @queryAll(".fs-form-field")
   protected _fields: HTMLElement[]
@@ -258,7 +257,6 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   private resize() {
-    console.log("Resize count="+(this.rc++))
     let size = GridSize.LARGE
     if (this.grid) {
       let width = this.grid.clientWidth;
