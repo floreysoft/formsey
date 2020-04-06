@@ -1,6 +1,6 @@
 {
   "name": "@formsey/core",
-  "version": "0.1.176",
+  "version": "0.1.178",
   "files": [
     "/*.js.map",
     "/*.d.ts.map",
