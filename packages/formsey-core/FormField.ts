@@ -125,7 +125,6 @@ export class FormField extends Field<FormDefinition, Object> {
       for (let field of this._fields) {
         let child = field.firstElementChild as Field<any, any>
         child.resize()
-        console.log("Form field:  Resize nested form field")
       }
     })
   }
