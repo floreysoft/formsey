@@ -120,15 +120,6 @@ export class FormField extends Field<FormDefinition, Object> {
     return html`<div class="grid" style="${grid}">${templates}</div>`
   }
 
-  updated() {
-    this.updateComplete.then(() => {
-      for (let field of this._fields) {
-        let child = field.firstElementChild as Field<any, any>
-        child.resize()
-      }
-    })
-  }
-
   public validate(report: boolean) {
     let validity = true;
     for (let field of this._fields) {
@@ -159,6 +150,12 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.gridSize != size) {
       this.gridSize = size
       this.requestUpdate()
+    }
+    for (let field of this._fields) {
+      let child = field.firstElementChild as Field<any, any>
+      if ( child && typeof child['resize'] == "function") {
+        child.resize()
+      }
     }
   }
 
