@@ -11,7 +11,7 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
-  @query("vaadin-date-picker-field")
+  @query("vaadin-date-picker")
   vaadinDatePicker: VaadinDatePicker
 
   renderField() {
