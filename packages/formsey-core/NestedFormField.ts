@@ -16,7 +16,9 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
 
   public resize() {
     let child = this.renderRoot.firstElementChild as Field<any, any>
-    child.resize()
+    if ( child ) {
+      child.resize()
+    }
   }
 
   public validate(report: boolean) {
