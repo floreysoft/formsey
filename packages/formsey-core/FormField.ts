@@ -1,7 +1,7 @@
-import { createField, Field, FormDefinition, ValueChangedEvent } from '@formsey/core';
+import { area, createField, Field, FormDefinition, ValueChangedEvent } from '@formsey/core';
 import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
-import { InvalidEvent } from './InvalidEvent';
 import { NestedFormDefinition } from './FieldDefinitions';
+import { InvalidEvent } from './InvalidEvent';
 
 export enum GridSize {
   SMALL = "gridSmall",
@@ -111,7 +111,7 @@ export class FormField extends Field<FormDefinition, Object> {
         }
         let fieldTemplate = html`${createField(this.configuration, field, value, fieldErrors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}`
         if (grid && grid.indexOf('grid-template-areas') >= 0) {
-          templates.push(html`<div class='fs-form-field' style="grid-area:_${field.name}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fs-form-field' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
           templates.push(html`<div class='fs-form-field'>${fieldTemplate}</div>`)
         }

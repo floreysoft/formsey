@@ -22,12 +22,16 @@ export class StringField extends MaterialField<StringFieldDefinition, string> {
   `]
   }
 
-  renderField() {
+  render() {
     let customValidity = this.definition.customValidity
     if (this.error) {
       customValidity = this.error.validityMessage
     }
-    return html`<mwc-textfield ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}" ?charCounter="${this.definition.maxlength}"></mwc-textfield>`;
+    return html`<mwc-textfield label="${this.definition.prompt}" helper="${ifDefined(this.definition.helpText)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}" ?charCounter="${this.definition.maxlength}"></mwc-textfield>`;
+  }
+
+  renderField() {
+    return;
   }
 
   renderFooter() {

@@ -140,6 +140,7 @@ export class Demo extends LitElement {
             {
               "name": "simple",
               "prompt": "Simple",
+              "helpText": "Optional help",
               "autocomplete": "off",
               "type": "string",
               "required": true
