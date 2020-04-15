@@ -13,7 +13,7 @@ export function area(field: FieldDefinition, fields: FieldDefinition[]): string 
   let area = field.name
   if (!area) {
     let typeCounter = 0
-    let area = field.type
+    area = field.type
     fields.forEach(formField => {
       if (field === formField) {
         area += typeCounter
