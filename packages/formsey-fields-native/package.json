@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.1.188",
+  "version": "0.1.189",
   "description": "Native fields",
   "files": [
     "/*.js.map",
@@ -10,7 +10,7 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.1.188",
+    "@formsey/core": "^0.1.189",
     "lit-element": "^2.3.0",
     "signature_pad": "^3.0.0-beta.3"
   },
