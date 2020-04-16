@@ -1,8 +1,8 @@
 import { BooleanFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
-import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
+import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox.js";
 import { customElement, html, property, query } from 'lit-element';
 import { MaterialField } from './MaterialField';
 

@@ -15,6 +15,7 @@ import '../packages/formsey-fields-material/BooleanField';
 import '../packages/formsey-fields-material/ListField';
 import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-material/SectionField';
+import '../packages/formsey-fields-material/CheckboxesField';
 import '../packages/formsey-fields-native/ImageField';
 import '../packages/formsey-fields-native/MarkupField';
 import '../packages/formsey-fields-native/OptionalSectionField';
@@ -78,7 +79,7 @@ const CONFIG: FormConfiguration = {
     'date': 'formsey-date',
     'list': 'formsey-list-material',
     'multipleChoice': 'formsey-multiple-choice-vaadin',
-    'checkboxes': 'formsey-checkboxes-vaadin',
+    'checkboxes': 'formsey-checkboxes-material',
     'signature': 'formsey-signature',
     'section': 'formsey-section-material',
     'repeatingSection': 'formsey-repeating-section',
@@ -138,12 +139,25 @@ export class Demo extends LitElement {
         let simpleDemo = {
           "fields": [
             {
-              "name": "simple",
-              "prompt": "Simple",
-              "helpText": "Optional help",
-              "autocomplete": "off",
-              "type": "string",
-              "required": true
+              "name": "checkboxes",
+              "prompt": "Checkboxes",
+              "helpText": "Checkboxes help",
+              "other": true,
+              "options": [
+                {
+                  "label": "OptionA",
+                  "value": "valueA"
+                },
+                {
+                  "label": "OptionB",
+                  "value": "valueB"
+                },
+                {
+                  "label": "OptionC",
+                  "value": "valueC"
+                }
+              ],
+              "type": "checkboxes"
             },
             {
               "prompt": "Simple section",
@@ -226,6 +240,14 @@ export class Demo extends LitElement {
                 }
               ],
               "type": "selectableSection"
+            },
+            {
+              "name": "simple",
+              "prompt": "Simple",
+              "helpText": "Optional help",
+              "autocomplete": "off",
+              "type": "string",
+              "required": true
             }
           ],
             "gridLarge": "grid-template-columns:1fr",

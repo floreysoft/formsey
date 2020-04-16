@@ -6,7 +6,6 @@ export { Form } from './Form'
 export { FormField, GridSize } from './FormField'
 export { LabeledField } from './LabeledField'
 export { NestedFormField } from './NestedFormField'
-export { NestedLayoutField } from './NestedLayoutField'
 export { ValueChangedEvent } from './ValueChangedEvent'
 
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {
