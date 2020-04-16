@@ -16,6 +16,8 @@ import '../packages/formsey-fields-material/ListField';
 import '../packages/formsey-fields-material/StringField';
 import '../packages/formsey-fields-material/SectionField';
 import '../packages/formsey-fields-material/CheckboxesField';
+import '../packages/formsey-fields-material/SelectableSectionField';
+import '../packages/formsey-fields-material/OptionalSectionField';
 import '../packages/formsey-fields-native/ImageField';
 import '../packages/formsey-fields-native/MarkupField';
 import '../packages/formsey-fields-native/OptionalSectionField';
@@ -83,8 +85,8 @@ const CONFIG: FormConfiguration = {
     'signature': 'formsey-signature',
     'section': 'formsey-section-material',
     'repeatingSection': 'formsey-repeating-section',
-    'optionalSection': 'formsey-optional-section',
-    'selectableSection': 'formsey-selectable-section',
+    'optionalSection': 'formsey-optional-section-material',
+    'selectableSection': 'formsey-selectable-section-material',
     'nestedForm': 'formsey-nested-form',
     'nestedLayout': 'formsey-nested-form',
     'form': 'formsey-form-field',

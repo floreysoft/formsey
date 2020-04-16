@@ -1,13 +1,14 @@
-import { CheckboxesFieldDefinition, Field, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from "@material/mwc-textfield/mwc-textfield.js";
-import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
-import { css, customElement, html, property, query, TemplateResult, queryAll } from 'lit-element';
+import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
+import { MaterialField } from './MaterialField';
 
 @customElement("formsey-checkboxes-material")
-export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> {
+export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, string[]> {
   @property({ converter: Object })
   value: string[] = []
 
@@ -22,12 +23,11 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
     :host {
       display: flex;
       flex-direction: column;
-      font-family: var(--lumo-font-family);
     }
     .other {
       display: grid;
-      grid-template-columns: max-content minmax(100px,350px);
-      grid-gap: 10px;
+      grid-template-columns: max-content minmax(10em,20em);
+      grid-gap: 2em;
       align-items: center;
     }`]
   }
@@ -61,7 +61,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
   valueChanged(e: Event) {
     let values = []
     let other = false
-    for (let value of this.combinedValues()) {
+    for (let value of this.values()) {
       if (value == "__other") {
         other = true
         values.push(this.otherTextField.value)
@@ -84,7 +84,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
     }
   }
 
-  private combinedValues() : string[] {
+  private values() : string[] {
     let values = []
     this.checkboxes.forEach(checkbox => {
       if ( checkbox.checked ) {

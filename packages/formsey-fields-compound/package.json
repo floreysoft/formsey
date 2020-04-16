@@ -10,6 +10,7 @@
     "!/test/"
   ],
   "dependencies": {
+    "@floreysoft/ace": "0.3.77",
     "@formsey/core": "^0.1.188",
     "lit-element": "^2.1.0"
   },

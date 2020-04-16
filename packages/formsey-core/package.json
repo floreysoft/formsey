@@ -10,7 +10,7 @@
   ],
   "description": "Formsey core components",
   "dependencies": {
-    "lit-element": "^2.1.0"
+    "lit-element": "^2.3.0"
   },
   "scripts": {
     "tsc": "tsc",
