@@ -54,7 +54,6 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    console.log(customValidity)
     return html`${templates}`;
   }
 
@@ -91,7 +90,6 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
         values.push(checkbox.value)
       }
     })
-    console.log(values)
     return values;
   }
 }
