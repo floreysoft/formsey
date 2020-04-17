@@ -1,13 +1,12 @@
-import { StringFieldDefinition } from '@formsey/core';
+import { StringFieldDefinition, Field } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
-import { customElement, html, property, query, css } from 'lit-element';
+import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { MaterialField } from './MaterialField';
 
 @customElement("formsey-text-material")
-export class TextField extends MaterialField<StringFieldDefinition, string> {
+export class TextField extends Field<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
@@ -23,7 +22,7 @@ export class TextField extends MaterialField<StringFieldDefinition, string> {
   }
 
   renderField() {
-    return html`<mwc-textarea fullwidth="true" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${this.value ? this.value : ''}"></mwc-textarea>`;
+    return html`<mwc-textarea label="${this.definition.prompt}" helper="${ifDefined(this.definition.helpText)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${this.value ? this.value : ''}"></mwc-textarea>`;
   }
 
   renderFooter() {
