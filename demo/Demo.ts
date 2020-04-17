@@ -13,9 +13,13 @@ import '@formsey/fields-vaadin/UploadField';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import '../packages/formsey-fields-material/BooleanField';
 import '../packages/formsey-fields-material/ListField';
+import '../packages/formsey-fields-material/DateField';
 import '../packages/formsey-fields-material/StringField';
+import '../packages/formsey-fields-material/EmailField';
+import '../packages/formsey-fields-material/NumberField';
 import '../packages/formsey-fields-material/SectionField';
 import '../packages/formsey-fields-material/CheckboxesField';
+import '../packages/formsey-fields-material/MultipleChoiceField';
 import '../packages/formsey-fields-material/SelectableSectionField';
 import '../packages/formsey-fields-material/OptionalSectionField';
 import '../packages/formsey-fields-native/ImageField';
@@ -76,11 +80,12 @@ export class DemoSection extends LitElement {
 const CONFIG: FormConfiguration = {
     'boolean': 'formsey-boolean-material',
     'string': 'formsey-string-material',
+    'email': 'formsey-email-material',
     'text': 'formsey-text-vaadin',
-    'number': 'formsey-number',
-    'date': 'formsey-date',
+    'number': 'formsey-number-material',
+    'date': 'formsey-date-material',
     'list': 'formsey-list-material',
-    'multipleChoice': 'formsey-multiple-choice-vaadin',
+    'multipleChoice': 'formsey-multiple-choice-material',
     'checkboxes': 'formsey-checkboxes-material',
     'signature': 'formsey-signature',
     'section': 'formsey-section-material',
@@ -159,7 +164,7 @@ export class Demo extends LitElement {
                   "value": "valueC"
                 }
               ],
-              "type": "checkboxes"
+              "type": "multipleChoice"
             },
             {
               "prompt": "Simple section",
@@ -244,11 +249,29 @@ export class Demo extends LitElement {
               "type": "selectableSection"
             },
             {
-              "name": "simple",
-              "prompt": "Simple",
-              "helpText": "Optional help",
+              "name": "email",
+              "prompt": "Email",
+              "helpText": "Email help",
               "autocomplete": "off",
-              "type": "string",
+              "type": "email",
+              "required": true
+            },
+            {
+              "name": "date",
+              "prompt": "Date",
+              "helpText": "Date help",
+              "autocomplete": "off",
+              "type": "date",
+              "required": true
+            },
+            {
+              "name": "number",
+              "prompt": "Number",
+              "helpText": "Number help",
+              "min": 5,
+              "max": 15,
+              "step": 0.5,
+              "type": "number",
               "required": true
             }
           ],

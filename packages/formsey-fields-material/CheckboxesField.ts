@@ -76,7 +76,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }
-    if (other) {
+    if ((<Checkbox>e.target).value == "__other" && other) {
       this.updateComplete.then(() => {
         this.otherTextField.focus()
       })

@@ -16,7 +16,7 @@ export abstract class MaterialField<T extends FieldDefinition, V> extends Labele
     }
 
     :host(:focus-within) header {
-      color: var(--mdc-theme-primary, rgba(255, 0, 0, 0.6));
+      color: var(--mdc-theme-primary, rgba(0, 0, 0, 0.8));
     }
 
     footer {

@@ -1,14 +1,14 @@
-import { Field, StringFieldDefinition } from '@formsey/core';
+import { Field, NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
 import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-string-material")
-export class StringField extends Field<StringFieldDefinition, string> {
-  @property({ type: String })
-  value: string;
+@customElement("formsey-number-material")
+export class NumberField extends Field<NumberFieldDefinition, number> {
+  @property({ type: Number })
+  value: number;
 
   @query("mwc-textfield")
   materialTextField: TextField
@@ -26,7 +26,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
     if (this.error) {
       customValidity = this.error.validityMessage
     }
-    return html`<mwc-textfield label="${this.definition.prompt}" helper="${ifDefined(this.definition.helpText)}" type="${this.type}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}" ?charCounter="${this.definition.maxlength}"></mwc-textfield>`;
+    return html`<mwc-textfield label="${this.definition.prompt}" helper="${ifDefined(this.definition.helpText)}" type="${this.type}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" min="${ifDefined(this.definition.min)}" max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}"></mwc-textfield>`;
   }
 
   firstUpdated() {
@@ -67,6 +67,11 @@ export class StringField extends Field<StringFieldDefinition, string> {
   }
 
   protected get type() : TextFieldType {
-    return "text"
+    return "number"
+  }
+
+  protected valueChanged(e: any) {
+    this.value = +e.currentTarget.value;
+    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
   }
 }
