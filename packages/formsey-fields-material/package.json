@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-material",
-  "version": "0.1.193",
+  "version": "0.1.194",
   "description": "Material design fields",
   "files": [
     "/*.js.map",
