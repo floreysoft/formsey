@@ -32,18 +32,12 @@ export class Form extends Field<FieldDefinition, Object> {
   renderHeader() {
     return
   }
-/*
+
   updated() {
     this.updateComplete.then(() => {
-      // Resize nested forms
-      if (this._forms) {
-        for (let form of this._forms) {
-          (<FormField>form).resize()
-        }
-      }
+      this.resize()
     })
   }
-*/
 
   public validate(report: boolean) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
@@ -76,7 +70,6 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   public resize() {
-    // this.requestUpdate()
     // Resize nested forms
     if (this._forms) {
       for (let form of this._forms) {
