@@ -1,7 +1,7 @@
 import { TemplateResult, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { InputFieldDefinition, FieldDefinition } from './FieldDefinitions';
-import { Field } from '.';
+import { Field } from './Field';
 
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
   static get styles() {
