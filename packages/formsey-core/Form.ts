@@ -4,7 +4,7 @@ import { InvalidEvent } from './InvalidEvent';
 
 @customElement("formsey-form")
 export class Form extends Field<FieldDefinition, Object> {
-  private resizeHandler = ((e: CustomEvent) => { this.resize(); if (e.detail) { this.requestUpdate() } })
+  private resizeHandler = ((e: CustomEvent) => { this.resize() })
 
   value: Object = {}
 
@@ -13,12 +13,12 @@ export class Form extends Field<FieldDefinition, Object> {
 
   connectedCallback() {
     super.connectedCallback()
-    window.addEventListener("resizeForm", this.resizeHandler)
+    window.addEventListener("resize", this.resizeHandler)
   }
 
   disconnectedCallback() {
     super.disconnectedCallback()
-    window.removeEventListener("resizeForm", this.resizeHandler)
+    window.removeEventListener("resize", this.resizeHandler)
   }
 
   renderField() {
@@ -32,7 +32,7 @@ export class Form extends Field<FieldDefinition, Object> {
   renderHeader() {
     return
   }
-
+/*
   updated() {
     this.updateComplete.then(() => {
       // Resize nested forms
@@ -43,6 +43,7 @@ export class Form extends Field<FieldDefinition, Object> {
       }
     })
   }
+*/
 
   public validate(report: boolean) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
@@ -75,6 +76,12 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   public resize() {
-    this.requestUpdate()
+    // this.requestUpdate()
+    // Resize nested forms
+    if (this._forms) {
+      for (let form of this._forms) {
+        (<FormField>form).resize()
+      }
+    }
   }
 }
