@@ -1,12 +1,10 @@
-import { html, property, customElement } from 'lit-element';
-import { Field, DateFieldDefinition } from '@formsey/core';
+import { DateFieldDefinition } from '@formsey/core';
+import { customElement } from 'lit-element';
+import { InputField } from './InputField';
 
 @customElement("formsey-date")
-export class DateField extends Field<DateFieldDefinition, string> {
-  @property({ type: String })
-  value: string;
-
-  renderField() {
-    return html`<input type="datetime-local" @change="${(event) => this.valueChanged(event)}" name="${this.definition.name}" placeholder="${this.definition.placeholder}" .value="${this.value}">`;
+export class DateField extends InputField<DateFieldDefinition> {
+  protected get type() : string {
+    return "date"
   }
 }
