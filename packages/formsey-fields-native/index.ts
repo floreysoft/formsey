@@ -20,4 +20,3 @@ export { StringField } from './StringField'
 export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 export { YouTubeField } from './YouTubeField'
-
