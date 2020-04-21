@@ -1,5 +1,3 @@
-import themes from '@formsey/core'
-
 export { BooleanField } from './BooleanField'
 export { CheckboxesField } from './CheckboxesField'
 export { ColorField } from './ColorField'
@@ -21,6 +19,7 @@ export { TextField } from './TextField'
 export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 
+let themes : any
 themes['material'] = {
   'boolean': 'formsey-boolean-material',
   'text': 'formsey-text-material',
