@@ -1,15 +1,25 @@
+import { themes } from '@formsey/core'
+import '@formsey/fields-vaadin/BooleanField'
+import '@formsey/fields-vaadin/CheckboxesField'
+import '@formsey/fields-vaadin/DateField'
+import '@formsey/fields-vaadin/EmailField'
+import '@formsey/fields-vaadin/ListField'
+import '@formsey/fields-vaadin/MultipleChoiceField'
+import '@formsey/fields-vaadin/NumberField'
+import '@formsey/fields-vaadin/StringField'
+import '@formsey/fields-vaadin/TextField'
+import '@formsey/fields-vaadin/UploadField'
+
 export { BooleanField } from './BooleanField'
 export { CheckboxesField } from './CheckboxesField'
 export { DateField } from './DateField'
-export { MultipleChoiceField } from './MultipleChoiceField'
-export { StringField } from './StringField'
 export { EmailField } from './EmailField'
-export { NumberField } from './NumberField'
-export { TextField } from './TextField'
 export { ListField } from './ListField'
+export { MultipleChoiceField } from './MultipleChoiceField'
+export { NumberField } from './NumberField'
+export { StringField } from './StringField'
+export { TextField } from './TextField'
 export { VaadinField } from './VaadinField'
-
-import { themes } from '@formsey/core'
 
 themes['vaadin'] = {
   components: {

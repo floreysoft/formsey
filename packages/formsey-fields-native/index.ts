@@ -1,3 +1,26 @@
+
+// import "./webpack-resolver";
+import { themes } from '@formsey/core'
+import '@formsey/fields-native/ColorField'
+import '@formsey/fields-native/DateField'
+import '@formsey/fields-native/DateTimeField'
+import '@formsey/fields-native/EmailField'
+import '@formsey/fields-native/ImageField'
+import '@formsey/fields-native/MarkupField'
+import '@formsey/fields-native/OptionalSectionField'
+import '@formsey/fields-native/PasswordField'
+import '@formsey/fields-native/PhoneField'
+import '@formsey/fields-native/RepeatingSectionField'
+import '@formsey/fields-native/SearchField'
+import '@formsey/fields-native/SectionField'
+import '@formsey/fields-native/SelectableSectionField'
+import '@formsey/fields-native/SignatureField'
+import '@formsey/fields-native/SourceCodeField'
+import '@formsey/fields-native/StringField'
+import '@formsey/fields-native/URLField'
+import '@formsey/fields-native/YouTubeField'
+import 'ace-builds/src-min-noconflict/ace.js'
+
 export { BooleanField } from './BooleanField'
 export { ColorField } from './ColorField'
 export { DateField } from './DateField'
@@ -20,11 +43,6 @@ export { StringField } from './StringField'
 export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 export { YouTubeField } from './YouTubeField'
-
-import 'ace-builds/src-min-noconflict/ace.js'
-// import "./webpack-resolver";
-
-import { themes } from '@formsey/core'
 
 themes['native'] = {
   components: {
