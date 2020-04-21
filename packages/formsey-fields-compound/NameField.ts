@@ -25,7 +25,7 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField(this.configuration, form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
+    return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
   }
 }
 

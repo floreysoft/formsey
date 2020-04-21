@@ -8,6 +8,16 @@ export { LabeledField } from './LabeledField'
 export { NestedFormField } from './NestedFormField'
 export { ValueChangedEvent } from './ValueChangedEvent'
 
+export interface Components {
+  [index: string]: string
+}
+
+export interface Themes {
+  [index: string]: Components
+}
+
+export let themes : Themes = {}
+
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {
   let area = field.name
   if (!area) {

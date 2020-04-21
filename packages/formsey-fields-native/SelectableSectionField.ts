@@ -30,8 +30,8 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
       let selection = this.definition.selections[index];
       let value = selection.label ? selection.label : selection.value;
       let errors = {}
-      return html`${createField(this.configuration, { type : "list", name: "selection", prompt: this.definition.prompt, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
-      <div class="fs-nested-form">${createField(this.configuration, selection.form, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
+      return html`${createField(this.components, { type : "list", name: "selection", prompt: this.definition.prompt, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
+      <div class="fs-nested-form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), null)}</div>`;
     }
     return undefined
   }

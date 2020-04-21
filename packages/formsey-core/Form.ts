@@ -26,7 +26,7 @@ export class Form extends Field<FieldDefinition, Object> {
     if (this.definition.name && this.value && this.value[this.definition.name]) {
       value = this.value[this.definition.name]
     }
-    return createField(this.configuration, this.definition, value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
+    return createField(this.components, this.definition, value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
   }
 
   renderHeader() {

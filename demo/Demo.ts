@@ -1,6 +1,6 @@
 import { Dialog } from '@floreysoft/dialog';
 import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
-import { FormConfiguration } from "@formsey/core/Field";
+import { Components } from "@formsey/core/Field";
 import '@formsey/core/Form';
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
 import '@formsey/fields-compound/AddressField';
@@ -77,7 +77,7 @@ export class DemoSection extends LitElement {
     }
 }
 
-const CONFIG: FormConfiguration = {
+const CONFIG: Components = {
     'boolean': 'formsey-boolean-material',
     'string': 'formsey-string-material',
     'email': 'formsey-email-material',

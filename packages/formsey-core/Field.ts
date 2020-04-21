@@ -1,11 +1,8 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
+import { Components } from '.';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
-
-export interface FormConfiguration {
-  [index: string]: string
-}
 
 export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
@@ -15,10 +12,10 @@ export function hacktml(parts, ...args) {
   return html(newParts, ...newArgs);
 }
 
-export const createField = (configuration: FormConfiguration, definition: FieldDefinition, value: Object, errors: InvalidErrors, valueChangedHandler: any, invalidHandler: any): TemplateResult => {
-  const tag = configuration[definition.type];
+export const createField = (components: Components, definition: FieldDefinition, value: Object, errors: InvalidErrors, valueChangedHandler: any, invalidHandler: any): TemplateResult => {
+  const tag = components[definition.type];
   if (tag) {
-    return hacktml`<${tag} .configuration=${configuration} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @invalid=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .configuration=${components} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @invalid=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
   }
@@ -27,7 +24,7 @@ export const createField = (configuration: FormConfiguration, definition: FieldD
 
 export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ converter: Object })
-  configuration: FormConfiguration
+  components: Components
 
   @property({ type: Object })
   definition: T
