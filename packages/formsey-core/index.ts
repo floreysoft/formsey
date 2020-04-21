@@ -1,4 +1,5 @@
 import { FieldDefinition } from './FieldDefinitions'
+import { TemplateResult } from 'lit-element'
 
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'
@@ -12,8 +13,14 @@ export interface Components {
   [index: string]: string
 }
 
+export interface Theme {
+  components: Components,
+  icon? : TemplateResult,
+  displayName?: string
+}
+
 export interface Themes {
-  [index: string]: Components
+  [index: string]: Theme
 }
 
 export let themes : Themes = {}

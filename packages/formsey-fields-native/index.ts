@@ -20,3 +20,47 @@ export { StringField } from './StringField'
 export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 export { YouTubeField } from './YouTubeField'
+
+import 'ace-builds/src-min-noconflict/ace.js'
+// import "./webpack-resolver";
+
+import { themes } from '@formsey/core'
+
+themes['native'] = {
+  components: {
+    'boolean': 'formsey-boolean',
+    'text': 'formsey-text',
+    'string': 'formsey-string',
+    'email': 'formsey-email',
+    'phone': 'formsey-phone',
+    'color': 'formsey-color',
+    'password': 'formsey-password',
+    'search': 'formsey-search',
+    'number': 'formsey-number',
+    'date': 'formsey-date',
+    'datetime': 'formsey-datetime',
+    'week': 'formsey-week',
+    'month': 'formsey-month',
+    'list': 'formsey-list',
+    'multipleChoice': 'formsey-multiple-choice',
+    'checkboxes': 'formsey-checkboxes',
+    'signature': 'formsey-signature',
+    'section': 'formsey-section',
+    'repeatingSection': 'formsey-repeating-section',
+    'optionalSection': 'formsey-optional-section',
+    'selectableSection': 'formsey-selectable-section',
+    'form': 'formsey-form-field',
+    'nestedLayout': 'formsey-nested-form',
+    'nestedForm': 'formsey-nested-form',
+    'formEditor': 'formsey-form-editor',
+    'address': 'formsey-address',
+    'name': 'formsey-name',
+    'creditCard': 'formsey-creditcard',
+    'richText': 'formsey-rich-text-vaadin',
+    'sourceCode': 'formsey-sourcecode',
+    'markup': 'formsey-markup',
+    'image': 'formsey-image',
+    'youtube': 'formsey-youtube',
+    'upload': 'formsey-upload-vaadin'
+  }
+}
