@@ -76,7 +76,7 @@ export class DemoSection extends LitElement {
     }
 }
 
-const CONFIG: Components = {
+const COMPONENTS: Components = {
     'boolean': 'formsey-boolean-material',
     'string': 'formsey-string-material',
     'email': 'formsey-email-material',
@@ -281,7 +281,7 @@ export class Demo extends LitElement {
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <formsey-form id="demoForm" .definition=${simpleDemo} .configuration=${CONFIG} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+        <formsey-form id="demoForm" .definition=${simpleDemo} .components=${COMPONENTS} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <vaadin-button @click=${this.reportValidity}>Validate and report</vaadin-button>
         <vaadin-button @click=${this.error}>Error</vaadin-button>
@@ -290,7 +290,7 @@ export class Demo extends LitElement {
         <pre id="demoFormPath"></pre>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
-           <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .configuration=${CONFIG}></formsey-form>
+           <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .components=${COMPONENTS}></formsey-form>
         </fs-dialog>
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
         </fs-demo-section>

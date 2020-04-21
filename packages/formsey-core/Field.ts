@@ -15,9 +15,9 @@ export function hacktml(parts, ...args) {
 export const createField = (components: Components, definition: FieldDefinition, value: Object, errors: InvalidErrors, valueChangedHandler: any, invalidHandler: any): TemplateResult => {
   const tag = components[definition.type];
   if (tag) {
-    return hacktml`<${tag} .configuration=${components} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @invalid=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .errors=${errors} @valueChanged=${valueChangedHandler} @invalid=${invalidHandler}></${tag}>`;
   } else {
-    console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your configuration!");
+    console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your components!");
   }
   return html``;
 }
