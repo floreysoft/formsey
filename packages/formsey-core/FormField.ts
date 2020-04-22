@@ -41,22 +41,6 @@ export class FormField extends Field<FormDefinition, Object> {
   @queryAll(".fs-form-field")
   protected _fields: HTMLElement[]
 
-  async fetchDefinition(url: string) {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      this.definition = data
-      this.requestUpdate();
-    } catch (reason) {
-      console.error(reason.message)
-    }
-  }
-
-  @property()
-  set src(url: string) {
-    this.fetchDefinition(url);
-  }
-
   static get styles() {
     return [...super.styles, css`
       .grid {

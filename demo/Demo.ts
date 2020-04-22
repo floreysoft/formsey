@@ -127,6 +127,9 @@ export class Demo extends LitElement {
     @query("#demoFormValidation")
     demoFormValidation: HTMLElement
 
+    @query("#realForm")
+    realForm: HTMLFormElement
+
     private resizeHandler = ((e: Event) => this.resize())
 
     connectedCallback() {
@@ -280,7 +283,12 @@ export class Demo extends LitElement {
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
-        <formsey-form id="demoForm" .definition=${simpleDemo} .components=${COMPONENTS} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+        <form id="realForm" method="POST">
+          <input type="text" name="klobrille" required>
+          <formsey-form id="demoForm" name="muskelmann" .definition=${simpleDemo} .components=${COMPONENTS} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+          <input type="submit" value="Send Request">
+          <input type="reset" value="Reset">
+        </form>
         <vaadin-button @click=${this.validate}>Validate</vaadin-button>
         <vaadin-button @click=${this.reportValidity}>Validate and report</vaadin-button>
         <vaadin-button @click=${this.error}>Error</vaadin-button>
@@ -294,6 +302,18 @@ export class Demo extends LitElement {
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
         </fs-demo-section>
         `
+    }
+
+    firstUpdated() {
+      let that = this
+      this.realForm.addEventListener('submit', function(e) {
+        if ( !this.demoForm.reportValidity() ) {
+          e.preventDefault()
+          let x = that.realForm.elements;
+          console.log("KLOBRILLE="+x['klobrille'].value)
+          console.log("FORMSEY="+JSON.stringify(x['muskelmann'].value))
+        }
+      });
     }
 
     createFields(count: number): FieldDefinition[] {

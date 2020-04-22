@@ -1,5 +1,5 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
-import { Components } from '.';
+import { Components, themes } from '.';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
@@ -32,13 +32,27 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   value: V;
 
+  @property({ type: String })
+  set theme(theme : string) {
+    if ( themes[theme] ) {
+      this.components = themes[theme].components
+    } else {
+      let theme = this.defaultTheme()
+      if ( theme ) {
+        console.warn("Theme '"+theme+"' not availble, using '"+theme+"' instead")
+      } else {
+        console.error("Theme '"+theme+"' not availble, no theme installed!")
+      }
+    }
+  }
+
   @property({ type: Boolean })
   valid: boolean = true
 
   @property({ type: Boolean })
   report: boolean = false
 
-  @property({ converter: Object })
+  @property({ type: Object })
   set errors(errors: InvalidErrors) {
     this.error = undefined
     if (errors && this.definition.name) {
@@ -100,6 +114,10 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     if (this.definition.hidden) {
       return false
     }
+    if ( !this.components ) {
+      this.theme = this.defaultTheme()
+      return typeof this.components != "undefined"
+    }
     return true
   }
 
@@ -150,6 +168,15 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     }
     if (this.error && !this.error.custom) {
       this.error = undefined
+    }
+  }
+
+  private defaultTheme() {
+    let avaliableThemes = Object.keys(themes)
+    if ( typeof themes =="undefined" || avaliableThemes.length == 0 ) {
+      return undefined;
+    } else {
+      return avaliableThemes[0]
     }
   }
 }

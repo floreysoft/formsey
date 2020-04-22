@@ -1,19 +1,55 @@
 import { createField, Field, FieldDefinition, ValueChangedEvent, FormField } from '@formsey/core';
-import { customElement, queryAll } from 'lit-element';
+import { customElement, queryAll, property } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
 @customElement("formsey-form")
 export class Form extends Field<FieldDefinition, Object> {
+  public static formAssociated = true;
+
   private resizeHandler = ((e: CustomEvent) => { this.resize() })
 
   value: Object = {}
 
+  async fetchDefinition(url: string) {
+    try {
+      let response = await fetch(url);
+      let data = await response.json();
+      this.definition = data.form
+      this.value = data.value
+      this.theme = data.theme
+      this.requestUpdate();
+    } catch (reason) {
+      console.error(reason.message)
+    }
+  }
+
+  @property()
+  set src(url: string) {
+    this.fetchDefinition(url);
+  }
+
   @queryAll("formsey-form-field")
   protected _forms: HTMLElement[]
+  protected internals: any
+  protected form : any
+
+  constructor() {
+    super()
+    // @ts-ignore
+    this.internals = this.attachInternals();
+  }
+
+  protected formResetCallback() {
+    this.value = {};
+    this.internals.setFormValue('');
+  }
 
   connectedCallback() {
     super.connectedCallback()
     window.addEventListener("resize", this.resizeHandler)
+    if (!this.hasAttribute('tabindex')) {
+      this.tabIndex = 0;
+    }
   }
 
   disconnectedCallback() {
@@ -61,6 +97,8 @@ export class Form extends Field<FieldDefinition, Object> {
       value = this.value
     }
     this.dispatchEvent(new ValueChangedEvent(e.name, value));
+    this.dispatchEvent(new CustomEvent('change', { detail: { name, value } }))
+    this.internals.setFormValue(this.value);
   }
 
   protected invalid(e: InvalidEvent) {
