@@ -1,7 +1,7 @@
 {
-  "name": "@formsey/fields-native",
+  "name": "@formsey/fields-native-extended",
   "version": "0.1.205",
-  "description": "Native fields",
+  "description": "Native fields extended",
   "files": [
     "/*.js.map",
     "/*.d.ts.map",
@@ -11,7 +11,8 @@
   ],
   "dependencies": {
     "@formsey/core": "^0.1.205",
-    "lit-element": "^2.3.0"
+    "lit-element": "^2.3.0",
+    "signature_pad": "^3.0.0-beta.3"
   },
   "scripts": {
     "tsc": "tsc",
@@ -20,6 +21,5 @@
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "29ce2037bdd00cacb4c05d5431dfeccc0bf4825d"
+  }
 }

@@ -9,12 +9,13 @@
     "dependencies": "lerna bootstrap",
     "compile": "tsc",
     "watch": "tsc -w",
-    "clean": "node_modules/.bin/del packages/**/*.js !packages/formsey-fields-vaadin/webpack-resolver.js packages/**/*.js.map packages/**/*.d.ts packages/**/*.d.ts.map demos/**/*.js demos/**/*.js.map demos/**/*.d.ts demos/**/*.d.ts.map",
+    "clean": "rm -rf ./dist && rm -rf ./lib && node_modules/.bin/del packages/**/*.js !packages/formsey-fields-vaadin/webpack-resolver.js packages/**/*.js.map packages/**/*.d.ts packages/**/*.d.ts.map demos/**/*.js demos/**/*.js.map demos/**/*.d.ts demos/**/*.d.ts.map",
     "pub": "lerna run tsc && lerna publish",
     "build": "webpack --config webpack.prod.js",
     "start": "webpack-dev-server --open  --config webpack.dev.js",
     "test": "karma start",
-    "test:watch": "karma start --auto-watch=true --single-run=false"
+    "test:watch": "karma start --auto-watch=true --single-run=false",
+    "lib": "webpack --config webpack.libs.js"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

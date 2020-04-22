@@ -26,14 +26,13 @@ import '../packages/formsey-fields-native/MarkupField';
 import '../packages/formsey-fields-native/OptionalSectionField';
 import '../packages/formsey-fields-native/RepeatingSectionField';
 import '../packages/formsey-fields-native/SelectableSectionField';
-import '../packages/formsey-fields-native/SourceCodeField';
 import '../packages/formsey-fields-native/StringField';
 import '../packages/formsey-fields-native/YouTubeField';
 import '../packages/formsey-fields-vaadin/ListField';
 import '../packages/formsey-fields-vaadin/MultipleChoiceField';
 import '../packages/formsey-fields-vaadin/StringField';
 import '../packages/formsey-fields-vaadin/TextField';
-
+import '../packages/formsey-fields-native-extended/SourceCodeField';
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
