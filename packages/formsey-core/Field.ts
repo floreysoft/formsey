@@ -37,9 +37,10 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     if ( themes[theme] ) {
       this.components = themes[theme].components
     } else {
-      let theme = this.defaultTheme()
-      if ( theme ) {
-        console.warn("Theme '"+theme+"' not availble, using '"+theme+"' instead")
+      let defaultTheme = this.defaultTheme()
+      if ( defaultTheme ) {
+        console.warn("Theme '"+theme+"' not availble, using '"+defaultTheme+"' instead")
+        this.components = themes[defaultTheme].components
       } else {
         console.error("Theme '"+theme+"' not availble, no theme installed!")
       }

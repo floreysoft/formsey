@@ -23,7 +23,19 @@ export interface Themes {
   [index: string]: Theme
 }
 
-export let themes : Themes = {}
+export function registerTheme(name: string, theme: Theme) {
+  let themes = window['formseyThemes'] as Themes
+  if ( typeof themes === "undefined" ) {
+    console.log("Create themes registry")
+    themes = {}
+  }
+  themes[name] = theme
+}
+
+export function getTheme(name: string) : Theme | undefined {
+  let themes = window['formseyThemes'] as Themes
+  return themes ? themes[name] : undefined
+}
 
 export function register(tag: string, constructor : CustomElementConstructor) {
   if ( customElements.get(tag) ) {
