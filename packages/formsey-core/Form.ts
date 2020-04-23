@@ -1,5 +1,5 @@
-import { createField, Field, FieldDefinition, ValueChangedEvent, FormField } from '@formsey/core';
-import { customElement, queryAll, property } from 'lit-element';
+import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from '@formsey/core';
+import { property, queryAll } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
 export class Form extends Field<FieldDefinition, Object> {
@@ -115,8 +115,4 @@ export class Form extends Field<FieldDefinition, Object> {
     }
   }
 }
-try {
-  customElements.define('formsey-form', Form);
-} catch(e) {
-  console.log('formsey-form already exists, skipping...');
-}
+register('formsey-form', Form)

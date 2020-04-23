@@ -1,4 +1,4 @@
-import { area, createField, Field, FormDefinition, ValueChangedEvent } from '@formsey/core';
+import { area, createField, Field, FormDefinition, ValueChangedEvent, register } from '@formsey/core';
 import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
@@ -250,3 +250,4 @@ export class FormField extends Field<FormDefinition, Object> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+register('formsey-form-field', FormField)

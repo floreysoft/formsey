@@ -25,6 +25,14 @@ export interface Themes {
 
 export let themes : Themes = {}
 
+export function register(tag: string, constructor : CustomElementConstructor) {
+  try {
+    customElements.define(tag, constructor)
+  } catch(e) {
+    console.log("'"+tag+"' already exists, skipping...")
+  }
+}
+
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {
   let area = field.name
   if (!area) {

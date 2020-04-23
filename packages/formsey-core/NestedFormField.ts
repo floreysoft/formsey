@@ -1,8 +1,7 @@
-import { createField, Field, NestedFormDefinition, ValueChangedEvent } from '@formsey/core';
+import { createField, Field, NestedFormDefinition, ValueChangedEvent, register } from '@formsey/core';
 import { customElement } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
-@customElement("formsey-nested-form")
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
   value: Object = {}
 
@@ -41,3 +40,4 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     this.dispatchEvent(new ValueChangedEvent(e.name, this.value));
   }
 }
+register('formsey-nested-form', NestedFormField)
