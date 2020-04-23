@@ -11,8 +11,7 @@
   ],
   "dependencies": {
     "@formsey/core": "^0.1.209",
-    "lit-element": "^2.3.0",
-    "signature_pad": "^3.0.0-beta.3"
+    "lit-element": "^2.3.0"
   },
   "scripts": {
     "tsc": "tsc",
@@ -22,5 +21,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cf009b236247ef65462237c546f9cdc68d8af7c2"
+  "gitHead": "c9c8c9f27ceefaa8316169297f984297472adc3f"
 }
