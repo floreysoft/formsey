@@ -2,7 +2,6 @@ import { createField, Field, FieldDefinition, ValueChangedEvent, FormField } fro
 import { customElement, queryAll, property } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
-@customElement("formsey-form")
 export class Form extends Field<FieldDefinition, Object> {
   public static formAssociated = true;
 
@@ -115,4 +114,9 @@ export class Form extends Field<FieldDefinition, Object> {
       }
     }
   }
+}
+try {
+  customElements.define('formsey-form', Form);
+} catch(e) {
+  console.log('formsey-form already exists, skipping...');
 }
