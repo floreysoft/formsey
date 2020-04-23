@@ -1,5 +1,5 @@
 import { Dialog } from '@floreysoft/dialog';
-import { Components, FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
+import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
 import '@formsey/core/Form';
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
 import '@formsey/fields-compound/AddressField';
@@ -10,29 +10,6 @@ import '@formsey/fields-vaadin/DateField';
 import '@formsey/fields-vaadin/MultipleChoiceField';
 import '@formsey/fields-vaadin/UploadField';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
-import '../packages/formsey-fields-material/BooleanField';
-import '../packages/formsey-fields-material/CheckboxesField';
-import '../packages/formsey-fields-material/DateField';
-import '../packages/formsey-fields-material/EmailField';
-import '../packages/formsey-fields-material/ListField';
-import '../packages/formsey-fields-material/MultipleChoiceField';
-import '../packages/formsey-fields-material/NumberField';
-import '../packages/formsey-fields-material/OptionalSectionField';
-import '../packages/formsey-fields-material/SectionField';
-import '../packages/formsey-fields-material/SelectableSectionField';
-import '../packages/formsey-fields-material/StringField';
-import '../packages/formsey-fields-native/ImageField';
-import '../packages/formsey-fields-native/MarkupField';
-import '../packages/formsey-fields-native/OptionalSectionField';
-import '../packages/formsey-fields-native/RepeatingSectionField';
-import '../packages/formsey-fields-native/SelectableSectionField';
-import '../packages/formsey-fields-native/StringField';
-import '../packages/formsey-fields-native/YouTubeField';
-import '../packages/formsey-fields-vaadin/ListField';
-import '../packages/formsey-fields-vaadin/MultipleChoiceField';
-import '../packages/formsey-fields-vaadin/StringField';
-import '../packages/formsey-fields-vaadin/TextField';
-import '../packages/formsey-fields-native-extended/SourceCodeField';
 
 @customElement("fs-demo-section")
 export class DemoSection extends LitElement {
@@ -73,36 +50,6 @@ export class DemoSection extends LitElement {
         <slot></slot>
         <p>Size: <a href="https://bundlephobia.com/result?p=${this.npm}" target="_size">${this.minified} kB (minified), ${this.gzipped} kB (gzipped)</a></p>`
     }
-}
-
-const COMPONENTS: Components = {
-    'boolean': 'formsey-boolean-material',
-    'string': 'formsey-string-material',
-    'email': 'formsey-email-material',
-    'text': 'formsey-text-vaadin',
-    'number': 'formsey-number-material',
-    'date': 'formsey-date-material',
-    'list': 'formsey-list-material',
-    'multipleChoice': 'formsey-multiple-choice-material',
-    'checkboxes': 'formsey-checkboxes-material',
-    'signature': 'formsey-signature',
-    'section': 'formsey-section-material',
-    'repeatingSection': 'formsey-repeating-section',
-    'optionalSection': 'formsey-optional-section-material',
-    'selectableSection': 'formsey-selectable-section-material',
-    'nestedForm': 'formsey-nested-form',
-    'nestedLayout': 'formsey-nested-form',
-    'form': 'formsey-form-field',
-    'grid': 'formsey-grid',
-    'address': 'formsey-address',
-    'name': 'formsey-name',
-    'creditCard': 'formsey-creditcard',
-    'richText': 'formsey-rich-text',
-    'sourceCode': 'formsey-sourcecode',
-    'markup': 'formsey-markup',
-    'image': 'formsey-image',
-    'youtube': 'formsey-youtube',
-    'upload': 'formsey-upload'
 }
 
 @customElement("fs-demo")
@@ -285,7 +232,7 @@ export class Demo extends LitElement {
         <p>Formsey</p>
         <form id="realForm" method="POST">
           <input type="text" name="klobrille" required>
-          <formsey-form id="demoForm" name="muskelmann" .definition=${simpleDemo} .components=${COMPONENTS} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+          <formsey-form id="demoForm" name="muskelmann" .definition=${simpleDemo} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
           <input type="submit" value="Send Request">
           <input type="reset" value="Reset">
         </form>
@@ -297,7 +244,7 @@ export class Demo extends LitElement {
         <pre id="demoFormPath"></pre>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
-           <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json" .components=${COMPONENTS}></formsey-form>
+           <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json"></formsey-form>
         </fs-dialog>
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
         </fs-demo-section>
