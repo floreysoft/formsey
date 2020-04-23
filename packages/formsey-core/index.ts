@@ -24,22 +24,23 @@ export interface Themes {
 }
 
 export function registerTheme(name: string, theme: Theme) {
-  let themes = window['formseyThemes'] as Themes
+  let themes = window['__formseyThemes'] as Themes
   if (typeof themes === "undefined") {
     console.log("Create themes registry")
     themes = {}
+    window['__formseyThemes'] = themes
   }
   console.log("Add theme='"+name+"' to registry")
   themes[name] = theme
 }
 
 export function getTheme(name: string): Theme | undefined {
-  let themes = window['formseyThemes'] as Themes
+  let themes = window['__formseyThemes'] as Themes
   return themes ? themes[name] : undefined
 }
 
 export function getDefaultTheme(): string | undefined {
-  let themes = window['formseyThemes'] as Themes
+  let themes = window['__formseyThemes'] as Themes
   if (typeof themes != "undefined") {
     let avaliableThemes = Object.keys(themes)
     if (avaliableThemes.length == 0) {
