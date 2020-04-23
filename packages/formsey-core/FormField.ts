@@ -9,7 +9,6 @@ export enum GridSize {
   LARGE = "gridLarge"
 }
 
-@customElement("formsey-form-field")
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
   set value(value: Object) {

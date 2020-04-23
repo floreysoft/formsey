@@ -1,5 +1,5 @@
-import { FieldDefinition } from './FieldDefinitions'
 import { TemplateResult } from 'lit-element'
+import { FieldDefinition } from './FieldDefinitions'
 
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'
@@ -26,10 +26,10 @@ export interface Themes {
 export let themes : Themes = {}
 
 export function register(tag: string, constructor : CustomElementConstructor) {
-  try {
-    customElements.define(tag, constructor)
-  } catch(e) {
+  if ( customElements.get(tag) ) {
     console.log("'"+tag+"' already exists, skipping...")
+  } else {
+    customElements.define(tag, constructor)
   }
 }
 
