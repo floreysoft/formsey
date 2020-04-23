@@ -1,14 +1,7 @@
 import { Dialog } from '@floreysoft/dialog';
 import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
-import '@formsey/core/Form';
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
-import '@formsey/fields-compound/AddressField';
-import '@formsey/fields-compound/CreditCardField';
-import '@formsey/fields-compound/NameField';
-import '@formsey/fields-vaadin/CheckboxesField';
-import '@formsey/fields-vaadin/DateField';
-import '@formsey/fields-vaadin/MultipleChoiceField';
-import '@formsey/fields-vaadin/UploadField';
+import '@formsey/fields-native';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 
 @customElement("fs-demo-section")
@@ -244,7 +237,6 @@ export class Demo extends LitElement {
         <pre id="demoFormPath"></pre>
         <pre id="demoFormValue"></pre>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
-           <formsey-form src="https://www.formsey.com/form/25eKDUrAPVnTm2yM0WoK.json"></formsey-form>
         </fs-dialog>
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
         </fs-demo-section>
