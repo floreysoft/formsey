@@ -1,0 +1,6 @@
+50 error Error: Command failed: git tag v0.1.211 -m v0.1.211
+50 error fatal: tag 'v0.1.211' already exists
+50 error
+50 error     at makeError (C:\Users\Daniel Florey\Develop\formsey-workspace\formsey-components\node_modules\execa\index.js:174:9)
+50 error     at C:\Users\Daniel Florey\Develop\formsey-workspace\formsey-components\node_modules\execa\index.js:278:16
+50 error     at processTicksAndRejections (internal/process/task_queues.js:93:5)
