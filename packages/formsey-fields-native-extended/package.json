@@ -1,5 +1,5 @@
 {
-  "name": "@formsey/fields-native-extended",
+  "name": "@floreysoft/fields-native-extended",
   "version": "0.2.1",
   "description": "Fields extended",
   "files": [
@@ -11,8 +11,8 @@
   ],
   "dependencies": {
     "@floreysoft/ace": "0.3.77",
-    "@formsey/fields-native": "^0.2.1",
-    "signature_pad": "^3.0.0-beta.3"
+    "signature_pad": "^3.0.0-beta.3",
+    "@formsey/fields-native": "^0.2.1"
   },
   "scripts": {
     "tsc": "tsc",
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1790bafb117ed0925b81fdfecda23909422ec5ec"
+  "gitHead": "88c005d7dcb0a6a55df07088b6db6679918f32ff"
 }
