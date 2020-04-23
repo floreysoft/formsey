@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Native fields",
   "files": [
     "/*.js.map",
