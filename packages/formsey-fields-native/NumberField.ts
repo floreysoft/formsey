@@ -1,10 +1,9 @@
-import { NumberFieldDefinition } from '@formsey/core';
-import { customElement } from 'lit-element';
+import { NumberFieldDefinition, register } from '@formsey/core';
 import { InputField } from './InputField';
 
-@customElement("formsey-number")
 export class NumberField extends InputField<NumberFieldDefinition> {
   protected get type() : string {
     return "number"
   }
 }
+register("formsey-number", NumberField)

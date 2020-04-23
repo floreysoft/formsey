@@ -1,12 +1,11 @@
-import { createField, Field, ListFieldDefinition, SelectableSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { css, customElement, html, property } from 'lit-element';
+import { createField, Field, ListFieldDefinition, register, SelectableSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { css, html, property } from 'lit-element';
 
 export class SelectableSectionValue {
   selection: string;
   value: Object = {}
 }
 
-@customElement("formsey-selectable-section")
 export class SelectableSectionField extends Field<SelectableSectionFieldDefinition, SelectableSectionValue> {
   @property({ converter: Object })
   value: SelectableSectionValue;
@@ -57,3 +56,4 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
     }
   }
 }
+register("formsey-selectable-section", SelectableSectionField)

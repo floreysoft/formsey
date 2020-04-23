@@ -1,9 +1,9 @@
-import { customElement } from 'lit-element';
+import { register } from '@formsey/core';
 import { StringField } from './StringField';
 
-@customElement("formsey-phone")
 export class PhoneField extends StringField {
- protected get type() : string {
+  protected get type() : string {
     return "tel"
   }
 }
+register("formsey-phone", PhoneField)

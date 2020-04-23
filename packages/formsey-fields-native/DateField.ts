@@ -1,10 +1,9 @@
-import { DateFieldDefinition } from '@formsey/core';
-import { customElement } from 'lit-element';
+import { DateFieldDefinition, register } from '@formsey/core';
 import { InputField } from './InputField';
 
-@customElement("formsey-date")
 export class DateField extends InputField<DateFieldDefinition> {
   protected get type() : string {
     return "date"
   }
 }
+register("formsey-date", DateField)

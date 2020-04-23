@@ -1,9 +1,9 @@
-import { customElement } from 'lit-element';
+import { register } from '@formsey/core';
 import { StringField } from './StringField';
 
-@customElement("formsey-password")
 export class PasswordField extends StringField {
- protected get type() : string {
+  protected get type() : string {
     return "password"
   }
 }
+register("formsey-password", PasswordField)

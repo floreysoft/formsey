@@ -1,7 +1,6 @@
 import { customElement, html, property, css } from 'lit-element';
-import { ImageFieldDefinition, LabeledField } from '@formsey/core';
+import { ImageFieldDefinition, LabeledField, register } from '@formsey/core';
 
-@customElement("formsey-image")
 export class ImageField extends LabeledField<ImageFieldDefinition, string> {
   @property({ converter: Object })
   definition: ImageFieldDefinition;
@@ -22,3 +21,4 @@ export class ImageField extends LabeledField<ImageFieldDefinition, string> {
     return html`<div style="text-align: ${this.definition.align}"><img src="${this.definition.url}" title="${this.definition.prompt}" style="width: ${this.definition.width}"></div>`
   }
 }
+register("formsey-image", ImageField)

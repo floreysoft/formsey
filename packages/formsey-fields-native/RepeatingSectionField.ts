@@ -1,8 +1,7 @@
-import { createField, FormDefinition, LabeledField, RepeatingFieldDefinition, ValueChangedEvent, Field } from '@formsey/core';
-import { css, customElement, html, property, TemplateResult, queryAll } from 'lit-element';
+import { createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { css, html, property, queryAll, TemplateResult } from 'lit-element';
 
-@customElement("formsey-repeating-section")
 export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
   value: Object[] = [];
@@ -162,3 +161,4 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+register("formsey-repeating-section", RepeatingSectionField)

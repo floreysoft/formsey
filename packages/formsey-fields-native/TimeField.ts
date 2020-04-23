@@ -1,9 +1,9 @@
-import { customElement } from 'lit-element';
 import { DateField } from './DateField';
+import { register } from '@formsey/core';
 
-@customElement("formsey-time")
 export class TimeField extends DateField {
- protected get type() : string {
+  protected get type() : string {
     return "time"
   }
 }
+register("formsey-time", TimeField)

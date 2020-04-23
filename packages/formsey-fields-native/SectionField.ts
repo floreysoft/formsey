@@ -1,8 +1,7 @@
-import { Field, FieldDefinition } from '@formsey/core';
-import { css, customElement, html, property } from 'lit-element';
+import { Field, FieldDefinition, register } from '@formsey/core';
+import { css, html, property } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
-@customElement("formsey-section")
 export class SectionField extends Field<FieldDefinition, void> {
   @property({ converter: Object })
   definition: FieldDefinition;
@@ -35,3 +34,4 @@ export class SectionField extends Field<FieldDefinition, void> {
     return html`<header>${ifDefined(this.definition.prompt)}</header><footer>${ifDefined(this.definition.helpText)}</footer>`
   }
 }
+register("formsey-section", SectionField)

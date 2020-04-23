@@ -1,9 +1,9 @@
-import { customElement } from 'lit-element';
+import { register } from '@formsey/core';
 import { StringField } from './StringField';
 
-@customElement("formsey-url")
 export class URLField extends StringField {
- protected get type() : string {
+  protected get type() : string {
     return "url"
   }
 }
+register("formsey-url", URLField)

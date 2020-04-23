@@ -1,8 +1,7 @@
-import { BooleanFieldDefinition, createField, OptionalSectionFieldDefinition, ValueChangedEvent, Field } from '@formsey/core';
-import { customElement, html, property, query } from 'lit-element';
+import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { html, property, query } from 'lit-element';
 
-@customElement("formsey-optional-section")
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, Object> {
   @property({ converter: Object })
   value: Object
@@ -75,3 +74,4 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.dispatchEvent(new ValueChangedEvent(e.name, this.value));
   }
 }
+register("formsey-optional-section", OptionalSectionField)

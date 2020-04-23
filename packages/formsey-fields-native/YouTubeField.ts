@@ -1,5 +1,5 @@
-import { FieldDefinition, LabeledField } from '@formsey/core';
-import { css, customElement, html, property } from 'lit-element';
+import { FieldDefinition, LabeledField, register } from '@formsey/core';
+import { css, html, property } from 'lit-element';
 
 interface YouTubeFieldDefinition extends FieldDefinition {
   url: string
@@ -7,7 +7,6 @@ interface YouTubeFieldDefinition extends FieldDefinition {
   align: string
 }
 
-@customElement("formsey-youtube")
 export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
   @property({ converter: Object })
   definition: YouTubeFieldDefinition;
@@ -42,13 +41,13 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
     let width = this.definition.width;
     let style = "width:"
 		if ( width.endsWith("%") ) {
-			// Set absolute height
+      // Set absolute height
 			let widthInPercent : number = <number>(width.substring(0, width.lastIndexOf("%")) as unknown)
 			let height = widthInPercent * 9 / 16;
 			style += widthInPercent+"%;padding-bottom:"+height+"%"
 		} else {
-			if ( width.endsWith("px") ) {
-				width = width.substring(0, width.lastIndexOf("px"));
+      if ( width.endsWith("px") ) {
+        width = width.substring(0, width.lastIndexOf("px"));
 			}
 		  let widthInPixel = <number>(width as unknown);
 			let heightInPixel = widthInPixel * 9 / 16;
@@ -61,20 +60,21 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
     let videoId = videoUrl;
 		let watchIndex = videoUrl.indexOf(this.WATCH_PARAMETER);
 		if ( watchIndex > 0 ) {
-			videoId = videoUrl.substring(watchIndex + this.WATCH_PARAMETER.length)
+      videoId = videoUrl.substring(watchIndex + this.WATCH_PARAMETER.length)
 		}
 		let youtuIndex = videoUrl.indexOf(this.YOUTU_PARAMETER);
 		if ( youtuIndex > 0 ) {
-			videoId = videoUrl.substring(youtuIndex + this.YOUTU_PARAMETER.length)
+      videoId = videoUrl.substring(youtuIndex + this.YOUTU_PARAMETER.length)
 		}
 		let paramsIndex = videoUrl.indexOf("&");
 		if ( paramsIndex > 0 ) {
-			videoId = videoId.substring(0, paramsIndex);
+      videoId = videoId.substring(0, paramsIndex);
 		}
 		paramsIndex = videoUrl.indexOf("?");
 		if ( paramsIndex > 0 ) {
-			videoId = videoId.substring(0, paramsIndex);
+      videoId = videoId.substring(0, paramsIndex);
 		}
 		return videoId;
   }
 }
+register("formsey-youtube", YouTubeField)
