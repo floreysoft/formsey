@@ -2,6 +2,7 @@
 /dist
 /.cache
 /coverage
+./lib-stats.json
 
 *.js
 !packages/formsey-fields-vaadin/webpack-resolver.js
