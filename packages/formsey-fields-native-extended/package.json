@@ -1,7 +1,7 @@
 {
-  "name": "@formsey/fields-native-extended",
+  "name": "@formsey/fields-extended",
   "version": "0.1.210",
-  "description": "Native fields extended",
+  "description": "Fields extended",
   "files": [
     "/*.js.map",
     "/*.d.ts.map",
@@ -21,5 +21,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c9c8c9f27ceefaa8316169297f984297472adc3f"
+  "gitHead": "8ca05eca98a227b38a4a39b932ce9bfd93e3a0b3"
 }
