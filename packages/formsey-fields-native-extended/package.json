@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-extended",
-  "version": "0.1.210",
+  "version": "0.1.211",
   "description": "Fields extended",
   "files": [
     "/*.js.map",
