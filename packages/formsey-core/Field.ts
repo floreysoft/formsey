@@ -1,5 +1,5 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
-import { Components, themes } from '.';
+import { Components, getDefaultTheme, getTheme } from '.';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
@@ -34,13 +34,14 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   @property({ type: String })
   set theme(theme : string) {
-    if ( themes[theme] ) {
-      this.components = themes[theme].components
+    let registeredTheme = getTheme(theme)
+    if ( registeredTheme ) {
+      this.components = registeredTheme.components
     } else {
-      let defaultTheme = this.defaultTheme()
+      let defaultTheme = getDefaultTheme()
       if ( defaultTheme ) {
         console.warn("Theme '"+theme+"' not availble, using '"+defaultTheme+"' instead")
-        this.components = themes[defaultTheme].components
+        this.components = getTheme[defaultTheme].components
       } else {
         console.error("Theme '"+theme+"' not availble, no theme installed!")
       }
@@ -116,7 +117,10 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
       return false
     }
     if ( !this.components ) {
-      this.theme = this.defaultTheme()
+      let defaultTheme = getDefaultTheme()
+      if ( typeof defaultTheme != "undefined" ) {
+        this.components = getTheme(defaultTheme).components
+      }
       return typeof this.components != "undefined"
     }
     return true
@@ -169,15 +173,6 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     }
     if (this.error && !this.error.custom) {
       this.error = undefined
-    }
-  }
-
-  private defaultTheme() {
-    let avaliableThemes = Object.keys(themes)
-    if ( typeof themes =="undefined" || avaliableThemes.length == 0 ) {
-      return undefined;
-    } else {
-      return avaliableThemes[0]
     }
   }
 }

@@ -15,7 +15,8 @@
     "start": "webpack-dev-server --open  --config webpack.dev.js",
     "test": "karma start",
     "test:watch": "karma start --auto-watch=true --single-run=false",
-    "lib": "webpack --config webpack.libs.js  --profile --json > lib-stats.json"
+    "lib": "webpack --config webpack.libs.js",
+    "stats": "webpack --config webpack.libs.js  --profile --json > lib-stats.json"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

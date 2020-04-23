@@ -1,16 +1,17 @@
 
 // import "./webpack-resolver";
-import { themes } from '@formsey/core'
+import { getTheme } from '@formsey/core'
 import 'ace-builds/src-min-noconflict/ace.js'
-import './SourceCodeField'
 import './SignatureField'
+import './SourceCodeField'
 
 export { SignatureField } from './SignatureField'
 export { SourceCodeField, SourceCodeFieldDefinition } from './SourceCodeField'
 
-themes['native'] = {
-  components: {
-    ...themes['native'].components,
+let theme = getTheme('native')
+if ( theme ) {
+  theme.components = {
+    ...theme.components,
     'signature': 'formsey-signature',
     'sourceCode': 'formsey-sourcecode'
   }

@@ -1,4 +1,4 @@
-import { themes } from '@formsey/core'
+import { registerTheme } from '@formsey/core'
 import '@formsey/fields-vaadin/BooleanField'
 import '@formsey/fields-vaadin/CheckboxesField'
 import '@formsey/fields-vaadin/DateField'
@@ -21,7 +21,7 @@ export { StringField } from './StringField'
 export { TextField } from './TextField'
 export { VaadinField } from './VaadinField'
 
-themes['vaadin'] = {
+registerTheme('vaadin', {
   components: {
     'boolean': 'formsey-boolean-vaadin',
     'string': 'formsey-string-vaadin',
@@ -51,4 +51,4 @@ themes['vaadin'] = {
     'youtube': 'formsey-youtube',
     'upload': 'formsey-upload-vaadin'
   }
-}
+})

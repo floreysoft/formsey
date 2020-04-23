@@ -1,4 +1,4 @@
-import { themes } from '@formsey/core'
+import { registerTheme } from '@formsey/core'
 import '@formsey/fields-material/BooleanField'
 import '@formsey/fields-material/CheckboxesField'
 import '@formsey/fields-material/ColorField'
@@ -38,7 +38,7 @@ export { TextField } from './TextField'
 export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 
-themes['material'] = {
+registerTheme('material', {
   components: {
     'boolean': 'formsey-boolean-material',
     'text': 'formsey-text-material',
@@ -75,4 +75,4 @@ themes['material'] = {
     'checkboxes': 'formsey-checkboxes-material',
     'richText': 'formsey-rich-text-vaadin'
   }
-}
+})

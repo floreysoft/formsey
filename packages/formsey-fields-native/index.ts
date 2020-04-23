@@ -1,4 +1,4 @@
-import { themes } from '@formsey/core'
+import { registerTheme } from '@formsey/core'
 import '@formsey/fields-native/ColorField'
 import '@formsey/fields-native/DateField'
 import '@formsey/fields-native/DateTimeField'
@@ -38,7 +38,7 @@ export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 export { YouTubeField } from './YouTubeField'
 
-themes['native'] = {
+registerTheme('native', {
   components: {
     'boolean': 'formsey-boolean',
     'text': 'formsey-text',
@@ -73,4 +73,4 @@ themes['native'] = {
     'youtube': 'formsey-youtube',
     'upload': 'formsey-upload-vaadin'
   }
-}
+})

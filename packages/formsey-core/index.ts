@@ -15,7 +15,7 @@ export interface Components {
 
 export interface Theme {
   components: Components,
-  icon? : TemplateResult,
+  icon?: TemplateResult,
   displayName?: string
 }
 
@@ -25,21 +25,35 @@ export interface Themes {
 
 export function registerTheme(name: string, theme: Theme) {
   let themes = window['formseyThemes'] as Themes
-  if ( typeof themes === "undefined" ) {
+  if (typeof themes === "undefined") {
     console.log("Create themes registry")
     themes = {}
   }
+  console.log("Add theme='"+name+"' to registry")
   themes[name] = theme
 }
 
-export function getTheme(name: string) : Theme | undefined {
+export function getTheme(name: string): Theme | undefined {
   let themes = window['formseyThemes'] as Themes
   return themes ? themes[name] : undefined
 }
 
-export function register(tag: string, constructor : CustomElementConstructor) {
-  if ( customElements.get(tag) ) {
-    console.log("'"+tag+"' already exists, skipping...")
+export function getDefaultTheme(): string | undefined {
+  let themes = window['formseyThemes'] as Themes
+  if (typeof themes != "undefined") {
+    let avaliableThemes = Object.keys(themes)
+    if (avaliableThemes.length == 0) {
+      return undefined;
+    } else {
+      return avaliableThemes[0]
+    }
+  }
+  return undefined
+}
+
+export function register(tag: string, constructor: CustomElementConstructor) {
+  if (customElements.get(tag)) {
+    console.log("'" + tag + "' already exists, skipping...")
   } else {
     customElements.define(tag, constructor)
   }
