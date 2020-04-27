@@ -5,13 +5,25 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class InputField<T extends InputFieldDefinition> extends LabeledField<T, string> {
   @property({ converter: Object })
-  definition: T;
+  set definition(definition: T) {
+    this.autofocus = definition.autofocus
+    this._definition = definition
+  }
+
+  get definition() {
+    return this._definition
+  }
 
   @property({ type: String })
   value: string;
 
+  @property({ type: Boolean, reflect: true })
+  autofocus: boolean;
+
   @query("input")
   input : HTMLInputElement
+
+  private _definition: T
 
   static get styles() {
     return [...super.styles, css`
@@ -33,7 +45,13 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   }
 
   protected renderField() {
-    return html`<input type="${this.type}" ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}"  .value="${ifDefined(this.value)}">`
+    return html`<input type="${this.type}" ?autofocus=${ifDefined(this.definition.autofocus)} ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}"  .value="${ifDefined(this.value)}">`
+  }
+
+  focus() {
+    if ( this.autofocus ) {
+      this.input.focus()
+    }
   }
 
   validate(report : boolean) {

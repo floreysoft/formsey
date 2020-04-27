@@ -142,6 +142,15 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
+  public focus() {
+    for (let field of this._fields) {
+      let child = field.firstElementChild as Field<any, any>
+      if ( child && child.hasAttribute("autofocus") && typeof child['focus'] == "function") {
+        child.focus()
+      }
+    }
+  }
+
   protected valueChanged(e: any) {
     if (this.value && e.name) {
       e.stopPropagation()

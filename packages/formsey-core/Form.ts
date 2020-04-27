@@ -13,7 +13,7 @@ export class Form extends Field<FieldDefinition, Object> {
     try {
       let response = await fetch(url);
       let data = await response.json();
-      this.definition = data.form
+      this.definition = data.definition
       this.value = data.value
       this.theme = data.theme
       this.requestUpdate();
@@ -111,6 +111,15 @@ export class Form extends Field<FieldDefinition, Object> {
     if (this._forms) {
       for (let form of this._forms) {
         (<FormField>form).resize()
+      }
+    }
+  }
+
+  public focus() {
+    // Focus the first field that wants to autofocus
+    if (this._forms) {
+      for (let form of this._forms) {
+        (<FormField>form).focus()
       }
     }
   }

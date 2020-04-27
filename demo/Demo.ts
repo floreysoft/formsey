@@ -82,150 +82,151 @@ export class Demo extends LitElement {
         super.disconnectedCallback()
     }
 
-    render() {
-        // let simpleDemo = { name: "verticalForm", type: "form", fields: [ { type: "repeatingSection", name: "repeater", prompt: "Repeat it", min : 0, max : 99, form : { type : "form", fields : this.createFields(3) }} ] }
-        let simpleDemo = {
-          "fields": [
+    private simpleDemo = {
+      "fields": [
+        {
+          "name": "checkboxes",
+          "prompt": "Checkboxes",
+          "helpText": "Checkboxes help",
+          "other": true,
+          "options": [
             {
-              "name": "checkboxes",
-              "prompt": "Checkboxes",
-              "helpText": "Checkboxes help",
-              "other": true,
-              "options": [
-                {
-                  "label": "OptionA",
-                  "value": "valueA"
-                },
-                {
-                  "label": "OptionB",
-                  "value": "valueB"
-                },
-                {
-                  "label": "OptionC",
-                  "value": "valueC"
-                }
-              ],
-              "type": "multipleChoice"
+              "label": "OptionA",
+              "value": "valueA"
             },
             {
-              "prompt": "Simple section",
-              "type": "section",
-              "helpText": "Just some text in the section"
+              "label": "OptionB",
+              "value": "valueB"
             },
             {
-              "name": "optional",
-              "prompt": "Optional",
-              "helpText": "Optional help",
-              "label": "My Label",
-              "required": true,
+              "label": "OptionC",
+              "value": "valueC"
+            }
+          ],
+          "type": "multipleChoice"
+        },
+        {
+          "prompt": "Simple section",
+          "type": "section",
+          "helpText": "Just some text in the section"
+        },
+        {
+          "name": "optional",
+          "prompt": "Optional",
+          "helpText": "Optional help",
+          "label": "My Label",
+          "required": true,
+          "form": {
+            "fields": [
+              {
+                "name": "aFieldInAForm",
+                "prompt": "A field in a form",
+                "autocomplete": "off",
+                "type": "string",
+                "required": true
+              }
+            ],
+            "gridLarge": "grid-template-columns:1fr",
+            "name": "optional",
+            "type": "form"
+          },
+          "type": "optionalSection",
+          "gridLarge": {
+            "fields": [],
+            "gridLarge": "grid-template-columns:1fr",
+            "type": "form"
+          }
+        },
+        {
+          "name": "selection",
+          "prompt" : "Selection section",
+          "helpText" : "mit hilfe",
+          "selections": [
+            {
               "form": {
                 "fields": [
                   {
-                    "name": "aFieldInAForm",
-                    "prompt": "A field in a form",
                     "autocomplete": "off",
-                    "type": "string",
-                    "required": true
+                    "name": "inA",
+                    "prompt": "In A",
+                    "type": "string"
                   }
                 ],
                 "gridLarge": "grid-template-columns:1fr",
-                "name": "optional",
                 "type": "form"
               },
-              "type": "optionalSection",
+              "gridLarge": {
+                "fields": [],
+                "gridLarge": "grid-template-columns:1fr",
+                "type": "form"
+              },
+              "label": "A",
+              "value": "a"
+            },
+            {
+              "label": "B",
+              "value": "b",
+              "form": {
+                "fields": [
+                  {
+                    "name": "inB",
+                    "prompt": "In B",
+                    "autocomplete": "off",
+                    "type": "string"
+                  }
+                ],
+                "gridLarge": "grid-template-columns:1fr",
+                "type": "form"
+              },
               "gridLarge": {
                 "fields": [],
                 "gridLarge": "grid-template-columns:1fr",
                 "type": "form"
               }
-            },
-            {
-              "name": "selection",
-              "prompt" : "Selection section",
-              "helpText" : "mit hilfe",
-              "selections": [
-                {
-                  "form": {
-                    "fields": [
-                      {
-                        "autocomplete": "off",
-                        "name": "inA",
-                        "prompt": "In A",
-                        "type": "string"
-                      }
-                    ],
-                    "gridLarge": "grid-template-columns:1fr",
-                    "type": "form"
-                  },
-                  "gridLarge": {
-                    "fields": [],
-                    "gridLarge": "grid-template-columns:1fr",
-                    "type": "form"
-                  },
-                  "label": "A",
-                  "value": "a"
-                },
-                {
-                  "label": "B",
-                  "value": "b",
-                  "form": {
-                    "fields": [
-                      {
-                        "name": "inB",
-                        "prompt": "In B",
-                        "autocomplete": "off",
-                        "type": "string"
-                      }
-                    ],
-                    "gridLarge": "grid-template-columns:1fr",
-                    "type": "form"
-                  },
-                  "gridLarge": {
-                    "fields": [],
-                    "gridLarge": "grid-template-columns:1fr",
-                    "type": "form"
-                  }
-                }
-              ],
-              "type": "selectableSection"
-            },
-            {
-              "name": "email",
-              "prompt": "Email",
-              "helpText": "Email help",
-              "autocomplete": "off",
-              "type": "email",
-              "required": true
-            },
-            {
-              "name": "date",
-              "prompt": "Date",
-              "helpText": "Date help",
-              "autocomplete": "off",
-              "type": "date",
-              "required": true
-            },
-            {
-              "name": "number",
-              "prompt": "Number",
-              "helpText": "Number help",
-              "min": 5,
-              "max": 15,
-              "step": 0.5,
-              "type": "number",
-              "required": true
             }
           ],
-            "gridLarge": "grid-template-columns:1fr",
-            "gridMedium": "grid-template-columns:1fr",
-            "type": "form"
-          }
+          "type": "selectableSection"
+        },
+        {
+          "name": "email",
+          "prompt": "Email",
+          "helpText": "Email help dsddd",
+          "autofocus" : true,
+          "autocomplete": "off",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "date",
+          "prompt": "Date",
+          "helpText": "Date help",
+          "autocomplete": "off",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "number",
+          "prompt": "Number",
+          "helpText": "Number help",
+          "min": 5,
+          "max": 15,
+          "step": 0.5,
+          "type": "number",
+          "required": true
+        }
+      ],
+        "gridLarge": "grid-template-columns:1fr",
+        "gridMedium": "grid-template-columns:1fr",
+        "type": "form"
+      }
+
+    render() {
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
         <form id="realForm" method="POST">
           <input type="text" name="klobrille" required>
-          <formsey-form id="demoForm" name="muskelmann" .definition=${simpleDemo} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+          <formsey-form id="demoForm" name="muskelmann" .definition=${this.simpleDemo} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
           <input type="submit" value="Send Request">
           <input type="reset" value="Reset">
         </form>
@@ -233,6 +234,7 @@ export class Demo extends LitElement {
         <vaadin-button @click=${this.reportValidity}>Validate and report</vaadin-button>
         <vaadin-button @click=${this.error}>Error</vaadin-button>
         <vaadin-button @click=${this.value}>Value</vaadin-button>
+        <vaadin-button @click=${this.refocus}>Focus</vaadin-button>
         <pre id="demoFormValidation"></pre>
         <pre id="demoFormPath"></pre>
         <pre id="demoFormValue"></pre>
@@ -269,6 +271,10 @@ export class Demo extends LitElement {
 
     reportValidity(e: Event) {
         this.demoForm.reportValidity()
+    }
+
+    refocus(e: Event) {
+      this.demoForm.focus()
     }
 
     error(e: Event) {
