@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "floreysoftformsey",
+  "private_key_id": "09f39a4021a22c5f01ef49ddb0762de239d5a1b8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDgxnnjloJyjNV5\nL5COcExd/xIstjeaf0h+ndlpCw7DZyIqNh9hYc0sIioKDdiobNRuC9Wl+TiQHtiK\nAR4umiboakXo1cVgpfZlPCs21q58R3Vq0rB4A02IVZ2g/X7FHlb1md247wFslrg1\nbIVZzeLEROAkzjn3yUBVBdGkhX0fY0JPfe+9iG9gJA8P977+Sxt7sMupUDutG8Oi\nzM9F75wbZJqweC49tyHPUcaP5zTREWYBrtf3v++OOTC5dbnyWAzNI+u6OObH+WrV\nffCcQHILXHegtQV7s3jGRMvVXEu/NCKPVrAdeDTlE5e5X/UcPdtziolfPR7U/dn0\nmbfMNNybAgMBAAECggEABI6W41xRIg1k4+No+i+gp2SHySGbQvtC9v4wQtxB3QhM\nPbAsjAbgPVLRU17bKPRRN4yZ35bhOgVwvRYvYcvSRMf9dC5RUBeimoQmbs2EwBRF\ndyL1B5nZio1hzWUWRYd1794XYVZxyvJ1+ESjoiHLGnuNp8az5NLPBmpAc9DDq/fc\ny5xWMQPZyyw0hHRB7JdZkxYXxPXS4yk9snGkQ+xfswBneZvYzwCdCtPrnHZxAD/a\nffXYWOcjdiq4eI2z7421aFYxoATsHLN2/Nyxs3Em1Vmfgzm/brcziLolf6RYJrOM\nLah+que8n4cQVCQrzjNcheEQLcn1FWrfvW+MLsP0UQKBgQD5uLKnfhXAeyPIrljL\nbzDAt1HzAeYb8C37qaf8v9MZqO3DIYbVxHBGSKyWA0sfJgeEZWqUWJCShlwzaMIt\nTjJFof4bOrkzThkb0xEQlHNC6DuEoE7i1bBE0h6Lr8LtJAJTw9y1w9ct/7KPc7xN\nurt9LkmljJwPeBqTIVQUZWF8JQKBgQDmbTcW628PKbjJyWMmQvGapqJf1j+i88CH\nrkG3HpYYd9bUmf3abfTFBsfqNqqz6dBzLf3xZf7eIL9SvuCrWv/1BC0D1jmrtpX/\nDQT6uMTpCRgMZkYGTN/1q2FLO/rGMSc734NroTnYJ1V/4h99Tmb/XTmOn/5nNt/4\nijFqsfE5vwKBgDVI09YpcTrBC8Gmcgv2jdCRTUss/Iy5kxY//ThRNhojkZgxbzPt\n1ocouqrHyR+8XZ5ChZthynd5c/MER2qjZNa22iG1Rg9Mes8VGm8PPgjoxMpn6m08\na4BD1YC44D75kAWPpWijgSaviMpTR7rOPXNYjR5mAmbKmeELG4W+nC6BAoGANbTg\n8TOgqA0WZ9nLhUB3JY+PKv05ydY8WqNv56l2XG+aH+VgeIfGVCHXeKyTLunhTuc6\nWAho1gcV8MhSfz3viIEXqNxGhtJAtbioH3PvWU1oUIOJ8K/8RztRqwJo2cbdGSRo\nci6a19mbIPpoUoFymjR1VNvPpOjyXPCAwhiFW+sCgYBHY75wz7fN1AI9o/kXMkMd\nyUiqxGQHk7BcqwMaAAUYRX+VGedgc2iPdCZ2+LRF5bbdF5ZnEnfT5QQCP/zfsbNk\n/0J4hMlCdErTt3zwORu7XDNay7kF7SV8TM4SrmJIfzh3J9bFyv5ASaoHc9mxT5X3\nThwtRGy8fyzYbwe3sVmECQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "formsey-libs@floreysoftformsey.iam.gserviceaccount.com",
+  "client_id": "107620830874921082039",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/formsey-libs%40floreysoftformsey.iam.gserviceaccount.com"
+}
