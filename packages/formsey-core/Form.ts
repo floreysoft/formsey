@@ -1,5 +1,5 @@
 import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from '@formsey/core';
-import { property, queryAll } from 'lit-element';
+import { property, queryAll, css } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
 export class Form extends Field<FieldDefinition, Object> {
@@ -31,6 +31,13 @@ export class Form extends Field<FieldDefinition, Object> {
   protected _forms: HTMLElement[]
   protected internals: any
   protected form : any
+
+  static get styles() {
+    return [...super.styles, css`
+      :host {
+        outline: none
+      }`];
+  }
 
   constructor() {
     super()

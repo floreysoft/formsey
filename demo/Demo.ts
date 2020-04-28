@@ -1,7 +1,7 @@
 import { Dialog } from '@floreysoft/dialog';
 import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
-import '@formsey/fields-native';
+import '@formsey/fields-vaadin';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 
 @customElement("fs-demo-section")
