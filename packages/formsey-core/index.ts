@@ -23,6 +23,10 @@ export interface Themes {
   [index: string]: Theme
 }
 
+export function getThemes() : Themes {
+  return window['__formseyThemes'] as Themes
+}
+
 export function registerTheme(name: string, theme: Theme) {
   let themes = window['__formseyThemes'] as Themes
   if (typeof themes === "undefined") {
