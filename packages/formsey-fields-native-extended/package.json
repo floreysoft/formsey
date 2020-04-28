@@ -10,8 +10,8 @@
     "!/test/"
   ],
   "dependencies": {
-    "@floreysoft/ace": "0.3.77",
-    "@formsey/fields-native": "^0.2.14",
+    "@floreysoft/ace": ">0.3.0",
+    "@formsey/fields-native": ">0.2.0",
     "signature_pad": "^3.0.0-beta.3"
   },
   "scripts": {

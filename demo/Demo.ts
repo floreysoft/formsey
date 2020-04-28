@@ -233,6 +233,7 @@ export class Demo extends LitElement {
         return html`
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
+        <floreysoft-ace gutter style="width:500px;height:500px" mode="json" theme="tomorrow"></floreysoft-ace>
         <form id="realForm" method="POST">
           <input type="text" name="klobrille" required>
           <formsey-form id="demoForm" name="muskelmann" .definition=${this.simpleDemo} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
