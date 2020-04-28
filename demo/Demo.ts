@@ -85,6 +85,15 @@ export class Demo extends LitElement {
     private simpleDemo = {
       "fields": [
         {
+          "name": "name",
+          "prompt": "Name",
+          "helpText": "Enter name",
+          "type": "string",
+          "required": true,
+          "readonly" : true,
+          "default" : "Huhuhuhu"
+        },
+        {
           "name": "checkboxes",
           "prompt": "Checkboxes",
           "helpText": "Checkboxes help",
