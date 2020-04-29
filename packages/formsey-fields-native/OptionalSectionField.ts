@@ -62,7 +62,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   protected selectionChanged(e: ValueChangedEvent<boolean>) {
-    this.value = e.value ? {} : undefined
+    this.value = e.detail.value ? {} : undefined
     this.untouched = false
     this.requestUpdate()
     this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));

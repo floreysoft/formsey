@@ -91,9 +91,9 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   protected valueChanged(e: ValueChangedEvent<any>) {
-    this.value = e.value;
-    if (e.name.startsWith('.')) {
-      e.name = e.name.substring(1)
+    this.value = e.detail.value;
+    if (e.detail.name.startsWith('.')) {
+      e.detail.name = e.detail.name.substring(1)
     }
     let value: any
     if (this.definition.name) {
@@ -102,8 +102,7 @@ export class Form extends Field<FieldDefinition, Object> {
     } else {
       value = this.value
     }
-    this.dispatchEvent(new ValueChangedEvent(e.name, value));
-    this.dispatchEvent(new CustomEvent('change', { detail: { name, value } }))
+    this.dispatchEvent(new ValueChangedEvent(e.detail.name ? e.detail.name : name, value));
     this.internals.setFormValue(this.value);
   }
 

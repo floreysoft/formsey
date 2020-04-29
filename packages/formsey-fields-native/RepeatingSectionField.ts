@@ -145,8 +145,8 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   }
 
   protected valueChanged(e: ValueChangedEvent<any>) {
-    let index = this.firstPathElement(e.name);
-    this.value[index] = e.value;
+    let index = this.firstPathElement(e.detail.name);
+    this.value[index] = e.detail.value;
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
     }

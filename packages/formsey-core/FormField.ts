@@ -151,20 +151,20 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected valueChanged(e: any) {
-    if (this.value && e.name) {
+  protected valueChanged(e: ValueChangedEvent<any>) {
+    if (this.value && e.detail.name) {
       e.stopPropagation()
-      let name = this.firstPathElement(e.name);
+      let name = this.firstPathElement(e.detail.name);
       if (name) {
         if (name.startsWith('.')) {
           name = name.substring(1)
-          e.name = e.name.substring(1)
-          this.value = { ...this.value, ...e.value }
+          e.detail.name = e.detail.name.substring(1)
+          this.value = { ...this.value, ...e.detail.value }
         } else {
-          this.value[name] = e.value;
+          this.value[name] = e.detail.value;
         }
         this.removeDeletedFields()
-        this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.name), this.value));
+        this.dispatchEvent(new ValueChangedEvent(this.prependPath(e.detail.name), this.value));
       }
     }
   }

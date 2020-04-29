@@ -236,7 +236,7 @@ export class Demo extends LitElement {
         <floreysoft-ace gutter style="width:500px;height:500px" mode="json" theme="tomorrow"></floreysoft-ace>
         <form id="realForm" method="POST">
           <input type="text" name="klobrille" required>
-          <formsey-form id="demoForm" name="muskelmann" .definition=${this.simpleDemo} @valueChanged=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+          <formsey-form id="demoForm" name="muskelmann" .definition=${this.simpleDemo} @change=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
           <input type="submit" value="Send Request">
           <input type="reset" value="Reset">
         </form>
@@ -381,8 +381,8 @@ export class Demo extends LitElement {
     }
 
     valueChanged(e: ValueChangedEvent<Object>) {
-        this.demoFormPath.innerText = e.name
-        this.demoFormValue.innerHTML = JSON.stringify(e.value)
+        this.demoFormPath.innerText = e.detail.name
+        this.demoFormValue.innerHTML = JSON.stringify(e.detail.value)
     }
 
     resize() {
