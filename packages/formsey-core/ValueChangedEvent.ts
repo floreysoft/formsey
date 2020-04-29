@@ -1,10 +1,5 @@
-export class ValueChangedEvent<T> extends Event {
-    value: T;
-    name: string;
-
+export class ValueChangedEvent<T> extends CustomEvent<any> {
     constructor(name: string | undefined, value: T) {
-        super("valueChanged", { bubbles : true });
-        this.value = value;
-        this.name = name;
+        super("change", { bubbles : true, detail : { name, value } });
     }
 }
