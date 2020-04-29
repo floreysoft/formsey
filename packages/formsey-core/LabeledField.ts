@@ -72,6 +72,6 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
         validityMessage = this.error.validityMessage
       }
     }
-    return this.report && typeof validityMessage !== "undefined" ? html`<div class="error-text">${validityMessage}</div>` : undefined
+    return this.report && validityMessage ? html`<div class="error-text">${validityMessage}</div>` : undefined
   }
 }
