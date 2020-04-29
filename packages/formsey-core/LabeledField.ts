@@ -66,10 +66,11 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   protected renderFooter(): TemplateResult | void {
     let validityMessage = undefined
     if (this.error) {
-      validityMessage = this.error.validityMessage
-    }
-    if (this.definition.hasOwnProperty('customValidity')) {
-      validityMessage = (<InputFieldDefinition>this.definition).customValidity
+      if (this.definition.hasOwnProperty('customValidity')) {
+        validityMessage = (<InputFieldDefinition>this.definition).customValidity
+      } else {
+        validityMessage = this.error.validityMessage
+      }
     }
     return this.report && typeof validityMessage !== "undefined" ? html`<div class="error-text">${validityMessage}</div>` : undefined
   }

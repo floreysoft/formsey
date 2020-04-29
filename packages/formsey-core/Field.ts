@@ -71,6 +71,13 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   _errors: InvalidErrors = {}
   error: InvalidError | undefined
 
+  public setCustomValidity(customErrors: InvalidErrors) {
+    if ( customErrors ) {
+      Object.keys(customErrors.errors).forEach((key) => { customErrors.errors[key].custom = true })
+    }
+    this.errors = customErrors
+  }
+
   public reportValidity(): boolean {
     this.clearErrors()
     this.report = true
