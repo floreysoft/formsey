@@ -1,5 +1,5 @@
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { CheckboxesFieldDefinition, Option, ChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangeEvent } from '@formsey/core';
 import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
 import { VaadinTextField } from '@vaadin/vaadin-text-field';
 import { css, customElement, html, property, query, TemplateResult } from 'lit-element';
@@ -83,7 +83,7 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
     this.value = values
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     }
     if (other) {
       this.updateComplete.then(() => {

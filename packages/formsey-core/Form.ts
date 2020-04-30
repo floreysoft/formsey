@@ -1,4 +1,4 @@
-import { createField, Field, FieldDefinition, FormField, register, ChangedEvent } from '@formsey/core';
+import { createField, Field, FieldDefinition, FormField, register, ChangeEvent } from '@formsey/core';
 import { property, queryAll, css } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
@@ -68,7 +68,7 @@ export class Form extends Field<FieldDefinition, Object> {
     if (this.definition.name && this.value && this.value[this.definition.name]) {
       value = this.value[this.definition.name]
     }
-    return createField(this.components, this.definition, value, this.errors, (event: ChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
+    return createField(this.components, this.definition, value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
   }
 
   renderHeader() {
@@ -90,7 +90,7 @@ export class Form extends Field<FieldDefinition, Object> {
     }
   }
 
-  protected changed(e: ChangedEvent<any>) {
+  protected changed(e: ChangeEvent<any>) {
     this.value = e.detail.value;
     if (e.detail.name.startsWith('.')) {
       e.detail.name = e.detail.name.substring(1)
@@ -102,7 +102,7 @@ export class Form extends Field<FieldDefinition, Object> {
     } else {
       value = this.value
     }
-    this.dispatchEvent(new ChangedEvent(e.detail.name ? e.detail.name : name, value));
+    this.dispatchEvent(new ChangeEvent(e.detail.name ? e.detail.name : name, value));
     this.internals.setFormValue(this.value);
   }
 

@@ -1,4 +1,4 @@
-import { Field, NumberFieldDefinition, ChangedEvent } from '@formsey/core';
+import { Field, NumberFieldDefinition, ChangeEvent } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
@@ -72,6 +72,6 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
 
   protected changed(e: any) {
     this.value = +e.currentTarget.value;
-    this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 }

@@ -1,4 +1,4 @@
-import { area, createField, Field, FormDefinition, ChangedEvent, register } from '@formsey/core';
+import { area, createField, Field, FormDefinition, ChangeEvent, register } from '@formsey/core';
 import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
@@ -92,7 +92,7 @@ export class FormField extends Field<FormDefinition, Object> {
             }
           }
         }
-        let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
+        let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (grid && grid.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fs-form-field' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
@@ -151,7 +151,7 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected changed(e: ChangedEvent<any>) {
+  protected changed(e: ChangeEvent<any>) {
     if (this.value && e.detail.name) {
       e.stopPropagation()
       let name = this.firstPathElement(e.detail.name);
@@ -164,7 +164,7 @@ export class FormField extends Field<FormDefinition, Object> {
           this.value[name] = e.detail.value;
         }
         this.removeDeletedFields()
-        this.dispatchEvent(new ChangedEvent(this.prependPath(e.detail.name), this.value));
+        this.dispatchEvent(new ChangeEvent(this.prependPath(e.detail.name), this.value));
       }
     }
   }

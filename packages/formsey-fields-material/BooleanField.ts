@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, ChangedEvent } from '@formsey/core';
+import { BooleanFieldDefinition, ChangeEvent } from '@formsey/core';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
@@ -34,6 +34,6 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
 
   protected changed(e: any) {
     this.value = this.materialCheckbox.checked
-    this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 }

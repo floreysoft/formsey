@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangeEvent } from '@formsey/core';
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
@@ -74,7 +74,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     this.value = values
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     }
     if ((<Checkbox>e.target).value == "__other" && other) {
       this.updateComplete.then(() => {

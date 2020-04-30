@@ -1,4 +1,4 @@
-import { InputFieldDefinition, LabeledField, ChangedEvent } from '@formsey/core';
+import { InputFieldDefinition, LabeledField, ChangeEvent } from '@formsey/core';
 import '@vaadin/vaadin-rich-text-editor/vaadin-rich-text-editor.js';
 import { customElement, html, property } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
@@ -15,7 +15,7 @@ export class RichTextField extends LabeledField<InputFieldDefinition, string> {
   protected changed(e: any) {
     this.value = e.currentTarget.htmlValue;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     }
   }
 }

@@ -1,4 +1,4 @@
-import { createField, Field, ListFieldDefinition, register, SelectableSectionFieldDefinition, ChangedEvent } from '@formsey/core';
+import { createField, Field, ListFieldDefinition, register, SelectableSectionFieldDefinition, ChangeEvent } from '@formsey/core';
 import { css, html, property } from 'lit-element';
 
 export class SelectableSectionValue {
@@ -29,13 +29,13 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
       let selection = this.definition.selections[index];
       let value = selection.label ? selection.label : selection.value;
       let errors = {}
-      return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ChangedEvent<string>) => this.selectionChanged(event), null)}
-      <div class="fs-nested-form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, errors, (event: ChangedEvent<any>) => this.changed(event), null)}</div>`;
+      return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ChangeEvent<string>) => this.selectionChanged(event), null)}
+      <div class="fs-nested-form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
     }
     return undefined
   }
 
-  protected selectionChanged(e: ChangedEvent<string>) {
+  protected selectionChanged(e: ChangeEvent<string>) {
     let value = e.detail.value;
     let option = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label=== value))[0].value;
     if (option) {
@@ -43,7 +43,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
       this.value.value = {}
       this.requestUpdate()
       if (this.definition.name) {
-        this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
       }
     }
   }
@@ -52,7 +52,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
     this.value.value = e.value;
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     }
   }
 }

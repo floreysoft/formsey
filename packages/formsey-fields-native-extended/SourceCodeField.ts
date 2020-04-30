@@ -1,6 +1,6 @@
 import '@floreysoft/ace';
 import { Ace } from '@floreysoft/ace';
-import { InputFieldDefinition, LabeledField, ChangedEvent } from '@formsey/core';
+import { InputFieldDefinition, LabeledField, ChangeEvent } from '@formsey/core';
 import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -36,7 +36,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   protected changed(e: any) {
     this.value = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     }
   }
 
