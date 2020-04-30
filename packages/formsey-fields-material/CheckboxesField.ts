@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangedEvent } from '@formsey/core';
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
@@ -43,12 +43,12 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
         let label = option.label ? option.label : option.value;
         let value = option.value ? option.value : option.label;
         let checked = this.value.includes(value);
-        templates.push(html`<mwc-formfield label="${label}"><mwc-checkbox .checked="${checked}" value="${value}" @change="${this.valueChanged}"></mwc-checkbox></mwc-formfield>`);
+        templates.push(html`<mwc-formfield label="${label}"><mwc-checkbox .checked="${checked}" value="${value}" @change="${this.changed}"></mwc-checkbox></mwc-formfield>`);
       }
     }
     if (this.definition.other) {
       let checked = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0).length > 0
-      templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-checkbox .checked="${checked}" value="__other" @change="${this.valueChanged}"></mwc-checkbox></mwc-formfield><mwc-textfield @input="${this.valueChanged}" ?disabled="${this.definition.disabled || !checked}" .value=""></mwc-textfield></div>`);
+      templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-checkbox .checked="${checked}" value="__other" @change="${this.changed}"></mwc-checkbox></mwc-formfield><mwc-textfield @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}" .value=""></mwc-textfield></div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
@@ -57,7 +57,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     return html`${templates}`;
   }
 
-  valueChanged(e: Event) {
+  changed(e: Event) {
     let values = []
     let other = false
     for (let value of this.values()) {
@@ -74,7 +74,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     this.value = values
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
     }
     if ((<Checkbox>e.target).value == "__other" && other) {
       this.updateComplete.then(() => {

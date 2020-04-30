@@ -1,4 +1,4 @@
-import { createField, Field, NestedFormDefinition, ValueChangedEvent, register } from '@formsey/core';
+import { createField, Field, NestedFormDefinition, ChangedEvent, register } from '@formsey/core';
 import { customElement } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
@@ -10,7 +10,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
       this.value = {}
     }
     this.definition.form.name = this.definition.name
-    return createField(this.components, this.definition.form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event));
+    return createField(this.components, this.definition.form, this.value, this.errors, (event: ChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
   }
 
   public resize() {
@@ -34,10 +34,10 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     this.dispatchEvent(new InvalidEvent(e.errors))
   }
 
-  protected valueChanged(e: any) {
+  protected changed(e: any) {
     e.stopPropagation()
     this.value = e.value;
-    this.dispatchEvent(new ValueChangedEvent(e.name, this.value));
+    this.dispatchEvent(new ChangedEvent(e.name, this.value));
   }
 }
 register('formsey-nested-form', NestedFormField)

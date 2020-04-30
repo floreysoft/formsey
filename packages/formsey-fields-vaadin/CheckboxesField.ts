@@ -1,5 +1,5 @@
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangedEvent } from '@formsey/core';
 import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
 import { VaadinTextField } from '@vaadin/vaadin-text-field';
 import { css, customElement, html, property, query, TemplateResult } from 'lit-element';
@@ -57,16 +57,16 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
     }
     if (this.definition.other) {
       let checked = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0).length > 0
-      templates.push(html`<vaadin-checkbox .checked="${checked}" class="other" value="__other">Other</vaadin-checkbox><vaadin-text-field @input="${this.valueChanged}" ?disabled="${this.definition.disabled || !checked}" .value=""></vaadin-text-field>`);
+      templates.push(html`<vaadin-checkbox .checked="${checked}" class="other" value="__other">Other</vaadin-checkbox><vaadin-text-field @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}" .value=""></vaadin-text-field>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-checkbox-group @change="${this.valueChanged}" label="${ifDefined(this.definition.label)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group @change="${this.changed}" label="${ifDefined(this.definition.label)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
   }
 
-  valueChanged(e: Event) {
+  changed(e: Event) {
     let values = []
     let other = false
     for (let value of this.vaadinCheckboxGroup.value) {
@@ -83,7 +83,7 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
     this.value = values
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
     }
     if (other) {
       this.updateComplete.then(() => {

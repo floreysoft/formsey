@@ -2,7 +2,7 @@ import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { Components, getDefaultTheme, getTheme } from '.';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
-import { ValueChangedEvent } from './ValueChangedEvent';
+import { ChangedEvent } from './ChangeEvent';
 
 export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
@@ -27,8 +27,8 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
   components: Components
 
   @property({ type: Object })
-  definition: T
 
+  definition: T
   @property({ type: Object })
   value: V;
 
@@ -117,7 +117,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
       }
     }
     if (this.definition.hidden) {
@@ -147,9 +147,9 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     super.update(changedProperties);
   }
 
-  protected valueChanged(e: any) {
+  protected changed(e: any) {
     this.value = e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
   }
 
   protected firstPathElement(path: string) {

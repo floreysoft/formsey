@@ -1,5 +1,5 @@
 import { Dialog } from '@floreysoft/dialog';
-import { FieldDefinition, Form, StringFieldDefinition, ValueChangedEvent } from "@formsey/core";
+import { FieldDefinition, Form, StringFieldDefinition, ChangedEvent } from "@formsey/core";
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
 import '@formsey/fields-vaadin';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
@@ -379,7 +379,7 @@ export class Demo extends LitElement {
         }
     }
 
-    valueChanged(e: ValueChangedEvent<Object>) {
+    valueChanged(e: ChangedEvent<Object>) {
         this.demoFormPath.innerText = e.detail.name
         this.demoFormValue.innerHTML = JSON.stringify(e.detail.value)
     }

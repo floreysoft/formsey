@@ -18,7 +18,7 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
     if ( this.error && this.error.validityMessage ) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-text-field style="display:flex" label="${ifDefined(this.definition.label)}" help-text="${ifDefined(this.definition.helpText)}" ?readonly="${this.definition.readonly}" ?autoselect="${this.definition.readonly}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.valueChanged}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}">`;
+    return html`<vaadin-text-field style="display:flex" label="${ifDefined(this.definition.label)}" help-text="${ifDefined(this.definition.helpText)}" ?readonly="${this.definition.readonly}" ?autoselect="${this.definition.readonly}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.changed}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${ifDefined(this.definition.disabled)}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}">`;
   }
 
   renderFooter() {

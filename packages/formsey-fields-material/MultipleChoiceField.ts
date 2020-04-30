@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangedEvent } from '@formsey/core';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-radio/mwc-radio";
 import { Radio } from "@material/mwc-radio/mwc-radio";
@@ -40,12 +40,12 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
         let label = option.label ? option.label : option.value;
         let value = option.value ? option.value : option.label;
         let checked = this.value == value
-        templates.push(html`<mwc-formfield label="${label}"><mwc-radio .checked="${checked}" value="${value}" @change="${this.valueChanged}"></mwc-radio></mwc-formfield>`);
+        templates.push(html`<mwc-formfield label="${label}"><mwc-radio .checked="${checked}" value="${value}" @change="${this.changed}"></mwc-radio></mwc-formfield>`);
       }
     }
     if (this.definition.other) {
       let checked = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label)).length == 0
-      templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-radio .checked="${checked}" value="__other" @change="${this.valueChanged}"></mwc-radio></mwc-formfield><mwc-textfield @input="${this.otherChanged}" ?disabled="${this.definition.disabled || !checked}" .value=""></mwc-textfield></div>`);
+      templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-radio .checked="${checked}" value="__other" @change="${this.changed}"></mwc-radio></mwc-formfield><mwc-textfield @input="${this.otherChanged}" ?disabled="${this.definition.disabled || !checked}" .value=""></mwc-textfield></div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
@@ -58,11 +58,11 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     this.value = (<TextField>e.target).value
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
     }
   }
 
-  valueChanged(e: Event) {
+  changed(e: Event) {
     let value = (<Radio>e.target).value
     let other = false
     if (value == "__other") {
@@ -76,7 +76,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     }
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
     }
     if ( value == "__other" && other) {
       this.updateComplete.then(() => {

@@ -1,6 +1,6 @@
 import '@floreysoft/ace';
 import { Ace } from '@floreysoft/ace';
-import { InputFieldDefinition, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { InputFieldDefinition, LabeledField, ChangedEvent } from '@formsey/core';
 import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -30,13 +30,13 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   }
 
   protected renderField() {
-    return html`<floreysoft-ace .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" .theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @changed=${this.valueChanged}></floreysoft-ace>`;
+    return html`<floreysoft-ace .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" .theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @changed=${this.changed}></floreysoft-ace>`;
   }
 
-  protected valueChanged(e: any) {
+  protected changed(e: any) {
     this.value = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
     }
   }
 

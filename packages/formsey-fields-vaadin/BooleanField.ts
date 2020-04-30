@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { BooleanFieldDefinition, ChangedEvent } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
@@ -28,12 +28,12 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label)}" theme="vertical"><vaadin-checkbox @change="${(event) => this.valueChanged(event)}" ?disabled="${ifDefined(this.definition.disabled)}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label}</vaadin-checkbox></vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label)}" theme="vertical"><vaadin-checkbox @change="${(event) => this.changed(event)}" ?disabled="${ifDefined(this.definition.disabled)}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label}</vaadin-checkbox></vaadin-checkbox-group>`;
   }
 
-  protected valueChanged(e: any) {
+  protected changed(e: any) {
     this.value = this.vaadinCheckbox.checked;
-    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
   }
 
   validate(report: boolean) {

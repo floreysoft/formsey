@@ -1,4 +1,4 @@
-import { Field, NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { Field, NumberFieldDefinition, ChangedEvent } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
@@ -26,7 +26,7 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
     if (this.error) {
       customValidity = this.error.validityMessage
     }
-    return html`<mwc-textfield label="${this.definition.label}" helper="${ifDefined(this.definition.helpText)}" type="${this.type}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.valueChanged}" @invalid="${this.invalid}" name="${this.definition.name}" min="${ifDefined(this.definition.min)}" max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}"></mwc-textfield>`;
+    return html`<mwc-textfield label="${this.definition.label}" helper="${ifDefined(this.definition.helpText)}" type="${this.type}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" min="${ifDefined(this.definition.min)}" max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}"></mwc-textfield>`;
   }
 
   firstUpdated() {
@@ -70,8 +70,8 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
     return "number"
   }
 
-  protected valueChanged(e: any) {
+  protected changed(e: any) {
     this.value = +e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
   }
 }

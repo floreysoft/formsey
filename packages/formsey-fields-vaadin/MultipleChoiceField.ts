@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangedEvent } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
@@ -56,16 +56,16 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
       let filtered = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label))
       let checked = (typeof this.value != "undefined") && (filtered.length == 0)
       templates.push(html`<vaadin-radio-button class="other" value="__other" .checked="${checked}">Other</vaadin-radio-button>
-      <vaadin-text-field @input="${this.valueChanged}" ?disabled="${this.definition.disabled || !checked}" .value="${checked ? this.value : ""}"></vaadin-text-field>`);
+      <vaadin-text-field @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}" .value="${checked ? this.value : ""}"></vaadin-text-field>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-radio-group @value-changed="${this.valueChanged}" label="${ifDefined(this.definition.label)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
+    return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
-  valueChanged(e: Event) {
+  changed(e: Event) {
     this.value = this.vaadinRadioGroup.value
     let other = false
     if (this.value == "__other") {
@@ -77,7 +77,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     }
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
     }
     if (other) {
       this.updateComplete.then(() => {

@@ -1,12 +1,19 @@
 import { BooleanFieldDefinition, Field, register } from '@formsey/core';
-import { html, property } from 'lit-element';
+import { html, property, query } from 'lit-element';
 
 export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
+  @query("input")
+  checkbox : HTMLInputElement
+
   renderField() {
-    return html`<input type="checkbox" @change="${(event) => this.valueChanged(event)}" .value="${this.value}"></vaadin-checkbox>`;
+    return html`<label><input type="checkbox" @change="${(event) => this.changed(event)}" .value="${this.value}" required="${this.definition.required}">${this.definition.label}</label>">`;
+  }
+
+  firstUpdated() {
+    this.checkbox.indeterminate = this.definition.indeterminate
   }
 }
 register("formsey-boolean", BooleanField)

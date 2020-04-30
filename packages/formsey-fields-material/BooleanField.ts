@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { BooleanFieldDefinition, ChangedEvent } from '@formsey/core';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
@@ -15,7 +15,7 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
   materialCheckbox: Checkbox
 
   renderField() {
-    return html`<mwc-formfield label="${this.definition.label}"><mwc-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox></mwc-formfield>`;
+    return html`<mwc-formfield label="${this.definition.label}"><mwc-checkbox @change="${(event) => this.changed(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox></mwc-formfield>`;
   }
 
   public validate(report: boolean) {
@@ -32,8 +32,8 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
     return valid
   }
 
-  protected valueChanged(e: any) {
+  protected changed(e: any) {
     this.value = this.materialCheckbox.checked
-    this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
   }
 }
