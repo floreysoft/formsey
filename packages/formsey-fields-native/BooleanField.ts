@@ -9,7 +9,7 @@ export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
   checkbox : HTMLInputElement
 
   renderField() {
-    return html`<label><input type="checkbox" @change="${(event) => this.changed(event)}" .value="${this.value}" required="${this.definition.required}">${this.definition.label}</label>">`;
+    return html`<label><input type="checkbox" @change="${(event) => this.changed(event)}" .value="${this.value}" required="${this.definition.required}">${this.definition.label}</label>`;
   }
 
   firstUpdated() {
