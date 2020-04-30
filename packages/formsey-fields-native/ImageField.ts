@@ -18,7 +18,7 @@ export class ImageField extends LabeledField<ImageFieldDefinition, string> {
   }
 
   renderField() {
-    return html`<div style="text-align: ${this.definition.align}"><img src="${this.definition.url}" title="${this.definition.prompt}" style="width: ${this.definition.width}"></div>`
+    return html`<div style="text-align: ${this.definition.align}"><img src="${this.definition.url}" title="${this.definition.label}" style="width: ${this.definition.width}"></div>`
   }
 }
 register("formsey-image", ImageField)

@@ -86,7 +86,7 @@ export class Demo extends LitElement {
       "fields": [
         {
           "name": "name",
-          "prompt": "Name",
+          "label": "Name",
           "helpText": "Enter name",
           "type": "string",
           "required": true,
@@ -95,7 +95,7 @@ export class Demo extends LitElement {
         },
         {
           "name": "checkboxes",
-          "prompt": "Checkboxes",
+          "label": "Checkboxes",
           "helpText": "Checkboxes help",
           "other": true,
           "options": [
@@ -115,21 +115,20 @@ export class Demo extends LitElement {
           "type": "multipleChoice"
         },
         {
-          "prompt": "Simple section",
+          "label": "Simple section",
           "type": "section",
           "helpText": "Just some text in the section"
         },
         {
           "name": "optional",
-          "prompt": "Optional",
+          "label": "Optional",
           "helpText": "Optional help",
-          "label": "My Label",
           "required": true,
           "form": {
             "fields": [
               {
                 "name": "aFieldInAForm",
-                "prompt": "A field in a form",
+                "label": "A field in a form",
                 "autocomplete": "off",
                 "type": "string",
                 "required": true
@@ -148,7 +147,7 @@ export class Demo extends LitElement {
         },
         {
           "name": "selection",
-          "prompt" : "Selection section",
+          "label" : "Selection section",
           "helpText" : "mit hilfe",
           "selections": [
             {
@@ -157,7 +156,7 @@ export class Demo extends LitElement {
                   {
                     "autocomplete": "off",
                     "name": "inA",
-                    "prompt": "In A",
+                    "label": "In A",
                     "type": "string"
                   }
                 ],
@@ -179,7 +178,7 @@ export class Demo extends LitElement {
                 "fields": [
                   {
                     "name": "inB",
-                    "prompt": "In B",
+                    "label": "In B",
                     "autocomplete": "off",
                     "type": "string"
                   }
@@ -198,7 +197,7 @@ export class Demo extends LitElement {
         },
         {
           "name": "email",
-          "prompt": "Email",
+          "label": "Email",
           "helpText": "Email help dsddd",
           "autofocus" : true,
           "autocomplete": "off",
@@ -207,7 +206,7 @@ export class Demo extends LitElement {
         },
         {
           "name": "date",
-          "prompt": "Date",
+          "label": "Date",
           "helpText": "Date help",
           "autocomplete": "off",
           "type": "date",
@@ -215,7 +214,7 @@ export class Demo extends LitElement {
         },
         {
           "name": "number",
-          "prompt": "Number",
+          "label": "Number",
           "helpText": "Number help",
           "min": 5,
           "max": 15,
@@ -270,7 +269,7 @@ export class Demo extends LitElement {
     createFields(count: number): FieldDefinition[] {
         let fields: StringFieldDefinition[] = []
         for (let i = 0; i < count; i++) {
-            fields.push({ name: String.fromCharCode(97 + i), prompt: String.fromCharCode(65 + i), type: "string", required: true, helpText: "Some more help", customValidity: "Was los!" })
+            fields.push({ name: String.fromCharCode(97 + i), label: String.fromCharCode(65 + i), type: "string", required: true, helpText: "Some more help", customValidity: "Was los!" })
         }
         return fields;
     }
@@ -362,7 +361,7 @@ export class Demo extends LitElement {
                         "value": "value4"
                       }
                     ],
-                    "prompt": "testeeeee",
+                    "label": "testeeeee",
                     "type": "list"
                   }
             ]

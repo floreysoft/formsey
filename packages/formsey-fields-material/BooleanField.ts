@@ -15,7 +15,7 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
   materialCheckbox: Checkbox
 
   renderField() {
-    return html`<mwc-formfield label="${this.definition.label ? this.definition.label : this.definition.prompt}"><mwc-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox></mwc-formfield>`;
+    return html`<mwc-formfield label="${this.definition.label}"><mwc-checkbox @change="${(event) => this.valueChanged(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox></mwc-formfield>`;
   }
 
   public validate(report: boolean) {

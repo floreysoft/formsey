@@ -31,6 +31,6 @@ export abstract class MaterialField<T extends FieldDefinition, V> extends Labele
   }
 
   render() {
-    return html`<mwc-formfield label="${this.definition.prompt}"></mwc-formfield>${this.renderField()}${this.definition.helpText ? html`<footer>${ifDefined(this.definition.helpText)}</footer>` : undefined}`
+    return html`<mwc-formfield label="${this.definition.label}"></mwc-formfield>${this.renderField()}${this.definition.helpText ? html`<footer>${ifDefined(this.definition.helpText)}</footer>` : undefined}`
   }
 }

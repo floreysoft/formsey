@@ -1,7 +1,7 @@
 export interface FieldDefinition {
   name?: string
   type?: string
-  prompt?: string
+  label?: string
   helpText?: string
   hidden?: boolean
   default? : any
@@ -23,7 +23,6 @@ export interface ImageFieldDefinition extends FieldDefinition {
 }
 
 export interface BooleanFieldDefinition extends InputFieldDefinition {
-  label?: string
   indeterminate?: boolean
   default? : boolean
 }
@@ -94,7 +93,6 @@ export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
 }
 
 export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
-  label : string
   form : FormDefinition
 }
 

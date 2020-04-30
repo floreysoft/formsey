@@ -28,7 +28,7 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.prompt)}" theme="vertical"><vaadin-checkbox @change="${(event) => this.valueChanged(event)}" ?disabled="${ifDefined(this.definition.disabled)}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label ? this.definition.label : this.definition.prompt}</vaadin-checkbox></vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label)}" theme="vertical"><vaadin-checkbox @change="${(event) => this.valueChanged(event)}" ?disabled="${ifDefined(this.definition.disabled)}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label}</vaadin-checkbox></vaadin-checkbox-group>`;
   }
 
   protected valueChanged(e: any) {

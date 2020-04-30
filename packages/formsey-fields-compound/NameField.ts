@@ -21,7 +21,7 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
     let form = {
       type: "form",
       name: this.definition.name,
-      prompt: this.definition.prompt,
+      label: this.definition.label,
       helpText: this.definition.helpText,
       fields: fields
     }

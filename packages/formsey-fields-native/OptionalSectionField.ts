@@ -33,7 +33,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     }
     this.definition.form.name = this.definition.name
     let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.errors, (event: ValueChangedEvent<any>) => this.valueChanged(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
-    return html`${createField(this.components, { type: "boolean", name: this.definition.name, prompt: this.definition.prompt, helpText: this.definition.helpText, label: this.definition.label ? this.definition.label : this.definition.prompt, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
   }
 

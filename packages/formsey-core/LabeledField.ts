@@ -20,17 +20,17 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
 
     .error-text {
       color: var(--formsey-error-text-color, var(--lumo-error-text-color, #ff0000));
-      font-family: var(--formsey-prompt-font-family, var(--lumo-font-family));
+      font-family: var(--formsey-label-font-family, var(--lumo-font-family));
       font-size: var(--formsey-error-font-size, var(--lumo-font-size-s));
       line-height: var(--formsey-error-line-height, var(--lumo-line-height-s));
     }
 
-    .prompt {
-      margin: var(--formsey-prompt-margin, var(--lumo-space-m) 0 0 0);
-      font-family: var(--formsey-prompt-font-family, var(--lumo-font-family));
-      font-size: var(--formsey-prompt-font-size, var(--lumo-font-size-m));
-      line-height: var(--formsey-prompt-line-height, var(--lumo-line-height-m));
-      color: var(--formsey-prompt-color, var(--lumo-secondary-text-color));
+    .label {
+      margin: var(--formsey-label-margin, var(--lumo-space-m) 0 0 0);
+      font-family: var(--formsey-label-font-family, var(--lumo-font-family));
+      font-size: var(--formsey-label-font-size, var(--lumo-font-size-m));
+      line-height: var(--formsey-label-line-height, var(--lumo-line-height-m));
+      color: var(--formsey-label-color, var(--lumo-secondary-text-color));
     }
 
     .required {
@@ -59,7 +59,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       required = (<InputFieldDefinition>this.definition).required
     }
     return html`
-      ${this.definition.prompt ? html`<div class="prompt">${this.definition.prompt}${required ? html`<span class="required">&#10033;</span>` : html``}</div>` : undefined}
+      ${this.definition.label ? html`<div class="label">${this.definition.label}${required ? html`<span class="required">&#10033;</span>` : html``}</div>` : undefined}
       ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined}`
   }
 

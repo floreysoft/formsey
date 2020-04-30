@@ -18,7 +18,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
     let form = {
       type: "form",
       name: this.definition.name,
-      prompt: this.definition.prompt,
+      label: this.definition.label,
       helpText: this.definition.helpText,
       fields: fields
     }
