@@ -2,7 +2,7 @@ import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { Components, getDefaultTheme, getTheme } from '.';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
-import { ChangedEvent } from './ChangeEvent';
+import { ChangeEvent } from './ChangeEvent';
 
 export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
@@ -117,7 +117,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
       }
     }
     if (this.definition.hidden) {
@@ -149,7 +149,7 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected changed(e: any) {
     this.value = e.currentTarget.value;
-    this.dispatchEvent(new ChangedEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 
   protected firstPathElement(path: string) {

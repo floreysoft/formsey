@@ -7,7 +7,7 @@ export { Form } from './Form'
 export { FormField, GridSize } from './FormField'
 export { LabeledField } from './LabeledField'
 export { NestedFormField } from './NestedFormField'
-export { ChangedEvent } from './ChangeEvent'
+export { ChangeEvent } from './ChangeEvent'
 
 export interface Components {
   [index: string]: string
