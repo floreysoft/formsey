@@ -5,7 +5,7 @@ import { InvalidEvent } from './InvalidEvent';
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
   value: Object = {}
 
-  renderField() {
+  render() {
     if (!this.value) {
       this.value = {}
     }

@@ -29,6 +29,8 @@ export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T,
     return html`<div class="${classMap({ wrapper: true, invalid: !this.valid && this.report })}">${this.renderHeader()}${this.renderField()}${this.renderFooter()}</div>`
   }
 
+  abstract renderField() : TemplateResult | undefined
+
   renderHeader() {
     return
   }

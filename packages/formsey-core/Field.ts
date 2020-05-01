@@ -22,7 +22,7 @@ export const createField = (components: Components, definition: FieldDefinition,
   return html``;
 }
 
-export abstract class Field<T extends FieldDefinition, V> extends LitElement {
+export class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ converter: Object })
   components: Components
 
@@ -132,12 +132,6 @@ export abstract class Field<T extends FieldDefinition, V> extends LitElement {
     }
     return true
   }
-
-  protected render(): void | TemplateResult {
-    return html`${this.renderField()}`
-  }
-
-  protected abstract renderField(): TemplateResult | void;
 
   protected checkProperties(): void {
   }

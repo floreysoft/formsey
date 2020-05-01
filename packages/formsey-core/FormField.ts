@@ -44,7 +44,7 @@ export class FormField extends Field<FormDefinition, Object> {
     return [...super.styles, css`
       .grid {
         display: inline-grid;
-        grid-gap: var(--lumo-space-xs, 0.2em);
+        grid-gap: 0px 5px;
         width: 100%;
         box-sizing: border-box;
         overflow: hidden;
@@ -59,7 +59,7 @@ export class FormField extends Field<FormDefinition, Object> {
   private grid: HTMLElement
   private gridSize: GridSize
 
-  renderField() {
+  render() {
     let templates: TemplateResult[] = []
     let grid = "grid-template-columns: 100%"
     if (this.gridSize == GridSize.LARGE && this.definition.gridLarge) {
@@ -68,6 +68,12 @@ export class FormField extends Field<FormDefinition, Object> {
       grid = this.definition.gridMedium
     } else if (this.gridSize == GridSize.SMALL && this.definition.gridSmall) {
       grid = this.definition.gridSmall
+    }
+    if ( this.definition.label ) {
+      templates.push(html`<div class="title">${this.definition.label}</div>`)
+    }
+    if ( this.definition.helpText ) {
+      templates.push(html`<div class="description">${this.definition.helpText}</div>`)
     }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {

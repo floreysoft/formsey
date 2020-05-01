@@ -1,7 +1,7 @@
-import { BooleanFieldDefinition, Field, register } from '@formsey/core';
+import { BooleanFieldDefinition, LabeledField, register } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 
-export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
+export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
