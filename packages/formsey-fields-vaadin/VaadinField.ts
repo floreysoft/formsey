@@ -8,7 +8,6 @@ export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T,
     .wrapper {
       box-sizing: border-box;
       transition: all 0.2s ease-out;
-      padding: 0 2px var(--lumo-space-xs);
     }
 
     .invalid {
@@ -35,6 +34,6 @@ export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T,
   }
 
   renderFooter() {
-    return this.definition.helpText && (this.valid || !this.report) ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
+    return this.definition.helpText && this.definition.helpText.length > 0 && (this.valid || !this.report) ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
   }
 }
