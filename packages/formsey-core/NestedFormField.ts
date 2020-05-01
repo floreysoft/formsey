@@ -37,7 +37,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   protected changed(e: any) {
     e.stopPropagation()
     this.value = e.value;
-    this.dispatchEvent(new ChangeEvent(e.name, this.value));
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 }
 register('formsey-nested-form', NestedFormField)
