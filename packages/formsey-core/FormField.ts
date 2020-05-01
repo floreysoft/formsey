@@ -47,7 +47,7 @@ export class FormField extends Field<FormDefinition, Object> {
         display: block;
       }
       .section {
-        padding: 10px;
+        padding: 5px;
       }
       .grid {
         display: inline-grid;
