@@ -43,7 +43,7 @@ registerTheme('material', {
     'repeatingSection': 'formsey-repeating-section',
     'optionalSection': 'formsey-optional-section-material',
     'selectableSection': 'formsey-selectable-section-material',
-    'form': 'formsey-form-field',
+    'form': 'formsey-form-field-material',
     'nestedLayout': 'formsey-nested-form',
     'nestedForm': 'formsey-nested-form',
     'formEditor': 'formsey-form-editor',
