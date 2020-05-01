@@ -1,7 +1,8 @@
 import { area, createField, Field, FormDefinition, ChangeEvent, register } from '@formsey/core';
-import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
+import { css, html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export enum GridSize {
   SMALL = "gridSmall",
@@ -81,6 +82,12 @@ export class FormField extends Field<FormDefinition, Object> {
     } else if (this.gridSize == GridSize.SMALL && this.definition.gridSmall) {
       grid = this.definition.gridSmall
     }
+    let paddingIndex = grid.indexOf("padding:")
+    let padding = undefined
+    if ( paddingIndex > 0 ) {
+      padding = grid.substring(paddingIndex)
+      grid = grid.substring(0, paddingIndex-1)
+    }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let fieldErrors = {}
@@ -119,7 +126,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if ( this.definition.helpText ) {
       header.push(html`<div class="description">${this.definition.helpText}</div>`)
     }
-    return html`${header}<div class="grid" style="${grid}">${templates}</div>`
+    return html`<div style="${ifDefined(padding)}">${header}<div class="grid" style="${grid}">${templates}</div><div>`
   }
 
   public validate(report: boolean) {
