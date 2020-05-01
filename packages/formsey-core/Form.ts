@@ -63,7 +63,7 @@ export class Form extends Field<FieldDefinition, Object> {
     window.removeEventListener("resize", this.resizeHandler)
   }
 
-  renderField() {
+  render() {
     let value = this.value
     if (this.definition.name && this.value && this.value[this.definition.name]) {
       value = this.value[this.definition.name]
