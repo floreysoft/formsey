@@ -1,5 +1,6 @@
 import { registerTheme } from '@formsey/core'
 
+export { FormField } from './FormField'
 export { BooleanField } from './BooleanField'
 export { CheckboxesField } from './CheckboxesField'
 export { ColorField } from './ColorField'
