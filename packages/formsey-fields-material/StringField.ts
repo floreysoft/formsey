@@ -21,7 +21,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
   `]
   }
 
-  renderField() {
+  render() {
     let customValidity = this.definition.customValidity
     if (this.error) {
       customValidity = this.error.validityMessage
