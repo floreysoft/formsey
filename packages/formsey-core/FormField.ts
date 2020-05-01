@@ -43,25 +43,15 @@ export class FormField extends Field<FormDefinition, Object> {
 
   static get styles() {
     return [...super.styles, css`
+      .section {
+        padding: 10px;
+      }
       .grid {
         display: inline-grid;
         grid-gap: 0px 5px;
         width: 100%;
         box-sizing: border-box;
         overflow: hidden;
-      }
-      .skewed {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #2c3e50;
-        z-index: 0;
-        transform: skewY(3deg);
-        transform-origin: top right;
       }
       .fs-form-field {
         width: 100%;
@@ -126,7 +116,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if ( this.definition.helpText ) {
       header.push(html`<div class="description">${this.definition.helpText}</div>`)
     }
-    return html`<div style="${ifDefined(padding)}">${header}<div class="grid" style="${grid}">${templates}</div><div>`
+    return html`<div class="section" style="${ifDefined(padding)}">${header}<div class="grid" style="${grid}">${templates}</div><div>`
   }
 
   public validate(report: boolean) {
