@@ -69,12 +69,6 @@ export class FormField extends Field<FormDefinition, Object> {
     } else if (this.gridSize == GridSize.SMALL && this.definition.gridSmall) {
       grid = this.definition.gridSmall
     }
-    if ( this.definition.label ) {
-      templates.push(html`<div class="title">${this.definition.label}</div>`)
-    }
-    if ( this.definition.helpText ) {
-      templates.push(html`<div class="description">${this.definition.helpText}</div>`)
-    }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let fieldErrors = {}
@@ -106,7 +100,14 @@ export class FormField extends Field<FormDefinition, Object> {
         }
       }
     }
-    return html`<div class="grid" style="${grid}">${templates}</div>`
+    let header : TemplateResult[] = []
+    if ( this.definition.label ) {
+      header.push(html`<div class="title">${this.definition.label}</div>`)
+    }
+    if ( this.definition.helpText ) {
+      header.push(html`<div class="description">${this.definition.helpText}</div>`)
+    }
+    return html`${header}<div class="grid" style="${grid}">${templates}</div>`
   }
 
   public validate(report: boolean) {
