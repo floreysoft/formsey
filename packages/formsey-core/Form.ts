@@ -27,8 +27,6 @@ export class Form extends Field<FieldDefinition, Object> {
     this.fetchDefinition(url);
   }
 
-  @queryAll("formsey-form-field")
-  protected _forms: HTMLElement[]
   protected internals: any
   protected form : any
 
@@ -113,20 +111,16 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   public resize() {
-    // Resize nested forms
-    if (this._forms) {
-      for (let form of this._forms) {
-        (<FormField>form).resize()
-      }
+    let child = this.getRootNode()?.firstChild as FormField
+    if ( child && typeof child['resize'] === "function" ) {
+      child.resize()
     }
   }
 
   public focus() {
-    // Focus the first field that wants to autofocus
-    if (this._forms) {
-      for (let form of this._forms) {
-        (<FormField>form).focus()
-      }
+    let child = this.getRootNode()?.firstChild as FormField
+    if ( child && typeof child['focus'] === "function" ) {
+      child.focus()
     }
   }
 }
