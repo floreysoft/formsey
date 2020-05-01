@@ -43,6 +43,9 @@ export class FormField extends Field<FormDefinition, Object> {
 
   static get styles() {
     return [...super.styles, css`
+      :host {
+        display: block;
+      }
       .section {
         padding: 10px;
       }
