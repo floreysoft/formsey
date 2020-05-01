@@ -54,7 +54,6 @@ export class FormField extends Field<FormDefinition, Object> {
         grid-gap: 0px 5px;
         width: 100%;
         box-sizing: border-box;
-        overflow: hidden;
       }
       .fs-form-field {
         width: 100%;
