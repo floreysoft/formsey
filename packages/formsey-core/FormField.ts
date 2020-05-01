@@ -49,7 +49,19 @@ export class FormField extends Field<FormDefinition, Object> {
         box-sizing: border-box;
         overflow: hidden;
       }
-
+      .skewed {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #2c3e50;
+        z-index: 0;
+        transform: skewY(3deg);
+        transform-origin: top right;
+      }
       .fs-form-field {
         width: 100%;
       }`];
@@ -107,7 +119,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if ( this.definition.helpText ) {
       header.push(html`<div class="description">${this.definition.helpText}</div>`)
     }
-    return html`${header}<div class="grid" style="${grid}">${templates}</div>`
+    return html`<section><div class="skewed"></div>${header}<div class="grid" style="${grid}">${templates}</div></section>`
   }
 
   public validate(report: boolean) {
