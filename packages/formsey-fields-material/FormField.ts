@@ -17,6 +17,5 @@ export class FormField extends CoreFormField {
       }
       `];
   }
-
 }
 register('formsey-form-field-material', FormField)
