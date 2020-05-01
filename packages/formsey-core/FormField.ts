@@ -42,6 +42,10 @@ export class FormField extends Field<FormDefinition, Object> {
 
   static get styles() {
     return [...super.styles, css`
+      .section {
+        position: relative;
+        padding: 10px 10px 30px 10px;
+      }
       .grid {
         display: inline-grid;
         grid-gap: 0px 5px;
@@ -61,6 +65,24 @@ export class FormField extends Field<FormDefinition, Object> {
         z-index: 0;
         transform: skewY(3deg);
         transform-origin: top right;
+      }
+      .spikes {
+        position: relative;
+        background: #2c3e50;
+        height: 50vh;
+      }
+      .spikes::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        left: -0%;
+        top: 100%;
+        z-index: 10;
+        display: block;
+        height: 50px;
+        background-size: 50px 100%;
+        background-image: linear-gradient(135deg, #2c3e50 25%, transparent 25%), linear-gradient(225deg, #2c3e50 25%, transparent 25%);
+        background-position: 0 0;
       }
       .fs-form-field {
         width: 100%;
@@ -119,7 +141,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if ( this.definition.helpText ) {
       header.push(html`<div class="description">${this.definition.helpText}</div>`)
     }
-    return html`<section><div class="skewed"></div>${header}<div class="grid" style="${grid}">${templates}</div></section>`
+    return html`<section class="spikes"></div>${header}<div class="grid" style="${grid}">${templates}</div></section>`
   }
 
   public validate(report: boolean) {
