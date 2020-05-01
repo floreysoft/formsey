@@ -111,14 +111,14 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   public resize() {
-    let child = this.getRootNode()?.firstChild as FormField
+    let child = this.shadowRoot?.firstElementChild as FormField
     if ( child && typeof child['resize'] === "function" ) {
       child.resize()
     }
   }
 
   public focus() {
-    let child = this.getRootNode()?.firstChild as FormField
+    let child = this.shadowRoot?.firstElementChild as FormField
     if ( child && typeof child['focus'] === "function" ) {
       child.focus()
     }
