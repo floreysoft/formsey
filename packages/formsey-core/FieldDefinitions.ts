@@ -39,6 +39,7 @@ export interface StringFieldDefinition extends InputFieldDefinition {
   minlength? : number
   maxlength? : number
   default? : string
+  autoselect? : boolean
 }
 
 export interface TextFieldDefinition extends StringFieldDefinition {
