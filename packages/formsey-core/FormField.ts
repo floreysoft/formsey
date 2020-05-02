@@ -160,11 +160,14 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  public focus() {
+  public focusField(path: string) {
+    if ( path.startsWith(this.definition.name+"." ) ) {
+      path = path.substring(this.definition.name.length+1)
+    }
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
-      if ( child && child.hasAttribute("autofocus") && typeof child['focus'] == "function") {
-        child.focus()
+      if ( child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
+        (<any>child).focusField(path)
       }
     }
   }

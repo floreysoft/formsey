@@ -25,6 +25,11 @@ export class TextField extends Field<StringFieldDefinition, string> {
     return html`<mwc-textarea label="${this.definition.label}" helper="${ifDefined(this.definition.helpText)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" .maxlength="${ifDefined(this.definition.maxlength)}" .value="${this.value ? this.value : ''}"></mwc-textarea>`;
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.materialTextArea.focus()
+    }
+  }
   firstUpdated() {
     this.materialTextArea.validityTransform = (newValue, nativeValidity) => {
       if (this.errors[this.definition.name] && this.errors[this.definition.name].custom) {

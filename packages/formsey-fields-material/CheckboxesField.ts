@@ -57,6 +57,12 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     return html`${templates}`;
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.checkboxes[0].focus()
+    }
+  }
+
   changed(e: Event) {
     let values = []
     let other = false

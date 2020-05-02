@@ -26,7 +26,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     return true
   }
 
-  renderField() {
+  render() {
     let checked = false
     if (this.value) {
       checked = true
@@ -35,6 +35,15 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
     return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ChangeEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
+  }
+
+  public focusField(path: string) {
+    if (this.form) {
+      let child = this.form.firstElementChild as Field<any, any>
+      if ( child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
+        (<any>child).focusField(path)
+      }
+    }
   }
 
   public validate(report: boolean) {

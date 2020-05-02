@@ -36,6 +36,11 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
     this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.vaadinCheckbox.focus()
+    }
+  }
   validate(report: boolean) {
     this.valid = !(!this.vaadinCheckbox.checked && this.definition.required)
     if (!this.valid) {

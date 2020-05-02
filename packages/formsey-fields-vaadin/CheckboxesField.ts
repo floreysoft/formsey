@@ -66,6 +66,12 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
     return html`<vaadin-checkbox-group @change="${this.changed}" label="${ifDefined(this.definition.label)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.vaadinCheckboxGroup.focus()
+    }
+  }
+
   changed(e: Event) {
     let values = []
     let other = false

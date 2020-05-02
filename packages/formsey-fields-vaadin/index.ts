@@ -10,6 +10,7 @@ export { NumberField } from './NumberField'
 export { StringField } from './StringField'
 export { TextField } from './TextField'
 export { VaadinField } from './VaadinField'
+export { OptionalSectionField } from './OptionalSectionField'
 
 registerTheme('vaadin', {
   components: {
@@ -25,7 +26,7 @@ registerTheme('vaadin', {
     'signature': 'formsey-signature',
     'section': 'formsey-section',
     'repeatingSection': 'formsey-repeating-section',
-    'optionalSection': 'formsey-optional-section',
+    'optionalSection': 'formsey-optional-section-vaadin',
     'selectableSection': 'formsey-selectable-section',
     'form': 'formsey-form-field',
     'nestedLayout': 'formsey-nested-form',

@@ -15,5 +15,11 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   firstUpdated() {
     this.checkbox.indeterminate = this.definition.indeterminate
   }
+
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.checkbox.focus()
+    }
+  }
 }
 register("formsey-boolean", BooleanField)

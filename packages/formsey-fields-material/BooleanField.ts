@@ -18,6 +18,12 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
     return html`<mwc-formfield label="${this.definition.label}"><mwc-checkbox @change="${(event) => this.changed(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox></mwc-formfield>`;
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.materialCheckbox.focus()
+    }
+  }
+
   public validate(report: boolean) {
     let valid = !this.definition.required || this.materialCheckbox.checked
     if (!valid) {

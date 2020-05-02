@@ -22,6 +22,12 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
     this.comboBox.itemLabelPath = "label"
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.comboBox.focus()
+    }
+  }
+
   updated(changedProperties : Object) {
     if ( changedProperties.hasOwnProperty('definition') ) {
       this.comboBox.items = this.definition.options

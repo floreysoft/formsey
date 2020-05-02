@@ -61,8 +61,8 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   renderField() {
     if (!this.value) {
       this.value = [];
-      if ( this.definition.min ) {
-        for ( let i = 0; i < this.definition.min; i++ ) {
+      if (this.definition.min) {
+        for (let i = 0; i < this.definition.min; i++) {
           this.value.push({});
         }
       }
@@ -71,23 +71,41 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     if (this.value) {
       for (let i: number = 0; i < this.value.length; i++) {
         const value = this.value[i];
-        const fieldDefinition: FormDefinition = { ...this.definition.form, name: ""+i }
+        const fieldDefinition: FormDefinition = { ...this.definition.form, name: "" + i }
         let fieldErrors = {}
         if (this.errors) {
           for (let error in this.errors) {
             let path = this.definition.name + "[" + i + "]."
             if (this.definition.name && (error.startsWith(path))) {
-                fieldErrors[error.substring(path.length)] = this.errors[error]
+              fieldErrors[error.substring(path.length)] = this.errors[error]
             }
           }
         }
         const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.components, fieldDefinition, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><svg class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" viewBox="0 0 32 32"><title>Remove section</title><path d="M0 13v6c0 0.552 0.448 1 1 1h30c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1h-30c-0.552 0-1 0.448-1 1z"></path>
-</svg></div>` : html ``}</div>`;
+</svg></div>` : html``}</div>`;
         itemTemplates.push(template);
       }
     }
-    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<svg viewBox="0 0 32 32" class="fs-add" @click="${(e: Event) => this.addForm()}"><title>Add section</title><path d="M31 12h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552 0-1 0.448-1 1v11h-11c-0.552 0-1 0.448-1 1v6c0 0.552 0.448 1 1 1h11v11c0 0.552 0.448 1 1 1h6c0.552 0 1-0.448 1-1v-11h11c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1z"></path></svg>`: html``}`;
+    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<svg viewBox="0 0 32 32" class="fs-add" @click="${(e: Event) => this.addForm()}"><title>Add section</title><path d="M31 12h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552 0-1 0.448-1 1v11h-11c-0.552 0-1 0.448-1 1v6c0 0.552 0.448 1 1 1h11v11c0 0.552 0.448 1 1 1h6c0.552 0 1-0.448 1-1v-11h11c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1z"></path></svg>` : html``}`;
+  }
+
+  public focusField(path: string) {
+    let index
+    if (path.startsWith(this.definition.name + "[")) {
+      index = path.substring(this.definition.name.length + 1, path.indexOf(']'))
+      path = path.substring(path.indexOf(']')+1)
+    }
+    let i = 0
+    for (let field of this._fields) {
+      if (index == i) {
+        let child = field.firstElementChild as Field<any, any>
+        if (child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
+          (<any>child).focusField(path)
+        }
+      }
+      i++
+    }
   }
 
   public resize() {
@@ -97,10 +115,10 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     }
   }
 
-  public validate(report : boolean) {
+  public validate(report: boolean) {
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
-      if ( report ) {
+      if (report) {
         child.reportValidity();
       } else {
         child.checkValidity();
@@ -156,7 +174,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     e.stopPropagation()
     for (let error in e.errors) {
       let index = error.indexOf('.')
-      this.errors[this.definition.name + "[" + error.substring(0, index) +"]."+error.substring(index+1)] = e.errors[error]
+      this.errors[this.definition.name + "[" + error.substring(0, index) + "]." + error.substring(index + 1)] = e.errors[error]
     }
     this.dispatchEvent(new InvalidEvent(this.errors))
   }

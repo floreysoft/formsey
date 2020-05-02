@@ -25,6 +25,12 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
     return undefined
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.vaadinTextField.focus()
+    }
+  }
+
   validate(report: boolean) {
     this.valid = report ? this.vaadinTextField.validate() : this.vaadinTextField.checkValidity() as boolean
     if (!this.valid) {

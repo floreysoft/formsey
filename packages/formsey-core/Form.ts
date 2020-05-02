@@ -117,10 +117,10 @@ export class Form extends Field<FieldDefinition, Object> {
     }
   }
 
-  public focus() {
+  public focusField(path: string) {
     let child = this.shadowRoot?.firstElementChild as FormField
-    if ( child && typeof child['focus'] === "function" ) {
-      child.focus()
+    if ( child && typeof child['focusField'] === "function" ) {
+      child.focusField(path)
     }
   }
 }

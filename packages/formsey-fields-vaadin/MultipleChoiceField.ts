@@ -65,6 +65,11 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.vaadinRadioGroup.focus()
+    }
+  }
   changed(e: Event) {
     this.value = this.vaadinRadioGroup.value
     let other = false
