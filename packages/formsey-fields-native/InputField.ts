@@ -4,6 +4,8 @@ import { css, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class InputField<T extends InputFieldDefinition> extends LabeledField<T, string> {
+  public static formAssociated = true;
+
   @property({ converter: Object })
   set definition(definition: T) {
     this.autofocus = definition.autofocus
@@ -23,6 +25,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   @query("input")
   input : HTMLInputElement
 
+  protected internals: any
   private _definition: T
 
   static get styles() {
@@ -36,6 +39,16 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
       outline: none;
       user-select: auto;
     }`]
+  }
+
+  constructor() {
+    super()
+    // @ts-ignore
+    this.internals = this.attachInternals();
+  }
+
+  protected formResetCallback() {
+    this.value = '';
   }
 
   protected checkProperties(): void {
