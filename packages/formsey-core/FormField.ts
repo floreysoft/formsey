@@ -74,11 +74,9 @@ export class FormField extends Field<FormDefinition, Object> {
     } else if (this.gridSize == GridSize.SMALL && this.definition.gridSmall) {
       grid = this.definition.gridSmall
     }
-    let paddingIndex = grid.indexOf("padding:")
-    let padding = undefined
-    if ( paddingIndex > 0 ) {
-      padding = grid.substring(paddingIndex)
-      grid = grid.substring(0, paddingIndex-1)
+    let layout = "padding:10px"
+    if ( this.definition.layout ) {
+      layout = this.definition.layout
     }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
@@ -118,7 +116,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if ( this.definition.helpText ) {
       header.push(html`<div class="description">${this.definition.helpText}</div>`)
     }
-    return html`<div class="section" style="${ifDefined(padding)}">${header}<div class="grid" style="${grid}">${templates}</div><div>`
+    return html`<div class="section" style="${ifDefined(layout)}">${header}<div class="grid" style="${grid}">${templates}</div><div>`
   }
 
   public validate(report: boolean) {

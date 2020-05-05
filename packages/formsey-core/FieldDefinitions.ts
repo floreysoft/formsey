@@ -71,6 +71,7 @@ export interface FormDefinition extends FieldDefinition {
   gridSmall? : string
   gridMedium? : string
   gridLarge? : string
+  layout? : string
 }
 
 export interface NestedFormDefinition extends FieldDefinition {
