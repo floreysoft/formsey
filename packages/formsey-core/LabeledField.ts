@@ -61,8 +61,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       required = (<InputFieldDefinition>this.definition).required
     }
     return html`
-      ${this.definition.label ? html`<div class="label">${this.definition.label}${required ? html`<span class="required">&#10033;</span>` : html``}</div>` : undefined}
-      ${this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined}`
+      ${this.definition.label ? html`<div class="label">${this.definition.label}${required ? html`<span class="required">&#10033;</span>` : html``}</div>` : undefined}`
   }
 
   protected renderFooter(): TemplateResult | void {
@@ -74,6 +73,8 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
         validityMessage = this.error.validityMessage
       }
     }
-    return this.report && validityMessage ? html`<div class="error-text">${validityMessage}</div>` : undefined
+
+    let helpText = this.definition.helpText ? html`<div class="help-text">${this.definition.helpText}</div>` : undefined
+    return this.report && validityMessage ? html`<div class="error-text">${validityMessage}</div>` : helpText
   }
 }
