@@ -11,6 +11,15 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       transition: all 0.2s ease-out;
     }
 
+    .label {
+      font-size: var(--formsey-label-font-size, 16px);
+      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
+      font-weight: var(--formsey-label-font-weight, 400);
+      color: var(--formsey-label-color, #222b4f);
+      line-height: var(--formsey-label-line-height, var(--lumo-line-height-m));
+      -webkit-font-smoothing: antialiased;
+    }
+
     .invalid {
       background-color: var(--formsey-invalod_color, var(--lumo-error-color-10pct, #ff000005));
       padding: 0 0.5rem 0.1rem;
@@ -20,32 +29,24 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
 
     .error-text {
       color: var(--formsey-error-text-color, var(--lumo-error-text-color, #ff0000));
-      font-family: var(--formsey-label-font-family, var(--lumo-font-family));
+      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
       font-size: var(--formsey-error-font-size, var(--lumo-font-size-s));
       line-height: var(--formsey-error-line-height, var(--lumo-line-height-s));
     }
 
-    .label {
-      margin: var(--formsey-label-margin, var(--lumo-space-m) 0 0 0);
-      font-family: var(--formsey-label-font-family, var(--lumo-font-family));
-      font-size: var(--formsey-label-font-size, var(--lumo-font-size-m));
-      line-height: var(--formsey-label-line-height, var(--lumo-line-height-m));
-      color: var(--formsey-label-color, var(--lumo-secondary-text-color));
-    }
-
     .required {
       margin: var(--formsey-required-margin, 0 0 0 var(--lumo-space-xs));
-      font-family: var(--formey-required-font-family, var(--lumo-font-family));
+      font-family: var(--formey-required-font-family, var(--formsey-font-family));
       font-size: var(--formey-required-font-size, var(--lumo-font-size-s));
       vertical-align: top;
       line-height: var(--formsey-required-line-height, var(--lumo-line-height-xs));
       color: var(--formsey-required-color, var(--lumo-error-text-color));
     }
     .help-text {
-      font-family: var(--formey-help-text-font-family, var(--lumo-font-family));
+      font-family: var(--formey-help-text-font-family, var(--formsey-font-family));
       font-size: var(--formey-help-text-font-size, var(--lumo-font-size-xs));
       line-height: var(--formsey-help-text-line-height, var(--lumo-line-height-xs));
-      color: var(--formsey-help-text-color, var(--lumo-secondary-text-color));
+      color: var(--formsey-help-text-color, #989db2);
     }`]
   }
 

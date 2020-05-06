@@ -40,10 +40,10 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     this.dispatchEvent(new InvalidEvent(e.errors))
   }
 
-  protected changed(e: any) {
+  protected changed(e: ChangeEvent<any>) {
     e.stopPropagation()
-    this.value = e.value;
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.value = e.detail.value;
+    this.dispatchEvent(new ChangeEvent(e.detail.name, this.value));
   }
 }
 register('formsey-nested-form', NestedFormField)

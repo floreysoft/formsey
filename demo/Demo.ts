@@ -2,6 +2,7 @@ import { Dialog } from '@floreysoft/dialog';
 import { FieldDefinition, Form, StringFieldDefinition, ChangeEvent } from "@formsey/core";
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
 import '@formsey/fields-vaadin';
+import '@formsey/fields-native';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 
 @customElement("fs-demo-section")
@@ -80,6 +81,62 @@ export class Demo extends LitElement {
     disconnectedCallback() {
         window.removeEventListener("resize", this.resizeHandler)
         super.disconnectedCallback()
+    }
+
+    private layoutDemo = {
+      "helpText": "Main Subtitle",
+      "fields": [
+        {
+          "type": "nestedLayout",
+          "name" : "test",
+          "form": {
+            "helpText": "Enter thename",
+            "fields": [
+              {
+                "helpText": "Enter your name",
+                "name": "givenName",
+                "type": "string",
+                "autocomplete": "off",
+                "label": "Given name"
+              },
+              {
+                "name": "familyName",
+                "type": "string",
+                "autocomplete": "off",
+                "label": "Family name"
+              }
+            ],
+            "type": "form",
+            "layout": "padding:0px;background-color:white;border-bottom:none;border-color:#d6d6d6",
+            "label": "Name",
+            "gridMedium": "grid-template-columns:1fr 1fr",
+            "gridLarge": "grid-template-columns:1fr 1fr"
+          }
+        },
+        {
+          "type": "nestedLayout",
+          "form": {
+            "helpText": "Enter the address",
+            "fields": [
+              {
+                "name": "address",
+                "type": "string",
+                "required": true,
+                "autocomplete": "off",
+                "label": "Address"
+              }
+            ],
+            "type": "form",
+            "layout": "padding:0px;background-color:#a0f0a050;border-bottom:undefined;border-color:none",
+            "label": "Address",
+            "gridLarge": "grid-template-columns:1fr"
+          }
+        }
+      ],
+      "type": "form",
+      "layout": "padding:30px;background-color:white;border-bottom:none;border-color:none",
+      "label": "Main title",
+      "gridLarge": "grid-template-columns:1fr"
     }
 
     private simpleDemo = {
@@ -233,7 +290,7 @@ export class Demo extends LitElement {
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
         <form id="realForm" method="POST">
-          <formsey-form id="demoForm" name="muskelmann" .definition=${this.simpleDemo} @change=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+          <formsey-form id="demoForm" name="muskelmann" theme="native" .definition=${this.layoutDemo} @change=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
           <input type="submit" value="Send Request">
           <input type="reset" value="Reset">
         </form>
