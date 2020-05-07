@@ -24,6 +24,7 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
       padding: var(--formsey-input-padding, 8px);
       outline: none;
       user-select: auto;
+      resize: vertical;
     }`]
   }
 

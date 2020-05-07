@@ -77,10 +77,10 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 
-  protected changed(e: any) {
-    this.value = e.value;
+  protected changed(e: ChangeEvent<any>) {
+    this.value = e.detail.value;
     this.requestUpdate()
-    this.dispatchEvent(new ChangeEvent(e.name, this.value));
+    this.dispatchEvent(new ChangeEvent(e.detail.name, this.value));
   }
 }
 register("formsey-optional-section", OptionalSectionField)

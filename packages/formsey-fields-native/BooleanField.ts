@@ -1,15 +1,30 @@
-import { BooleanFieldDefinition, LabeledField, register } from '@formsey/core';
-import { html, property, query } from 'lit-element';
+import { BooleanFieldDefinition, LabeledField, register, ChangeEvent } from '@formsey/core';
+import { html, property, query, css } from 'lit-element';
 
 export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
+  static get styles() {
+    return [...super.styles, css`
+    input[type="checkbox"] {
+      width: 10px;
+      height: 10px;
+      margin: 0 5px 0 2px;
+      transform: scale(1.5);
+    }`]
+  }
+
   @property({ type: Boolean })
   value: boolean;
 
-  @query("input")
-  checkbox : HTMLInputElement
+  @query("#checkbox")
+  checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label><input type="checkbox" @change="${(event) => this.changed(event)}" .value="${this.value}" required="${this.definition.required}">${this.definition.label}</label>`;
+    return html`<label><input id="checkbox" type="checkbox" @click="${this.clicked}" .value="${this.value}" required="${this.definition.required}">${this.definition.label}</label>`;
+  }
+
+  clicked(e ) {
+    this.value = this.checkbox.checked
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 
   firstUpdated() {
@@ -17,7 +32,7 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   }
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
+    if (path == this.definition.name) {
       this.checkbox.focus()
     }
   }
