@@ -14,6 +14,7 @@ export class FormField extends CoreFormField {
 
       .description {
         font-size: 18px;
+        color: #757c98;
       }
       `];
   }

@@ -52,15 +52,15 @@ export class FormField extends Field<FormDefinition, Object> {
         font-weight: var(--formsey-title-font-weight, 400);
         line-height: var(--formsey-title-line-height, var(--lumo-line-height-m));
         color: var(--formsey-title-color, #222b4f);
-        margin: var(--formsey-title-margin, 12px 0 8px 0);
+        margin: var(--formsey-title-margin, 12px 0 4px 0);
       }
       .description {
-        font-size: var(--formsey-description-font-size, 16px);
+        font-size: var(--formsey-description-font-size, 18px);
         font-family: var(--formsey-description-font-family, var(--formsey-font-family));
         font-weight: var(--formsey-description-font-weight, 400);
         line-height: var(--formsey-description-line-height, var(--lumo-line-height-m));
-        color: var(--formsey-description-color, #222b4f);
-        margin: var(--formsey-description-margin, 8px 0 4px 0);
+        color: var(--formsey-description-color, #757c98);
+        margin: var(--formsey-description-margin, 0 0 10px 0);
       }
       .section {
         padding: 5px;

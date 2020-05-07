@@ -37,10 +37,10 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
       border-radius: var(--formsey-input-border-radius, 4px);
       border: 1px solid var(--formsey-input-border-color, #d5d5d5);
       padding: var(--formsey-input-padding, 8px);
-      background: var(--formsey-input-background, linear-gradient(45deg, rgba(245,245,245,1) 0%, rgba(239,239,239,1) 33%, rgba(242,242,242,1) 100%));
+      background: var(--formsey-input-background, #fafafa);
       outline: none;
       user-select: auto;
-      transition: all 0.2s;
+      transition: all 0.12s;
     }
     input:focus {
       border: 1px solid var(--formsey-input-focus-border-color, #a0a0a0);
