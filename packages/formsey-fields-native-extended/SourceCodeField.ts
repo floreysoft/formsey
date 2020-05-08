@@ -21,7 +21,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   static get styles() {
     return [...super.styles, css`
     floreysoft-ace {
-      height: 100px;
+      height: 150px;
       border-radius: var(--formsey-input-border-radius, 4px);
       border: 1px solid var(--formsey-input-border-color, #d5d5d5);
       overflow: hidden;

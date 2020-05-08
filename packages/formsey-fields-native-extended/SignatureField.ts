@@ -1,5 +1,5 @@
-import { LabeledField, SignatureFieldDefinition, ChangeEvent } from '@formsey/core';
-import { css, customElement, query, html, property } from 'lit-element';
+import { ChangeEvent, LabeledField, SignatureFieldDefinition } from '@formsey/core';
+import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import SignaturePad from 'signature_pad';
 
@@ -26,7 +26,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     .pad {
       position: relative;
       width: 100%;
-      height: 200px;
+      height: 150px;
       box-sizing: border-box;
       border-radius: var(--formsey-input-border-radius, 4px);
       border: 1px solid var(--formsey-input-border-color, #d5d5d5);
