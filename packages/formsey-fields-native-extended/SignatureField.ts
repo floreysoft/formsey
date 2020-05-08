@@ -47,8 +47,13 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
       width: 16px;
       right: 8px;
       top: 8px;
-      fill: var(--formsey-primary-color,  #020b2f);
+      fill: var(--formsey-signature-clear-icon-color, #757c98);
       stroke-width: 0;
+      transition: fill 0.12s ease-out;
+    }
+
+    svg:hover {
+      fill: var(--formsey-primary-color,  #020b2f);
     }
     `]
   }
