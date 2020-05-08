@@ -9,6 +9,8 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     .wrapper {
       box-sizing: border-box;
       transition: all 0.2s ease-out;
+      display: flex;
+      flex-direction: column;
     }
 
     .label {
@@ -18,6 +20,11 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       color: var(--formsey-label-color, #222b4f);
       line-height: var(--formsey-label-line-height, var(--lumo-line-height-m));
       -webkit-font-smoothing: antialiased;
+      transition: color 0.12 ease-out;
+    }
+
+    .wrapper:focus-within .label {
+      color: var(--formsey-pimary-color,  #020b2f);
     }
 
     .invalid {
@@ -46,9 +53,16 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       font-family: var(--formey-help-text-font-family, var(--formsey-font-family));
       font-size: var(--formey-help-text-font-size, var(--lumo-font-size-xs));
       line-height: var(--formsey-help-text-line-height, 1.5);
-      color: var(--formsey-help-text-color, #757c98);
+      color: var(--formsey-pimary-color, #757c98);
       margin: var(--formsey-help-text-margin, 2px 0 0 0);
-    }`]
+      opacity: 0.6;
+      transition: opacity 0.12s ease-out;
+    }
+
+    .wrapper:focus-within .help-text {
+      opacity: 1;
+    }
+    `]
   }
 
   protected render(): void | TemplateResult {

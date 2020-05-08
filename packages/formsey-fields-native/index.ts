@@ -24,6 +24,7 @@ export { WeekField } from './WeekField'
 export { YouTubeField } from './YouTubeField'
 export { ListField } from './ListField'
 export { MultipleChoiceField } from './MultipleChoiceField'
+export { CheckboxesField } from './CheckboxesField'
 
 
 registerTheme('native', {
