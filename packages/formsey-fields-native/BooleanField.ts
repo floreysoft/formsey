@@ -9,7 +9,14 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
       height: 10px;
       margin: 0 5px 0 2px;
       transform: scale(1.5);
-    }`]
+    }
+
+    label {
+      padding: 8px 0;
+      height: 34px;
+      box-sizing: border-box;
+    }
+    `]
   }
 
   @property({ type: Boolean })
