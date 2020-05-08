@@ -36,29 +36,30 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       border-radius: var(--formsey-invalid-border-radius, var(--lumo-border-radius-m, 0.2em));
     }
 
-    .error-text {
-      color: var(--formsey-error-text-color, var(--lumo-error-text-color, #ff0000));
-      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
-      font-size: var(--formsey-error-font-size, var(--lumo-font-size-s));
-      line-height: var(--formsey-error-line-height, var(--lumo-line-height-s));
-    }
-
-    .required {
-      margin: var(--formsey-required-margin, 0 0 0 4px);
-      font-family: var(--formey-required-font-family, var(--formsey-font-family));
-      font-size: var(--formey-required-font-size, 9px);
-      vertical-align: top;
-      line-height: var(--formsey-required-line-height, 1.75);
-      color: var(--formsey-required-color, var(--lumo-error-text-color));
-    }
-    .help-text {
+    .error-text, .help-text {
       font-family: var(--formey-help-text-font-family, var(--formsey-font-family));
       font-size: var(--formey-help-text-font-size, 12px);
       line-height: var(--formsey-help-text-line-height, 1.5);
-      color: var(--formsey-help-text-color, #757c98);
       margin: var(--formsey-help-text-margin, 2px 0 0 0);
+    }
+
+    .error-text {
+      color: var(--formsey-error-text-color, var(--lumo-error-text-color, #ff0000));
+    }
+
+    .help-text {
+      color: var(--formsey-help-text-color, #757c98);
       opacity: 0.6;
       transition: opacity 0.12s ease-out;
+    }
+
+    .required {
+      color: var(--formsey-required-color, var(--lumo-error-text-color));
+      margin: var(--formsey-required-margin, 0 0 0 4px);
+      font-family: var(--formey-required-font-family, var(--formsey-font-family));
+      font-size: var(--formey-required-font-size, 9px);
+      line-height: var(--formsey-required-line-height, 1.75);
+      vertical-align: top;
     }
 
     .wrapper:focus-within .help-text {
