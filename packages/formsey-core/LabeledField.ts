@@ -15,8 +15,8 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
 
     .label {
       font-family: var(--formsey-label-font-family, var(--formsey-font-family));
-      font-size: var(--formsey-label-font-size, 16px);
-      font-weight: var(--formsey-label-font-weight, 400);
+      font-size: var(--formsey-label-font-size, 14px);
+      font-weight: var(--formsey-label-font-weight, 500);
       color: var(--formsey-label-color, #222b4f);
       line-height: var(--formsey-label-line-height, var(--lumo-line-height-m));
       -webkit-font-smoothing: antialiased;
@@ -51,7 +51,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     }
     .help-text {
       font-family: var(--formey-help-text-font-family, var(--formsey-font-family));
-      font-size: var(--formey-help-text-font-size, var(--lumo-font-size-xs));
+      font-size: var(--formey-help-text-font-size, 12px);
       line-height: var(--formsey-help-text-line-height, 1.5);
       color: var(--formsey-primary-color, #757c98);
       margin: var(--formsey-help-text-margin, 2px 0 0 0);

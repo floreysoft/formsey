@@ -22,9 +22,8 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     return [...super.styles, css`
     floreysoft-ace {
       height: 100px;
-      border-radius: var(--lumo-border-radius);
-      border: 1px solid var(--lumo-contrast-20pct);
-      margin: var(--lumo-space-xs) 0;
+      border-radius: var(--formsey-input-border-radius, 4px);
+      border: 1px solid var(--formsey-input-border-color, #d5d5d5);
       overflow: hidden;
     }`]
   }
