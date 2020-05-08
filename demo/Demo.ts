@@ -139,6 +139,190 @@ export class Demo extends LitElement {
       "gridLarge": "grid-template-columns:1fr"
     }
 
+    private allFields = {
+      "type": "form",
+      "fields": [
+        {
+          "name": "string",
+          "type": "string",
+          "prompt": "Yes",
+          "autocomplete": "off",
+          "maxlength": "5",
+          "label": "String",
+          "helpText": "Ein String"
+        },
+        {
+          "type": "text",
+          "autocomplete": "off",
+          "label": "Text",
+          "name": "text",
+          "helpText": "Long text"
+        },
+        {
+          "type": "email",
+          "autocomplete": "off",
+          "label": "Email",
+          "name": "email",
+          "helpText": "Email field"
+        },
+        {
+          "type": "phone",
+          "autocomplete": "off",
+          "label": "Phone",
+          "name": "phone",
+          "helpText": "Phone field"
+        },
+        {
+          "type": "color",
+          "autocomplete": "off",
+          "label": "Color",
+          "name": "color",
+          "helpText": "Color field"
+        },
+        {
+          "type": "search",
+          "autocomplete": "off",
+          "label": "Search",
+          "name": "search",
+          "helpText": "Search field"
+        },
+        {
+          "type": "url",
+          "autocomplete": "off",
+          "label": "URL",
+          "name": "uRL",
+          "helpText": "Url Field"
+        },
+        {
+          "type": "password",
+          "autocomplete": "off",
+          "label": "Password",
+          "name": "password",
+          "helpText": "Password field"
+        },
+        {
+          "type": "number",
+          "label": "Number",
+          "name": "number",
+          "helpText": "Number field"
+        },
+        {
+          "type": "richText",
+          "label": "Rich text",
+          "name": "richText"
+        },
+        {
+          "type": "sourceCode",
+          "label": "Source code",
+          "name": "sourceCode",
+          "helpText": "JavaScript editor",
+          "mode": "javascript",
+          "theme": "tomorrow",
+          "gutter": true
+        },
+        {
+          "type": "date",
+          "label": "Date",
+          "name": "date",
+          "helpText": "Date field"
+        },
+        {
+          "type": "time",
+          "label": "Time",
+          "name": "time",
+          "helpText": "Time field"
+        },
+        {
+          "type": "datetime",
+          "label": "Date and Time",
+          "name": "dateAndTime",
+          "helpText": "Date and time field"
+        },
+        {
+          "type": "week",
+          "label": "Week",
+          "name": "week",
+          "helpText": "Week field"
+        },
+        {
+          "type": "month",
+          "label": "Month",
+          "name": "month",
+          "helpText": "Month field"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "list",
+          "label": "Listbox",
+          "name": "listbox",
+          "helpText": "List field",
+          "options": [
+            {
+              "label": "Option",
+              "value": "value"
+            },
+            {
+              "label": "Option2",
+              "value": "value2"
+            },
+            {
+              "label": "Option3",
+              "value": "value3"
+            }
+          ]
+        },
+        {
+          "type": "multipleChoice",
+          "label": "Multiple Choice",
+          "name": "multipleChoice",
+          "helpText": "Multiple Choice field",
+          "options": [
+            {
+              "label": "Option",
+              "value": "value"
+            },
+            {
+              "label": "Option2",
+              "value": "value2"
+            },
+            {
+              "label": "Option3",
+              "value": "value3"
+            }
+          ],
+          "other": true
+        },
+        {
+          "type": "checkboxes",
+          "label": "Checkboxes",
+          "name": "checkboxes",
+          "helpText": "Checkboxes field",
+          "options": [
+            {
+              "label": "Option",
+              "value": "value"
+            },
+            {
+              "label": "Option2",
+              "value": "value2"
+            },
+            {
+              "label": "Option3",
+              "value": "value3"
+            }
+          ],
+          "other": true
+        },
+        {
+          "type": "upload",
+          "label": "Upload",
+          "name": "upload"
+        }
+      ]
+    }
+
     private simpleDemo = {
       "fields": [
         {
@@ -297,7 +481,7 @@ export class Demo extends LitElement {
         <fs-demo-section title="Form" npm="@formsey/core" github="https://github.com/floreysoft/floreysoft-components/tree/master/packages/formsey-core" minified="" gzipped="">
         <p>Formsey</p>
         <form id="realForm" method="POST">
-          <formsey-form id="demoForm" name="muskelmann" theme="native" .definition=${this.simpleDemo} @change=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
+          <formsey-form id="demoForm" name="muskelmann" theme="native" .definition=${this.allFields} @change=${this.valueChanged} @invalid=${this.invalid}></formsey-form>
           <input type="submit" value="Send Request">
           <input type="reset" value="Reset">
         </form>

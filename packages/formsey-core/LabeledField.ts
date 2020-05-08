@@ -45,8 +45,9 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     .help-text {
       font-family: var(--formey-help-text-font-family, var(--formsey-font-family));
       font-size: var(--formey-help-text-font-size, var(--lumo-font-size-xs));
-      line-height: var(--formsey-help-text-line-height, var(--lumo-line-height-xs));
+      line-height: var(--formsey-help-text-line-height, 1.5);
       color: var(--formsey-help-text-color, #757c98);
+      margin: var(--formsey-help-text-margin, 2px 0 0 0);
     }`]
   }
 

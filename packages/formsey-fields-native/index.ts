@@ -5,6 +5,7 @@ export { ColorField } from './ColorField'
 export { DateField } from './DateField'
 export { DateTimeField } from './DateTimeField'
 export { EmailField } from './EmailField'
+export { URLField } from './URLField'
 export { ImageField } from './ImageField'
 export { MarkupField } from './MarkupField'
 export { MonthField } from './MonthField'
@@ -21,6 +22,9 @@ export { TextField } from './TextField'
 export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 export { YouTubeField } from './YouTubeField'
+export { ListField } from './ListField'
+export { MultipleChoiceField } from './MultipleChoiceField'
+
 
 registerTheme('native', {
   components: {
@@ -31,9 +35,11 @@ registerTheme('native', {
     'phone': 'formsey-phone',
     'color': 'formsey-color',
     'password': 'formsey-password',
+    'url': 'formsey-url',
     'search': 'formsey-search',
     'number': 'formsey-number',
     'date': 'formsey-date',
+    'time': 'formsey-time',
     'datetime': 'formsey-datetime',
     'week': 'formsey-week',
     'month': 'formsey-month',
