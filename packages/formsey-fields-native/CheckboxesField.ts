@@ -11,7 +11,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
 
   static get styles() {
     return [...super.styles, css`
-    :host {
+    .options {
       display: grid;
       grid-template-columns: 1fr;
       grid-gap: 5px;
@@ -56,7 +56,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`${templates}`;
+    return html`<div class="options>${templates}</div>`;
   }
 
   otherChanged(e: ChangeEvent<string>) {

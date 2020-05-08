@@ -27,6 +27,11 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
       outline: none;
       user-select: auto;
       resize: vertical;
+      transition: border 0.12s ease-out;
+    }
+
+    textarea:focus {
+      border: 1px solid var(--formsey-primary-color,  #020b2f);
     }`]
   }
 
