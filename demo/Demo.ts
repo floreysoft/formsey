@@ -3,6 +3,7 @@ import { FieldDefinition, Form, StringFieldDefinition, ChangeEvent } from "@form
 import { InvalidEvent } from "@formsey/core/InvalidEvent";
 import '@formsey/fields-vaadin';
 import '@formsey/fields-native';
+import '@formsey/fields-native-extended';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 
 @customElement("fs-demo-section")
@@ -29,6 +30,9 @@ export class DemoSection extends LitElement {
             }
             svg {
                 vertical-align: text-top;
+            }
+            #demoFormValue {
+              word-break: break-all;
             }
         `]
     }
@@ -219,6 +223,12 @@ export class Demo extends LitElement {
           "mode": "javascript",
           "theme": "tomorrow",
           "gutter": true
+        },
+        {
+          "type": "signature",
+          "label": "Signature",
+          "name": "signature",
+          "helpText": "Signature field"
         },
         {
           "type": "date",
@@ -490,9 +500,9 @@ export class Demo extends LitElement {
         <vaadin-button @click=${this.error}>Error</vaadin-button>
         <vaadin-button @click=${this.value}>Value</vaadin-button>
         <vaadin-button @click=${this.refocus}>Focus</vaadin-button>
-        <pre id="demoFormValidation"></pre>
-        <pre id="demoFormPath"></pre>
-        <pre id="demoFormValue"></pre>
+        <div id="demoFormValidation"></div>
+        <div id="demoFormPath"></div>
+        <div id="demoFormValue"></div>
         <fs-dialog id="formDialog" header="Enter form" buttons='[{ "label" : "Submit", "theme" : "primary"}, { "label" : "Cancel", "theme" : "secondary"}]'>
         </fs-dialog>
         <vaadin-button @click=${e => this.openDialog("formDialog")}>Show form</vaadin-button>
@@ -600,7 +610,7 @@ export class Demo extends LitElement {
 
     valueChanged(e: ChangeEvent<Object>) {
         this.demoFormPath.innerText = e.detail.name
-        this.demoFormValue.innerHTML = JSON.stringify(e.detail.value)
+        // this.demoFormValue.innerHTML = JSON.stringify(e.detail.value)
     }
 
     resize() {

@@ -25,7 +25,12 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
       border-radius: var(--formsey-input-border-radius, 4px);
       border: 1px solid var(--formsey-input-border-color, #d5d5d5);
       overflow: hidden;
-    }`]
+    }
+
+    floreysoft-ace:focus-within {
+      border: 1px solid var(--formsey-primary-color,  #020b2f);
+    }
+    `]
   }
 
   protected renderField() {
