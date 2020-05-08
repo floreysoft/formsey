@@ -20,11 +20,13 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       color: var(--formsey-label-color, #222b4f);
       line-height: var(--formsey-label-line-height, var(--lumo-line-height-m));
       -webkit-font-smoothing: antialiased;
-      transition: color 0.12 ease-out;
+      transition: all 0.12s ease-out;
+      opacity: 0.8;
     }
 
     .wrapper:focus-within .label {
       color: var(--formsey-primary-color,  #020b2f);
+      opacity: 1;
     }
 
     .invalid {

@@ -41,7 +41,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
       background: var(--formsey-input-background, #fafafa);
       outline: none;
       user-select: auto;
-      transition: all 0.12s;
+      transition: border 0.12s ease-out;
     }
     input:focus {
       border: 1px solid var(--formsey-primary-color,  #020b2f);
