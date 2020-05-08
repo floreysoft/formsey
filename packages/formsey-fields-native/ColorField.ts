@@ -35,7 +35,7 @@ export class ColorField extends StringField {
       float: left;
     }
     #picker:focus-within {
-      border: 1px solid var(--formsey-input-focus-border-color, #a0a0a0);
+      border: 1px solid var(--formsey-primary-color,  #020b2f);
     }
     `]
   }
