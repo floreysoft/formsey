@@ -15,6 +15,9 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
       display: flex;
       flex-direction: column;
     }
+    label {
+      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
+    }
     input[type="checkbox"] {
       width: 10px;
       height: 10px;
@@ -44,8 +47,9 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
       }
     }
     if (this.definition.other) {
-      let checked = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0).length > 0
-      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}">Other</label>${createField(this.components, { type: "string", "name" : "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, "", null, (e) => this.changed(e),null)}</div>`);
+      let other = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
+      let checked = other.length > 0
+      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}">Other</label>${createField(this.components, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", null, (e) => this.changed(e), null)}</div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
@@ -87,10 +91,10 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     }
   }
 
-  private values() : string[] {
+  private values(): string[] {
     let values = []
     this.checkboxes.forEach(checkbox => {
-      if ( checkbox.checked ) {
+      if (checkbox.checked) {
         values.push(checkbox.value)
       }
     })

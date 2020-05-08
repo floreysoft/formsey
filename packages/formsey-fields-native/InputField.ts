@@ -31,6 +31,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   static get styles() {
     return [...super.styles, css`
     input {
+      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
       width: 100%;
       height: var(--formsey-input-height, 34px);
       box-sizing: border-box;

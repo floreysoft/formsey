@@ -582,37 +582,10 @@ export class Demo extends LitElement {
     }
 
     value(e: Event) {
-        let definition = {
-            name: "verticalForm", type: "form", fields: [
-                {
-                    "default": "valuea",
-                    "disabled": false,
-                    "helpText": "feeeeee",
-                    "name": "Testeeeee",
-                    "options": [
-                      {
-                        "label": "OptionA",
-                        "value": "valuea"
-                      },
-                      {
-                        "label": "OptionV",
-                        "value": "valuev"
-                      },
-                      {
-                        "label": "Option3",
-                        "value": "value3"
-                      },
-                      {
-                        "label": "Option4",
-                        "value": "value4"
-                      }
-                    ],
-                    "label": "testeeeee",
-                    "type": "list"
-                  }
-            ]
+        let value = {
+          "checkboxes" : [ "value2", "Kacke" ]
         }
-        this.demoForm.definition = definition
+        this.demoForm.value = value
     }
 
     invalid(e: InvalidEvent) {
