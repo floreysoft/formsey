@@ -30,6 +30,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
       box-sizing: border-box;
       border-radius: var(--formsey-input-border-radius, 4px);
       border: 1px solid var(--formsey-input-border-color, #d5d5d5);
+      background: var(--formsey-input-background, #fafafa);
     }
 
     .pad:focus-within {

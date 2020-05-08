@@ -12,8 +12,9 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
   static get styles() {
     return [...super.styles, css`
     :host {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 5px;
     }
     label {
       font-family: var(--formsey-label-font-family, var(--formsey-font-family));
