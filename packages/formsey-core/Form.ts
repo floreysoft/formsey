@@ -74,12 +74,6 @@ export class Form extends Field<FieldDefinition, Object> {
     return
   }
 
-  updated() {
-    this.updateComplete.then(() => {
-      this.resize()
-    })
-  }
-
   public validate(report: boolean) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
     if (report) {

@@ -5,8 +5,6 @@ import SignaturePad from 'signature_pad';
 
 @customElement("formsey-signature")
 export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {
-  private readonly ICON_DELETE = html`<svg viewBox="0 0 32 32"><title>Delete</title><path d="M20 4v-4h-8v4h-8v4h24v-4zM24 10v16h-4v-16h-2v16h-4v-16h-2v16h-4v-16h-2v17c0 2 1 3 3 3h14c2 0 3-1 3-3v-17h-2z"></path></svg>`
-
   @property({ type: String })
   value: string;
 
@@ -29,8 +27,8 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
       height: 150px;
       box-sizing: border-box;
       border-radius: var(--formsey-input-border-radius, 4px);
-      border: 1px solid var(--formsey-input-border-color, #d5d5d5);
-      background: var(--formsey-input-background, #fafafa);
+      background: var(--formsey-input-background, #99999920);
+      border: var(--formsey-input-border, 1px solid #99999920);
     }
 
     .pad:focus-within {
@@ -68,31 +66,26 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
       this.signaturePad = new SignaturePad(this.canvas);
       this.signaturePad.on();
       this.signaturePad.onEnd = (event: MouseEvent | Touch) => this.onStrokeEnd(event);
-      this.updateComplete.then(() => this.resizeCanvas())
+      this.updateComplete.then(() => this.resize())
     }
   }
 
-  resizeCanvas() {
+  resize() {
     var ratio = Math.max(window.devicePixelRatio || 1, 1);
     this.canvas.width = this.canvas.offsetWidth * ratio;
     this.canvas.height = this.canvas.offsetHeight * ratio;
     this.canvas.getContext("2d").scale(ratio, ratio);
-    // this.signaturePad.clear();
   }
 
   protected clear(e: Event) {
-    this.resizeCanvas()
+    this.resize()
     this.signaturePad.clear();
     this.value = "";
-    if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 
   protected onStrokeEnd(e: MouseEvent | Touch) {
     this.value = this.signaturePad.toDataURL();
-    if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }
 }

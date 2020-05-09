@@ -31,15 +31,15 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   static get styles() {
     return [...super.styles, css`
     input {
-      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
-      width: 100%;
-      height: var(--formsey-input-height, 34px);
-      box-sizing: border-box;
-      border-radius: var(--formsey-input-border-radius, 4px);
-      border: 1px solid var(--formsey-input-border-color, #d5d5d5);
-      padding: var(--formsey-input-padding, 8px);
-      background: var(--formsey-input-background, #fafafa);
       outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
+      height: var(--formsey-input-height, 34px);
+      border-radius: var(--formsey-input-border-radius, 4px);
+      padding: var(--formsey-input-padding, 8px);
+      background: var(--formsey-input-background, #99999920);
+      border: var(--formsey-input-border, 1px solid #99999920);
       user-select: auto;
       transition: border 0.12s ease-out;
     }

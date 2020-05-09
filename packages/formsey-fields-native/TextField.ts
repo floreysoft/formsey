@@ -20,8 +20,8 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
       width: 100%;
       box-sizing: border-box;
       border-radius: var(--formsey-input-border-radius, 4px);
-      border: 1px solid var(--formsey-input-border-color, #d5d5d5);
-      background: var(--formsey-input-background, #fafafa);
+      background: var(--formsey-input-background, #99999920);
+      border: var(--formsey-input-border, 1px solid #99999920);
       padding: var(--formsey-input-padding, 8px);
       font-family: var(--formsey-font-family, -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol");
       outline: none;

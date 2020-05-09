@@ -14,7 +14,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     .options {
       display: grid;
       grid-template-columns: 1fr;
-      grid-gap: 5px;
+      grid-gap: 4px;
     }
     label {
       font-family: var(--formsey-label-font-family, var(--formsey-font-family));
@@ -27,7 +27,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     }
     .other {
       display: grid;
-      grid-template-columns: max-content minmax(10em,20em);
+      grid-template-columns: max-content 1fr;
       grid-gap: 2em;
       align-items: center;
     }`]
@@ -52,7 +52,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<div class="options>${templates}</div>`;
+    return html`<div class="options">${templates}</div>`;
   }
 
   otherChanged(e: ChangeEvent<string>) {

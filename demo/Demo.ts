@@ -609,7 +609,7 @@ export class Demo extends LitElement {
     }
 
     valueChanged(e: ChangeEvent<Object>) {
-        this.demoFormPath.innerText = e.detail.name
+      //  this.demoFormPath.innerText = e.detail.name
         // this.demoFormValue.innerHTML = JSON.stringify(e.detail.value)
     }
 

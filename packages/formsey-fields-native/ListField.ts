@@ -16,9 +16,9 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
       height: var(--formsey-input-height, 34px);
       box-sizing: border-box;
       border-radius: var(--formsey-input-border-radius, 4px);
-      border: 1px solid var(--formsey-input-border-color, #d5d5d5);
       padding: var(--formsey-input-padding, 8px);
-      background: var(--formsey-input-background, #fafafa);
+      background: var(--formsey-input-background, #99999920);
+      border: var(--formsey-input-border, 1px solid #99999920);
       outline: none;
       user-select: auto;
       transition: all 0.12s;
