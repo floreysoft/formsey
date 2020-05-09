@@ -19,6 +19,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       font-weight: var(--formsey-label-font-weight, 500);
       color: var(--formsey-label-color, #222b4f);
       line-height: var(--formsey-label-line-height, var(--lumo-line-height-m));
+      padding: var(--formsey-label-padding, 4px 0 0);
       -webkit-font-smoothing: antialiased;
       transition: all 0.12s ease-out;
       opacity: 0.8;
