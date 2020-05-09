@@ -13,8 +13,9 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
 
     label {
       font-family: var(--formsey-label-font-family, var(--formsey-font-family));
+      font-size: var(--formsey-label-font-size, 14px);
       padding: 8px 0;
-      height: 34px;
+      min-height: 34px;
       box-sizing: border-box;
     }
     `]
