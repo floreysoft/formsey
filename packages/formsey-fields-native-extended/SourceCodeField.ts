@@ -3,6 +3,7 @@ import { Ace } from '@floreysoft/ace';
 import { InputFieldDefinition, LabeledField, ChangeEvent } from '@formsey/core';
 import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { INPUT_STYLE } from '@formsey/fields-native/styles';
 
 export interface SourceCodeFieldDefinition extends InputFieldDefinition {
   theme? : string
@@ -19,22 +20,16 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   editor : Ace
 
   static get styles() {
-    return [...super.styles, css`
-    floreysoft-ace {
+    return [...super.styles, INPUT_STYLE, css`
+    .input {
       height: 150px;
-      border-radius: var(--formsey-input-border-radius, 4px);
-      border: 1px solid var(--formsey-input-border-color, #d5d5d5);
+      padding: 0;
       overflow: hidden;
-    }
-
-    floreysoft-ace:focus-within {
-      border: 1px solid var(--formsey-primary-color,  #020b2f);
-    }
-    `]
+    }`]
   }
 
   protected renderField() {
-    return html`<floreysoft-ace .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" .theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @changed=${this.changed}></floreysoft-ace>`;
+    return html`<floreysoft-ace class="input" .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" .theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @changed=${this.changed}></floreysoft-ace>`;
   }
 
   protected changed(e: any) {

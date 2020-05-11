@@ -23,9 +23,10 @@ export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
 export { YouTubeField } from './YouTubeField'
 export { ListField } from './ListField'
+export { UploadField } from './UploadField'
 export { MultipleChoiceField } from './MultipleChoiceField'
 export { CheckboxesField } from './CheckboxesField'
-
+export { NestedFormField } from './NestedFormField'
 
 registerTheme('native', {
   components: {
@@ -62,6 +63,6 @@ registerTheme('native', {
     'markup': 'formsey-markup',
     'image': 'formsey-image',
     'youtube': 'formsey-youtube',
-    'upload': 'formsey-upload-vaadin'
+    'upload': 'formsey-upload'
   }
 })

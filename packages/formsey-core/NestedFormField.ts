@@ -1,23 +1,8 @@
-import { ChangeEvent, createField, Field, NestedFormDefinition, register } from '@formsey/core';
+import { ChangeEvent, createField, Field, NestedFormDefinition } from '@formsey/core';
 import { InvalidEvent } from './InvalidEvent';
-import { css } from 'lit-element';
 
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
   value: Object = {}
-
-  static get styles() {
-    return [...super.styles, css`
-    ::part(title) {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 18px);
-    }
-
-    ::part(description) {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 16px);
-    }
-    `]
-  }
 
   render() {
     if (!this.value) {
@@ -61,4 +46,3 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     this.dispatchEvent(new ChangeEvent(e.detail.name, this.value));
   }
 }
-register('formsey-nested-form', NestedFormField)

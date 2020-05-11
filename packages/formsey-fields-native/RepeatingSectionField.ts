@@ -1,6 +1,7 @@
 import { createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition, ChangeEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { css, html, property, queryAll, TemplateResult } from 'lit-element';
+import { NESTED_FORM_STYLE } from './styles';
 
 export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
@@ -10,7 +11,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   protected _fields: HTMLElement[]
 
   static get styles() {
-    return [...super.styles, css`
+    return [...super.styles, NESTED_FORM_STYLE, css`
     .form {
       position: relative;
       margin: 0.5em 0 0 0.8em;
@@ -24,27 +25,16 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
       border-left: 2px solid var(--lumo-contrast-20pct);
     }
 
-    .form ::part(title) {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 18px);
-    }
-
-    .form ::part(description) {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 16px);
-    }
-
     .fs-remove-wrapper {
       position: absolute;
       line-height: 0;
       padding: 0.4em 0;
       top: calc(50% - 1em);
-      left: -0.9em;
-      background-color: var(--lumo-base-color);
+      left: -0.85em;
     }
 
     .fs-add, .fs-remove {
-      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
+      font-size: var(--formsey-repeating-section-icon-size, 12px);
       width: 1em;
       height: 1em;
       padding: 0.2em;

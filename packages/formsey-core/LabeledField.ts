@@ -41,7 +41,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       font-family: var(--formey-help-text-font-family, var(--formsey-font-family));
       font-size: var(--formey-help-text-font-size, 12px);
       line-height: var(--formsey-help-text-line-height, 1.5);
-      margin: var(--formsey-help-text-margin, 2px 0 0 0);
+      margin: var(--formsey-help-text-margin, 1px 0 0 0);
     }
 
     .error-text {

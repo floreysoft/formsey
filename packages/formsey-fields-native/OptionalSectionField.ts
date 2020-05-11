@@ -1,6 +1,7 @@
 import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ChangeEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html, property, query } from 'lit-element';
+import { NESTED_FORM_STYLE } from './styles';
 
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, Object> {
   @property({ converter: Object })
@@ -10,6 +11,10 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   form: HTMLElement
 
   private untouched: boolean = true
+
+  static get styles() {
+    return [...super.styles, NESTED_FORM_STYLE]
+  }
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {

@@ -2,6 +2,7 @@ import { ChangeEvent, LabeledField, SignatureFieldDefinition } from '@formsey/co
 import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import SignaturePad from 'signature_pad';
+import { INPUT_STYLE } from '@formsey/fields-native/styles';
 
 @customElement("formsey-signature")
 export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {
@@ -20,18 +21,13 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   canvas: HTMLCanvasElement
 
   static get styles() {
-    return [...super.styles, css`
-    .pad {
+    return [...super.styles, INPUT_STYLE, css`
+    .input {
       position: relative;
-      width: 100%;
       height: 150px;
-      box-sizing: border-box;
-      border-radius: var(--formsey-input-border-radius, 4px);
-      background: var(--formsey-input-background, #99999920);
-      border: var(--formsey-input-border, 1px solid #99999920);
     }
 
-    .pad:focus-within {
+    .input:focus-within {
       border: 1px solid var(--formsey-primary-color,  #020b2f);
     }
 
@@ -58,7 +54,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   }
 
   renderField() {
-    return html`<div class="pad" width="${ifDefined(this.definition.width)}px" height="${ifDefined(this.definition.height)}px"><canvas id="signature-pad" tabindex="0"></canvas><svg viewBox="0 0 32 32" @click="${this.clear}"><title>Clear</title><path d="M20 4v-4h-8v4h-8v4h24v-4zM24 10v16h-4v-16h-2v16h-4v-16h-2v16h-4v-16h-2v17c0 2 1 3 3 3h14c2 0 3-1 3-3v-17h-2z"></path></svg></div>`;
+    return html`<div class="input" width="${ifDefined(this.definition.width)}px" height="${ifDefined(this.definition.height)}px"><canvas id="signature-pad" tabindex="0"></canvas><svg viewBox="0 0 32 32" @click="${this.clear}"><title>Clear</title><path d="M20 4v-4h-8v4h-8v4h24v-4zM24 10v16h-4v-16h-2v16h-4v-16h-2v16h-4v-16h-2v17c0 2 1 3 3 3h14c2 0 3-1 3-3v-17h-2z"></path></svg></div>`;
   }
 
   firstUpdated() {
@@ -71,10 +67,12 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   }
 
   resize() {
-    var ratio = Math.max(window.devicePixelRatio || 1, 1);
-    this.canvas.width = this.canvas.offsetWidth * ratio;
-    this.canvas.height = this.canvas.offsetHeight * ratio;
-    this.canvas.getContext("2d").scale(ratio, ratio);
+    if (this.canvas) {
+      var ratio = Math.max(window.devicePixelRatio || 1, 1);
+      this.canvas.width = this.canvas.offsetWidth * ratio;
+      this.canvas.height = this.canvas.offsetHeight * ratio;
+      this.canvas.getContext("2d").scale(ratio, ratio);
+    }
   }
 
   protected clear(e: Event) {

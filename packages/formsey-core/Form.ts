@@ -70,6 +70,10 @@ export class Form extends Field<FieldDefinition, Object> {
     return createField(this.components, this.definition, value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
   }
 
+  firstUpdated() {
+    this.updateComplete.then(() => { this.resize() })
+  }
+
   renderHeader() {
     return
   }
