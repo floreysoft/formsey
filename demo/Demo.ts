@@ -86,188 +86,120 @@ export class Demo extends LitElement {
         window.removeEventListener("resize", this.resizeHandler)
         super.disconnectedCallback()
     }
-
-    private layoutDemo = {
-      "helpText": "Main Subtitle",
-      "fields": [
-        {
-          "type": "nestedLayout",
-          "name" : "test",
-          "form": {
-            "helpText": "Enter thename",
-            "fields": [
-              {
-                "helpText": "Enter your name",
-                "name": "givenName",
-                "type": "string",
-                "autocomplete": "off",
-                "label": "Given name"
-              },
-              {
-                "name": "familyName",
-                "type": "string",
-                "autocomplete": "off",
-                "label": "Family name"
-              }
-            ],
-            "type": "form",
-            "layout": "padding:0px;background-color:white;border-bottom:none;border-color:#d6d6d6",
-            "label": "Name",
-            "gridMedium": "grid-template-columns:1fr 1fr",
-            "gridLarge": "grid-template-columns:1fr 1fr"
-          }
-        },
-        {
-          "type": "nestedLayout",
-          "form": {
-            "helpText": "Enter the address",
-            "fields": [
-              {
-                "name": "address",
-                "type": "string",
-                "required": true,
-                "autocomplete": "off",
-                "label": "Address"
-              }
-            ],
-            "type": "form",
-            "layout": "padding:0px;background-color:#a0f0a050;border-bottom:undefined;border-color:none",
-            "label": "Address",
-            "gridLarge": "grid-template-columns:1fr"
-          }
-        }
-      ],
-      "type": "form",
-      "layout": "padding:30px;background-color:white;border-bottom:none;border-color:none",
-      "label": "Main title",
-      "gridLarge": "grid-template-columns:1fr"
-    }
-
     private allFields = {
-      "type": "form",
+      "helpText": "Main Description",
       "fields": [
         {
+          "helpText": "Ein String",
           "name": "string",
           "type": "string",
           "prompt": "Yes",
           "autocomplete": "off",
-          "maxlength": "5",
           "label": "String",
-          "helpText": "Ein String"
+          "maxlength": "5"
         },
         {
-          "type": "text",
-          "autocomplete": "off",
           "label": "Text",
+          "autocomplete": "off",
+          "disabled": false,
+          "helpText": "Long text",
           "name": "text",
-          "helpText": "Long text"
+          "type": "text",
+          "autofocus": false,
+          "minlength": "3"
         },
         {
+          "helpText": "Email field",
+          "name": "email",
           "type": "email",
           "autocomplete": "off",
-          "label": "Email",
-          "name": "email",
-          "helpText": "Email field"
+          "label": "Email"
         },
         {
-          "type": "phone",
           "autocomplete": "off",
           "label": "Phone",
+          "helpText": "Phone field",
           "name": "phone",
-          "helpText": "Phone field"
+          "type": "phone"
         },
         {
           "type": "color",
-          "autocomplete": "off",
+          "autocomplete": "on",
           "label": "Color",
-          "name": "color",
-          "helpText": "Color field"
+          "helpText": "Color field",
+          "name": "ZU"
         },
         {
           "type": "search",
           "autocomplete": "off",
           "label": "Search",
-          "name": "search",
-          "helpText": "Search field"
+          "helpText": "Search field",
+          "name": "search"
         },
         {
+          "helpText": "Url Field",
+          "name": "uRL",
           "type": "url",
           "autocomplete": "off",
-          "label": "URL",
-          "name": "uRL",
-          "helpText": "Url Field"
+          "label": "URL"
         },
         {
-          "type": "password",
           "autocomplete": "off",
           "label": "Password",
+          "helpText": "Password field",
           "name": "password",
-          "helpText": "Password field"
+          "required": true,
+          "type": "password"
         },
         {
-          "type": "number",
           "label": "Number",
+          "helpText": "Number field",
           "name": "number",
-          "helpText": "Number field"
+          "type": "number"
         },
         {
-          "type": "richText",
-          "label": "Rich text",
-          "name": "richText"
-        },
-        {
-          "type": "sourceCode",
-          "label": "Source code",
-          "name": "sourceCode",
-          "helpText": "JavaScript editor",
-          "mode": "javascript",
-          "theme": "tomorrow",
-          "gutter": true
-        },
-        {
-          "type": "signature",
-          "label": "Signature",
-          "name": "signature",
-          "helpText": "Signature field"
-        },
-        {
-          "type": "date",
-          "label": "Date",
+          "helpText": "Date field",
           "name": "date",
-          "helpText": "Date field"
+          "type": "date",
+          "label": "Date"
         },
         {
-          "type": "time",
-          "label": "Time",
+          "helpText": "Time field",
           "name": "time",
-          "helpText": "Time field"
+          "type": "time",
+          "label": "Time"
         },
         {
-          "type": "datetime",
+          "min": "2020-05-14",
           "label": "Date and Time",
+          "disabled": false,
+          "helpText": "Date and time field",
+          "step": "2",
           "name": "dateAndTime",
-          "helpText": "Date and time field"
+          "type": "datetime"
         },
         {
-          "type": "week",
           "label": "Week",
+          "helpText": "Week field",
           "name": "week",
-          "helpText": "Week field"
+          "type": "week"
         },
         {
           "type": "month",
           "label": "Month",
-          "name": "month",
-          "helpText": "Month field"
+          "helpText": "Month field",
+          "name": "month"
         },
         {
-          "type": "boolean"
+          "label": "Checkbox",
+          "helpText": "Some help on the checkbox",
+          "name": "checkbox",
+          "type": "boolean",
+          "indeterminate": false
         },
         {
-          "type": "list",
-          "label": "Listbox",
           "name": "listbox",
-          "helpText": "List field",
+          "type": "list",
           "options": [
             {
               "label": "Option",
@@ -280,211 +212,256 @@ export class Demo extends LitElement {
             {
               "label": "Option3",
               "value": "value3"
+            }
+          ],
+          "label": "Listbox",
+          "helpText": "List field"
+        },
+        {
+          "helpText": "Multiple Choice field",
+          "name": "multipleChoice",
+          "type": "multipleChoice",
+          "other": true,
+          "options": [
+            {
+              "label": "Option",
+              "value": "value"
+            },
+            {
+              "label": "Option2",
+              "value": "value2"
+            },
+            {
+              "label": "Option3",
+              "value": "value3"
+            }
+          ],
+          "label": "Multiple Choice"
+        },
+        {
+          "name": "checkboxes",
+          "type": "checkboxes",
+          "other": true,
+          "options": [
+            {
+              "label": "Option",
+              "value": "value"
+            },
+            {
+              "label": "Option2",
+              "value": "value2"
+            },
+            {
+              "label": "Option3",
+              "value": "value3"
+            }
+          ],
+          "label": "Checkboxes",
+          "helpText": "Checkboxes field"
+        },
+        {
+          "mode": "javascript",
+          "theme": "tomorrow",
+          "label": "Source code",
+          "gutter": true,
+          "helpText": "JavaScript editor",
+          "name": "sourceCode",
+          "type": "sourceCode"
+        },
+        {
+          "name": "signature",
+          "type": "signature",
+          "height": "300px",
+          "width": "400px",
+          "label": "Signature",
+          "helpText": "Enter your signature"
+        },
+        {
+          "name": "upload",
+          "type": "upload",
+          "label": "Upload"
+        },
+        {
+          "type": "nestedLayout",
+          "form": {
+            "type": "form",
+            "layout": "padding:15px;background-color:#d3d3d3;border-bottom:undefined;border-color:none",
+            "label": "Nested layout",
+            "helpText": "Description",
+            "fields": [
+              {
+                "type": "string",
+                "autocomplete": "off",
+                "label": "Nested Name 1",
+                "helpText": "With Help",
+                "name": "nestedName1"
+              },
+              {
+                "autocomplete": "off",
+                "label": "Nested Name 2",
+                "helpText": "With Help 2",
+                "name": "nestedName2",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        {
+          "type": "nestedForm",
+          "form": {
+            "label": "Nested Form",
+            "helpText": "Nested Form Description",
+            "fields": [
+              {
+                "autocomplete": "off",
+                "label": "Nested Form 1",
+                "name": "nestedForm1",
+                "type": "string"
+              }
+            ],
+            "name": "nestedName",
+            "type": "form",
+            "layout": "padding:15px;background-color:undefined;border-bottom:undefined;border-color:undefined"
+          },
+          "name": "nestedName"
+        },
+        {
+          "helpText": "Section subtitle",
+          "name": "sectionTitle",
+          "type": "section",
+          "label": "Section title"
+        },
+        {
+          "name": "markup",
+          "type": "markup",
+          "default": "<p>Huhu</p>",
+          "label": "Markup",
+          "helpText": "Markup Help"
+        },
+        {
+          "width": "100%",
+          "label": "Image",
+          "url": "https://images.unsplash.com/photo-1533907650686-70576141c030?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
+          "helpText": "Help",
+          "name": "image",
+          "align": "left",
+          "type": "image"
+        },
+        {
+          "min": "0",
+          "label": "Repeating",
+          "helpText": "Repeating help",
+          "name": "repeating",
+          "type": "repeatingSection",
+          "form": {
+            "layout": "padding:0px;background-color:undefined;border-bottom:undefined;border-color:undefined",
+            "type": "form",
+            "label": "Some stuff",
+            "helpText": "Inside repeat",
+            "fields": [
+              {
+                "helpText": "Name help",
+                "name": "name",
+                "type": "string",
+                "autocomplete": "off",
+                "label": "Name"
+              },
+              {
+                "helpText": "Age help",
+                "name": "age",
+                "type": "number",
+                "label": "Age"
+              }
+            ],
+            "name": "someStuff"
+          },
+          "max": "5"
+        },
+        {
+          "min": "0",
+          "label": "Small repeating",
+          "helpText": "Repeating help",
+          "name": "repeating",
+          "type": "repeatingSection",
+          "form": {
+            "layout": "padding:0px;background-color:undefined;border-bottom:undefined;border-color:undefined",
+            "type": "form",
+            "fields": [
+              {
+                "helpText": "Name help",
+                "name": "name",
+                "type": "string",
+                "autocomplete": "off",
+                "label": "Name"
+              },
+              {
+                "helpText": "Age help",
+                "name": "age",
+                "type": "number",
+                "label": "Age"
+              }
+            ],
+            "name": "someStuff"
+          },
+          "max": "5"
+        },
+        {
+          "type": "selectableSection",
+          "label": "Selectable section",
+          "helpText": "Some selectable help",
+          "name": "selectableSection",
+          "selections": [
+            {
+              "label": "First sectuion",
+              "value": "section1",
+              "form": {
+                "layout" : "padding:0px",
+                "helpText": "Section description",
+                "fields": [
+                  {
+                    "autocomplete": "off",
+                    "label": "Section A Field",
+                    "name": "sectionafield",
+                    "type": "string"
+                  }
+                ],
+                "type": "form",
+                "label": "Section title"
+              }
             }
           ]
         },
         {
-          "type": "multipleChoice",
-          "label": "Multiple Choice",
-          "name": "multipleChoice",
-          "helpText": "Multiple Choice field",
-          "options": [
-            {
-              "label": "Option",
-              "value": "value"
-            },
-            {
-              "label": "Option2",
-              "value": "value2"
-            },
-            {
-              "label": "Option3",
-              "value": "value3"
-            }
-          ],
-          "other": true
-        },
-        {
-          "type": "checkboxes",
-          "label": "Checkboxes",
-          "name": "checkboxes",
-          "helpText": "Checkboxes field",
-          "options": [
-            {
-              "label": "Option",
-              "value": "value"
-            },
-            {
-              "label": "Option2",
-              "value": "value2"
-            },
-            {
-              "label": "Option3",
-              "value": "value3"
-            }
-          ],
-          "other": true
-        },
-        {
-          "type": "upload",
-          "label": "Upload",
-          "name": "upload"
-        }
-      ]
-    }
-
-    private simpleDemo = {
-      "fields": [
-        {
-          "name": "name",
-          "label": "Name",
-          "helpText": "Enter name",
-          "type": "string",
-          "required": true,
-          "readonly" : true,
-          "default" : "Huhuhuhu"
-        },
-        {
-          "name": "checkboxes",
-          "label": "Checkboxes",
-          "helpText": "Checkboxes help",
-          "other": true,
-          "options": [
-            {
-              "label": "OptionA",
-              "value": "valueA"
-            },
-            {
-              "label": "OptionB",
-              "value": "valueB"
-            },
-            {
-              "label": "OptionC",
-              "value": "valueC"
-            }
-          ],
-          "type": "multipleChoice"
-        },
-        {
-          "label": "Simple section",
-          "type": "section",
-          "helpText": "Just some text in the section"
-        },
-        {
-          "name": "optional",
-          "label": "Optional",
-          "helpText": "Optional help",
-          "required": true,
+          "helpText": "Optional section",
+          "name": "optionalSection",
+          "type": "optionalSection",
           "form": {
+            "label": "Optional Title",
+            "helpText": "Optional description",
             "fields": [
               {
-                "name": "aFieldInAForm",
-                "label": "A field in a form",
-                "autocomplete": "off",
+                "helpText": "Help",
+                "name": "optionalName",
                 "type": "string",
-                "required": true
+                "autocomplete": "off",
+                "label": "Optional name"
               }
             ],
-            "gridLarge": "grid-template-columns:1fr",
-            "name": "optional",
-            "type": "form"
+            "name": "optionalSection",
+            "type": "form",
+            "layout": "padding:0px;background-color:undefined;border-bottom:undefined;border-color:undefined"
           },
-          "type": "optionalSection",
-          "gridLarge": {
-            "fields": [],
-            "gridLarge": "grid-template-columns:1fr",
-            "type": "form"
-          }
-        },
-        {
-          "name": "selection",
-          "label" : "Selection section",
-          "helpText" : "mit hilfe",
-          "selections": [
-            {
-              "form": {
-                "fields": [
-                  {
-                    "autocomplete": "off",
-                    "name": "inA",
-                    "label": "In A",
-                    "type": "string"
-                  }
-                ],
-                "gridLarge": "grid-template-columns:1fr",
-                "type": "form"
-              },
-              "gridLarge": {
-                "fields": [],
-                "gridLarge": "grid-template-columns:1fr",
-                "type": "form"
-              },
-              "label": "A",
-              "value": "a"
-            },
-            {
-              "label": "B",
-              "value": "b",
-              "form": {
-                "fields": [
-                  {
-                    "name": "inB",
-                    "label": "In B",
-                    "autocomplete": "off",
-                    "type": "string"
-                  }
-                ],
-                "gridLarge": "grid-template-columns:1fr",
-                "type": "form"
-              },
-              "gridLarge": {
-                "fields": [],
-                "gridLarge": "grid-template-columns:1fr",
-                "type": "form"
-              }
-            }
-          ],
-          "type": "selectableSection"
-        },
-        {
-          "name": "email",
-          "label": "Email",
-          "helpText": "Email help dsddd",
-          "autofocus" : true,
-          "autocomplete": "off",
-          "type": "email",
-          "required": true
-        },
-        {
-          "name": "color",
-          "label": "Color",
-          "helpText": "Pick color",
-          "type": "color"
-        },
-        {
-          "name": "date",
-          "label": "Date",
-          "helpText": "Date help",
-          "autocomplete": "off",
-          "type": "date",
-          "required": true
-        },
-        {
-          "name": "number",
-          "label": "Number",
-          "helpText": "Number help",
-          "min": 5,
-          "max": 15,
-          "step": 0.5,
-          "type": "number",
-          "required": true
+          "default": false,
+          "label": "Optional section"
         }
       ],
-        "gridLarge": "grid-template-columns:1fr",
-        "gridMedium": "grid-template-columns:1fr",
-        "layout": "padding:0px;",
-        "type": "form"
-      }
+      "layout": "padding:0px;background-color:none;border-bottom:undefined;border-color:none",
+      "type": "form",
+      "gridMedium": "grid-template-columns:1fr 1fr;grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;grid-auto-flow: column",
+      "gridLarge": "grid-template-columns:1fr 1fr 1fr",
+      "gridSmall": "grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;grid-template-areas:'_optionalSection _optionalSection _optionalSection _optionalSection _optionalSection _optionalSection _optionalSection _optionalSection _optionalSection _optionalSection _optionalSection _optionalSection' '_string _string _string _string _string _string _text _text _text _text _text _text' '_email _email _email _email _email _email _phone _phone _phone _phone _phone _phone' '_ZU _ZU _ZU _search _search _search _uRL _uRL _uRL _password _password _password' '_number _number _number _date _date _date _time _time _time _dateAndTime _dateAndTime _dateAndTime' '_week _week _week _month _month _month _checkbox _checkbox _checkbox _listbox _listbox _listbox' '_multipleChoice _multipleChoice _multipleChoice _multipleChoice _multipleChoice _multipleChoice _checkboxes _checkboxes _checkboxes _checkboxes _checkboxes _checkboxes' '_sourceCode _sourceCode _sourceCode _sourceCode _sourceCode _sourceCode _signature _signature _signature _signature _signature _signature' '_nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0 _nestedLayout0' '_sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle _sectionTitle' '_markup _markup _markup _markup _markup _markup _markup _markup _markup _markup _markup _markup' '_image _image _image _image _image _image _image _image _image _image _image _image' '_repeating _repeating _repeating _repeating _repeating _repeating _repeating _repeating _repeating _repeating _repeating _repeating' '_selectableSection _selectableSection _selectableSection _selectableSection _selectableSection _selectableSection _selectableSection _selectableSection _selectableSection _selectableSection _selectableSection _selectableSection' '_upload _upload _upload _upload _upload _upload _nestedName _nestedName _nestedName _nestedName _nestedName _nestedName';grid-gap:5px 5px",
+      "label": "Main Title"
+    }
 
     render() {
         return html`

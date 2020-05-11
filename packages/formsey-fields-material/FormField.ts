@@ -9,12 +9,13 @@ export class FormField extends CoreFormField {
       }
 
       .title {
-        font-size: 24px;
+        font-size: var(--formsey-title-font-size, 24px);
+        font-size: var(--formsey-title-color, var(--mdc-theme-primary, #757c98));
       }
 
       .description {
-        font-size: 18px;
-        color: #757c98;
+        font-size: var(--formsey-description-font-size, 18px);
+        font-size: var(--formsey-description-color, var(--mdc-theme-secondary, #757c98));
       }
       `];
   }

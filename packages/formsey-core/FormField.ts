@@ -50,7 +50,7 @@ export class FormField extends Field<FormDefinition, Object> {
         font-size: var(--formsey-title-font-size, 24px);
         font-family: var(--formsey-title-font-family, var(--formsey-font-family));
         font-weight: var(--formsey-title-font-weight, 400);
-        line-height: var(--formsey-title-line-height, var(--lumo-line-height-m));
+        line-height: var(--formsey-title-line-height, 1.5);
         color: var(--formsey-title-color, #222b4f);
         margin: var(--formsey-title-margin, 12px 0 4px 0);
       }
@@ -58,7 +58,7 @@ export class FormField extends Field<FormDefinition, Object> {
         font-size: var(--formsey-description-font-size, 18px);
         font-family: var(--formsey-description-font-family, var(--formsey-font-family));
         font-weight: var(--formsey-description-font-weight, 400);
-        line-height: var(--formsey-description-line-height, var(--lumo-line-height-m));
+        line-height: var(--formsey-description-line-height, 1.5));
         color: var(--formsey-description-color, #757c98);
         margin: var(--formsey-description-margin, 0 0 10px 0);
       }
@@ -127,10 +127,10 @@ export class FormField extends Field<FormDefinition, Object> {
     }
     let header : TemplateResult[] = []
     if ( this.definition.label ) {
-      header.push(html`<div class="title">${this.definition.label}</div>`)
+      header.push(html`<div part="title" class="title">${this.definition.label}</div>`)
     }
     if ( this.definition.helpText ) {
-      header.push(html`<div class="description">${this.definition.helpText}</div>`)
+      header.push(html`<div part="description" class="description">${this.definition.helpText}</div>`)
     }
     return html`<div class="section" style="${ifDefined(layout)}">${header}<div class="grid" style="${grid}">${templates}</div><div>`
   }

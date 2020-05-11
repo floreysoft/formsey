@@ -1,4 +1,4 @@
-import { createField, Field, ListFieldDefinition, register, SelectableSectionFieldDefinition, ChangeEvent } from '@formsey/core';
+import { ChangeEvent, createField, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition } from '@formsey/core';
 import { css, html, property } from 'lit-element';
 
 export class SelectableSectionValue {
@@ -6,14 +6,22 @@ export class SelectableSectionValue {
   value: Object = {}
 }
 
-export class SelectableSectionField extends Field<SelectableSectionFieldDefinition, SelectableSectionValue> {
+export class SelectableSectionField extends LabeledField<SelectableSectionFieldDefinition, SelectableSectionValue> {
   @property({ converter: Object })
   value: SelectableSectionValue;
 
   static get styles() {
-    return [...super.styles, css`.fs-nested-form {
-      margin-top: 5px;
-    }`]
+    return [...super.styles, css`
+    .form ::part(title) {
+      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
+      font-size: var(--formsey-selectable-title-font-size, 18px);
+    }
+
+    .form ::part(description) {
+      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
+      font-size: var(--formsey-selectable-title-font-size, 16px);
+    }
+    `]
   }
 
   renderField() {
@@ -30,7 +38,7 @@ export class SelectableSectionField extends Field<SelectableSectionFieldDefiniti
       let value = selection.label ? selection.label : selection.value;
       let errors = {}
       return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ChangeEvent<string>) => this.selectionChanged(event), null)}
-      <div class="fs-nested-form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
+      <div class="form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
     }
     return undefined
   }

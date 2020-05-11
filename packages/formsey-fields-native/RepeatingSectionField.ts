@@ -6,22 +6,32 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   @property({ converter: Object })
   value: Object[] = [];
 
-  @queryAll(".fs-nested-form")
+  @queryAll(".form")
   protected _fields: HTMLElement[]
 
   static get styles() {
     return [...super.styles, css`
-    .fs-nested-form {
+    .form {
       position: relative;
       margin: 0.5em 0 0 0.8em;
-      padding: 10px 0 5px 15px;
+      padding: 0 0 5px 15px;
       border-left: 2px solid var(--lumo-contrast-10pct);
       transition: transform 0.2s cubic-bezier(.12, .32, .54, 2), opacity 0.15s;
-      font-size: var(--formsey-repeating-section-icon-size, var(--lumo-font-size-s, 12px));
+      font-size: var(--formsey-repeating-section-icon-size, 12px);
     }
 
-    .fs-nested-form:hover {
+    .form:hover {
       border-left: 2px solid var(--lumo-contrast-20pct);
+    }
+
+    .form ::part(title) {
+      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
+      font-size: var(--formsey-selectable-title-font-size, 18px);
+    }
+
+    .form ::part(description) {
+      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
+      font-size: var(--formsey-selectable-title-font-size, 16px);
     }
 
     .fs-remove-wrapper {
@@ -29,7 +39,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
       line-height: 0;
       padding: 0.4em 0;
       top: calc(50% - 1em);
-      left: -0.8em;
+      left: -0.9em;
       background-color: var(--lumo-base-color);
     }
 
@@ -40,21 +50,21 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
       padding: 0.2em;
       stroke-width: 0;
       fill: var(--formsey-repeating-section-icon-fill-color, var(--lumo-primary-contrast-color));
-      border-radius: var(--lumo-border-radius);
+      border-radius: 50%;
       background-color: var(--formsey-repeating-section-icon-background-color, var(--lumo-contrast-30pct));
-      transition: transform 0.2s cubic-bezier(.12, .32, .54, 2), background-color 0.15s;
+      transition: background-color 0.12s ease-out;
     }
 
-    .fs-nested-form:hover .fs-remove-wrapper {
+    .form:hover .fs-remove-wrapper {
       opacity: 1;
     }
 
     .fs-add:hover, .fs-remove:hover {
-      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--lumo-primary-color));
+      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-primary-color,  #020b2f));
     }
 
     .fs-add {
-      margin: 0.3em 0.2em 0;
+      margin: 0.3em 0 0.1em 0.1em;
     }`]
   }
 
@@ -81,13 +91,13 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
             }
           }
         }
-        const template = html`<div class="fs-nested-form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.components, fieldDefinition, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}
-        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><svg class="fs-remove" @click="${(e: Event) => this.removeForm(i)}" viewBox="0 0 32 32"><title>Remove section</title><path d="M0 13v6c0 0.552 0.448 1 1 1h30c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1h-30c-0.552 0-1 0.448-1 1z"></path>
+        const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">${createField(this.components, fieldDefinition, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}
+        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><svg class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(i)}" viewBox="0 0 32 32"><title>Remove section</title><path d="M0 13v6c0 0.552 0.448 1 1 1h30c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1h-30c-0.552 0-1 0.448-1 1z"></path>
 </svg></div>` : html``}</div>`;
         itemTemplates.push(template);
       }
     }
-    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<svg viewBox="0 0 32 32" class="fs-add" @click="${(e: Event) => this.addForm()}"><title>Add section</title><path d="M31 12h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552 0-1 0.448-1 1v11h-11c-0.552 0-1 0.448-1 1v6c0 0.552 0.448 1 1 1h11v11c0 0.552 0.448 1 1 1h6c0.552 0 1-0.448 1-1v-11h11c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1z"></path></svg>` : html``}`;
+    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<svg viewBox="0 0 32 32" @click="${(e: Event) => this.addForm()}" class="fs-add"><title>Add section</title><path d="M31 12h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552 0-1 0.448-1 1v11h-11c-0.552 0-1 0.448-1 1v6c0 0.552 0.448 1 1 1h11v11c0 0.552 0.448 1 1 1h6c0.552 0 1-0.448 1-1v-11h11c0.552 0 1-0.448 1-1v-6c0-0.552-0.448-1-1-1z"></path></svg></button>` : html``}`;
   }
 
   public focusField(path: string) {
