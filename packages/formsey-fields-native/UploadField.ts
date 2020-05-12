@@ -1,6 +1,8 @@
-import { LabeledField, register, TextFieldDefinition, ChangeEvent } from '@formsey/core';
+import { ChangeEvent, LabeledField, register, UploadFieldDefinition } from '@formsey/core';
 import { css, html, property, query, TemplateResult } from 'lit-element';
+import { ICON_FILE, ICON_REMOVE, ICON_UPLOAD } from '.';
 import { INPUT_STYLE } from './styles';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 interface FileObject {
   name: string
@@ -9,11 +11,20 @@ interface FileObject {
   size: number
 }
 
-export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]> {
+interface Messages {
+  prompt: string
+}
+
+export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[]> {
   public static formAssociated = true;
 
   @property({ type: Object })
   value: FileObject[]
+
+  @property({ type: Object })
+  messages: Messages = {
+    prompt: "Click to pick or drop file(s)"
+  }
 
   @query("label")
   label: HTMLElement
@@ -34,13 +45,38 @@ export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]>
 
     .input {
       cursor: pointer;
-      padding: 20px;
-      min-height: 150px;
+      height: auto;
+      padding: 3px;
     }
 
-    .preview {
-      max-width:2em;
-      max-height:2em;
+    .files, .prompt {
+      cursor: default;
+      display: grid;
+      grid-template-columns: 24px 1fr max-content 20px;
+      grid-gap: 5px;
+      align-items: center;
+    }
+
+    .prompt {
+      grid-template-columns: 1fr max-content;
+    }
+
+    .prompt span {
+      text-align: center;
+    }
+
+    .prompt svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .files {
+      font-size: 12px;
+    }
+
+    .preview, .preview svg {
+      max-width:24px;
+      max-height:24px;
       width: auto;
       height: auto;
     }
@@ -49,6 +85,19 @@ export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]>
       border: 1px dashed var(--formsey-primary-color, #999);
       color: var(--formsey-primary-color, #999);
     }
+
+    .filename {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .remove svg {
+      margin-top: 4px;
+      width: 16px;
+      fill: currentColor;
+      cursor: pointer;
+    }
     `]
   }
 
@@ -56,19 +105,20 @@ export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]>
     if (!this.value) {
       this.value = []
     }
-    return html`<label class="input" @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input type="file" multiple accept="image/*" @change="${(e: Event) => this.handleFiles(Array.from(this.input.files))}" tabindex="0" id="file">Click to pick or drop file(s)<div class="files">
+    return html`<div class="input">${!this.definition.multiple && this.value.length > 0 ? undefined : html`<label @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input type="file" ?multiple="${this.definition.multiple}" capture="${ifDefined(this.definition.capture)}" accept="${this.definition.accept ? this.definition.accept.join(',') : ''}" @change="${(e: Event) => this.handleFiles(Array.from(this.input.files))}" tabindex="0" id="file"><div class="prompt"><span>${this.messages.prompt}</span>${ICON_UPLOAD}</div></label>`}
+    ${this.value.length > 0 ? html`<div class="files">
     ${this.value.map((file: FileObject) => {
-      const aMultiples = ["kb", "mb", "gb", "tb" ];
-      let niceSize : string
+      const aMultiples = ["kb", "mb", "gb", "tb"];
+      let niceSize: string
       for (let nMultiple = 0, nApprox = file.size / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
         niceSize = nApprox.toFixed(3) + " " + aMultiples[nMultiple]
       }
-      let preview : TemplateResult
-      file.type.startsWith("image/") ? preview = html`<img class="preview" src="${file['data']}">` : preview = html`<div>Symbol</div>`
-      return html`<div class="file">${preview}<div>${file.name}</div><div>${niceSize}</div></div>`
+      let preview: TemplateResult
+      file.type.startsWith("image/") ? preview = html`<img class="preview" src="${file['data']}">` : preview = ICON_FILE
+      return html`${preview}<div class="filename" title="${file.name}">${file.name}</div><div>${niceSize}</div><div tabindex="0" class="remove" @click="${ ( e: Event) => { this.removeFile(file.name) }}">${ICON_REMOVE}</div>`
     }
     )}
-    </div></label>`
+    </div>` : undefined}</div>`
   }
 
   private dragOver(e: DragEvent) {
@@ -96,12 +146,16 @@ export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]>
     this.handleFiles(files)
   }
 
+  private removeFile(name: string) {
+    this.value = this.value.filter( ( file : FileObject ) => file.name != name)
+    this.requestUpdate()
+    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+  }
+
   private handleFiles(files: File[]) {
     files.forEach((file: File) => {
       let reader = new FileReader();
       reader.addEventListener("load", () => {
-        // convert image file to base64 string
-        console.log(reader.result)
         this.value.push({
           data: reader.result,
           name: file.name,

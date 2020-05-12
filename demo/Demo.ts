@@ -191,6 +191,30 @@ export class Demo extends LitElement {
         "name": "month"
       },
       {
+        "name": "uploadSingle",
+        "type": "upload",
+        "label": "Upload Single File",
+        "helpText" : "Please upload file",
+        "multiple" : false
+      },
+      {
+        "name": "uploadPDFs",
+        "type": "upload",
+        "label": "Upload Multiple PDF's",
+        "helpText" : "Please upload documents",
+        "accept" : [ "application/pdf" ],
+        "multiple" : true
+      },
+      {
+        "name": "uploadPhoto",
+        "type": "upload",
+        "label": "Upload Photo",
+        "helpText" : "Please upload photo",
+        "accept" : [ "image/*" ],
+        "capture" : "user",
+        "multiple" : true
+      },
+      {
         "label": "Checkbox",
         "helpText": "Some help on the checkbox",
         "name": "checkbox",
@@ -276,11 +300,7 @@ export class Demo extends LitElement {
         "label": "Signature",
         "helpText": "Enter your signature"
       },
-      {
-        "name": "upload",
-        "type": "upload",
-        "label": "Upload"
-      },
+
       {
         "type": "nestedLayout",
         "form": {

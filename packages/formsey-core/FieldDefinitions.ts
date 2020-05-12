@@ -42,6 +42,12 @@ export interface StringFieldDefinition extends InputFieldDefinition {
   autoselect? : boolean
 }
 
+export interface UploadFieldDefinition extends InputFieldDefinition {
+  multiple: boolean
+  accept? : string[]
+  capture?: string
+}
+
 export interface TextFieldDefinition extends StringFieldDefinition {
 }
 
