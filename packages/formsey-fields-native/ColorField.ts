@@ -1,26 +1,27 @@
 import { register } from '@formsey/core';
 import { css, html } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { StringField } from './StringField';
 import { ICON_COLOR_FIELD } from '.';
+import { StringField } from './StringField';
+import { INPUT_STYLE } from './styles';
 
 export class ColorField extends StringField {
   static get styles() {
-    return [...super.styles, css`
+    return [...super.styles, INPUT_STYLE, css`
     #layout {
-      display: inline-grid;
+      position: relative;
       width: 100%;
-      grid-template-columns: 1fr 32px;
     }
 
     input[type="text"] {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
       text-transform: uppercase;
     }
 
     input[type="color"] {
       opacity: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
       display: block;
       width: 32px;
       height: 32px;
@@ -29,33 +30,26 @@ export class ColorField extends StringField {
     }
 
     #picker {
-      position: relative;
-      background: var(--formsey-input-background, #99999920);
-      border-radius: var(--formsey-input-border-radius, 4px);
-      border: 1px solid transparent;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      float: left;
-    }
-    #picker:focus-within {
-      border: 1px solid var(--formsey-primary-color,  #020b2f);
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
     }
 
     svg {
-      position: absolute;
-      width: 1em;
-      height: auto;
-      top: 5px;
-      left: 5px;
-      padding: 3px;
-      background-color: #ffffff;
-      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      padding: 4px;
     }
     `]
   }
 
   protected renderField() {
-    return html`<div id="layout">${super.renderField()}<div id="picker" style="background-color:${ifDefined(this.value)}">${ICON_COLOR_FIELD}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}"></div></div>`
+    this.definition.maxlength = 9
+    return html`<div id="layout">${super.renderField()}<div id="picker" style="background-color:${ifDefined(this.value)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}"></div></div>`
   }
 
   protected get type(): string {

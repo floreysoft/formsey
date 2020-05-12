@@ -24,13 +24,13 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   autofocus: boolean;
 
   @query("#input")
-  input : HTMLInputElement
+  input: HTMLInputElement
 
   protected internals: any
   private _definition: T
 
   static get styles() {
-    return [...super.styles, INPUT_STYLE ]
+    return [...super.styles, INPUT_STYLE]
   }
 
   constructor() {
@@ -54,31 +54,31 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   }
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
+    if (path == this.definition.name) {
       this.input.focus()
     }
   }
 
-  validate(report : boolean) {
+  validate(report: boolean) {
     this.input.setCustomValidity("")
     return this.input.checkValidity() as boolean
   }
 
   invalid() {
     let validityState = {}
-    for ( let key in this.input.validity ) {
-      if ( this.input.validity[key] ) {
+    for (let key in this.input.validity) {
+      if (this.input.validity[key]) {
         validityState[key] = this.input.validity[key]
       }
     }
-    if ( this.definition.customValidity && !this.input.validity.valid ) {
+    if (this.definition.customValidity && !this.input.validity.valid) {
       this.input.setCustomValidity(this.definition.customValidity)
     }
-    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(this.input.validationMessage, false, validityState )
+    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(this.input.validationMessage, false, validityState)
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 
-  protected get type() : string {
+  protected get type(): string {
     return "text"
   }
 }
