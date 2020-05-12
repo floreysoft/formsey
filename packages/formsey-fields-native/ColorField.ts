@@ -33,23 +33,22 @@ export class ColorField extends StringField {
       position: absolute;
       top: 0;
       right: 0;
-      margin: 5px;
-      width: 24px;
-      height: 24px;
+      margin: 7px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
     }
 
     svg {
       width: 16px;
       height: 16px;
-      padding: 4px;
-    }
+     }
     `]
   }
 
   protected renderField() {
     this.definition.maxlength = 9
-    return html`<div id="layout">${super.renderField()}<div id="picker" style="background-color:${ifDefined(this.value)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}"></div></div>`
+    return html`<div id="layout">${super.renderField()}<div id="picker" style="background-color:${ifDefined(this.value)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}" tabindex="-1"></div></div>`
   }
 
   protected get type(): string {

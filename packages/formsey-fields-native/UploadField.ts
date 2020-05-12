@@ -59,10 +59,11 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
 
     .prompt {
       grid-template-columns: 1fr max-content;
+      cursor: pointer;
     }
 
     .prompt span {
-      text-align: center;
+      padding-left: 4px;
     }
 
     .prompt svg {
