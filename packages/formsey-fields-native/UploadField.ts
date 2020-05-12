@@ -1,12 +1,12 @@
 import { LabeledField, register, TextFieldDefinition, ChangeEvent } from '@formsey/core';
-import { css, html, property, query } from 'lit-element';
+import { css, html, property, query, TemplateResult } from 'lit-element';
 import { INPUT_STYLE } from './styles';
 
 interface FileObject {
-  name : string
-  data : string | ArrayBuffer
-  type : string
-  size : number
+  name: string
+  data: string | ArrayBuffer
+  type: string
+  size: number
 }
 
 export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]> {
@@ -53,11 +53,21 @@ export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]>
   }
 
   protected renderField() {
-    if ( !this.value ) {
+    if (!this.value) {
       this.value = []
     }
-    return html`<label class="input" @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input type="file" multiple accept="image/*" @change="${ ( e : Event) => this.handleFiles(Array.from(this.input.files))}" tabindex="0" id="file">Click to pick or drop file(s)<div class="files">
-    ${this.value.map((file : FileObject) => html`<img class="preview" src="${file['data']}"><div>${file.name}</div>`)}
+    return html`<label class="input" @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input type="file" multiple accept="image/*" @change="${(e: Event) => this.handleFiles(Array.from(this.input.files))}" tabindex="0" id="file">Click to pick or drop file(s)<div class="files">
+    ${this.value.map((file: FileObject) => {
+      const aMultiples = ["kb", "mb", "gb", "tb" ];
+      let niceSize : string
+      for (let nMultiple = 0, nApprox = file.size / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
+        niceSize = nApprox.toFixed(3) + " " + aMultiples[nMultiple]
+      }
+      let preview : TemplateResult
+      file.type.startsWith("image/") ? preview = html`<img class="preview" src="${file['data']}">` : preview = html`<div>Symbol</div>`
+      return html`<div class="file">${preview}<div>${file.name}</div><div>${niceSize}</div></div>`
+    }
+    )}
     </div></label>`
   }
 
@@ -93,11 +103,10 @@ export class UploadField extends LabeledField<TextFieldDefinition, FileObject[]>
         // convert image file to base64 string
         console.log(reader.result)
         this.value.push({
-          data : reader.result,
-          name : file.name,
+          data: reader.result,
+          name: file.name,
           type: file.type,
-          size : file.size
-
+          size: file.size
         })
         this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
         this.requestUpdate()
