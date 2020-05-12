@@ -1,8 +1,8 @@
 import { ChangeEvent, LabeledField, SignatureFieldDefinition } from '@formsey/core';
+import { INPUT_STYLE } from '@formsey/fields-native/styles';
 import { css, customElement, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import SignaturePad from 'signature_pad';
-import { INPUT_STYLE } from '@formsey/fields-native/styles';
 
 @customElement("formsey-signature")
 export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {
@@ -72,6 +72,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
       this.canvas.width = this.canvas.offsetWidth * ratio;
       this.canvas.height = this.canvas.offsetHeight * ratio;
       this.canvas.getContext("2d").scale(ratio, ratio);
+      setTimeout(() => { this.signaturePad.clear() }, 1);
     }
   }
 
