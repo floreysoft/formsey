@@ -102,6 +102,8 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return true
   }
 
+  public resize(): void {}
+
   static get styles() {
     return [css`
     .hidden {
