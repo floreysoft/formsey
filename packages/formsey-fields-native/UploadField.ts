@@ -47,6 +47,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
       cursor: pointer;
       height: auto;
       padding: 3px;
+      min-height: var(--formsey-input-height, 34px);
     }
 
     .files, .prompt {
