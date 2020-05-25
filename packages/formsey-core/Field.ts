@@ -27,8 +27,8 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   components: Components
 
   @property({ type: Object })
-
   definition: T
+
   @property({ type: Object })
   value: V;
 
