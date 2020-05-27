@@ -16,13 +16,13 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
       position: relative;
       margin: 0.5em 0 0 0.8em;
       padding: 0 0 5px 15px;
-      border-left: 2px solid var(--lumo-contrast-10pct);
-      transition: transform 0.2s cubic-bezier(.12, .32, .54, 2), opacity 0.15s;
-      font-size: var(--formsey-repeating-section-icon-size, 12px);
+      border-left: 2px solid var(--fs-widget-background-color);
+      font-size: var(--formsey-repeating-section-icon-size, inherit);
+      transition: all 0.12s ease-out;
     }
 
     .form:hover {
-      border-left: 2px solid var(--lumo-contrast-20pct);
+      border-left: 2px solid var(--fs-widget-background-color-hover);
     }
 
     .fs-remove-wrapper {
@@ -30,31 +30,32 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
       line-height: 0;
       padding: 0.4em 0;
       top: calc(50% - 1em);
-      left: -0.85em;
+      left: -0.8em;
     }
 
     .fs-add, .fs-remove {
-      font-size: var(--formsey-repeating-section-icon-size, 12px);
+      font-size: var(--formsey-repeating-section-icon-size, inherit);
       width: 1em;
       height: 1em;
       padding: 0.2em;
       stroke-width: 0;
-      fill: var(--formsey-repeating-section-icon-fill-color, var(--lumo-primary-contrast-color));
+      fill: var(--formsey-repeating-section-icon-fill-color, var(--fs-text-color, currentColor));
       border-radius: 50%;
-      background-color: var(--formsey-repeating-section-icon-background-color, var(--lumo-contrast-30pct));
+      background-color: var(--formsey-repeating-section-icon-background-color, var(--fs-widget-background-color, inherit));
       transition: background-color 0.12s ease-out;
     }
 
     .form:hover .fs-remove-wrapper {
       opacity: 1;
     }
-
-    .fs-add:hover, .fs-remove:hover {
-      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-primary-color,  #020b2f));
+    .form:hover .fs-remove {
+      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--fs-widget-background-color-hover, inherit));
     }
-
+    .fs-add:hover {
+      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--fs-widget-background-color-hover, inherit));
+    }
     .fs-add {
-      margin: 0.3em 0 0.1em 0.1em;
+      margin: 0.1em;
     }`]
   }
 

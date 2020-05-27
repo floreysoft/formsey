@@ -14,52 +14,52 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     }
 
     .label {
-      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
-      font-size: var(--formsey-label-font-size, 14px);
-      font-weight: var(--formsey-label-font-weight, 500);
-      color: var(--formsey-label-color, #222b4f);
-      line-height: var(--formsey-label-line-height, 1.5);
-      padding: var(--formsey-label-padding, 4px 0 0);
+      font-family: var(--formsey-label-font-family, var(--formsey-font-family, inherit));
+      font-size: var(--formsey-label-font-size, inherit);
+      font-weight: var(--formsey-label-font-weight, inherit);
+      color: var(--formsey-label-color, inherit);
+      line-height: var(--formsey-label-line-height, inherit);
+      padding: var(--formsey-label-padding, var(--fs-widget-padding, 4px 0 0 0));
       -webkit-font-smoothing: antialiased;
       transition: all 0.12s ease-out;
       opacity: 0.8;
     }
 
     .wrapper:focus-within .label {
-      color: var(--formsey-primary-color,  #020b2f);
+      color: var(--formsey-primary-color, var(--fs-accent-color, inherit));
       opacity: 1;
     }
 
     .invalid {
-      background-color: var(--formsey-invalod_color, var(--lumo-error-color-10pct, #ff000005));
-      padding: 0 0.5rem 0.1rem;
-      margin: 0.1rem 0;
-      border-radius: var(--formsey-invalid-border-radius, var(--lumo-border-radius-m, 0.2em));
+      background-color: var(--formsey-invalod_color, var(--fs-background-color-error, #AA000044));
+      padding: 0 0.5em 0.1em;
+      border-radius: var(--formsey-invalid-border-radius, var(--fs-border-radius-m, 0.3em));
     }
 
     .error-text, .help-text {
-      font-family: var(--formey-help-text-font-family, var(--formsey-font-family));
-      font-size: var(--formey-help-text-font-size, 12px);
-      line-height: var(--formsey-help-text-line-height, 1.5);
+      font-family: var(--formey-help-text-font-family, var(--formsey-font-family, inherit));
+      font-size: var(--formey-help-text-font-size, smaller);
+      line-height: var(--formsey-help-text-line-height, inherit);
       margin: var(--formsey-help-text-margin, 1px 0 0 0);
     }
 
     .error-text {
-      color: var(--formsey-error-text-color, var(--lumo-error-text-color, #ff0000));
+      color: var(--formsey-error-text-color, var(--lumo-error-text-color, #FC0000));
     }
 
     .help-text {
       color: var(--formsey-help-text-color, #757c98);
+      padding: var(--formsey-help-text-padding, var(--fs-widget-padding, 4px 0 0 0));
       opacity: 0.6;
       transition: opacity 0.12s ease-out;
     }
 
     .required {
-      color: var(--formsey-required-color, var(--lumo-error-text-color));
-      margin: var(--formsey-required-margin, 0 0 0 4px);
-      font-family: var(--formey-required-font-family, var(--formsey-font-family));
-      font-size: var(--formey-required-font-size, 9px);
-      line-height: var(--formsey-required-line-height, 1.75);
+      color: var(--formsey-required-color, var(--fs-text-color-error));
+      margin: var(--formsey-required-margin, var(--fs-widget-padding, 0 0 0 4px));
+      font-family: var(--formey-required-font-family, var(--formsey-font-family, inherit));
+      font-size: var(--formey-required-font-size, smaller);
+      line-height: var(--formsey-required-line-height, inherit);
       vertical-align: top;
     }
 

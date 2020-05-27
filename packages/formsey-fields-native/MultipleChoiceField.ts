@@ -17,13 +17,15 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
       grid-gap: 4px;
     }
     label {
-      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
     }
     input[type="radio"] {
-      width: 10px;
-      height: 10px;
-      margin: 0 5px 0 2px;
-      transform: scale(1.5);
+      margin: var(--fs-widget-padding, 0 .5em 0 0);
+      font-family: var(--formsey-font-family, var(--fs-font-family, inherit));
+      font-size: var(--formsey-font-size, var(--fs-font-size, inherit));
+      color: var(--formsey-text-color, var(--fs-text-color, inherit));
     }
     .other {
       display: grid;

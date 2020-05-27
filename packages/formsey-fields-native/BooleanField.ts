@@ -1,21 +1,24 @@
 import { BooleanFieldDefinition, LabeledField, register, ChangeEvent } from '@formsey/core';
 import { html, property, query, css } from 'lit-element';
+import { INPUT_STYLE } from './styles';
 
 export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
   static get styles() {
     return [...super.styles, css`
+    :host {
+    }
+
     input[type="checkbox"] {
-      width: 10px;
-      height: 10px;
-      margin: 0 5px 0 2px;
-      transform: scale(1.5);
+      margin: var(--fs-widget-padding, 0 .5em 0 0);
+      font-family: var(--formsey-font-family, var(--fs-font-family, inherit));
+      font-size: var(--formsey-font-size, var(--fs-font-size, inherit));
+      color: var(--formsey-text-color, var(--fs-text-color, inherit));
     }
 
     label {
-      font-family: var(--formsey-label-font-family, var(--formsey-font-family));
-      font-size: var(--formsey-label-font-size, 14px);
-      padding: 8px 0;
-      min-height: 34px;
+      height: var(--formsey-input-height, 2em);
+      display: flex;
+      align-items: center;
       box-sizing: border-box;
     }
     `]

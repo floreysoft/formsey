@@ -46,11 +46,12 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     .input {
       cursor: pointer;
       height: auto;
-      padding: 3px;
-      min-height: var(--formsey-input-height, 34px);
+      min-height: var(--formsey-input-height, 2em);
+      padding: 0;
     }
 
     .files, .prompt {
+      line-height: initial;
       cursor: default;
       display: grid;
       grid-template-columns: 24px 1fr max-content 20px;
@@ -61,6 +62,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     .prompt {
       grid-template-columns: 1fr max-content;
       cursor: pointer;
+      padding: var(--fs-widget-padding, 3px);
     }
 
     .prompt span {
@@ -68,19 +70,20 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     }
 
     .prompt svg {
-      width: 22px;
-      height: 22px;
+      width: 1.2em;
+      height: 1.2em;
     }
 
     .files {
-      font-size: 12px;
+      font-size: var(--fs-font-size, smaller);
     }
 
     .preview, .preview svg {
-      max-width:24px;
-      max-height:24px;
+      max-width:2em;
+      max-height:2em;
       width: auto;
       height: auto;
+      padding: 0.1em 0.3em;
     }
 
     .over {
@@ -94,9 +97,13 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
       white-space: nowrap;
     }
 
+    .remove {
+      outline: none;
+    }
+
     .remove svg {
-      margin-top: 4px;
-      width: 16px;
+      margin-top: 3px;
+      width: 1.2em;
       fill: currentColor;
       cursor: pointer;
     }

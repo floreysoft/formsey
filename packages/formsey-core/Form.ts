@@ -34,7 +34,6 @@ export class Form extends Field<FieldDefinition, Object> {
     return [...super.styles, css`
       :host {
         outline: none;
-        --formsey-font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       }`];
   }
 

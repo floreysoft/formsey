@@ -1,4 +1,3 @@
-import '@floreysoft/ace';
 import { Ace } from '@floreysoft/ace';
 import { InputFieldDefinition, LabeledField, ChangeEvent } from '@formsey/core';
 import { css, customElement, html, property, query } from 'lit-element';

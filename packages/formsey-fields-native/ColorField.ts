@@ -23,8 +23,8 @@ export class ColorField extends StringField {
       top: 0;
       right: 0;
       display: block;
-      width: 32px;
-      height: 32px;
+      width: 1.8em;
+      height: 1.8em;
       border: none;
       padding: 0 1px;
     }
@@ -33,15 +33,15 @@ export class ColorField extends StringField {
       position: absolute;
       top: 0;
       right: 0;
-      margin: 7px;
-      width: 20px;
-      height: 20px;
+      margin: .4em;
+      width: 1.2em;
+      height: 1.2em;
       border-radius: 50%;
     }
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 1.2em;
+      height: 1.2em;
      }
     `]
   }

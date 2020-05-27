@@ -47,20 +47,20 @@ export class FormField extends Field<FormDefinition, Object> {
         display: block;
       }
       .title {
-        font-size: var(--formsey-title-font-size, 24px);
-        font-family: var(--formsey-title-font-family, var(--formsey-font-family));
-        font-weight: var(--formsey-title-font-weight, 400);
-        line-height: var(--formsey-title-line-height, 1.5);
-        color: var(--formsey-title-color, #222b4f);
-        margin: var(--formsey-title-margin, 12px 0 4px 0);
+        font-size: var(--formsey-title-font-size, larger);
+        font-family: var(--formsey-title-font-family, var(--formsey-font-family, inherit));
+        font-weight: var(--formsey-title-font-weight, inherit);
+        line-height: var(--formsey-title-line-height, inherit);
+        color: var(--formsey-title-color, inherit);
+        margin: var(--formsey-title-margin, var(--fs-padding, 12px 0 4px 0));
       }
       .description {
-        font-size: var(--formsey-description-font-size, 18px);
-        font-family: var(--formsey-description-font-family, var(--formsey-font-family));
-        font-weight: var(--formsey-description-font-weight, 400);
-        line-height: var(--formsey-description-line-height, 1.5));
+        font-size: var(--formsey-description-font-size, inherit);
+        font-family: var(--formsey-description-font-family, var(--formsey-font-family, inherit));
+        font-weight: var(--formsey-description-font-weight, inherit);
+        line-height: var(--formsey-description-line-height, inherit);
         color: var(--formsey-description-color, #757c98);
-        margin: var(--formsey-description-margin, 0 0 10px 0);
+        margin: var(--formsey-description-margin, var(--fs-padding, 12px 0 4px 0));
       }
       .section {
         padding: 5px;
