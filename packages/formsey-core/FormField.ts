@@ -67,7 +67,7 @@ export class FormField extends Field<FormDefinition, Object> {
       }
       .grid {
         display: inline-grid;
-        grid-gap: 0px 5px;
+        grid-gap: 5px 5px;
         width: 100%;
         box-sizing: border-box;
       }
