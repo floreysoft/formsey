@@ -51,9 +51,6 @@ export class Form extends Field<FieldDefinition, Object> {
   connectedCallback() {
     super.connectedCallback()
     window.addEventListener("resize", this.resizeHandler)
-    if (!this.hasAttribute('tabindex')) {
-      this.tabIndex = 0;
-    }
   }
 
   disconnectedCallback() {
