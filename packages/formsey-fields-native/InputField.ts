@@ -59,6 +59,10 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
     }
   }
 
+  focus() {
+    this.input.focus()
+  }
+
   validate(report: boolean) {
     this.input.setCustomValidity("")
     return this.input.checkValidity() as boolean

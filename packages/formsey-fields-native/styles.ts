@@ -17,7 +17,7 @@ export const INPUT_STYLE = css`
     transition: border 0.12s ease-out;
   }
   .input:focus-within {
-    border: 1px solid var(--formsey-primary-color, var(--fs-accent-color, #020b2f));
+    border: 1px solid var(--formsey-border-color-focus, var(--fs-border-color-focus, #020b2f));
   }`
 
 export const NESTED_FORM_STYLE = css`
