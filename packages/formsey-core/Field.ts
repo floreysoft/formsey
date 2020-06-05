@@ -133,6 +133,17 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return true
   }
 
+  attributeChangedCallback(name: string, old: string|null, value: string|null) {
+    if ( !this.getAttribute("definition" )) {
+      if ( !this.definition ) {
+        this.definition = {} as T
+      }
+      console.log("Set definition '"+name+"' to "+value)
+      this.definition[name] = value
+    }
+    super.attributeChangedCallback(name, old, value)
+  }
+
   protected checkProperties(): void {
   }
 
