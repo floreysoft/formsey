@@ -122,7 +122,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
   public resize() {
     for (let field of this._fields) {
-      let child = field.firstElementChild as Field<any, any>
+      let child = field.children[1] as Field<any, any>
       child.resize()
     }
   }
