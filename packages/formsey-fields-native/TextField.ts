@@ -32,12 +32,6 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
     this.value = '';
   }
 
-  protected checkProperties(): void {
-    if (!this.definition) {
-      throw new Error("property 'definition' required");
-    }
-  }
-
   protected renderField() {
     return html`<textarea class="input" rows="3" ?autofocus=${ifDefined(this.definition.autofocus)} ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}">${ifDefined(this.value)}</textarea>`
   }

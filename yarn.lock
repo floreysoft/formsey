@@ -846,6 +846,11 @@
   dependencies:
     lit-element "^2.0.1"
 
+"@floreysoft/utils@^0.3.179":
+  version "0.3.179"
+  resolved "https://registry.yarnpkg.com/@floreysoft/utils/-/utils-0.3.179.tgz#6b422793b6f3f1d0b5da6604dbf49e39ce09c1e1"
+  integrity sha512-pHitrxEE1+Lu8ce3dRUdvpaO0aioXMrxQ41duVTM7dm4y4A2TEW0iqa/JE4ZcBPZS+uzD0Eo17ko+FYyXZSO2Q==
+
 "@google-cloud/common@^2.1.1":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@google-cloud/common/-/common-2.4.0.tgz#2783b7de8435024a31453510f2dab5a6a91a4c82"

@@ -63,6 +63,18 @@ export class Option {
   value: string
 }
 
+export class Image {
+  value: string
+  label?: string
+  src?: string
+  alt?: string
+}
+
+export interface ImagesFieldDefinition extends InputFieldDefinition {
+  multiple?: boolean
+  images : Image[]
+}
+
 export interface ListFieldDefinition extends InputFieldDefinition {
   options : Option[]
 }

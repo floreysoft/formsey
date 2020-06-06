@@ -90,6 +90,26 @@ export class Demo extends LitElement {
     "helpText": "Main Description",
     "fields": [
       {
+        "helpText": "Images",
+        "name": "images",
+        "type": "images",
+        "label": "My Images",
+        "images": [
+          {
+            "label" : "Huhn",
+            "value" : "huhn",
+            "src" : "https://is3-ssl.mzstatic.com/image/thumb/Purple118/v4/8a/ab/08/8aab08c9-5058-77e2-d3a1-1463bf655495/source/256x256bb.jpg",
+            "alt" : "Ein Huhn"
+          },
+          {
+            "label" : "Blume",
+            "value" : "blume",
+            "src" : "https://kita-global.de/wp-content/uploads/2015/02/flower-256x256.png",
+            "alt" : "Eine Blume"
+          }
+        ]
+      },
+      {
         "helpText": "Ein String",
         "name": "string",
         "type": "string",
