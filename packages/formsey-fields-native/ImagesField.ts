@@ -1,28 +1,35 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ChangeEvent, ImagesFieldDefinition, LabeledField, register } from '@formsey/core';
 import { css, html, LitElement, property, query, queryAll, TemplateResult } from 'lit-element';
+import ResizeObserver from 'resize-observer-polyfill';
 
 export class ImageCheckbox extends LitElement {
   static get styles() {
     return css`
     :host {
       display: inline-block;
+      position: relative;
     }
     label {
       display: inline-block;
+      line-height: 0;
     }
     input[type="checkbox"] {
+      position: absolute;
       opacity: 0;
       width: 0;
       height: 0;
     }
     img {
+      width: 100%;
       max-width: 100%;
       max-height: 100%;
       height: auto;
       border-radius: var(--formsey-input-border-radius, var(--fs-border-radius, 3px));
       border: 1px solid transparent;
       opacity: .8;
+      transition-duration: 0.2s;
+      transform-origin: 50% 50%;
       z-index: -1;
     }
     img:hover {
@@ -30,6 +37,7 @@ export class ImageCheckbox extends LitElement {
     }
     :focus+label>img {
       border: 1px solid var(--formsey-border-color-focus, var(--fs-border-color-focus, orange));
+      transform: scale(0.95);
     }
     :checked+label>img {
       opacity: 1;
@@ -54,7 +62,6 @@ export class ImageCheckbox extends LitElement {
       text-align: center;
       line-height: 1;
     }
-
     :checked+label {
       border-color: #ddd;
     }
@@ -81,11 +88,19 @@ export class ImageCheckbox extends LitElement {
   @property({ type: String })
   alt: string
 
+  @property({ type: Number })
+  tabIndex: number
+
+
   @query("input[type='checkbox']")
   checkbox: HTMLInputElement
 
   render() {
-    return html`<input id="${this.id}" type="checkbox" @keydown="${this.keyDown}" @click="${this.clicked}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.id}"><img src="${this.src}" alt="${this.alt}" /></label>`;
+    return html`<input id="${this.id}" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @click="${this.clicked}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.id}"><img src="${this.src}" alt="${this.alt}" /></label>`;
+  }
+
+  updated() {
+    this.checkbox.checked = this.checked
   }
 
   focus() {
@@ -93,6 +108,7 @@ export class ImageCheckbox extends LitElement {
   }
 
   clicked(e: Event) {
+    this.checked = this.checkbox.checked;
     this.dispatchEvent(new ChangeEvent(this.id, this.checkbox.checked));
   }
 
@@ -107,20 +123,59 @@ export class ImageCheckbox extends LitElement {
 }
 register("formsey-image-checkbox", ImageCheckbox)
 
-export class ImagesField extends LabeledField<ImagesFieldDefinition, string[]> {
+export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | string> {
+  @property({ type: Object })
+  set definition(definition: ImagesFieldDefinition) {
+    this._definition = definition
+    if ( this.images ) {
+      this.calculateColumns(this.images.offsetWidth)
+    }
+  }
+
+  get definition() {
+    return this._definition
+  }
+
   @property({ type: Array })
-  value: string[];
+  value: string[] | string
+
+  @property({ type: Number })
+  columns: number = 5
 
   @queryAll("formsey-image-checkbox")
   checkboxes: ImageCheckbox[]
 
+  @query(".images")
+  images: HTMLElement
+
+  columnWidth: number
+  
+  ro: ResizeObserver
+
+  _definition: ImagesFieldDefinition
+
   static get styles() {
     return [...super.styles, css`
       formsey-image-checkbox {
-        width: 5em;
-        height: 5em;
+        width: 100%;
+        height: auto;
+      }
+
+      .images {
+          column-gap: 0px;
+          line-height: 0;
+        }
       }
     `]
+  }
+
+  constructor() {
+    super()
+    this.ro = new ResizeObserver((entries, observer) => {
+      for (const entry of entries) {
+        this.calculateColumns(entry.contentRect.width)
+      }
+    });
   }
 
   renderField() {
@@ -133,15 +188,19 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[]> {
         let image = this.definition.images[i]
         let label = image.label ? image.label : image.value;
         let value = image.value ? image.value : image.label;
-        let checked = this.value.includes(value);
-        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}"></formsey-image-checkbox>`);
+        let checked = this.definition.multiple ? this.value.includes(value) : this.value == value
+        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
       }
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<div class="images">${templates}</div>`;
+    return html`<div class="images" style="columns:${this.columns} auto">${templates}</div>`;
+  }
+
+  firstUpdated() {
+    this.ro.observe(this.images)
   }
 
   focusField(path: string) {
@@ -149,13 +208,18 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[]> {
     }
   }
 
-  changed(e: Event) {
-    this.value = []
-    this.checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        this.value.push(checkbox.id)
-      }
-    })
+  changed(e: CustomEvent) {
+    if (this.definition.multiple) {
+      let value = []
+      this.checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          value.push(checkbox.id)
+        }
+      })
+      this.value = value
+    } else {
+      this.value = e.detail.value ? e.detail.name : undefined
+    }
     if (this.definition.name) {
       this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     }
@@ -163,23 +227,54 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[]> {
 
   private keyDown(e: KeyboardEvent) {
     if (!e.ctrlKey && !e.altKey) {
+      const left = (<HTMLElement>e.currentTarget).getBoundingClientRect().left
+      const top = (<HTMLElement>e.currentTarget).getBoundingClientRect().top
       switch (e.keyCode) {
         case KEYCODE.LEFT:
-          if (!walkAndFocus((<HTMLElement>e.currentTarget), "l")) {
+          e.stopPropagation();
+          let onTheLeft = this.shadowRoot.elementFromPoint(left - 1, top)
+          if (onTheLeft) {
+            (<HTMLElement>onTheLeft).focus()
+          } else {
             this.dispatchEvent(new CustomEvent('focusLeft', { bubbles: true, composed: true }))
           }
           break;
         case KEYCODE.RIGHT:
-          if (!walkAndFocus((<HTMLElement>e.currentTarget), "r")) {
+          e.stopPropagation()
+          let onTheRight = this.shadowRoot.elementFromPoint(left + this.columnWidth + 10, top)
+          if (onTheRight) {
+            (<HTMLElement>onTheRight).focus()
+          } else {
             this.dispatchEvent(new CustomEvent('focusRight', { bubbles: true, composed: true }))
           }
           break
         case KEYCODE.UP:
+          e.stopPropagation()
+          e.preventDefault()
+          if (!walkAndFocus((<HTMLElement>e.currentTarget), "l")) {
+            this.dispatchEvent(new CustomEvent('focusAbove', { bubbles: true, composed: true }))
+          }
           break
         case KEYCODE.DOWN:
+          e.stopPropagation()
+          e.preventDefault()
+          if (!walkAndFocus((<HTMLElement>e.currentTarget), "r")) {
+            this.dispatchEvent(new CustomEvent('focusBelow', { bubbles: true, composed: true }))
+          }
           break
       }
     }
+  }
+
+  private calculateColumns(availableWidth: number) {
+    const columnWidth = this.definition?.columnWidth ? this.definition?.columnWidth : 150
+    const minColumns = this.definition?.minColumns ? this.definition?.minColumns : 1
+    const maxColumns = this.definition?.maxColumns ? this.definition?.maxColumns : 4
+    let columns = Math.round(availableWidth / columnWidth)
+    columns = Math.min(columns, maxColumns)
+    columns = Math.max(columns, minColumns)
+    this.columnWidth = availableWidth / columns
+    this.columns = columns
   }
 }
 register("formsey-images", ImagesField)

@@ -4,16 +4,16 @@ export interface FieldDefinition {
   label?: string
   helpText?: string
   hidden?: boolean
-  default? : any
+  default?: any
 }
 
 export interface InputFieldDefinition extends FieldDefinition {
-  autofocus? : boolean
+  autofocus?: boolean
   required?: boolean
   disabled?: boolean
-  customValidity? : string
+  customValidity?: string
   readonly?: boolean
-  autocomplete? : string
+  autocomplete?: string
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {
@@ -24,7 +24,7 @@ export interface ImageFieldDefinition extends FieldDefinition {
 
 export interface BooleanFieldDefinition extends InputFieldDefinition {
   indeterminate?: boolean
-  default? : boolean
+  default?: boolean
 }
 
 export interface NumberFieldDefinition extends InputFieldDefinition {
@@ -35,16 +35,16 @@ export interface NumberFieldDefinition extends InputFieldDefinition {
 
 export interface StringFieldDefinition extends InputFieldDefinition {
   placeholder?: string
-  pattern? : string
-  minlength? : number
-  maxlength? : number
-  default? : string
-  autoselect? : boolean
+  pattern?: string
+  minlength?: number
+  maxlength?: number
+  default?: string
+  autoselect?: boolean
 }
 
 export interface UploadFieldDefinition extends InputFieldDefinition {
   multiple: boolean
-  accept? : string[]
+  accept?: string[]
   capture?: string
 }
 
@@ -72,24 +72,50 @@ export class Image {
 
 export interface ImagesFieldDefinition extends InputFieldDefinition {
   multiple?: boolean
-  images : Image[]
+  columnWidth?: number,
+  minColumns?: number,
+  maxColumns?: number,
+  images: Image[]
 }
 
 export interface ListFieldDefinition extends InputFieldDefinition {
-  options : Option[]
+  options: Option[]
 }
 
 export interface CheckboxesFieldDefinition extends InputFieldDefinition {
-  options : Option[]
-  other? : boolean
+  options: Option[]
+  other?: boolean
+}
+
+export interface Breakpoints {
+  xxs?: number
+  xs?: number
+  s?: number
+  m?: number
+  l?: number
+  xl?: number
+  xxl?: number
+}
+
+export interface Grids {
+  xxs?: string
+  xs?: string
+  s?: string
+  m?: string
+  l?: string
+  xl?: string
+  xxl?: string
+}
+
+export interface Layout {
+  style: string
+  breakpoints: Breakpoints
+  grids : Grids
 }
 
 export interface FormDefinition extends FieldDefinition {
   fields: FieldDefinition[]
-  gridSmall? : string
-  gridMedium? : string
-  gridLarge? : string
-  layout? : string
+  layout?: Layout
 }
 
 export interface NestedFormDefinition extends FieldDefinition {
@@ -108,12 +134,12 @@ export class Selection {
 }
 
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
-  selections : Selection[]
-  multipleChoice? : boolean
+  selections: Selection[]
+  multipleChoice?: boolean
 }
 
 export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
-  form : FormDefinition
+  form: FormDefinition
 }
 
 export interface SignatureFieldDefinition extends InputFieldDefinition {

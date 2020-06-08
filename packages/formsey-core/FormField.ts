@@ -1,13 +1,17 @@
-import { area, createField, Field, FormDefinition, ChangeEvent, register } from '@formsey/core';
+import { area, ChangeEvent, createField, Field, FormDefinition, register } from '@formsey/core';
 import { css, html, property, query, queryAll, TemplateResult } from 'lit-element';
-import { NestedFormDefinition } from './FieldDefinitions';
-import { InvalidEvent } from './InvalidEvent';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import ResizeObserver from 'resize-observer-polyfill';
+import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
+import { InvalidEvent } from './InvalidEvent';
 
-export enum GridSize {
-  SMALL = "gridSmall",
-  MEDIUM = "gridMedium",
-  LARGE = "gridLarge"
+export const DEFAULT_BREAKPOINTS: Breakpoints = {
+  "xs": 320,
+  "s": 568,
+  "m": 768,
+  "l": 1024,
+  "xl": 1366,
+  "xxl": 1680
 }
 
 export class FormField extends Field<FormDefinition, Object> {
@@ -35,11 +39,18 @@ export class FormField extends Field<FormDefinition, Object> {
     return this._definition
   }
 
+  @property()
+  private gridLayout: string = "grid-template-columns: 100%"
+
   protected _value: Object = {}
   protected _definition: FormDefinition
 
   @queryAll(".fs-form-field")
   protected _fields: HTMLElement[]
+
+  private resizeObserver: ResizeObserver
+
+  private static readonly SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl", "xxl"]
 
   static get styles() {
     return [...super.styles, css`
@@ -78,21 +89,21 @@ export class FormField extends Field<FormDefinition, Object> {
 
   @query(".grid")
   private grid: HTMLElement
-  private gridSize: GridSize
+
+  constructor() {
+    super()
+    this.resizeObserver = new ResizeObserver((entries, observer) => {
+      for (const entry of entries) {
+        this.layout(entry.contentRect.width)
+      }
+    });
+  }
 
   render() {
     let templates: TemplateResult[] = []
-    let grid = "grid-template-columns: 100%"
-    if (this.gridSize == GridSize.LARGE && this.definition.gridLarge) {
-      grid = this.definition.gridLarge
-    } else if (this.gridSize == GridSize.MEDIUM && this.definition.gridMedium) {
-      grid = this.definition.gridMedium
-    } else if (this.gridSize == GridSize.SMALL && this.definition.gridSmall) {
-      grid = this.definition.gridSmall
-    }
-    let layout = "padding:10px"
-    if ( this.definition.layout ) {
-      layout = this.definition.layout
+    let style = "padding:10px"
+    if (this.definition.layout) {
+      style = this.definition.layout.style
     }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
@@ -118,21 +129,25 @@ export class FormField extends Field<FormDefinition, Object> {
           }
         }
         let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
-        if (grid && grid.indexOf('grid-template-areas') >= 0) {
+        if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fs-form-field' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
           templates.push(html`<div class='fs-form-field'>${fieldTemplate}</div>`)
         }
       }
     }
-    let header : TemplateResult[] = []
-    if ( this.definition.label ) {
+    let header: TemplateResult[] = []
+    if (this.definition.label) {
       header.push(html`<div part="title" class="title">${this.definition.label}</div>`)
     }
-    if ( this.definition.helpText ) {
+    if (this.definition.helpText) {
       header.push(html`<div part="description" class="description">${this.definition.helpText}</div>`)
     }
-    return html`<div class="section" style="${ifDefined(layout)}">${header}<div class="grid" style="${grid}">${templates}</div><div>`
+    return html`<div class="section" style="${ifDefined(style)}">${header}<div class="grid" style="${this.gridLayout}">${templates}</div><div>`
+  }
+
+  firstUpdated() {
+    this.resizeObserver.observe(this.grid)
   }
 
   public validate(report: boolean) {
@@ -153,34 +168,30 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   public resize() {
-    let size = GridSize.LARGE
-    if (this.grid) {
-      let width = this.grid.clientWidth;
-      if (width < 576) {
-        size = GridSize.SMALL
-      } else if (width < 768) {
-        size = GridSize.MEDIUM
-      }
-    }
-    if (this.gridSize != size) {
-      this.gridSize = size
-      this.requestUpdate()
-    }
-    for (let field of this._fields) {
-      let child = field.firstElementChild as Field<any, any>
-      if ( child && typeof child['resize'] == "function") {
-        child.resize()
+  }
+
+  public layout(availableWidth: number) {
+    if (this.definition.layout?.grids) {
+      for (let size of FormField.SUPPORTED_BREAKPOINTS) {
+        let breakpoint = this.definition?.layout?.breakpoints?.[size]
+        if (typeof breakpoint === "undefined") {
+          breakpoint = DEFAULT_BREAKPOINTS[size]
+        }
+        if (breakpoint > availableWidth && this.definition.layout?.grids[size]) {
+          this.gridLayout = this.definition.layout?.grids[size]
+          break;
+        }
       }
     }
   }
 
   public focusField(path: string) {
-    if ( path.startsWith(this.definition.name+"." ) ) {
-      path = path.substring(this.definition.name.length+1)
+    if (path.startsWith(this.definition.name + ".")) {
+      path = path.substring(this.definition.name.length + 1)
     }
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
-      if ( child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
+      if (child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
         (<any>child).focusField(path)
       }
     }
@@ -217,9 +228,7 @@ export class FormField extends Field<FormDefinition, Object> {
         }
       }
       this.addMemberValueIfPresent("type", newValue)
-      this.addMemberValueIfPresent("gridSmall", newValue)
-      this.addMemberValueIfPresent("gridMedium", newValue)
-      this.addMemberValueIfPresent("gridLarge", newValue)
+      this.addMemberValueIfPresent("layout", newValue)
       this._value = newValue
     }
   }

@@ -1,13 +1,13 @@
 import { TemplateResult } from 'lit-element'
 import { FieldDefinition } from './FieldDefinitions'
 
+export { ChangeEvent } from './ChangeEvent'
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'
 export { Form } from './Form'
-export { FormField, GridSize } from './FormField'
+export { FormField } from './FormField'
 export { LabeledField } from './LabeledField'
 export { NestedFormField } from './NestedFormField'
-export { ChangeEvent } from './ChangeEvent'
 
 export interface Components {
   [index: string]: string
