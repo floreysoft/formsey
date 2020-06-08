@@ -5,6 +5,8 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
 
+export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl", "xxl"]
+
 export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xs": 320,
   "s": 568,
@@ -49,8 +51,6 @@ export class FormField extends Field<FormDefinition, Object> {
   protected _fields: HTMLElement[]
 
   private resizeObserver: ResizeObserver
-
-  private static readonly SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl", "xxl"]
 
   static get styles() {
     return [...super.styles, css`
@@ -172,7 +172,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   public layout(availableWidth: number) {
     if (this.definition.layout?.grids) {
-      for (let size of FormField.SUPPORTED_BREAKPOINTS) {
+      for (let size of SUPPORTED_BREAKPOINTS) {
         let breakpoint = this.definition?.layout?.breakpoints?.[size]
         if (typeof breakpoint === "undefined") {
           breakpoint = DEFAULT_BREAKPOINTS[size]
