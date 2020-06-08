@@ -108,9 +108,9 @@ export interface Grids {
 }
 
 export interface Layout {
-  style: string
-  breakpoints: Breakpoints
-  grids : Grids
+  style?: string
+  breakpoints?: Breakpoints
+  grids?: Grids
 }
 
 export interface FormDefinition extends FieldDefinition {
