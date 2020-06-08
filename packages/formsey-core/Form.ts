@@ -105,13 +105,6 @@ export class Form extends Field<FieldDefinition, Object> {
     this.dispatchEvent(new InvalidEvent(e.errors));
   }
 
-  public resize() {
-    let child = this.shadowRoot?.firstElementChild as FormField
-    if ( child && typeof child['resize'] === "function" ) {
-      child.resize()
-    }
-  }
-
   public focusField(path: string) {
     let child = this.shadowRoot?.firstElementChild as FormField
     if ( child && typeof child['focusField'] === "function" ) {

@@ -37,10 +37,4 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
       this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     }
   }
-
-  resize() {
-    if (this.editor) {
-      this.editor.resize()
-    }
-  }
 }

@@ -20,13 +20,6 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     }
   }
 
-  public resize() {
-    let child = this.renderRoot.firstElementChild as Field<any, any>
-    if (child && typeof child['resize'] == "function") {
-      child.resize()
-    }
-  }
-
   public validate(report: boolean) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
     if (report) {

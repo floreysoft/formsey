@@ -167,9 +167,6 @@ export class FormField extends Field<FormDefinition, Object> {
     return validity;
   }
 
-  public resize() {
-  }
-
   public layout(availableWidth: number) {
     if (this.definition.layout?.grids) {
       for (let size of SUPPORTED_BREAKPOINTS) {
