@@ -42,7 +42,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   @property()
-  private gridLayout: string = "grid-template-columns: 100%"
+  private gridSize: string = "l"
 
   protected _value: Object = {}
   protected _definition: FormDefinition
@@ -105,6 +105,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.layout) {
       style = this.definition.layout.style
     }
+    let gridLayout = this.definition.layout?.grids?.[this.gridSize] ? this.definition.layout?.grids?.[this.gridSize] : "grid-template-columns:1fr;grid-gap:5px 5px"
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let fieldErrors = {}
@@ -129,7 +130,7 @@ export class FormField extends Field<FormDefinition, Object> {
           }
         }
         let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
-        if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
+        if (gridLayout.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fs-form-field' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
           templates.push(html`<div class='fs-form-field'>${fieldTemplate}</div>`)
@@ -143,7 +144,20 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.helpText) {
       header.push(html`<div part="description" class="description">${this.definition.helpText}</div>`)
     }
-    return html`<div class="section" style="${ifDefined(style)}">${header}<div class="grid" style="${this.gridLayout}">${templates}</div><div>`
+    return html`<div class="section" style="${ifDefined(style)}">${header}<div class="grid" style="${gridLayout}">${templates}</div><div>`
+  }
+
+  connectedCallback() {
+    this.addEventListener('gridChanged', this.nestedGridChanged)
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener('gridChanged', this.nestedGridChanged)
+  }
+
+  nestedGridChanged(e: CustomEvent) {
+    e.stopPropagation()
+    this.dispatchEvent(new CustomEvent('gridChanged', { bubbles: true, composed: true, detail: { name: e.detail.name+"."+this.definition.name, gridSize: e.detail.gridSize }}))
   }
 
   firstUpdated() {
@@ -169,14 +183,19 @@ export class FormField extends Field<FormDefinition, Object> {
 
   public layout(availableWidth: number) {
     if (this.definition.layout?.grids) {
+      let gridSize
       for (let size of SUPPORTED_BREAKPOINTS) {
         let breakpoint = this.definition?.layout?.breakpoints?.[size]
         if (typeof breakpoint === "undefined") {
           breakpoint = DEFAULT_BREAKPOINTS[size]
         }
-        if (breakpoint > availableWidth && this.definition.layout?.grids[size]) {
-          this.gridLayout = this.definition.layout?.grids[size]
-          break;
+        gridSize = this.definition.layout.grids[size] ? size : gridSize
+        if (breakpoint > availableWidth && gridSize ) {
+          if ( this.gridSize != gridSize ) {
+            this.gridSize = gridSize
+            this.dispatchEvent(new CustomEvent('gridChanged', { bubbles: true, composed: true, detail: { name: this.definition.name, gridSize }}))
+            break;
+          }
         }
       }
     }
