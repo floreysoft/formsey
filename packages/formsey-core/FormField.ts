@@ -34,6 +34,7 @@ export class FormField extends Field<FormDefinition, Object> {
     this._definition = definition;
     this.applyHiddenFields();
     this.removeDeletedFields()
+    this.updateGridLayout()
     this.requestUpdate();
   }
 
@@ -42,7 +43,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   @property()
-  private gridSize: string = "l"
+  private gridLayout: string = "grid-template-columns:1fr;grid-gap:5px 5px"
 
   protected _value: Object = {}
   protected _definition: FormDefinition
@@ -51,6 +52,7 @@ export class FormField extends Field<FormDefinition, Object> {
   protected _fields: HTMLElement[]
 
   private resizeObserver: ResizeObserver
+  private gridSize: string
 
   static get styles() {
     return [...super.styles, css`
@@ -105,7 +107,6 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.layout) {
       style = this.definition.layout.style
     }
-    let gridLayout = this.definition.layout?.grids?.[this.gridSize] ? this.definition.layout?.grids?.[this.gridSize] : "grid-template-columns:1fr;grid-gap:5px 5px"
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let fieldErrors = {}
@@ -130,7 +131,7 @@ export class FormField extends Field<FormDefinition, Object> {
           }
         }
         let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
-        if (gridLayout.indexOf('grid-template-areas') >= 0) {
+        if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fs-form-field' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
           templates.push(html`<div class='fs-form-field'>${fieldTemplate}</div>`)
@@ -144,24 +145,27 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.helpText) {
       header.push(html`<div part="description" class="description">${this.definition.helpText}</div>`)
     }
-    return html`<div class="section" style="${ifDefined(style)}">${header}<div class="grid" style="${gridLayout}">${templates}</div><div>`
+    return html`<div class="section" style="${ifDefined(style)}">${header}<div class="grid" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div><div>`
   }
 
-  connectedCallback() {
-    this.addEventListener('gridChanged', this.nestedGridChanged)
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener('gridChanged', this.nestedGridChanged)
-  }
-
-  nestedGridChanged(e: CustomEvent) {
+  gridSizeChanged(e: CustomEvent) {
     e.stopPropagation()
-    this.dispatchEvent(new CustomEvent('gridChanged', { bubbles: true, composed: true, detail: { name: e.detail.name+"."+this.definition.name, gridSize: e.detail.gridSize }}))
+    this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.path() + "." + e.detail.id, size: e.detail.size } }))
   }
 
   firstUpdated() {
     this.resizeObserver.observe(this.grid)
+  }
+
+  updated() {
+    let counter = 0;
+    for (let field of this._fields) {
+      let child = field.firstElementChild as any
+      if ( typeof child['setIndex'] == "function" ) {
+        child.setIndex(counter)
+        counter++
+      }
+    }
   }
 
   public validate(report: boolean) {
@@ -182,21 +186,30 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   public layout(availableWidth: number) {
-    if (this.definition.layout?.grids) {
-      let gridSize
-      for (let size of SUPPORTED_BREAKPOINTS) {
-        let breakpoint = this.definition?.layout?.breakpoints?.[size]
-        if (typeof breakpoint === "undefined") {
-          breakpoint = DEFAULT_BREAKPOINTS[size]
+    for (let size of SUPPORTED_BREAKPOINTS) {
+      let breakpoint = this.definition?.layout?.breakpoints?.[size]
+      if (typeof breakpoint === "undefined") {
+        breakpoint = DEFAULT_BREAKPOINTS[size]
+      }
+      if (breakpoint > availableWidth) {
+        if (this.gridSize != size) {
+          // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
+          this.gridSize = size
+          this.updateGridLayout()
+          this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.path(), size } }))
         }
-        gridSize = this.definition.layout.grids[size] ? size : gridSize
-        if (breakpoint > availableWidth && gridSize ) {
-          if ( this.gridSize != gridSize ) {
-            this.gridSize = gridSize
-            this.dispatchEvent(new CustomEvent('gridChanged', { bubbles: true, composed: true, detail: { name: this.definition.name, gridSize }}))
-            break;
-          }
-        }
+        break
+      }
+    }
+  }
+
+  protected updateGridLayout() {
+    let gridLayout
+    for (let size of SUPPORTED_BREAKPOINTS) {
+      gridLayout = this.definition?.layout?.grids?.[size] ? this.definition.layout.grids[size] : gridLayout
+      if (this.gridSize == size) {
+        this.gridLayout = gridLayout ? gridLayout : this.gridLayout
+        break;
       }
     }
   }
@@ -316,6 +329,28 @@ export class FormField extends Field<FormDefinition, Object> {
       this.errors[this.definition.name ? this.definition.name + "." + error : error] = e.errors[error]
     }
     this.dispatchEvent(new InvalidEvent(this.errors))
+  }
+
+  private path() {
+    const container = this.closestElement(".fs-form-field", this)
+    if ( container && container.parentElement ) {
+      const index = [...Array.from(container.parentElement.children)].indexOf(container)
+      return index
+    } else {
+      return 0
+    }
+  }
+
+  private closestElement(selector: string, base: Element = this) {
+    function __closestFrom(el: Element | Window | Document): Element {
+      if (!el || el === document || el === window) return null;
+      if ((el as Slotable).assignedSlot) el = (el as Slotable).assignedSlot;
+      let found = (el as Element).closest(selector);
+      return found
+        ? found
+        : __closestFrom(((el as Element).getRootNode() as ShadowRoot).host);
+    }
+    return __closestFrom(base);
   }
 }
 register('formsey-form-field', FormField)

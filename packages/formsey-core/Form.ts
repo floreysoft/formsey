@@ -5,8 +5,6 @@ import { InvalidEvent } from './InvalidEvent';
 export class Form extends Field<FieldDefinition, Object> {
   public static formAssociated = true;
 
-  private resizeHandler = ((e: CustomEvent) => { this.resize() })
-
   value: Object = {}
 
   async fetchDefinition(url: string) {
@@ -48,26 +46,12 @@ export class Form extends Field<FieldDefinition, Object> {
     this.internals.setFormValue('');
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    window.addEventListener("resize", this.resizeHandler)
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback()
-    window.removeEventListener("resize", this.resizeHandler)
-  }
-
   render() {
     let value = this.value
     if (this.definition.name && this.value && this.value[this.definition.name]) {
       value = this.value[this.definition.name]
     }
     return createField(this.components, this.definition, value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
-  }
-
-  firstUpdated() {
-    this.updateComplete.then(() => { this.resize() })
   }
 
   renderHeader() {
