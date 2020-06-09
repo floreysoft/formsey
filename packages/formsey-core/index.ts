@@ -34,8 +34,14 @@ export function registerTheme(name: string, theme: Theme) {
     themes = {}
     window['__formseyThemes'] = themes
   }
-  console.log("Add theme='"+name+"' to registry")
-  themes[name] = theme
+  let registeredTheme = themes[name]
+  if ( typeof registeredTheme !== "undefined") {
+    console.log("Add components to registered theme='"+name+"'")
+    themes[name] = { ...registerTheme, components: { ...registeredTheme.components, ...theme.components }}
+  } else {
+    console.log("Add new theme='"+name+"' to registry")
+    themes[name] = theme
+  }
 }
 
 export function getTheme(name: string): Theme | undefined {

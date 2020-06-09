@@ -1,4 +1,4 @@
-import { registerTheme } from '@formsey/core';
+import { registerTheme, getTheme } from '@formsey/core';
 import { html } from 'lit-element';
 
 export { BooleanField } from './BooleanField';
