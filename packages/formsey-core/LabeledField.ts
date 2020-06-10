@@ -48,9 +48,9 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     }
 
     .help-text {
-      color: var(--formsey-help-text-color, #757c98);
+      color: var(--formsey-help-text-color, inherit);
       padding: var(--formsey-help-text-padding, var(--fs-widget-padding, 4px 0 0 0));
-      opacity: 0.6;
+      opacity: 0.8;
       transition: opacity 0.12s ease-out;
     }
 

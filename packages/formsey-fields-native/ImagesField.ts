@@ -27,17 +27,12 @@ export class ImageCheckbox extends LitElement {
       height: auto;
       border-radius: var(--formsey-input-border-radius, var(--fs-border-radius, 3px));
       border: 1px solid transparent;
-      opacity: .8;
-      transition-duration: 0.2s;
+      opacity: .9;
+      transition: opacity 0.2s ease-out, transform .2s;
       transform-origin: 50% 50%;
-      z-index: -1;
     }
     img:hover {
-      opacity: .9;
-    }
-    :focus+label>img {
-      border: 1px solid var(--formsey-border-color-focus, var(--fs-border-color-focus, orange));
-      transform: scale(0.95);
+      opacity: .95;
     }
     :checked+label>img {
       opacity: 1;
@@ -47,28 +42,36 @@ export class ImageCheckbox extends LitElement {
       position: relative;
       cursor: pointer;
       user-select: none;
+      transition: transform .2s;
     }
-    label::before {
+    label::after {
       content: '✓';
-      color: var(--formsey-text-color, var(--fs-accent-color-text, #ffffff));
-      border: 1px solid transparent;
+      color: var(--formsey-text-color, var(--fs-accent-color, #ffffff));
+      background-color: var(--formsey-background-color, var(--fs-background-color, inherit));
       border-radius: 50%;
       position: absolute;
       right: .5em;
       top: .5em;
       width: 1em;
       height: 1em;
-      display: none;
       text-align: center;
       line-height: 1;
+      transform-origin: 50% 50%;
+      display:none;
+      box-shadow: var(--formsey-box-shadow, var(--fs-box-shadow));
+    }
+    :checked+label>img {
+      box-shadow: var(--formsey-box-shadow, var(--fs-box-shadow));
+      border: 1px solid var(--fs-widget-background-color-selected);
+    }
+    :focus+label>img {
+      border: 1px solid var(--formsey-border-color-focus, var(--fs-border-color-focus, orange));
     }
     :checked+label {
-      border-color: #ddd;
+      transform: scale(.95);
     }
-    :checked+label::before {
-      display: block;
-      border: 1px solid var(--formsey-text-color, var(--fs-accent-color-text, #ffffff));
-      background-color: var(--formsey-primary-color, var(--fs-accent-color, inherit));
+    :checked+label::after {
+      display:block;
     }
     `
   }
@@ -96,7 +99,7 @@ export class ImageCheckbox extends LitElement {
   checkbox: HTMLInputElement
 
   render() {
-    return html`<input id="${this.id}" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @click="${this.clicked}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.id}"><img src="${this.src}" alt="${this.alt}" /></label>`;
+    return html`<input id="${this.id}" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @click="${this.clicked}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.id}"><img src="${this.src}" alt="${this.alt}" /><slot></slot></label>`;
   }
 
   updated() {
@@ -149,7 +152,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   images: HTMLElement
 
   columnWidth: number
-  
+
   ro: ResizeObserver
 
   _definition: ImagesFieldDefinition
@@ -164,7 +167,12 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
       .images {
           column-gap: 0px;
           line-height: 0;
-        }
+      }
+
+      .display {
+        line-height: 1.15;
+        padding-top: 0;
+        padding-bottom: 0;
       }
     `]
   }
@@ -186,11 +194,9 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
     if (this.definition.images) {
       for (let i = 0; i < this.definition.images.length; i++) {
         let image = this.definition.images[i]
-        let label = image.label ? image.label : image.value;
         let value = image.value ? image.value : image.label;
         let checked = this.definition.multiple ? this.value.includes(value) : this.value == value
-        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
-      }
+        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"><div class="help-text display">${image.label}</div></formsey-image-checkbox>`);      }
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {

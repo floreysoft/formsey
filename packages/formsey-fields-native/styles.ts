@@ -10,6 +10,7 @@ export const INPUT_STYLE = css`
     font-family: var(--formsey-font-family, var(--fs-font-family, inherit));
     font-size: var(--formsey-font-size, var(--fs-font-size, inherit));
     color: var(--formsey-text-color, var(--fs-text-color, inherit));
+    font-weight: var(--formsey-font-weight, var(--fs-font-weight, inherit));
     border-radius: var(--formsey-input-border-radius, var(--fs-border-radius, 3px));
     padding: var(--formsey-input-padding, var(--fs-widget-padding, .2em .3em));
     background: var(--formsey-input-background, var(--fs-widget-background-color-alpha, #99999920));

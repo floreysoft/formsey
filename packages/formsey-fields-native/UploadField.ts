@@ -44,9 +44,10 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     }
 
     .input {
+      display: flex;
+      flex-direction: column;
       cursor: pointer;
       height: auto;
-      min-height: var(--formsey-input-height, 2em);
       padding: 0;
     }
 
@@ -62,7 +63,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     .prompt {
       grid-template-columns: 1fr max-content;
       cursor: pointer;
-      padding: var(--fs-widget-padding, 3px);
+      min-height: calc( var(--formsey-input-height, 2em) - 2px);
     }
 
     .prompt span {
