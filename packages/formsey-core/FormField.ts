@@ -5,15 +5,14 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
 
-export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl", "xxl"]
+export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
 
 export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xs": 320,
   "s": 568,
   "m": 768,
   "l": 1024,
-  "xl": 1366,
-  "xxl": 1680
+  "xl": 1366
 }
 
 export class FormField extends Field<FormDefinition, Object> {
