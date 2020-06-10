@@ -31,7 +31,7 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label><input id="checkbox" type="checkbox" @click="${this.clicked}" .value="${this.value}" required="${this.definition.required}">${this.definition.label}</label>`;
+    return html`<label><input id="checkbox" type="checkbox" @click="${this.clicked}" ?checked="${this.value}" required="${this.definition.required}">${this.definition.label}</label>`;
   }
 
   clicked(e ) {
