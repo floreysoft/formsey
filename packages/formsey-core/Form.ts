@@ -2,6 +2,62 @@ import { createField, Field, FieldDefinition, FormField, register, ChangeEvent }
 import { property, queryAll, css } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
+export function get(data: Object, path: string): any {
+  if (!data) {
+    return undefined
+  }
+  let index = path.indexOf('.')
+  let token: string
+  if (index == -1) {
+    token = path
+    path = ""
+  } else {
+    token = path.substring(0, index)
+    path = path.substring(index + 1)
+  }
+  let found: any
+  if (token.endsWith(']')) {
+    let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
+    token = token.substring(0, token.indexOf('['))
+    found = data[token][index]
+  } else {
+    found = data[token]
+  }
+  if (found && path) {
+    return get(found, path)
+  } else {
+    return found
+  }
+}
+
+export function set(data: Object, path: string, value: any): any {
+  let index = path.indexOf('.')
+  let token: string
+  if (index == -1) {
+    token = path
+    path = ""
+  } else {
+    token = path.substring(0, index)
+    path = path.substring(index + 1)
+  }
+  if (token.endsWith(']')) {
+    let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
+    token = token.substring(0, token.indexOf('['))
+    if (path) {
+      set(data[token][index], path, value)
+    } else {
+      data[token][index] = value
+      return
+    }
+  } else {
+    if (path) {
+      set(data[token], path, value)
+    } else {
+      data[token] = value
+      return
+    }
+  }
+}
 export class Form extends Field<FieldDefinition, Object> {
   public static formAssociated = true;
 
@@ -96,79 +152,22 @@ export class Form extends Field<FieldDefinition, Object> {
     }
   }
 
-  public getValue(path: string) : any {
-    return this.get(this.value, path);
+  public getValue(path: string): any {
+    return get(this.value, path);
   }
 
-  public setValue(path: string, value: any) : any {
-    this.set(this.value, path, value);
+  public setValue(path: string, value: any): any {
+    set(this.value, path, value);
     this.requestUpdate()
   }
 
-  public getField(path: string) : any {
-    return this.get(this.definition, path);
+  public getField(path: string): any {
+    return get(this.definition, path);
   }
 
-  public setField(path: string, value: any) : any {
-    this.set(this.definition, path, value);
+  public setField(path: string, value: any): any {
+    set(this.definition, path, value);
     this.requestUpdate()
-  }
-
-  public get(data: Object, path: string): any {
-    if (!data) {
-      return undefined
-    }
-    let index = path.indexOf('.')
-    let token: string
-    if (index == -1) {
-      token = path
-      path = ""
-    } else {
-      token = path.substring(0, index)
-      path = path.substring(index + 1)
-    }
-    let found: any
-    if (token.endsWith(']')) {
-      let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
-      token = token.substring(0, token.indexOf('['))
-      found = data[token][index]
-    } else {
-      found = data[token]
-    }
-    if (found && path) {
-      return this.get(found, path)
-    } else {
-      return found
-    }
-  }
-
-  public set(data: Object, path: string, value: any): any {
-    let index = path.indexOf('.')
-    let token: string
-    if (index == -1) {
-      token = path
-      path = ""
-    } else {
-      token = path.substring(0, index)
-      path = path.substring(index + 1)
-    }
-    if (token.endsWith(']')) {
-      let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
-      token = token.substring(0, token.indexOf('['))
-      if (path) {
-        this.set(data[token][index], path, value)
-      } else {
-        data[token][index] = value
-        return
-      }
-    } else {
-      if (path) {
-        this.set(data[token], path, value)
-      } else {
-        data[token] = value
-        return
-      }
-    }
   }
 }
 register('formsey-form', Form)
