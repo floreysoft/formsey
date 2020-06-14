@@ -102,6 +102,7 @@ export class Form extends Field<FieldDefinition, Object> {
 
   public setValue(path: string, value: any) : any {
     this.set(this.value, path, value);
+    this.requestUpdate()
   }
 
   public getField(path: string) : any {
@@ -110,6 +111,7 @@ export class Form extends Field<FieldDefinition, Object> {
 
   public setField(path: string, value: any) : any {
     this.set(this.definition, path, value);
+    this.requestUpdate()
   }
 
   public get(data: Object, path: string): any {
