@@ -1,4 +1,4 @@
-import { createField, Field, FieldDefinition, FormField, register, ChangeEvent } from '@formsey/core';
+import { createField, Field, FieldDefinition, FormDefinition, FormField, register, ChangeEvent } from '@formsey/core';
 import { property, queryAll, css } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
@@ -6,15 +6,9 @@ export function get(data: Object, path: string): any {
   if (!data) {
     return undefined
   }
-  let index = path.indexOf('.')
-  let token: string
-  if (index == -1) {
-    token = path
-    path = ""
-  } else {
-    token = path.substring(0, index)
-    path = path.substring(index + 1)
-  }
+  let tokens = path.split('.')
+  let token = tokens.shift()
+  path = tokens.join('.')
   let found: any
   if (token.endsWith(']')) {
     let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
@@ -31,15 +25,9 @@ export function get(data: Object, path: string): any {
 }
 
 export function set(data: Object, path: string, value: any): any {
-  let index = path.indexOf('.')
-  let token: string
-  if (index == -1) {
-    token = path
-    path = ""
-  } else {
-    token = path.substring(0, index)
-    path = path.substring(index + 1)
-  }
+  let tokens = path.split('.')
+  let token = tokens.shift()
+  path = tokens.join('.')
   if (token.endsWith(']')) {
     let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
     token = token.substring(0, token.indexOf('['))
@@ -58,10 +46,17 @@ export function set(data: Object, path: string, value: any): any {
     }
   }
 }
-export class Form extends Field<FieldDefinition, Object> {
-  public static formAssociated = true;
 
+interface Logic {
+  onValueChanged(key : string, form: Form) : void
+
+  onDefinitionChanged(key: string, form: Form) : FormDefinition
+}
+
+export class Form extends Field<FieldDefinition, Object> {
   value: Object = {}
+
+  logic: Logic
 
   async fetchDefinition(url: string) {
     try {
@@ -81,7 +76,6 @@ export class Form extends Field<FieldDefinition, Object> {
     this.fetchDefinition(url);
   }
 
-  protected internals: any
   protected form: any
 
   static get styles() {
@@ -89,17 +83,6 @@ export class Form extends Field<FieldDefinition, Object> {
       :host {
         outline: none;
       }`];
-  }
-
-  constructor() {
-    super()
-    // @ts-ignore
-    this.internals = this.attachInternals();
-  }
-
-  protected formResetCallback() {
-    this.value = {};
-    this.internals.setFormValue('');
   }
 
   render() {
@@ -135,8 +118,11 @@ export class Form extends Field<FieldDefinition, Object> {
     } else {
       value = this.value
     }
-    this.dispatchEvent(new ChangeEvent(e.detail.name ? e.detail.name : name, value));
-    this.internals.setFormValue(this.value);
+    const key = e.detail.name ? e.detail.name : name
+    if ( this.logic ) {
+      this.logic.onValueChanged(key, this)
+    }
+    this.dispatchEvent(new ChangeEvent(key, value));
   }
 
   protected invalid(e: InvalidEvent) {
