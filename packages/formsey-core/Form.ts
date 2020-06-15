@@ -47,16 +47,8 @@ export function set(data: Object, path: string, value: any): any {
   }
 }
 
-interface Logic {
-  onValueChanged(key : string, form: Form) : void
-
-  onDefinitionChanged(key: string, form: Form) : FormDefinition
-}
-
 export class Form extends Field<FieldDefinition, Object> {
   value: Object = {}
-
-  logic: Logic
 
   async fetchDefinition(url: string) {
     try {
@@ -119,9 +111,6 @@ export class Form extends Field<FieldDefinition, Object> {
       value = this.value
     }
     const key = e.detail.name ? e.detail.name : name
-    if ( this.logic ) {
-      this.logic.onValueChanged(key, this)
-    }
     this.dispatchEvent(new ChangeEvent(key, value));
   }
 
