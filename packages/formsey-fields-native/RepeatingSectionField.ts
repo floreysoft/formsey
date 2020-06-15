@@ -169,10 +169,11 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   }
 
   protected changed(e: ChangeEvent<any>) {
-    let index = this.firstPathElement(e.detail.name);
+    let path = e.detail.name.split('.')
+    let index = path.shift()
     this.value[index] = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent(this.definition.name+"["+index+"]."+path.shift(), this.value));
     }
   }
 

@@ -139,13 +139,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected firstPathElement(path: string) {
-    if (path) {
-      let index = path.indexOf('.')
-      if (index > 0) {
-        return path.substring(0, index)
-      }
-    }
-    return path;
+    return path.split('.')[0]
   }
 
   protected prependPath(path: string) {
