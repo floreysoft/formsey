@@ -7,13 +7,20 @@ export interface FieldDefinition {
   default?: any
 }
 
-export interface InputFieldDefinition extends FieldDefinition {
+export interface InteractiveFieldDefinition extends FieldDefinition {
   autofocus?: boolean
   required?: boolean
   disabled?: boolean
+}
+
+export interface InputFieldDefinition extends InteractiveFieldDefinition {
   customValidity?: string
   readonly?: boolean
   autocomplete?: string
+}
+
+export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
+  text: string
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {

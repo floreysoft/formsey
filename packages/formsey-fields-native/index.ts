@@ -72,6 +72,7 @@ registerTheme('native', {
     'image': 'formsey-image',
     'youtube': 'formsey-youtube',
     'upload': 'formsey-upload',
-    'images': 'formsey-images'
+    'images': 'formsey-images',
+    'button': 'formsey-button'
   }
 })
