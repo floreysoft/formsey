@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ChangeEvent } from '@formsey/core';
+import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ChangeEvent, ClickEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html, property, query } from 'lit-element';
 import { NESTED_FORM_STYLE } from './styles';
@@ -37,8 +37,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
       checked = true
     }
     this.definition.form.name = this.definition.name
-    let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
-    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ChangeEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
+    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ChangeEvent<boolean>) => this.selectionChanged(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
   }
 

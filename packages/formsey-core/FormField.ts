@@ -1,4 +1,4 @@
-import { area, ChangeEvent, createField, Field, FormDefinition, register } from '@formsey/core';
+import { area, ChangeEvent, createField, Field, FormDefinition, register, ClickEvent } from '@formsey/core';
 import { css, html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -129,7 +129,7 @@ export class FormField extends Field<FormDefinition, Object> {
             }
           }
         }
-        let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
+        let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fs-form-field' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {

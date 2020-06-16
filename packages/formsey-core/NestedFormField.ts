@@ -1,4 +1,4 @@
-import { ChangeEvent, createField, Field, NestedFormDefinition } from '@formsey/core';
+import { ChangeEvent, createField, Field, NestedFormDefinition, ClickEvent } from '@formsey/core';
 import { html, query } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
@@ -13,7 +13,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
       this.value = {}
     }
     this.definition.form.name = this.definition.name
-    return html`<div part="form">${createField(this.components, this.definition.form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+    return html`<div part="form">${createField(this.components, this.definition.form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event),  (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
   }
 
   public focusField(path: string) {

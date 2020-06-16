@@ -1,4 +1,4 @@
-import { createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition, ChangeEvent } from '@formsey/core';
+import { createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition, ChangeEvent, ClickEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { css, html, property, queryAll, TemplateResult } from 'lit-element';
 import { NESTED_FORM_STYLE } from './styles';
@@ -95,7 +95,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         }
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove"  tabindex="0" @click="${(e: Event) => this.removeForm(i)}">${ICON_MINUS}</button></div>` : undefined}
-        ${createField(this.components, fieldDefinition, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+        ${createField(this.components, fieldDefinition, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
         itemTemplates.push(template);
       }
     }

@@ -1,8 +1,9 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { Components, getDefaultTheme, getTheme } from '.';
+import { ChangeEvent } from './ChangeEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
-import { ChangeEvent } from './ChangeEvent';
+import { ClickEvent } from './ClickEvent';
 
 export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
@@ -12,10 +13,10 @@ export function hacktml(parts, ...args) {
   return html(newParts, ...newArgs);
 }
 
-export const createField = (components: Components, definition: FieldDefinition, value: Object, errors: InvalidErrors, changeHandler: any, invalidHandler: any): TemplateResult => {
+export const createField = (components: Components, definition: FieldDefinition, value: Object, errors: InvalidErrors, changeHandler: any, clickHandler: any, invalidHandler: any): TemplateResult => {
   const tag = components[definition.type];
   if (tag) {
-    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .errors=${errors} @change=${changeHandler} @invalid=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .errors=${errors} @change=${changeHandler} @click=${clickHandler} @invalid=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your components!");
   }
@@ -136,6 +137,10 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   protected changed(e: any) {
     this.value = e.currentTarget.value;
     this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+  }
+
+  protected clicked(e: any) {
+    this.dispatchEvent(new ClickEvent(this.definition.name));
   }
 
   protected firstPathElement(path: string) {

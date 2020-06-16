@@ -2,6 +2,7 @@ import { TemplateResult } from 'lit-element'
 import { FieldDefinition } from './FieldDefinitions'
 
 export { ChangeEvent } from './ChangeEvent'
+export { ClickEvent } from './ClickEvent'
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'
 export { Form } from './Form'

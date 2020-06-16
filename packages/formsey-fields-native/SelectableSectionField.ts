@@ -1,4 +1,4 @@
-import { ChangeEvent, createField, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition } from '@formsey/core';
+import { ChangeEvent, createField, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition, ClickEvent } from '@formsey/core';
 import { css, html, property } from 'lit-element';
 
 export class SelectableSectionValue {
@@ -37,8 +37,8 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       let selection = this.definition.selections[index];
       let value = selection.label ? selection.label : selection.value;
       let errors = {}
-      return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ChangeEvent<string>) => this.selectionChanged(event), null)}
-      <div class="form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
+      return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, errors, (event: ChangeEvent<string>) => this.selectionChanged(event), (event: ClickEvent<any>) => this.clicked(event), null)}
+      <div class="form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), null)}</div>`;
     }
     return undefined
   }

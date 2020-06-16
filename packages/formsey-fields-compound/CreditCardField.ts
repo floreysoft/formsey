@@ -1,5 +1,5 @@
 import { html, property } from 'lit-element';
-import { createField, ChangeEvent, CompoundField, FieldDefinition } from '@formsey/core';
+import { createField, ChangeEvent, CompoundField, FieldDefinition, ClickEvent } from '@formsey/core';
 
 export interface CreditCardFieldDefinition extends FieldDefinition {
   enabledAutofill : boolean
@@ -22,7 +22,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
+    return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), null)}</div>`;
   }
 }
 

@@ -48,7 +48,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     }
     if (this.definition.other) {
       let checked = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label)).length == 0
-      templates.push(html`<div class="other"><label><input type="radio" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}">Other</label>${createField(this.components, { type: "string", "name" : "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? this.value : "", null, (e) => this.otherChanged(e),null)}</div>`);
+      templates.push(html`<div class="other"><label><input type="radio" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}">Other</label>${createField(this.components, { type: "string", "name" : "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? this.value : "", null, (e) => this.otherChanged(e), null, null)}</div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
