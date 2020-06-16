@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native-extended",
-  "version": "0.2.100",
+  "version": "0.2.101",
   "description": "Fields extended",
   "files": [
     "/*.js.map",
@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
-    "@formsey/fields-native": "^0.2.100",
+    "@formsey/fields-native": "^0.2.101",
     "signature_pad": "^3.0.0-beta.3"
   },
   "scripts": {
