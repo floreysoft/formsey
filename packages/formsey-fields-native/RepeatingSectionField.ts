@@ -136,7 +136,6 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     this.value.push({});
     this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
     this.requestUpdate();
-    this.updateComplete.then(() => { this.resize() })
   }
 
   protected removeForm(index: number) {

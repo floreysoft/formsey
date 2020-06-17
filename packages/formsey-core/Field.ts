@@ -103,8 +103,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return true
   }
 
-  public resize(): void {}
-
   static get styles() {
     return [css`
     .hidden {
@@ -140,6 +138,8 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected clicked(e: any) {
+    e.stopPropagation()
+    e.preventDefault()
     this.dispatchEvent(new ClickEvent(this.definition.name));
   }
 

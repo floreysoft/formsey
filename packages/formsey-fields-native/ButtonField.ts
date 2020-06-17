@@ -44,7 +44,7 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   button: HTMLButtonElement
 
   renderField() {
-    return html`<button class="input" @click="${this.clicked}">${this.definition.text}</button>`;
+    return html`<button class="input" @click="${this.clicked}" ?disabled="${this.definition.disabled}">${this.definition.text}</button>`;
   }
 
   focusField(path: string) {

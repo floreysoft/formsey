@@ -243,6 +243,20 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
+  protected clicked(e: ClickEvent<any>) {
+    if (e.detail.name) {
+      e.stopPropagation()
+      let name = this.firstPathElement(e.detail.name);
+      if (name) {
+        if (name.startsWith('.')) {
+          name = name.substring(1)
+          e.detail.name = e.detail.name.substring(1)
+        }
+        this.dispatchEvent(new ClickEvent(this.prependPath(e.detail.name)));
+      }
+    }
+  }
+
   protected removeDeletedFields() {
     if (this._definition && this._definition.fields && this._value) {
       // Remove values from fields that have been removed from the definition

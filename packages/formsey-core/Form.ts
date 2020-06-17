@@ -110,8 +110,16 @@ export class Form extends Field<FieldDefinition, Object> {
     } else {
       value = this.value
     }
-    const key = e.detail.name ? e.detail.name : name
+    const key = e.detail.name ? e.detail.name : this.definition.name
     this.dispatchEvent(new ChangeEvent(key, value));
+  }
+
+  protected clicked(e: ChangeEvent<any>) {
+    if (e.detail.name?.startsWith('.')) {
+      e.detail.name = e.detail.name.substring(1)
+    }
+    const key = e.detail.name ? e.detail.name : this.definition.name
+    this.dispatchEvent(new ClickEvent(key));
   }
 
   protected invalid(e: InvalidEvent) {

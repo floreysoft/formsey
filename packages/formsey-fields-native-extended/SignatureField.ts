@@ -89,7 +89,6 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   }
 
   protected clear(e: Event) {
-    this.resize()
     this.signaturePad.clear();
     this.value = "";
     this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
