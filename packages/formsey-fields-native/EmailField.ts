@@ -3,7 +3,7 @@ import { StringField } from './StringField';
 import { register } from '@formsey/core';
 
 export class EmailField extends StringField {
-  protected get type() : string {
+  protected get type() : "email" {
     return "email"
   }
 }

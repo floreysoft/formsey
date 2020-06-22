@@ -1,80 +1,10 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ChangeEvent, ImagesFieldDefinition, LabeledField, register } from '@formsey/core';
-import { css, html, LitElement, property, query, queryAll, TemplateResult } from 'lit-element';
+import { html, LitElement, property, query, queryAll, TemplateResult } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined'
 import ResizeObserver from 'resize-observer-polyfill';
 
 export class ImageCheckbox extends LitElement {
-  static get styles() {
-    return css`
-    :host {
-      display: inline-block;
-      position: relative;
-    }
-    input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    img {
-      width: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      height: auto;
-      opacity: .9;
-      transition: opacity 0.2s ease-out, transform .2s;
-      transform-origin: 50% 50%;
-    }
-    img:hover {
-      opacity: .95;
-    }
-    :checked+label>img {
-      opacity: 1;
-    }
-    label {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-      transition: transform .2s;
-      line-height: 0;
-    }
-    label::after {
-      content: ' ';
-      color: var(--formsey-text-color, var(--fs-accent-color-text, #ffffff));
-      background-color: var(--formsey-background-color, var(--fs-background-color, inherit));
-      border-radius: 50%;
-      position: absolute;
-      right: .25em;
-      top: .25em;
-      width: 1em;
-      height: 1em;
-      text-align: center;
-      line-height: 1em;
-      transform-origin: 50% 50%;
-      display:none;
-      box-shadow: var(--formsey-box-shadow, var(--fs-box-shadow));
-    }
-    :checked+label>img {
-      box-shadow: 0px 0px 3px 0 var(--fs-text-color);
-    }
-    :focus+label {
-      transform: scale(.95);
-    }
-    :checked+label {
-      transform: scale(.9);
-    }
-    :focus+label>img {
-      box-shadow: 0px 0px 3px 0 var(--fs-border-color-focus);
-      opacity: .9;
-    }
-    :checked+label::after {
-      display:block;
-    }
-    `
-  }
-
   @property({ type: Boolean })
   required: boolean;
 
@@ -90,15 +20,21 @@ export class ImageCheckbox extends LitElement {
   @property({ type: String })
   alt: string
 
+  @property({ type: String })
+  label: string
+
   @property({ type: Number })
   tabIndex: number
-
 
   @query("input[type='checkbox']")
   checkbox: HTMLInputElement
 
   render() {
-    return html`<input id="${this.id}" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @click="${this.clicked}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.id}"><img src="${this.src}" alt="${this.alt}" /><slot></slot></label>`;
+    return html`<input id="${this.id}" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @click="${this.clicked}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.id}"><img src="${this.src}" alt="${this.alt}" />${ifDefined(this.label)}</label>`;
+  }
+
+  protected createRenderRoot(): Element | ShadowRoot {
+    return this;
   }
 
   updated() {
@@ -147,7 +83,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   @queryAll("formsey-image-checkbox")
   checkboxes: ImageCheckbox[]
 
-  @query(".images")
+  @query(".ifi")
   images: HTMLElement
 
   columnWidth: number
@@ -155,25 +91,6 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   ro: ResizeObserver
 
   _definition: ImagesFieldDefinition
-
-  static get styles() {
-    return [...super.styles, css`
-      formsey-image-checkbox {
-        width: 100%;
-        height: auto;
-      }
-
-      .images {
-          column-gap: 0px;
-          line-height: 0;
-      }
-
-      .display {
-        line-height: 1.15;
-        margin-bottom: .5em;
-      }
-    `]
-  }
 
   constructor() {
     super()
@@ -194,15 +111,14 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
         const image = this.definition.images[i]
         const value = typeof image.value !== "undefined" ? image.value : image.label;
         const checked = this.definition.multiple ? this.value.includes(value) : this.value === value
-        const label = image.label ? html`<div class="help-text display">${image.label}</div>` : undefined
-        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}">${label}</formsey-image-checkbox>`);
+        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
       }
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<div class="images" style="columns:${this.columns} auto">${templates}</div>`;
+    return html`<div class="ifi" style="columns:${this.columns} auto">${templates}</div>`;
   }
 
   firstUpdated() {

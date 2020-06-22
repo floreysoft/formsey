@@ -1,7 +1,7 @@
 import { createField, Field, FieldDefinition, FormDefinition, FormField, register, ChangeEvent, ClickEvent } from '@formsey/core';
 import { property, queryAll, css } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
-import { LABELED_FIELD_STYLES } from './styles';
+import { NATIVE_STYLES } from './styles';
 
 export function get(data: Object, path: string): any {
   if (!data) {
@@ -72,7 +72,7 @@ export class Form extends Field<FieldDefinition, Object> {
   protected form: any
 
   static get styles() {
-    return [...super.styles, LABELED_FIELD_STYLES, css`
+    return [...super.styles, NATIVE_STYLES, css`
       :host {
         outline: none;
       `]

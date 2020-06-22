@@ -3,7 +3,7 @@ import { DateField } from './DateField';
 import { register } from '@formsey/core';
 
 export class DateTimeField extends DateField {
-  protected get type() : string {
+  protected get type() : "datetime-local" {
     return "datetime-local"
   }
 }

@@ -13,63 +13,6 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   @queryAll(".form")
   protected _fields: HTMLElement[]
 
-  static get styles() {
-    return [...super.styles, NESTED_FORM_STYLE, css`
-    .form {
-      position: relative;
-      margin: 0.5em 0 0 0.8em;
-      padding: 0 0 5px 15px;
-      border-left: 2px solid var(--fs-widget-background-color);
-      font-size: var(--formsey-repeating-section-icon-size, inherit);
-      transition: all 0.12s ease-out;
-    }
-
-    .form:hover {
-      border-left: 2px solid var(--fs-widget-background-color-hover);
-    }
-
-    .fs-remove-wrapper {
-      position: absolute;
-      line-height: 0;
-      padding: 0.4em 0;
-      top: calc(50% - 1em);
-      left: -0.8em;
-    }
-    button svg {
-      width: 1em;
-      height: auto;
-      stroke-width: 0;
-      fill: var(--formsey-repeating-section-icon-fill-color, var(--fs-text-color, currentColor));
-    }
-    button {
-      display: flex;
-      width: 1.4em;
-      height: 1.4em;
-      font-size: var(--formsey-repeating-section-icon-size, inherit);
-      border-radius: 50%;
-      background-color: var(--formsey-repeating-section-icon-background-color, var(--fs-widget-background-color, inherit));
-      transition: background-color 0.12s ease-out;
-      border: var(--formsey-input-border, 1px solid transparent);
-      padding: 0.2em;
-    }
-    button:focus {
-      outline: none;
-      border: 1px solid var(--formsey-border-color-focus, var(--fs-border-color-focus, #020b2f));
-    }
-    .form:hover .fs-remove-wrapper {
-      opacity: 1;
-    }
-    .form:hover .fs-remove {
-      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--fs-widget-background-color-hover, inherit));
-    }
-    .fs-add:hover {
-      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--fs-widget-background-color-hover, inherit));
-    }
-    .fs-add {
-      margin: 0.2em 0.1em 0.1em;
-    }`]
-  }
-
   renderField() {
     if (!this.value) {
       this.value = [];

@@ -1,8 +1,6 @@
 import { Ace } from '@floreysoft/ace';
-import { InputFieldDefinition, LabeledField, ChangeEvent } from '@formsey/core';
-import { css, customElement, html, property, query } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { INPUT_STYLE } from '@formsey/fields-native/styles';
+import { ChangeEvent, InputFieldDefinition, LabeledField } from '@formsey/core';
+import { customElement, html, property, query } from 'lit-element';
 
 export interface SourceCodeFieldDefinition extends InputFieldDefinition {
   theme? : string
@@ -18,17 +16,8 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   @query("floreysoft-ace")
   editor : Ace
 
-  static get styles() {
-    return [...super.styles, INPUT_STYLE, css`
-    .input {
-      height: 150px;
-      padding: 0;
-      overflow: hidden;
-    }`]
-  }
-
   protected renderField() {
-    return html`<floreysoft-ace class="input" .value=${ifDefined(this.value)} ?gutter="${this.definition.gutter}" .mode="${ifDefined(this.definition.mode)}" .theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @changed=${this.changed}></floreysoft-ace>`;
+    return html`<floreysoft-ace class="input" .value=${this.value} ?gutter="${this.definition.gutter}" .mode="${this.definition.mode}" .theme="${this.definition.theme}" ?readonly="${this.definition.readonly}" @changed=${this.changed}></floreysoft-ace>`;
   }
 
   protected changed(e: any) {

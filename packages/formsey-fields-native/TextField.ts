@@ -1,39 +1,21 @@
 import { LabeledField, register, StringFieldDefinition, TextFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { css, html, property, query } from 'lit-element';
+import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { INPUT_STYLE } from './styles';
 
 export class TextField extends LabeledField<TextFieldDefinition, string> {
-  public static formAssociated = true;
-
   @property({ type: String })
   value: string;
 
   @query("textarea")
   textArea : HTMLTextAreaElement
 
-  protected internals: any
-
-  static get styles() {
-    return [...super.styles, INPUT_STYLE, css`
-    .input {
-      height: auto;
-    }`]
-  }
-
-  constructor() {
-    super()
-    // @ts-ignore
-    this.internals = this.attachInternals();
-  }
-
   protected formResetCallback() {
     this.value = '';
   }
 
   protected renderField() {
-    return html`<textarea class="input" rows="3" ?autofocus=${ifDefined(this.definition.autofocus)} ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}">${ifDefined(this.value)}</textarea>`
+    return html`<textarea class="input" rows="3" ?autofocus=${this.definition.autofocus} ?disabled=${this.definition.disabled} ?required="${this.definition.required}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${this.definition.autocomplete}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}">${ifDefined(this.value)}</textarea>`
   }
 
   focusField(path: string) {

@@ -10,20 +10,6 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   @property({ converter: Object })
   value: SelectableSectionValue;
 
-  static get styles() {
-    return [...super.styles, css`
-    .form ::part(title) {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 18px);
-    }
-
-    .form ::part(description) {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 16px);
-    }
-    `]
-  }
-
   renderField() {
     if (this.definition && this.definition.selections) {
       let values = this.definition.selections.map(selection => ( selection.value ? selection.value : selection.label));

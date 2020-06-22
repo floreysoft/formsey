@@ -1,29 +1,7 @@
-import { BooleanFieldDefinition, LabeledField, register, ChangeEvent } from '@formsey/core';
-import { html, property, query, css } from 'lit-element';
-import { INPUT_STYLE } from './styles';
+import { BooleanFieldDefinition, ChangeEvent, LabeledField, register } from '@formsey/core';
+import { css, html, property, query } from 'lit-element';
 
 export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
-  static get styles() {
-    return [...super.styles, css`
-    :host {
-    }
-
-    input[type="checkbox"] {
-      margin: var(--fs-widget-padding, 0 .5em 0 0);
-      font-family: var(--formsey-font-family, var(--fs-font-family, inherit));
-      font-size: var(--formsey-font-size, var(--fs-font-size, inherit));
-      color: var(--formsey-text-color, var(--fs-text-color, inherit));
-    }
-
-    label {
-      height: var(--formsey-input-height, 2em);
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-    }
-    `]
-  }
-
   @property({ type: Boolean })
   value: boolean;
 
@@ -31,10 +9,10 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label><input id="checkbox" type="checkbox" @click="${this.clicked}" ?checked="${this.value}" required="${this.definition.required}">${this.definition.label}</label>`;
+    return html`<label class="bfl"><input id="checkbox" type="checkbox" @click="${this.clicked}" ?checked="${this.value}" ?required="${this.definition.required}">${this.definition.label}</label>`;
   }
 
-  clicked(e ) {
+  clicked(e) {
     this.value = this.checkbox.checked
     this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
   }

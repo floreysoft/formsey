@@ -14,29 +14,6 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
   private readonly WATCH_PARAMETER = "watch?v=";
 	private readonly YOUTU_PARAMETER = "youtu.be/";
 
-  static get styles() {
-    return [...super.styles, css`
-    :host {
-      display: table;
-      width: 100%;
-    }
-
-    .fs-video {
-      position: relative;
-      overflow: hidden;
-      max-width: 100%;
-    }
-
-    iframe {
-      border: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }`]
-  }
-
   renderField() {
     let width = this.definition.width;
     let style = "width:"

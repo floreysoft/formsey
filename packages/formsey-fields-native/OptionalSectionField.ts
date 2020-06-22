@@ -12,10 +12,6 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
   private untouched: boolean = true
 
-  static get styles() {
-    return [...super.styles, NESTED_FORM_STYLE]
-  }
-
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
       return false

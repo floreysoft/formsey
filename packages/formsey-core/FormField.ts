@@ -58,7 +58,7 @@ export class FormField extends Field<FormDefinition, Object> {
       :host {
         display: block;
       }
-      .title {
+      .fft {
         font-size: var(--formsey-title-font-size, larger);
         font-family: var(--formsey-title-font-family, var(--formsey-font-family, inherit));
         font-weight: var(--formsey-title-font-weight, inherit);
@@ -66,7 +66,7 @@ export class FormField extends Field<FormDefinition, Object> {
         color: var(--formsey-title-color, inherit);
         margin: var(--formsey-title-margin, var(--fs-padding, 12px 0 4px 0));
       }
-      .description {
+      .ffd {
         font-size: var(--formsey-description-font-size, inherit);
         font-family: var(--formsey-description-font-family, var(--formsey-font-family, inherit));
         font-weight: var(--formsey-description-font-weight, inherit);
@@ -74,21 +74,21 @@ export class FormField extends Field<FormDefinition, Object> {
         color: var(--formsey-description-color, #757c98);
         margin: var(--formsey-description-margin, var(--fs-padding, 12px 0 4px 0));
       }
-      .section {
+      .ffs {
         padding: 5px;
       }
-      .grid {
+      .ffg {
         display: inline-grid;
         grid-gap: 5px 5px;
         width: 100%;
         box-sizing: border-box;
       }
-      .fs-form-field {
+      .fff {
         width: 100%;
       }`];
   }
 
-  @query(".grid")
+  @query(".ffg")
   private grid: HTMLElement
 
   constructor() {
@@ -131,20 +131,20 @@ export class FormField extends Field<FormDefinition, Object> {
         }
         let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
-          templates.push(html`<div class='fs-form-field' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
-          templates.push(html`<div class='fs-form-field'>${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff'>${fieldTemplate}</div>`)
         }
       }
     }
     let header: TemplateResult[] = []
     if (this.definition.label) {
-      header.push(html`<div part="title" class="title">${this.definition.label}</div>`)
+      header.push(html`<div class="fft">${this.definition.label}</div>`)
     }
     if (this.definition.helpText) {
-      header.push(html`<div part="description" class="description">${this.definition.helpText}</div>`)
+      header.push(html`<div class="ffd">${this.definition.helpText}</div>`)
     }
-    return html`<div class="section" style="${ifDefined(style)}">${header}<div class="grid" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div><div>`
+    return html`<div class="ffs" style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div></div>`
   }
 
   gridSizeChanged(e: CustomEvent) {
@@ -345,7 +345,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   private path() {
-    const container = this.closestElement(".fs-form-field", this)
+    const container = this.closestElement(".fff", this)
     if ( container && container.parentElement ) {
       const index = [...Array.from(container.parentElement.children)].indexOf(container)
       return index

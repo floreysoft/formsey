@@ -9,32 +9,6 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
   @queryAll("input[type=checkbox]")
   protected checkboxes: HTMLInputElement[]
 
-  static get styles() {
-    return [...super.styles, css`
-    .options {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 4px;
-    }
-    label {
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-    }
-    input[type="checkbox"] {
-      margin: var(--fs-widget-padding, 0 .5em 0 0);
-      font-family: var(--formsey-font-family, var(--fs-font-family, inherit));
-      font-size: var(--formsey-font-size, var(--fs-font-size, inherit));
-      color: var(--formsey-text-color, var(--fs-text-color, inherit));
-    }
-    .other {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      grid-gap: 2em;
-      align-items: center;
-    }`]
-  }
-
   renderField() {
     if (!this.value) {
       this.value = []
@@ -52,13 +26,13 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     if (this.definition.other) {
       let other = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
       let checked = other.length > 0
-      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}">Other</label>${createField(this.components, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", null, (e) => this.changed(e), null, null)}</div>`);
+      templates.push(html`<div class="cbot"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}">Other</label>${createField(this.components, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", null, (e) => this.changed(e), null, null)}</div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<div class="options">${templates}</div>`;
+    return html`<div class="cbop">${templates}</div>`;
   }
 
   otherChanged(e: ChangeEvent<string>) {

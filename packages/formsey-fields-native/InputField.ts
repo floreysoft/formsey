@@ -44,7 +44,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   }
 
   protected renderField() {
-    return html`<input id="input" class="input" type="${this.type}" ?autofocus=${ifDefined(this.definition.autofocus)} ?readonly=${ifDefined(this.definition.readonly)} ?disabled=${ifDefined(this.definition.disabled)} ?required="${ifDefined(this.definition.required)}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}"  .value="${ifDefined(this.value)}">`
+    return html`<input id="input" class="input" type="${this.type}" ?autofocus=${this.definition.autofocus} ?readonly=${this.definition.readonly} ?disabled=${this.definition.disabled} ?required="${this.definition.required}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}"  .value="${this.value}">`
   }
 
   focusField(path: string) {
@@ -76,7 +76,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 
-  protected get type(): string {
+  protected get type(): "hidden" | "text" | "search" | "tel" | "url" | "email" | "password" | "datetime" | "date" | "month" | "week" | "time" | "datetime-local" | "number" | "range" | "color" | "checkbox" | "radio" | "file" | "submit" | "image" | "reset" | "button" {
     return "text"
   }
 }

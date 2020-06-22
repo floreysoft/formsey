@@ -1,8 +1,7 @@
 import { ChangeEvent, LabeledField, register, UploadFieldDefinition } from '@formsey/core';
-import { css, html, property, query, TemplateResult } from 'lit-element';
-import { ICON_FILE, ICON_REMOVE, ICON_UPLOAD } from '.';
-import { INPUT_STYLE } from './styles';
+import { html, property, query, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ICON_FILE, ICON_REMOVE, ICON_UPLOAD } from '.';
 
 interface FileObject {
   name: string
@@ -31,85 +30,6 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
 
   @query("input")
   input: HTMLInputElement
-
-  static get styles() {
-    return [...super.styles, INPUT_STYLE, css`
-    input[type="file"] {
-      width: 0.1px;
-      height: 0.1px;
-      opacity: 0;
-      overflow: hidden;
-      position: absolute;
-      z-index: -1;
-    }
-
-    .input {
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-      height: auto;
-      padding: 0;
-    }
-
-    .files, .prompt {
-      line-height: initial;
-      cursor: default;
-      display: grid;
-      grid-template-columns: 24px 1fr max-content 20px;
-      grid-gap: 5px;
-      align-items: center;
-    }
-
-    .prompt {
-      grid-template-columns: 1fr max-content;
-      cursor: pointer;
-      min-height: calc( var(--formsey-input-height, 2em) - 2px);
-    }
-
-    .prompt span {
-      padding-left: 4px;
-    }
-
-    .prompt svg {
-      width: 1.2em;
-      height: 1.2em;
-    }
-
-    .files {
-      font-size: var(--fs-font-size, smaller);
-    }
-
-    .preview, .preview svg {
-      max-width:2em;
-      max-height:2em;
-      width: auto;
-      height: auto;
-      padding: 0.1em 0.3em;
-    }
-
-    .over {
-      border: 1px dashed var(--formsey-primary-color, #999);
-      color: var(--formsey-primary-color, #999);
-    }
-
-    .filename {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .remove {
-      outline: none;
-    }
-
-    .remove svg {
-      margin-top: 3px;
-      width: 1.2em;
-      fill: currentColor;
-      cursor: pointer;
-    }
-    `]
-  }
 
   protected renderField() {
     if (!this.value) {

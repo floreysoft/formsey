@@ -6,13 +6,6 @@ export class MarkupField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })
   definition: FieldDefinition;
 
-  static get styles() {
-    return [...super.styles, css`
-    * {
-      font-family: var(--lumo-font-family);
-    }`]
-  }
-
   renderField() {
     return html`${unsafeHTML(this.definition.default ? this.definition.default : "")}`
   }

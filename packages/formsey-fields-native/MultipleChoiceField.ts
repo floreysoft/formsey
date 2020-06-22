@@ -9,32 +9,6 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
   @query("formsey-string")
   otherTextField: StringField
 
-  static get styles() {
-    return [...super.styles, css`
-    .options {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 4px;
-    }
-    label {
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-    }
-    input[type="radio"] {
-      margin: var(--fs-widget-padding, 0 .5em 0 0);
-      font-family: var(--formsey-font-family, var(--fs-font-family, inherit));
-      font-size: var(--formsey-font-size, var(--fs-font-size, inherit));
-      color: var(--formsey-text-color, var(--fs-text-color, inherit));
-    }
-    .other {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      grid-gap: 2em;
-      align-items: center;
-    }`]
-  }
-
   renderField() {
     let templates: TemplateResult[] = [];
     if (this.definition.options) {

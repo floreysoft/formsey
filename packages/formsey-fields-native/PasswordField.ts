@@ -2,7 +2,7 @@ import { register } from '@formsey/core';
 import { StringField } from './StringField';
 
 export class PasswordField extends StringField {
-  protected get type() : string {
+  protected get type() : "password" {
     return "password"
   }
 }

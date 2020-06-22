@@ -2,7 +2,7 @@ import { register, StringFieldDefinition } from '@formsey/core';
 import { InputField } from './InputField';
 
 export class StringField extends InputField<StringFieldDefinition> {
-  protected get type() : string {
+  protected get type() : "text" | "search" | "tel" | "url" | "email" | "password" {
     return "text"
   }
 

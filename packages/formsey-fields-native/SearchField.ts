@@ -2,7 +2,7 @@ import { StringField } from './StringField';
 import { register } from '@formsey/core';
 
 export class SearchField extends StringField {
-  protected get type() : string {
+  protected get type() : "search" {
     return "search"
   }
 }

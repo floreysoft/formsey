@@ -10,10 +10,10 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   @property({ type: String })
   value: string;
 
-  @property({ type: Number })
+  @property({ type: Object })
   width: Number;
 
-  @property({ type: Number })
+  @property({ type: Object })
   height: Number;
 
   signaturePad: SignaturePad;
@@ -22,39 +22,6 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   canvas: HTMLCanvasElement
 
   private resizeObserver: ResizeObserver
-
-  static get styles() {
-    return [...super.styles, INPUT_STYLE, css`
-    .input {
-      position: relative;
-      height: 150px;
-    }
-
-    .input:focus-within {
-      border: 1px solid var(--formsey-primary-color,  #020b2f);
-    }
-
-    canvas {
-      width: 100%;
-      height: 100%;
-      outline: none;
-    }
-
-    svg {
-      position: absolute;
-      width: 16px;
-      right: 8px;
-      top: 8px;
-      fill: var(--formsey-signature-clear-icon-color, #757c98);
-      stroke-width: 0;
-      transition: fill 0.12s ease-out;
-    }
-
-    svg:hover {
-      fill: var(--formsey-primary-color,  #020b2f);
-    }
-    `]
-  }
 
   constructor() {
     super()
