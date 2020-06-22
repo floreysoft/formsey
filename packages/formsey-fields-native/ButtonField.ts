@@ -5,8 +5,6 @@ import { INPUT_STYLE } from './styles';
 export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   static get styles() {
     return [...super.styles, INPUT_STYLE, css`
-    :host {
-    }
     button {
       display: flex;
       align-items: center;

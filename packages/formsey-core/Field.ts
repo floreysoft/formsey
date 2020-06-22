@@ -34,17 +34,17 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   value: V;
 
   @property({ type: String })
-  set theme(theme : string) {
+  set theme(theme: string) {
     let registeredTheme = getTheme(theme)
-    if ( registeredTheme ) {
+    if (registeredTheme) {
       this.components = registeredTheme.components
     } else {
       let defaultTheme = getDefaultTheme()
-      if ( defaultTheme ) {
-        console.warn("Theme '"+theme+"' not availble, using '"+defaultTheme+"' instead")
+      if (defaultTheme) {
+        console.warn("Theme '" + theme + "' not availble, using '" + defaultTheme + "' instead")
         this.components = getTheme[defaultTheme].components
       } else {
-        console.error("Theme '"+theme+"' not availble, no theme installed!")
+        console.error("Theme '" + theme + "' not availble, no theme installed!")
       }
     }
   }
@@ -73,7 +73,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   error: InvalidError | undefined
 
   public setCustomValidity(customErrors: InvalidErrors) {
-    if ( customErrors ) {
+    if (customErrors) {
       Object.keys(customErrors.errors).forEach((key) => { customErrors.errors[key].custom = true })
     }
     this.errors = customErrors
@@ -110,6 +110,10 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     }`]
   }
 
+  protected createRenderRoot(): Element | ShadowRoot {
+    return this;
+  }
+
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
       return false
@@ -122,9 +126,9 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     if (this.definition.hidden) {
       return false
     }
-    if ( !this.components ) {
+    if (!this.components) {
       let defaultTheme = getDefaultTheme()
-      if ( typeof defaultTheme != "undefined" ) {
+      if (typeof defaultTheme != "undefined") {
         this.components = getTheme(defaultTheme).components
       }
       return typeof this.components != "undefined"
