@@ -1,5 +1,5 @@
-import { createField, Field, FieldDefinition, FormDefinition, FormField, register, ChangeEvent, ClickEvent } from '@formsey/core';
-import { property, queryAll, css } from 'lit-element';
+import { ChangeEvent, ClickEvent, createField, Field, FieldDefinition, FormField, register } from '@formsey/core';
+import { css, property, html } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
 
@@ -69,21 +69,35 @@ export class Form extends Field<FieldDefinition, Object> {
     this.fetchDefinition(url);
   }
 
+  @property()
+  action : string
+
+  @property()
+  method : "GET" | "POST" | "dialog"
+
   protected form: any
 
+
   static get styles() {
-    return [...super.styles, NATIVE_STYLES, css`
-      :host {
-        outline: none;
-      `]
+    return [...super.styles, NATIVE_STYLES ]
+  }
+
+  protected shouldUpdate(): boolean {
+    return true
   }
 
   render() {
+    let field = undefined
     let value = this.value
-    if (this.definition.name && this.value && this.value[this.definition.name]) {
+    if (this.definition?.name && this.value && this.value[this.definition.name]) {
       value = this.value[this.definition.name]
+      field = createField(this.components, this.definition, value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event));
     }
-    return createField(this.components, this.definition, value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event));
+    if ( this.method && this.action ) {
+      return html`<form action="${this.action}" method="${this.method}">${field}<slot></slot></form>`
+    } else {
+      return field
+    }
   }
 
   protected createRenderRoot(): Element | ShadowRoot {
