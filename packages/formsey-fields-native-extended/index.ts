@@ -1,7 +1,6 @@
 
 // import "./webpack-resolver";
 import { registerTheme } from '@formsey/core'
-import 'ace-builds/src-min-noconflict/ace.js'
 import './SignatureField'
 import './SourceCodeField'
 

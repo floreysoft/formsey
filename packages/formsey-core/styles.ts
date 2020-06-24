@@ -462,15 +462,13 @@ export const NATIVE_STYLES = css`
       position: relative;
       margin: 0.5em 0 0 0.8em;
       padding: 0 0 5px 15px;
-      border-left: 2px solid var(--fs-widget-background-color);
+      border-left: 2px solid var(--fs-widget-background-color, #E2DDDB);
       font-size: var(--formsey-repeating-section-icon-size, inherit);
       transition: all 0.12s ease-out;
     }
-
     formsey-repeating-section .form:hover {
-      border-left: 2px solid var(--fs-widget-background-color-hover);
+      border-left: 2px solid var(--fs-widget-background-color-hover, #CAC4C2);
     }
-
     formsey-repeating-section .fs-remove-wrapper {
       position: absolute;
       line-height: 0;
@@ -490,7 +488,7 @@ export const NATIVE_STYLES = css`
       height: 1.4em;
       font-size: var(--formsey-repeating-section-icon-size, inherit);
       border-radius: 50%;
-      background-color: var(--formsey-repeating-section-icon-background-color, var(--fs-widget-background-color, inherit));
+      background-color: var(--formsey-repeating-section-icon-background-color, var(--fs-widget-background-color, #E2DDDB));
       transition: background-color 0.12s ease-out;
       border: var(--formsey-input-border, 1px solid transparent);
       padding: 0.2em;
@@ -502,11 +500,8 @@ export const NATIVE_STYLES = css`
     formsey-repeating-section .form:hover .fs-remove-wrapper {
       opacity: 1;
     }
-    formsey-repeating-section .form:hover .fs-remove {
-      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--fs-widget-background-color-hover, inherit));
-    }
-    formsey-repeating-section .fs-add:hover {
-      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--fs-widget-background-color-hover, inherit));
+    formsey-repeating-section .form:hover .fs-remove, formsey-repeating-section .fs-add:hover {
+      background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--fs-widget-background-color-hover, #CAC4C2));
     }
     formsey-repeating-section .fs-add {
       margin: 0.2em 0.1em 0.1em;

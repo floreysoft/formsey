@@ -12,7 +12,8 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "s": 568,
   "m": 768,
   "l": 1024,
-  "xl": 1366
+  "xl": 1366,
+  "xxl" : 12000
 }
 
 export class FormField extends Field<FormDefinition, Object> {
@@ -150,7 +151,9 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   public layout(availableWidth: number) {
-    for (let size of SUPPORTED_BREAKPOINTS) {
+    console.log("NEU")
+    let breakpoints = [ ...SUPPORTED_BREAKPOINTS, "xxl"]
+    for (let size of breakpoints) {
       let breakpoint = this.definition?.layout?.breakpoints?.[size]
       if (typeof breakpoint === "undefined") {
         breakpoint = DEFAULT_BREAKPOINTS[size]
