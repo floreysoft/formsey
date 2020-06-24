@@ -5,8 +5,6 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { INPUT_STYLE } from './styles';
 
 export class InputField<T extends InputFieldDefinition> extends LabeledField<T, string> {
-  public static formAssociated = true;
-
   @property({ converter: Object })
   set definition(definition: T) {
     this.autofocus = definition.autofocus
@@ -26,17 +24,10 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   @query("#input")
   input: HTMLInputElement
 
-  protected internals: any
   private _definition: T
 
   static get styles() {
     return [...super.styles, INPUT_STYLE]
-  }
-
-  constructor() {
-    super()
-    // @ts-ignore
-    this.internals = this.attachInternals();
   }
 
   protected formResetCallback() {
@@ -44,7 +35,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   }
 
   protected renderField() {
-    return html`<input id="input" class="input" type="${this.type}" ?autofocus=${this.definition.autofocus} ?readonly=${this.definition.readonly} ?disabled=${this.definition.disabled} ?required="${this.definition.required}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}" value="${ifDefined(this.value)}">`
+    return html`<input id="input" class="input" type="${this.type}" ?autofocus=${this.definition.autofocus} ?readonly=${this.definition.readonly} ?disabled=${this.definition.disabled} ?required="${this.definition.required}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.path()}" placeholder="${ifDefined((<StringFieldDefinition>this.definition).placeholder)}" autocomplete="${ifDefined(this.definition.autocomplete)}" pattern="${ifDefined(((<StringFieldDefinition>this.definition).pattern))}" minlength="${ifDefined((<StringFieldDefinition>this.definition).minlength)}" maxlength="${ifDefined((<StringFieldDefinition>this.definition).maxlength)}"  min="${ifDefined((<any>this.definition).min)}" max="${ifDefined((<any>this.definition).max)}" step="${ifDefined((<any>this.definition).step)}" .value="${this.value ? this.value : ''}">`
   }
 
   focusField(path: string) {

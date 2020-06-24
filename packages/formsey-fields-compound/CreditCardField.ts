@@ -22,7 +22,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), null)}</div>`;
+    return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.path(), this.errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
   }
 }
 

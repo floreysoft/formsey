@@ -36,6 +36,18 @@ export const NATIVE_STYLES = css`
       color: var(--formsey-text-color, var(--fs-text-color, inherit));
     }
 
+    input[type="color"] {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block;
+      width: 1.8em;
+      height: 1.8em;
+      border: none;
+      padding: 0 1px;
+    }
+
     label {
       display: flex;
       align-items: center;
@@ -68,27 +80,13 @@ export const NATIVE_STYLES = css`
       height: var(--formsey-input-height, 2em);
     }
 
-    /* Checkboxes Field */
-    .cbop {
+    /* Checkboxes Field / Multiple Choice Field*/
+    formsey-checkboxes .options, formsey-multiple-choice .options {
       display: grid;
       grid-template-columns: 1fr;
       grid-gap: 4px;
     }
-
-    .cbot {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      grid-gap: 2em;
-      align-items: center;
-    }
-
-    /* Multiple Choice field */
-    formsey-multiple-choice .options {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 4px;
-    }
-    formsey-multiple-choice .other {
+    formsey-checkboxes .other, formsey-multiple-choice .other {
       display: grid;
       grid-template-columns: max-content 1fr;
       grid-gap: 2em;
@@ -96,6 +94,12 @@ export const NATIVE_STYLES = css`
     }
 
     /* Form Field */
+    formsey-form-field fieldset {
+      padding: 5px;
+      border: 0;
+      margin: 0;
+      min-width: 0;
+    }
     .fft {
       font-size: var(--formsey-title-font-size, larger);
       font-family: var(--formsey-title-font-family, var(--formsey-font-family, inherit));
@@ -103,6 +107,7 @@ export const NATIVE_STYLES = css`
       line-height: var(--formsey-title-line-height, inherit);
       color: var(--formsey-title-color, inherit);
       margin: var(--formsey-title-margin, var(--fs-padding, 12px 0 4px 0));
+      padding: 0;
     }
     .ffd {
       font-size: var(--formsey-description-font-size, inherit);
@@ -111,9 +116,6 @@ export const NATIVE_STYLES = css`
       line-height: var(--formsey-description-line-height, inherit);
       color: var(--formsey-description-color, #757c98);
       margin: var(--formsey-description-margin, var(--fs-padding, 12px 0 4px 0));
-    }
-    .ffs {
-      padding: 5px;
     }
     .ffg {
       display: inline-grid;
@@ -154,17 +156,6 @@ export const NATIVE_STYLES = css`
       text-transform: uppercase;
     }
 
-    input[type="color"] {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: block;
-      width: 1.8em;
-      height: 1.8em;
-      border: none;
-      padding: 0 1px;
-    }
 
     .cfp {
       position: absolute;
@@ -258,16 +249,10 @@ export const NATIVE_STYLES = css`
       line-height: 0;
     }
 
-    .ifd {
-      line-height: 1.15;
-      margin-bottom: .5em;
-    }
 
     formsey-image-checkbox {
       display: inline-block;
       position: relative;
-      width: 100%;
-      height: auto;
     }
     formsey-image-checkbox input[type="checkbox"] {
       position: absolute;
@@ -297,7 +282,8 @@ export const NATIVE_STYLES = css`
       cursor: pointer;
       user-select: none;
       transition: transform .2s;
-      line-height: 0;
+      line-height: 1.15;
+      margin-bottom: .5em;
     }
     formsey-image-checkbox label::after {
       content: ' ';

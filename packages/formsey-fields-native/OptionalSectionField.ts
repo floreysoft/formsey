@@ -33,8 +33,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
       checked = true
     }
     this.definition.form.name = this.definition.name
-    let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
-    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.errors, (event: ChangeEvent<boolean>) => this.selectionChanged(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}
+    let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.path(), this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
+    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.path(), this.errors, (event: ChangeEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
   }
 

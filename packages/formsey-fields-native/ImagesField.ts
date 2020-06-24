@@ -23,6 +23,9 @@ export class ImageCheckbox extends LitElement {
   @property({ type: String })
   label: string
 
+  @property({ type: String })
+  path: string
+
   @property({ type: Number })
   tabIndex: number
 
@@ -30,7 +33,7 @@ export class ImageCheckbox extends LitElement {
   checkbox: HTMLInputElement
 
   render() {
-    return html`<input id="${this.id}" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @click="${this.clicked}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.id}"><img src="${this.src}" alt="${this.alt}" />${ifDefined(this.label)}</label>`;
+    return html`<input id="${this.path}.${this.id}.cb" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @change="${this.changed}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.path}.${this.id}.cb"><img src="${this.src}" alt="${this.alt}"/>${ifDefined(this.label)}</label>`;
   }
 
   protected createRenderRoot(): Element | ShadowRoot {
@@ -45,8 +48,9 @@ export class ImageCheckbox extends LitElement {
     this.checkbox.focus()
   }
 
-  clicked(e: Event) {
-    this.checked = this.checkbox.checked;
+  changed(e: Event) {
+    e.stopPropagation()
+    this.checked = (<HTMLInputElement>e.target).checked;
     this.dispatchEvent(new ChangeEvent(this.id, this.checkbox.checked));
   }
 
@@ -54,7 +58,7 @@ export class ImageCheckbox extends LitElement {
     switch (e.keyCode) {
       case KEYCODE.RETURN:
         this.checkbox.checked = !this.checkbox.checked
-        this.clicked(e)
+        this.changed(e)
         break
     }
   }
@@ -111,7 +115,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
         const image = this.definition.images[i]
         const value = typeof image.value !== "undefined" ? image.value : image.label;
         const checked = this.definition.multiple ? this.value.includes(value) : this.value === value
-        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
+        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" path="${this.path()}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
       }
     }
     let customValidity = this.definition.customValidity
@@ -131,20 +135,27 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   }
 
   changed(e: CustomEvent) {
-    if (this.definition.multiple) {
-      let value = []
-      this.checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-          value.push(checkbox.id)
-        }
-      })
-      this.value = value
-    } else {
-      this.value = e.detail.value ? e.detail.name : undefined
+    if (e.detail) {
+      if (this.definition.multiple) {
+        let value = []
+        this.checkboxes.forEach(checkbox => {
+          if (checkbox.checked) {
+            value.push(this.extractValue(checkbox.id))
+          }
+        })
+        this.value = value
+      } else {
+        this.value = e.detail.value ? this.extractValue(e.detail.name) : undefined
+      }
+      if (this.definition.name) {
+        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      }
     }
-    if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
-    }
+  }
+
+  private extractValue(value : string) : string {
+    let path = value.split('.')
+    return path[path.length-1];
   }
 
   private keyDown(e: KeyboardEvent) {

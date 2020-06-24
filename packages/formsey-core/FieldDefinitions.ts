@@ -20,7 +20,8 @@ export interface InputFieldDefinition extends InteractiveFieldDefinition {
 }
 
 export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
-  text: string
+  text: string,
+  buttonType: "button" | "submit" | "reset" | "menu" | undefined
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {

@@ -1,5 +1,5 @@
 import { ChangeEvent, ClickEvent, createField, Field, FieldDefinition, FormField, register } from '@formsey/core';
-import { css, property, html } from 'lit-element';
+import { html, property } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
 
@@ -48,8 +48,8 @@ export function set(data: Object, path: string, value: any): any {
   }
 }
 
-export class Form extends Field<FieldDefinition, Object> {
-  value: Object = {}
+export class Form extends Field<FieldDefinition, any> {
+  value: any
 
   async fetchDefinition(url: string) {
     try {
@@ -70,30 +70,32 @@ export class Form extends Field<FieldDefinition, Object> {
   }
 
   @property()
-  action : string
+  action: string
 
   @property()
-  method : "GET" | "POST" | "dialog"
+  method: "GET" | "POST" | "dialog"
 
   protected form: any
 
 
   static get styles() {
-    return [...super.styles, NATIVE_STYLES ]
+    return [...super.styles, NATIVE_STYLES]
   }
 
   protected shouldUpdate(): boolean {
-    return true
+    let update = super.shouldUpdate()
+    if ( !update ) {
+      update = (typeof this.definition === "undefined")
+    }
+    return update;
   }
 
   render() {
     let field = undefined
-    let value = this.value
-    if (this.definition?.name && this.value && this.value[this.definition.name]) {
-      value = this.value[this.definition.name]
-      field = createField(this.components, this.definition, value, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event));
+    if (this.definition) {
+      field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
     }
-    if ( this.method && this.action ) {
+    if (this.method && this.action) {
       return html`<form action="${this.action}" method="${this.method}">${field}<slot></slot></form>`
     } else {
       return field
@@ -131,14 +133,6 @@ export class Form extends Field<FieldDefinition, Object> {
     }
     const key = e.detail.name ? e.detail.name : this.definition.name
     this.dispatchEvent(new ChangeEvent(key, value));
-  }
-
-  protected clicked(e: ChangeEvent<any>) {
-    if (e.detail.name?.startsWith('.')) {
-      e.detail.name = e.detail.name.substring(1)
-    }
-    const key = e.detail.name ? e.detail.name : this.definition.name
-    this.dispatchEvent(new ClickEvent(key));
   }
 
   protected invalid(e: InvalidEvent) {

@@ -13,10 +13,10 @@ export function hacktml(parts, ...args) {
   return html(newParts, ...newArgs);
 }
 
-export const createField = (components: Components, definition: FieldDefinition, value: Object, errors: InvalidErrors, changeHandler: any, clickHandler: any, invalidHandler: any): TemplateResult => {
+export const createField = (components: Components, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any): TemplateResult => {
   const tag = components[definition.type];
   if (tag) {
-    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .errors=${errors} @change=${changeHandler} @click=${clickHandler} @invalid=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change=${changeHandler} @invalid=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your components!");
   }
@@ -32,6 +32,9 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   @property({ type: Object })
   value: V;
+
+  @property()
+  parentPath: string
 
   @property({ type: String })
   set theme(theme: string) {
@@ -144,7 +147,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   protected clicked(e: any) {
     e.stopPropagation()
     e.preventDefault()
-    this.dispatchEvent(new ClickEvent(this.definition.name));
+    this.dispatchEvent(new ClickEvent(this.path()));
   }
 
   protected firstPathElement(path: string) {
@@ -153,6 +156,10 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected prependPath(path: string) {
     return (this.definition.name ? this.definition.name : "") + "." + path
+  }
+
+  protected path() : string {
+    return this.definition.name ? (this.parentPath ? (this.parentPath+"."+this.definition.name) : this.definition.name) : this.parentPath
   }
 
   private clearErrors() {

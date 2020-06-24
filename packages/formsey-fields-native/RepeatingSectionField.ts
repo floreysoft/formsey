@@ -1,7 +1,6 @@
-import { createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition, ChangeEvent, ClickEvent } from '@formsey/core';
+import { ChangeEvent, ClickEvent, createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { css, html, property, queryAll, TemplateResult } from 'lit-element';
-import { NESTED_FORM_STYLE } from './styles';
+import { html, property, queryAll, TemplateResult } from 'lit-element';
 
 export const ICON_MINUS = html`<svg viewBox="0 0 24 24"><title>Remove section</title><path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg>`
 export const ICON_PLUS = html`<svg viewBox="0 0 24 24"><title>Add section</title><path d="M5 13h6v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6h6c0.552 0 1-0.448 1-1s-0.448-1-1-1h-6v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1v6h-6c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg>`
@@ -26,7 +25,6 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     if (this.value) {
       for (let i: number = 0; i < this.value.length; i++) {
         const value = this.value[i];
-        const fieldDefinition: FormDefinition = { ...this.definition.form, name: "" + i }
         let fieldErrors = {}
         if (this.errors) {
           for (let error in this.errors) {
@@ -38,7 +36,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         }
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove"  tabindex="0" @click="${(e: Event) => this.removeForm(i)}">${ICON_MINUS}</button></div>` : undefined}
-        ${createField(this.components, fieldDefinition, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+        ${createField(this.components, { ...this.definition.form, name: "" }, value, this.path()+"["+i+"]", fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
         itemTemplates.push(template);
       }
     }
@@ -112,8 +110,9 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
   protected changed(e: ChangeEvent<any>) {
     let path = e.detail.name.split('.')
-    let index = path.shift()
-    this.value[index] = e.detail.value;
+    let index = path.shift() as string
+    index = index.substring(1, index.length-1)
+    this.value[+index] = e.detail.value;
     if (this.definition.name) {
       this.dispatchEvent(new ChangeEvent(this.definition.name+"["+index+"]."+path.shift(), this.value));
     }

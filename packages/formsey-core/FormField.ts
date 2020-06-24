@@ -53,41 +53,6 @@ export class FormField extends Field<FormDefinition, Object> {
   private resizeObserver: ResizeObserver
   private gridSize: string
 
-  static get styles() {
-    return [...super.styles, css`
-      :host {
-        display: block;
-      }
-      .fft {
-        font-size: var(--formsey-title-font-size, larger);
-        font-family: var(--formsey-title-font-family, var(--formsey-font-family, inherit));
-        font-weight: var(--formsey-title-font-weight, inherit);
-        line-height: var(--formsey-title-line-height, inherit);
-        color: var(--formsey-title-color, inherit);
-        margin: var(--formsey-title-margin, var(--fs-padding, 12px 0 4px 0));
-      }
-      .ffd {
-        font-size: var(--formsey-description-font-size, inherit);
-        font-family: var(--formsey-description-font-family, var(--formsey-font-family, inherit));
-        font-weight: var(--formsey-description-font-weight, inherit);
-        line-height: var(--formsey-description-line-height, inherit);
-        color: var(--formsey-description-color, #757c98);
-        margin: var(--formsey-description-margin, var(--fs-padding, 12px 0 4px 0));
-      }
-      .ffs {
-        padding: 5px;
-      }
-      .ffg {
-        display: inline-grid;
-        grid-gap: 5px 5px;
-        width: 100%;
-        box-sizing: border-box;
-      }
-      .fff {
-        width: 100%;
-      }`];
-  }
-
   @query(".ffg")
   private grid: HTMLElement
 
@@ -129,7 +94,7 @@ export class FormField extends Field<FormDefinition, Object> {
             }
           }
         }
-        let fieldTemplate = html`${createField(this.components, field, value, fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: ClickEvent<any>) => this.clicked(event), (event: InvalidEvent) => this.invalid(event))}`
+        let fieldTemplate = html`${createField(this.components, field, value, this.path(), fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fff' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
@@ -144,12 +109,12 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.helpText) {
       header.push(html`<div class="ffd">${this.definition.helpText}</div>`)
     }
-    return html`<div class="ffs" style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div></div>`
+    return html`<fieldset style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div></fieldset>`
   }
 
   gridSizeChanged(e: CustomEvent) {
     e.stopPropagation()
-    this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.path() + "." + e.detail.id, size: e.detail.size } }))
+    this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath() + "." + e.detail.id, size: e.detail.size } }))
   }
 
   firstUpdated() {
@@ -195,7 +160,7 @@ export class FormField extends Field<FormDefinition, Object> {
           // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
           this.gridSize = size
           this.updateGridLayout()
-          this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.path(), size } }))
+          this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), size } }))
         }
         break
       }
@@ -239,20 +204,6 @@ export class FormField extends Field<FormDefinition, Object> {
         }
         this.removeDeletedFields()
         this.dispatchEvent(new ChangeEvent(this.prependPath(e.detail.name), this.value));
-      }
-    }
-  }
-
-  protected clicked(e: ClickEvent<any>) {
-    if (e.detail.name) {
-      e.stopPropagation()
-      let name = this.firstPathElement(e.detail.name);
-      if (name) {
-        if (name.startsWith('.')) {
-          name = name.substring(1)
-          e.detail.name = e.detail.name.substring(1)
-        }
-        this.dispatchEvent(new ClickEvent(this.prependPath(e.detail.name)));
       }
     }
   }
@@ -344,7 +295,7 @@ export class FormField extends Field<FormDefinition, Object> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 
-  private path() {
+  private domPath() {
     const container = this.closestElement(".fff", this)
     if ( container && container.parentElement ) {
       const index = [...Array.from(container.parentElement.children)].indexOf(container)
