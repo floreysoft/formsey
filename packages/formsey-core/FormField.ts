@@ -15,6 +15,8 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xl": 1366
 }
 
+const DEFAULT_LAYOUT = "grid-template-columns:1fr;grid-gap:5px 5px"
+
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
   set value(value: Object) {
@@ -42,7 +44,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   @property()
-  private gridLayout: string = "grid-template-columns:1fr;grid-gap:5px 5px"
+  private gridLayout: string = DEFAULT_LAYOUT
 
   protected _value: Object = {}
   protected _definition: FormDefinition
@@ -166,12 +168,12 @@ export class FormField extends Field<FormDefinition, Object> {
       // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
       this.gridSize = detectedSize
       this.updateGridLayout()
-      this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), detectedSize } }))
+      this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), size: detectedSize } }))
     }
 }
 
   protected updateGridLayout() {
-    let gridLayout
+    let gridLayout = DEFAULT_LAYOUT
     for (let size of SUPPORTED_BREAKPOINTS) {
       gridLayout = this.definition?.layout?.grids?.[size] ? this.definition.layout.grids[size] : gridLayout
       if (this.gridSize == size) {

@@ -30,7 +30,6 @@ export const NESTED_FORM_STYLE = css`
       color: var(--formsey-title-color, inherit);
       margin: var(--formsey-title-margin, var(--fs-padding, 12px 0 4px 0));
     }
-  }
 
   ::part(description) {
     font-size: var(--formsey-description-font-size, inherit);

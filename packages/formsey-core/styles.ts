@@ -383,6 +383,7 @@ export const NATIVE_STYLES = css`
     }
 
     formsey-upload .prompt {
+      flex-grow: 1;
       grid-template-columns: 1fr max-content;
       cursor: pointer;
       min-height: calc( var(--formsey-input-height, 2em) - 2px);
