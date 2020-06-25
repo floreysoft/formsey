@@ -1,5 +1,5 @@
-import { area, ChangeEvent, createField, Field, FormDefinition, register, ClickEvent } from '@formsey/core';
-import { css, html, property, query, queryAll, TemplateResult } from 'lit-element';
+import { area, ChangeEvent, createField, Field, FormDefinition, register } from '@formsey/core';
+import { html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
 import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
@@ -12,8 +12,7 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "s": 568,
   "m": 768,
   "l": 1024,
-  "xl": 1366,
-  "xxl" : 12000
+  "xl": 1366
 }
 
 export class FormField extends Field<FormDefinition, Object> {
@@ -151,24 +150,25 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   public layout(availableWidth: number) {
-    console.log("NEU")
-    let breakpoints = [ ...SUPPORTED_BREAKPOINTS, "xxl"]
-    for (let size of breakpoints) {
+    // If available with larger than larges breakpoint, default to the largest
+    let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length-1]
+    for (let size of SUPPORTED_BREAKPOINTS) {
       let breakpoint = this.definition?.layout?.breakpoints?.[size]
       if (typeof breakpoint === "undefined") {
         breakpoint = DEFAULT_BREAKPOINTS[size]
       }
       if (breakpoint > availableWidth) {
-        if (this.gridSize != size) {
-          // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
-          this.gridSize = size
-          this.updateGridLayout()
-          this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), size } }))
-        }
+        detectedSize = size
         break
       }
     }
-  }
+    if (this.gridSize != detectedSize) {
+      // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
+      this.gridSize = detectedSize
+      this.updateGridLayout()
+      this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), detectedSize } }))
+    }
+}
 
   protected updateGridLayout() {
     let gridLayout
