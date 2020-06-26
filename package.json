@@ -1,5 +1,6 @@
 {
-  "name": "root",
+  "name": "formsey",
+  "description": "A new approach to create responsive forms using Web Components",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -16,9 +17,11 @@
     "test": "karma start",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "lib": "webpack --config webpack.libs.js && node publishLibs.js",
-    "stats": "webpack --config webpack.libs.js  --profile --json > lib-stats.json"
+    "stats": "webpack --config webpack.libs.js  --profile --json > lib-stats.json",
+    "docs" : "npx @appnest/readme generate"
   },
   "devDependencies": {
+    "@appnest/readme": "^1.2.7",
     "@babel/core": "^7.3.4",
     "@google-cloud/storage": "^4.7.0",
     "@open-wc/testing": "^2.5.15",

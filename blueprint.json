@@ -1,0 +1,36 @@
+{
+	"text": "Thank you so much for showing interest in this project! Formsey has been built to simplify the tedious task of creating good looking responsive forms.",
+	"demo": "https://www.formsey.com",
+	"ids": {
+		"npm": "@formsey/core",
+		"github": "floreysoft/formsey-components",
+		"webcomponents": "formsey"
+	},
+	"bullets": [
+		"**High-quality:** Centered around the best practices.",
+		"**Testable:** Hundreds of test-cases makes sure the library is stable.",
+		"**Easy-to-use:** But with a simple and understandable API.",
+		"**Accessible:** All components has been build with accessibility in mind.",
+		"**Single-responsibility:** Each component does one thing really well. This makes them really easy to extend and compose."
+	],
+	"logo": {
+		"src": "https://www.formsey.com/assets/images/Formsey_Icon_256x256.png",
+		"width": 128
+	},
+	"documentationConfig": {
+		"output": "md",
+		"debug": false,
+		"markdown": {
+			"titleLevel": 1
+		}
+	},
+	"elements": [
+		[
+			"Name",
+			"Tag",
+			"Description",
+			"Documentation",
+			"Demo"
+		]
+	]
+}
