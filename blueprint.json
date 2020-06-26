@@ -3,7 +3,7 @@
 	"demo": "https://www.formsey.com",
 	"ids": {
 		"npm": "@formsey/core",
-		"github": "floreysoft/formsey-components",
+		"github": "floreysoft/formsey",
 		"webcomponents": "formsey"
 	},
 	"bullets": [

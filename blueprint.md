@@ -38,7 +38,7 @@ Fixes, probably tests
 
 You are more than welcome to contribute to this repository! Below are some instructions on how to setup the project for development.
 
-1. Clone this repository by running `git clone https://github.com/floreysoft/formsey-components.git`.
+1. Clone this repository by running `git clone https://github.com/floreysoft/formsey.git`.
 2. Run `yarn` to install all dependencies.
 3. Spin up the development server with `yarn start`. The browser should automatically be opened at the correct url. If not, you can open your browser and go to `http://localhost:8080`.
 4. Compile the documentation by running `yarn docs`.

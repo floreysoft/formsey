@@ -4,8 +4,8 @@
 <p align="center">
 		<a href="https://npmcharts.com/compare/@formsey/core?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@formsey/core.svg" height="20"/></a>
 <a href="https://www.npmjs.com/package/@formsey/core"><img alt="NPM Version" src="https://img.shields.io/npm/v/@formsey/core.svg" height="20"/></a>
-<a href="https://david-dm.org/floreysoft/formsey-components"><img alt="Dependencies" src="https://img.shields.io/david/floreysoft/formsey-components.svg" height="20"/></a>
-<a href="https://github.com/floreysoft/formsey-components/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/floreysoft/formsey-components.svg" height="20"/></a>
+<a href="https://david-dm.org/floreysoft/formsey"><img alt="Dependencies" src="https://img.shields.io/david/floreysoft/formsey.svg" height="20"/></a>
+<a href="https://github.com/floreysoft/formsey/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/floreysoft/formsey.svg" height="20"/></a>
 <a href="https://www.webcomponents.org/element/formsey"><img alt="Published on webcomponents.org" src="https://img.shields.io/badge/webcomponents.org-published-blue.svg" height="20"/></a>
 	</p>
 
@@ -84,7 +84,7 @@ Fixes, probably tests
 
 You are more than welcome to contribute to this repository! Below are some instructions on how to setup the project for development.
 
-1. Clone this repository by running `git clone https://github.com/floreysoft/formsey-components.git`.
+1. Clone this repository by running `git clone https://github.com/floreysoft/formsey.git`.
 2. Run `yarn` to install all dependencies.
 3. Spin up the development server with `yarn start`. The browser should automatically be opened at the correct url. If not, you can open your browser and go to `http://localhost:8080`.
 4. Compile the documentation by running `yarn docs`.
