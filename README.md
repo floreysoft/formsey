@@ -102,9 +102,9 @@ npm login --scope=formsey
 ## ➤ Contributors
 	
 
-| [<img alt="Daniel Florey" src="https://avatars0.githubusercontent.com/u/2938750?s=460&v=4" width="100">](https://twitter.com/danielflorey) | [<img alt="You?" src="https://joeschmoe.io/api/v1/random" width="100">](https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md) |
-|:--------------------------------------------------:|:--------------------------------------------------:|
-| [Daniel Florey](https://twitter.com/danielflorey) | [You?](https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md) |
+| [<img alt="Daniel Florey" src="https://avatars0.githubusercontent.com/u/2938750?s=460&v=4" width="100">](https://twitter.com/danielflorey) | [<img alt="Oliver Zeigermann" src="https://avatars0.githubusercontent.com/u/394409?s=460&v=4" width="100">](https://github.com/DJCordhose) | [<img alt="You?" src="https://joeschmoe.io/api/v1/random" width="100">](https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md) |
+|:--------------------------------------------------:|:--------------------------------------------------:|:--------------------------------------------------:|
+| [Daniel Florey](https://twitter.com/danielflorey) | [Oliver Zeigermann](https://github.com/DJCordhose) | [You?](https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md) |
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#license)
