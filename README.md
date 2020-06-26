@@ -1,5 +1,5 @@
 <!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️--><p align="center">
-  <img src="https://www.formsey.com/assets/images/formsey.png" alt="Logo" width="128" height="auto" />
+  <img src="https://www.formsey.com/assets/images/formsey.png" alt="Logo" width="400" height="auto" />
 </p>
 <p align="center">
 		<a href="https://npmcharts.com/compare/@formsey/core?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@formsey/core.svg" height="20"/></a>

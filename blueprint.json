@@ -12,7 +12,7 @@
 	],
 	"logo": {
 		"src": "https://www.formsey.com/assets/images/formsey.png",
-		"width": 128
+		"width": 400
 	},
 	"documentationConfig": {
 		"output": "md",
