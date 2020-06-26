@@ -11,7 +11,7 @@
 		"**Accessible:** All components has been build with keyboard navigation in mind."
 	],
 	"logo": {
-		"src": "https://www.formsey.com/assets/images/Formsey_Icon_256x256.png",
+		"src": "https://www.formsey.com/assets/images/formsey.png",
 		"width": 128
 	},
 	"documentationConfig": {
