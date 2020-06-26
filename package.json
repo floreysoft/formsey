@@ -1,6 +1,7 @@
 {
   "name": "formsey",
   "description": "A new approach to create responsive forms using Web Components",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -44,5 +45,17 @@
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1"
-  }
+  },
+	"contributors": [
+		{
+			"name": "Daniel Florey",
+			"url": "https://twitter.com/danielflorey",
+			"img": "https://avatars0.githubusercontent.com/u/2938750?s=460&v=4"
+		},
+		{
+			"name": "You?",
+			"img": "https://joeschmoe.io/api/v1/random",
+			"url": "https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md"
+		}
+	]
 }
