@@ -127,7 +127,7 @@ export class FormField extends Field<FormDefinition, Object> {
     let counter = 0;
     for (let field of this._fields) {
       let child = field.firstElementChild as any
-      if ( typeof child['setIndex'] == "function" ) {
+      if (typeof child['setIndex'] == "function") {
         child.setIndex(counter)
         counter++
       }
@@ -153,7 +153,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   public layout(availableWidth: number) {
     // If available with larger than larges breakpoint, default to the largest
-    let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length-1]
+    let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
     for (let size of SUPPORTED_BREAKPOINTS) {
       let breakpoint = this.definition?.layout?.breakpoints?.[size]
       if (typeof breakpoint === "undefined") {
@@ -170,7 +170,7 @@ export class FormField extends Field<FormDefinition, Object> {
       this.updateGridLayout()
       this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), size: detectedSize } }))
     }
-}
+  }
 
   protected updateGridLayout() {
     let gridLayout = DEFAULT_LAYOUT
@@ -198,18 +198,16 @@ export class FormField extends Field<FormDefinition, Object> {
   protected changed(e: ChangeEvent<any>) {
     if (this.value && e.detail.name) {
       e.stopPropagation()
-      let name = this.firstPathElement(e.detail.name);
-      if (name) {
-        if (name.startsWith('.')) {
-          name = name.substring(1)
-          e.detail.name = e.detail.name.substring(1)
-          this.value = { ...this.value, ...e.detail.value }
-        } else {
-          this.value[name] = e.detail.value;
-        }
-        this.removeDeletedFields()
-        this.dispatchEvent(new ChangeEvent(this.prependPath(e.detail.name), this.value));
+      let name = e.detail.name
+      if (name.startsWith('.')) {
+        name = name.substring(1)
+        this.value = { ...this.value, ...e.detail.value }
+      } else {
+        name = this.firstPathElement(e.detail.name);
+        this.value[name] = e.detail.value;
       }
+      this.removeDeletedFields()
+      this.dispatchEvent(new ChangeEvent(this.prependPath(e.detail.name), this.value));
     }
   }
 
@@ -302,7 +300,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   private domPath() {
     const container = this.closestElement(".fff", this)
-    if ( container && container.parentElement ) {
+    if (container && container.parentElement) {
       const index = [...Array.from(container.parentElement.children)].indexOf(container)
       return index
     } else {

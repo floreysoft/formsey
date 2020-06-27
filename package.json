@@ -19,7 +19,7 @@
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "lib": "webpack --config webpack.libs.js && node publishLibs.js",
     "stats": "webpack --config webpack.libs.js  --profile --json > lib-stats.json",
-    "docs" : "npx @appnest/readme generate"
+    "docs": "npx @appnest/readme generate"
   },
   "devDependencies": {
     "@appnest/readme": "^1.2.7",
@@ -46,21 +46,21 @@
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1"
   },
-	"contributors": [
-		{
-			"name": "Daniel Florey",
-			"url": "https://twitter.com/danielflorey",
-			"img": "https://avatars0.githubusercontent.com/u/2938750?s=460&v=4"
+  "contributors": [
+    {
+      "name": "Daniel Florey",
+      "url": "https://twitter.com/danielflorey",
+      "img": "https://avatars0.githubusercontent.com/u/2938750?s=460&v=4"
     },
-		{
-			"name": "Oliver Zeigermann",
-			"url": "https://github.com/DJCordhose",
-			"img": "https://avatars0.githubusercontent.com/u/394409?s=460&v=4"
+    {
+      "name": "Oliver Zeigermann",
+      "url": "https://github.com/DJCordhose",
+      "img": "https://avatars0.githubusercontent.com/u/394409?s=460&v=4"
     },
-		{
-			"name": "You?",
-			"img": "https://joeschmoe.io/api/v1/random",
-			"url": "https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md"
-		}
-	]
+    {
+      "name": "You?",
+      "img": "https://joeschmoe.io/api/v1/random",
+      "url": "https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md"
+    }
+  ]
 }

@@ -10,34 +10,13 @@
         vaadin-split-layout {
             margin: 0;
             height: 100%;
-            --fs-accent-color:#ff813f;
+            --fs-accent-color: #ff813f;
         }
     </style>
-    <!-- Include the "lumo-color" style module -->
-    <custom-style>
-        <style include="lumo-color lumo-typography"></style>
-    </custom-style>
 </head>
 
 <body>
-    <vaadin-split-layout>
-        <section theme="light">
-            <div style="text-align:center">
-                <h3>Formsey components</h3>
-                <p>Formsey demo using luma light theme</p>
-            </div>
-            <fs-demo></fs-demo>
-        </section>
-        <!--
-        <section theme="dark">
-            <div style="text-align:center">
-                <h3>floreysoft components</h3>
-                <p>Formsey demo using lumo dark theme</p>
-            </div>
-            <fs-demo></fs-demo>
-        </section>
-        -->
-    </vaadin-split-layout>
+    <fs-demo></fs-demo>
 </body>
 
 </html>
