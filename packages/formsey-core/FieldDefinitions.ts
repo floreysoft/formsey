@@ -1,8 +1,10 @@
+import { TemplateResult } from "lit-element"
+
 export interface FieldDefinition {
   name?: string
   type?: string
-  label?: string
-  helpText?: string
+  label?: string | TemplateResult
+  helpText?: string | TemplateResult
   hidden?: boolean
   default?: any
 }
@@ -20,7 +22,7 @@ export interface InputFieldDefinition extends InteractiveFieldDefinition {
 }
 
 export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
-  text: string,
+  text: string | TemplateResult
   buttonType: "button" | "submit" | "reset" | "menu" | undefined
 }
 

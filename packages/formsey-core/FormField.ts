@@ -196,8 +196,11 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected changed(e: ChangeEvent<any>) {
-    if (this.value && e.detail.name) {
-      e.stopPropagation()
+    e.stopPropagation()
+    if ( !this.value ) {
+      this.value = {}
+    }
+    if (e.detail?.name) {
       let name = e.detail.name
       if (name.startsWith('.')) {
         name = name.substring(1)

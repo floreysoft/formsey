@@ -17,7 +17,8 @@
     "start": "webpack-dev-server --open  --config webpack.dev.js",
     "test": "karma start",
     "test:watch": "karma start --auto-watch=true --single-run=false",
-    "lib": "webpack --config webpack.libs.js && node publishLibs.js",
+    "lib": "webpack --config webpack.libs.js",
+    "publishLib": "webpack --config webpack.libs.js && node publishLibs.js",
     "stats": "webpack --config webpack.libs.js  --profile --json > lib-stats.json",
     "docs": "npx @appnest/readme generate"
   },

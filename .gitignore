@@ -3,6 +3,7 @@
 /.cache
 /coverage
 ./lib-stats.json
+/umd
 
 *.js
 !packages/formsey-fields-vaadin/webpack-resolver.js

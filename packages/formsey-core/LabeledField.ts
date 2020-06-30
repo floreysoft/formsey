@@ -28,7 +28,6 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
         validityMessage = this.error.validityMessage
       }
     }
-
     let helpText = this.definition.helpText ? html`<div class="lfht">${this.definition.helpText}</div>` : undefined
     return this.report && validityMessage ? html`<div class="lfet">${validityMessage}</div>` : helpText
   }
