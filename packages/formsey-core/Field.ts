@@ -16,7 +16,7 @@ export function hacktml(parts, ...args) {
 export const createField = (components: Components, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any): TemplateResult => {
   const tag = components[definition.type];
   if (tag) {
-    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change=${changeHandler} @input=${changeHandler} @invalid=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your components!");
   }
@@ -145,6 +145,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected inputted(e: any) {
+    e.stopPropagation()
     this.value = e.currentTarget.value;
     this.dispatchEvent(new ChangeEvent("input", this.definition.name, this.value));
   }

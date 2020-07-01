@@ -1,11 +1,9 @@
-import { ChangeEvent, LabeledField, SignatureFieldDefinition } from '@formsey/core';
-import { INPUT_STYLE } from '@formsey/fields-native/styles';
-import { css, customElement, html, property, query } from 'lit-element';
+import { ChangeEvent, LabeledField, register, SignatureFieldDefinition } from '@formsey/core';
+import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import SignaturePad from 'signature_pad';
 import ResizeObserver from 'resize-observer-polyfill';
+import SignaturePad from 'signature_pad';
 
-@customElement("formsey-signature")
 export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -66,3 +64,4 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 }
+register("formsey-signature", SignatureField)
