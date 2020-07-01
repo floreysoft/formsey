@@ -18,7 +18,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined" && this.untouched) {
       this.value = this.definition.default
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
       }
     }
     if (this.definition.hidden) {
@@ -75,13 +75,13 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.value = e.detail.value ? {} : undefined
     this.untouched = false
     this.requestUpdate()
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 
   protected changed(e: ChangeEvent<any>) {
     this.value = e.detail.value;
     this.requestUpdate()
-    this.dispatchEvent(new ChangeEvent(e.detail.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", e.detail.name, this.value));
   }
 }
 register("formsey-optional-section", OptionalSectionField)

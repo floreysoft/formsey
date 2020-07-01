@@ -37,7 +37,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       this.value.value = {}
       this.requestUpdate()
       if (this.definition.name) {
-        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
       }
     }
   }
@@ -46,7 +46,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     this.value.value = e.value;
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     }
   }
 }

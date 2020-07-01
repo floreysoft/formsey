@@ -3,6 +3,8 @@ import { FieldDefinition } from './FieldDefinitions'
 
 export { ChangeEvent } from './ChangeEvent'
 export { ClickEvent } from './ClickEvent'
+export { BlurEvent } from './BlurEvent'
+export { FocusEvent } from './FocusEvent'
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'
 export { Form } from './Form'

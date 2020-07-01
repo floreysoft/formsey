@@ -34,9 +34,7 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(__dirname, 'umd'),
-    filename: "[name].min.js",
-    library: ["formsey", "[name]"],
-		libraryTarget: "umd"
+    path: path.resolve(__dirname, 'dist'),
+    filename: "[name].min.js"
   }
 };

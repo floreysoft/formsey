@@ -30,16 +30,18 @@ export class FormseyDemo1 extends LitElement {
     .form {
       border-left: 1px solid var(--fs-border-color);
       overflow-y: auto;
+      width: 50%;
     }
     .description {
       background-color: var(--fs-background-color);
       overflow-y: auto;
+      width: 50%;
     }
     `
   }
 
   render() {
-    return html`<fs-splitter><div class="description"><formsey-form id="left" src="https://cdn.formsey.com/MonYjcP85Txw9jbHgjEg/dx2dJCism2x4OfnUtqFk" @change="${this.descriptionChanged}"></formsey-form></div><div class="form"><formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @change="${this.formChanged}"></formsey-form></div></fs-splitter>`
+    return html`<fs-splitter><div class="description"><formsey-form id="left" src="https://cdn.formsey.com/MonYjcP85Txw9jbHgjEg/dx2dJCism2x4OfnUtqFk" @change="${this.descriptionChanged}"></formsey-form></div><div class="form"><formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @change="${this.formChanged}" @load="${this.formLoaded}"></formsey-form></div></fs-splitter>`
   }
 
   descriptionChanged(e: CustomEvent) {
@@ -49,6 +51,10 @@ export class FormseyDemo1 extends LitElement {
 
   formChanged(e: CustomEvent) {
     this.left.value = { definition: JSON.stringify(this.right.definition, null, 2), enteredValue: JSON.stringify(e.detail.value, null, 2) }
+  }
+
+  formLoaded(e: CustomEvent) {
+    this.left.value = { definition: JSON.stringify(e.detail.definition, null, 2), enteredValue: JSON.stringify(e.detail.value, null, 2) }
   }
 }
 

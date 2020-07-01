@@ -79,7 +79,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
   private removeFile(name: string) {
     this.value = this.value.filter( ( file : FileObject ) => file.name != name)
     this.requestUpdate()
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 
   private handleFiles(files: File[]) {
@@ -92,7 +92,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
           type: file.type,
           size: file.size
         })
-        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
         this.requestUpdate()
       }, false);
       reader.readAsDataURL(file)

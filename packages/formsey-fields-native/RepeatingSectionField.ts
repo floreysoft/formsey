@@ -75,14 +75,14 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
   protected addForm() {
     this.value.push({});
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     this.requestUpdate();
   }
 
   protected removeForm(index: number) {
     this.value.splice(index, 1);
     this.requestUpdate();
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 
   protected drag(e, from: number) {
@@ -114,7 +114,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     index = index.substring(1, index.length-1)
     this.value[+index] = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name+"["+index+"]."+path.shift(), this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name+"["+index+"]."+path.shift(), this.value));
     }
   }
 

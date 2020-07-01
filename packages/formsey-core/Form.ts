@@ -1,4 +1,4 @@
-import { ChangeEvent, ClickEvent, createField, Field, FieldDefinition, FormField, register } from '@formsey/core';
+import { ChangeEvent, createField, Field, FieldDefinition, FormField, register } from '@formsey/core';
 import { html, property } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
@@ -58,6 +58,7 @@ export class Form extends Field<FieldDefinition, any> {
       this.definition = data.definition
       this.value = data.value
       this.theme = data.theme
+      this.dispatchEvent(new CustomEvent('load', { detail: { definition: data.definition, value: data.value, theme: data.theme } }))
       this.requestUpdate();
     } catch (reason) {
       console.error(reason.message)
@@ -132,7 +133,12 @@ export class Form extends Field<FieldDefinition, any> {
       value = this.value
     }
     const key = e.detail.name ? e.detail.name : this.definition.name
-    this.dispatchEvent(new ChangeEvent(key, value));
+    if ( e.type == "inputChange" || e.type == "input" ) {
+      this.dispatchEvent(new ChangeEvent("input", key, value));
+    }
+    if ( e.type == "inputChange" || e.type == "change" ) {
+      this.dispatchEvent(new ChangeEvent("change", key, value));
+    }
   }
 
   protected invalid(e: InvalidEvent) {

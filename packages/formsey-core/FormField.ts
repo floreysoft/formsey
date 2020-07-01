@@ -210,7 +210,7 @@ export class FormField extends Field<FormDefinition, Object> {
         this.value[name] = e.detail.value;
       }
       this.removeDeletedFields()
-      this.dispatchEvent(new ChangeEvent(this.prependPath(e.detail.name), this.value));
+      this.dispatchEvent(new ChangeEvent(e.type as "input" | "change", this.prependPath(e.detail.name), this.value));
     }
   }
 

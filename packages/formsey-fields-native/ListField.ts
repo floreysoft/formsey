@@ -26,7 +26,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
   protected changed(e: any) {
     this.value = e.currentTarget.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent(e.type as "change", this.definition.name, this.value));
     }
   }
 }

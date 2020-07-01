@@ -16,7 +16,7 @@ export function hacktml(parts, ...args) {
 export const createField = (components: Components, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any): TemplateResult => {
   const tag = components[definition.type];
   if (tag) {
-    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change=${changeHandler} @invalid=${invalidHandler}></${tag}>`;
+    return hacktml`<${tag} .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change=${changeHandler} @input=${changeHandler} @invalid=${invalidHandler}></${tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching tag has been found in your components!");
   }
@@ -123,7 +123,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangeEvent("change", this.definition.name, this.value));
       }
     }
     if (this.definition.hidden) {
@@ -141,10 +141,27 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected changed(e: any) {
     this.value = e.currentTarget.value;
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("change", this.definition.name, this.value));
+  }
+
+  protected inputted(e: any) {
+    this.value = e.currentTarget.value;
+    this.dispatchEvent(new ChangeEvent("input", this.definition.name, this.value));
   }
 
   protected clicked(e: any) {
+    e.stopPropagation()
+    e.preventDefault()
+    this.dispatchEvent(new ClickEvent(this.path()));
+  }
+
+  protected focused(e: any) {
+    e.stopPropagation()
+    e.preventDefault()
+    this.dispatchEvent(new ClickEvent(this.path()));
+  }
+
+  protected blurred(e: any) {
     e.stopPropagation()
     e.preventDefault()
     this.dispatchEvent(new ClickEvent(this.path()));

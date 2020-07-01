@@ -51,7 +51,7 @@ export class ImageCheckbox extends LitElement {
   changed(e: Event) {
     e.stopPropagation()
     this.checked = (<HTMLInputElement>e.target).checked;
-    this.dispatchEvent(new ChangeEvent(this.id, this.checkbox.checked));
+    this.dispatchEvent(new ChangeEvent(e.type as "change", this.id, this.checkbox.checked));
   }
 
   private keyDown(e: KeyboardEvent) {
@@ -148,7 +148,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
         this.value = e.detail.value ? this.extractValue(e.detail.name) : undefined
       }
       if (this.definition.name) {
-        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ChangeEvent(e.type as "input" | "change", this.definition.name, this.value));
       }
     }
   }
