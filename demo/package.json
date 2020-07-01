@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "@floreysoft/ace": ">0.3.77",
-    "@floreysoft/dialog": "^0.1.1",
-    "@floreysoft/splitter": "^0.1.1",
-    "@floreysoft/theme": "^0.3.198",
-    "@floreysoft/tabs": "^0.3.198",
+    "@floreysoft/dialog": "^0.3.184",
+    "@floreysoft/splitter": "^0.3.172",
+    "@floreysoft/theme": "^0.3.184",
+    "@floreysoft/tabs": "^0.3.184",
     "@formsey/fields-native": "^0.2.109"
   }
 }

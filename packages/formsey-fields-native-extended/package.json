@@ -14,7 +14,7 @@
     "@formsey/fields-native": "^0.2.109",
     "signature_pad": "^3.0.0-beta.3",
     "@ts-stack/markdown": ">0",
-    "highlight.js": ">10"
+    "highlight.js": "^10.1.1"
   },
   "scripts": {
     "tsc": "tsc",
