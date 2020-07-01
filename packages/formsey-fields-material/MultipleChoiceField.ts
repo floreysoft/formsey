@@ -45,7 +45,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     }
     if (this.definition.other) {
       let checked = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label)).length == 0
-      templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-radio .checked="${checked}" value="__other" @change="${this.changed}"></mwc-radio></mwc-formfield><mwc-textfield @input="${this.otherChanged}" ?disabled="${this.definition.disabled || !checked}" .value=""></mwc-textfield></div>`);
+      templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-radio .checked="${checked}" value="__other" @change="${this.changed}"></mwc-radio></mwc-formfield><mwc-textfield @input="${this.otherChanged}" ?disabled="${this.definition.disabled || !checked}"></mwc-textfield></div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
@@ -58,7 +58,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     this.value = (<TextField>e.target).value
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     }
   }
 
@@ -76,7 +76,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     }
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     }
     if ( value == "__other" && other) {
       this.updateComplete.then(() => {

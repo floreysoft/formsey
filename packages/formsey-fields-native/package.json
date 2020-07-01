@@ -12,8 +12,7 @@
   ],
   "dependencies": {
     "@floreysoft/utils": "^0.3.179",
-    "@formsey/core": "^0.2.109",
-    "@ts-stack/markdown": ">0"
+    "@formsey/core": "^0.2.109"
   },
   "scripts": {
     "tsc": "tsc",

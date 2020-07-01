@@ -19,7 +19,7 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-date-picker style="display:flex" label="${ifDefined(this.definition.label)}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" ?disabled="${ifDefined(this.definition.disabled)}" ?autofocus="${this.definition.autofocus}" @change="${this.changed}" min="${ifDefined(this.definition.min)}"  max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" .value=${this.value} placeholder="${ifDefined(this.definition.placeholder)}"></vaadin-date-picker>`
+    return html`<vaadin-date-picker style="display:flex" label="${ifDefined(this.definition.label)}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" ?disabled="${this.definition.disabled}" ?autofocus="${this.definition.autofocus}" @change="${this.changed}" min="${ifDefined(this.definition.min)}"  max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" .value=${this.value} placeholder="${ifDefined(this.definition.placeholder)}"></vaadin-date-picker>`
   }
 
   focusField(path: string) {

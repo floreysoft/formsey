@@ -82,7 +82,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     }
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     }
     if (other) {
       this.updateComplete.then(() => {

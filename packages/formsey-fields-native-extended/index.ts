@@ -1,15 +1,15 @@
 
 // import "./webpack-resolver";
 import { registerTheme } from '@formsey/core'
-import './SignatureField'
-import './SourceCodeField'
 
 export { SignatureField } from './SignatureField'
 export { SourceCodeField, SourceCodeFieldDefinition } from './SourceCodeField'
+export { MarkdownField } from './MarkdownField';
 
 registerTheme('native', {
   components: {
     'signature': 'formsey-signature',
-    'sourceCode': 'formsey-sourcecode'
+    'sourceCode': 'formsey-sourcecode',
+    'markdown': 'formsey-markdown'
   }
 })

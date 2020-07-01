@@ -58,11 +58,11 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   protected clear(e: Event) {
     this.signaturePad.clear();
     this.value = "";
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 
   protected onStrokeEnd(e: MouseEvent | Touch) {
     this.value = this.signaturePad.toDataURL();
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 }

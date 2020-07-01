@@ -40,6 +40,6 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
 
   protected changed(e: any) {
     this.value = this.materialCheckbox.checked
-    this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 }

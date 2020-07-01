@@ -11,7 +11,6 @@ export { EmailField } from './EmailField';
 export { ImageField } from './ImageField';
 export { ImagesField } from './ImagesField';
 export { ListField } from './ListField';
-export { MarkdownField } from './MarkdownField';
 export { MarkupField } from './MarkupField';
 export { MonthField } from './MonthField';
 export { MultipleChoiceField } from './MultipleChoiceField';
@@ -70,7 +69,6 @@ registerTheme('native', {
     'creditCard': 'formsey-creditcard',
     'richText': 'formsey-rich-text-vaadin',
     'markup': 'formsey-markup',
-    'markdown': 'formsey-markdown',
     'image': 'formsey-image',
     'youtube': 'formsey-youtube',
     'upload': 'formsey-upload',

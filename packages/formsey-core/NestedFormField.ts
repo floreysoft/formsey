@@ -40,6 +40,6 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   protected changed(e: ChangeEvent<any>) {
     e.stopPropagation()
     this.value = e.detail.value;
-    this.dispatchEvent(new ChangeEvent(e.detail.name, this.value));
+    this.dispatchEvent(new ChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
   }
 }

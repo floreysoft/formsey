@@ -59,7 +59,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
       this.otherTextField.requestUpdate()
     }
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     }
   }
 }

@@ -2,6 +2,7 @@ import { FieldDefinition, LabeledField, register } from '@formsey/core';
 import { Marked, Renderer } from '@ts-stack/markdown';
 import { html, property } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { highlight } from 'highlight.js';
 
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })
@@ -27,7 +28,8 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
         pedantic: false,
         sanitize: false,
         smartLists: true,
-        smartypants: false
+        smartypants: false,
+        highlight: (code, lang) => highlight(lang, code).value
       });
   }
 

@@ -14,7 +14,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
   comboBox : ComboBoxElement
 
   renderField() {
-    return html`<vaadin-combo-box style="display:flex" @change="${event => this.changed(event)}" label="${ifDefined(this.definition.label)}" ?disabled="${this.definition.disabled}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}"></vaadin-combo-box>`;
+    return html`<vaadin-combo-box style="display:flex" @change="${event => this.inputted(event)}" label="${ifDefined(this.definition.label)}" ?disabled="${this.definition.disabled}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}"></vaadin-combo-box>`;
   }
 
   firstUpdated() {
@@ -37,7 +37,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
   protected changed(e: any) {
     this.value = e.currentTarget.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     }
   }
 }

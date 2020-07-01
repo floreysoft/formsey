@@ -9,13 +9,13 @@ export class RichTextField extends LabeledField<InputFieldDefinition, string> {
   value: string;
 
   renderField() {
-    return html`<vaadin-rich-text-editor style="display:flex" theme="compact" @change="${this.changed}" name="${this.definition.name}" ?disabled=${ifDefined(this.definition.disabled)} value="<p>Hallo</p>"></vaadin-rich-text-editor>`;
+    return html`<vaadin-rich-text-editor style="display:flex" theme="compact" @change="${this.changed}" name="${this.definition.name}" ?disabled=${this.definition.disabled} value="<p>Hallo</p>"></vaadin-rich-text-editor>`;
   }
 
   protected changed(e: any) {
     this.value = e.currentTarget.htmlValue;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
     }
   }
 }
