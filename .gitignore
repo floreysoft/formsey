@@ -9,8 +9,8 @@
 !packages/formsey-fields-vaadin/webpack-resolver.js
 !webpack*.js
 !karma.conf.js
-*.js.map
-*.d.ts
-*.d.ts.map
+**/*.js.map
+**/*.d.ts
+**/*.d.ts.map
 
 yarn-error.log

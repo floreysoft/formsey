@@ -934,12 +934,6 @@
   resolved "https://registry.yarnpkg.com/@floreysoft/utils/-/utils-0.3.203.tgz#4b3b61bfc3bb398c8da08f6852181cf620b902ca"
   integrity sha512-sFxyHiaJTTSpnfT3tVrYy8HPk4wuXteEu0ntj8TadETluaEG84iG0Nqco3j02SL9h2BtJxQmrKqvOaUd0RNonA==
 
-"@formsey/fields-native@>0.2.109":
-  version "0.2.109"
-  dependencies:
-    "@floreysoft/utils" "^0.3.179"
-    "@formsey/core" "^0.2.109"
-
 "@google-cloud/common@^2.1.1":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@google-cloud/common/-/common-2.4.0.tgz#2783b7de8435024a31453510f2dab5a6a91a4c82"
