@@ -1,12 +1,12 @@
 import { TemplateResult } from 'lit-element'
 import { FieldDefinition } from './FieldDefinitions'
 
+export { BlurEvent } from './BlurEvent'
 export { ChangeEvent } from './ChangeEvent'
 export { ClickEvent } from './ClickEvent'
-export { BlurEvent } from './BlurEvent'
-export { FocusEvent } from './FocusEvent'
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'
+export { FocusEvent } from './FocusEvent'
 export { Form } from './Form'
 export { FormField } from './FormField'
 export { LabeledField } from './LabeledField'
@@ -65,12 +65,15 @@ export function getDefaultTheme(): string | undefined {
   return undefined
 }
 
-export function register(tag: string, constructor: CustomElementConstructor) {
+export function register(theme: string, type: string, tag: string, constructor: CustomElementConstructor) {
   if (customElements.get(tag)) {
     console.log("'" + tag + "' already exists, skipping...")
   } else {
     customElements.define(tag, constructor)
   }
+  let components = {}
+  components[type] = tag
+  registerTheme(theme, { components })
 }
 
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {
