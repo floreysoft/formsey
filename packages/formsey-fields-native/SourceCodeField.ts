@@ -29,4 +29,4 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     }
   }
 }
-register(["native", "material","vaadin"], "sourceCode", "formsey-sourcecode", SourceCodeField)
+register("formsey-sourcecode", SourceCodeField, ["native", "vaadin", "material"], "sourceCode",  "@formsey/fields-native/SourceCodeField")

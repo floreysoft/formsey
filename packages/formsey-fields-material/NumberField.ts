@@ -74,5 +74,4 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
     this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 }
-
-register("material", "number", "formsey-number-material", NumberField);
+register("formsey-number-material", NumberField, "material", "number", "@formsey/fields-material/NumberField");

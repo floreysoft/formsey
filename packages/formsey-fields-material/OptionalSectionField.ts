@@ -3,5 +3,4 @@ import { register } from '@formsey/core';
 
 export class OptionalSectionField extends NativeOptionalSectionField {
 }
-
-register("material", "optionalSection", "formsey-optional-section-material", OptionalSectionField);
+register("formsey-optional-section-material", OptionalSectionField, "material", "optionalSection", "@formsey/fields-material/OptionalSectionField");

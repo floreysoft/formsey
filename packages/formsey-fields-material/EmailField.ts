@@ -7,5 +7,4 @@ export class EmailField extends StringField {
     return "email"
   }
 }
-
-register("material", "email", "formsey-email-material", EmailField);
+register("formsey-email-material", EmailField, "material", "email", "@formsey/fields-material/EmailField");

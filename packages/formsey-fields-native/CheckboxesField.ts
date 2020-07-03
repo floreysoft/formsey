@@ -78,4 +78,4 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     return values;
   }
 }
-register("native", "checkboxes", "formsey-checkboxes", CheckboxesField)
+register("formsey-checkboxes", CheckboxesField, "native", "checkboxes", "@formsey/fields-native/CheckboxesField")

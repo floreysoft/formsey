@@ -105,5 +105,4 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-
-register(["vaadin"], "multipleChoice", "formsey-multiple-choice-vaadin", MultipleChoiceField);
+register("formsey-multiple-choice-vaadin", MultipleChoiceField, "vaadin", "multipleChoice", "@formsey/fields-vaadin/MultipleChoiceField")

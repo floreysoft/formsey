@@ -6,4 +6,4 @@ export class DateTimeField extends DateField {
     return "datetime-local"
   }
 }
-register("native", "datetime", "formsey-datetime", DateTimeField)
+register("formsey-datetime", DateTimeField, "native", "datetime", "@formsey/fields-native/DateTimeField")

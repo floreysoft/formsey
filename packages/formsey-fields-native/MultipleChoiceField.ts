@@ -63,4 +63,4 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     }
   }
 }
-register("native", "multipleChoice", "formsey-multiple-choice", MultipleChoiceField)
+register("formsey-multiple-choice", MultipleChoiceField, "native", "multipleChoice", "@formsey/fields-native/MultipleChoiceField")

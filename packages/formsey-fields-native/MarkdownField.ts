@@ -58,4 +58,4 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
     return this.attachShadow({ mode: 'open' });
   }
 }
-register("native", "markdown", "formsey-markdown", MarkdownField)
+register("formsey-markdown", MarkdownField, ["native", "vaadin", "material"], "markdown", "@formsey/fields-native/MarkdownField")

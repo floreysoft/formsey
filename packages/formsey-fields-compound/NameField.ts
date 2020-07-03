@@ -28,5 +28,4 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
     return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.path(), this.errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
   }
 }
-
-register(["native", "material","vaadin"], "name", "formsey-name", NameField);
+register("formsey-name", NameField, ["native", "material", "vaadin"], "address", "@formsey/fields-compound/NameField");

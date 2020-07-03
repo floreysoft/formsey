@@ -54,5 +54,4 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
 		return videoId;
   }
 }
-
-register(["native", "material","vaadin"], "youtube", "formsey-youtube", YouTubeField)
+register("formsey-youtube", YouTubeField, "native", "youtube", "@formsey/fields-native/YouTubeField")

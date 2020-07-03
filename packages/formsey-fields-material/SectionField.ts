@@ -33,5 +33,4 @@ export class SectionField extends Field<FieldDefinition, void> {
     return html`<header>${ifDefined(this.definition.label)}</header><footer>${ifDefined(this.definition.helpText)}</footer>`
   }
 }
-
-register("material", "section", "formsey-section-material", SectionField);
+register("formsey-section-material", SectionField, "material", "section", "@formsey/fields-material/SectionField");

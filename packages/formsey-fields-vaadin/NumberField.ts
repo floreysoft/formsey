@@ -40,5 +40,4 @@ export class NumberField extends VaadinField<NumberFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-
-register(["vaadin"], "number", "formsey-number-vaadin", NumberField);
+register("formsey-number-vaadin", NumberField, "vaadin", "number", "@formsey/fields-vaadin/NumberField")

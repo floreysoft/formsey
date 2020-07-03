@@ -41,5 +41,4 @@ export class TextField extends VaadinField<TextFieldDefinition, string> {
   }
 
 }
-
-register(["vaadin"], "text", "formsey-text-vaadin", TextField);
+register("formsey-text-vaadin", TextField, "vaadin", "text", "@formsey/fields-vaadin/TextField")

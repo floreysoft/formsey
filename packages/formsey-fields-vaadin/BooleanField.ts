@@ -53,5 +53,4 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-
-register(["vaadin"], "boolean", "formsey-boolean-vaadin", BooleanField);
+register("formsey-boolean-vaadin", BooleanField, "vaadin", "boolean", "@formsey/fields-vaadin/BooleanField")

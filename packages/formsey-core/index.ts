@@ -12,8 +12,13 @@ export { FormField } from './FormField'
 export { LabeledField } from './LabeledField'
 export { NestedFormField } from './NestedFormField'
 
+export interface Component {
+  tag: string,
+  importPath: string
+}
+
 export interface Components {
-  [index: string]: string
+  [index: string]: Component
 }
 
 export interface Theme {
@@ -65,7 +70,7 @@ export function getDefaultTheme(): string | undefined {
   return undefined
 }
 
-export function register(theme: string|string[]|null, type: string|null, tag: string, constructor: CustomElementConstructor) {
+export function register(tag: string, constructor: CustomElementConstructor, themes?: string|string[], type?: string, importPath? : string) {
   if (customElements.get(tag)) {
     console.log("'" + tag + "' already exists, skipping...")
     debugger
@@ -73,14 +78,12 @@ export function register(theme: string|string[]|null, type: string|null, tag: st
     console.log("Registering custom element="+tag);
     customElements.define(tag, constructor)
   }
-  if (theme != null && type != null) {
-    if (typeof theme == "string") {
-      theme = [theme];
-    }
-    for(var i = 0; i < theme.length; i++) {
-      let components = {}
-      components[type] = tag
-      registerTheme(theme[i], { components })
+  if (themes && type && importPath) {
+    themes = [].concat(themes)
+    for(let theme of themes) {
+      let components = {} as Components
+      components[type] = { tag, importPath }
+      registerTheme(theme, { components })
     }
   }
 }

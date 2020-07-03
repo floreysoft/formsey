@@ -173,4 +173,4 @@ export class Form extends Field<FieldDefinition, any> {
   }
 }
 
-register(null, null, "formsey-form", Form)
+register("formsey-form", Form)

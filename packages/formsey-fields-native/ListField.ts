@@ -1,7 +1,5 @@
-import { ListFieldDefinition, ChangeEvent, LabeledField, register } from '@formsey/core';
-import { css, html, property, query } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { INPUT_STYLE } from './styles';
+import { ChangeEvent, LabeledField, ListFieldDefinition, register } from '@formsey/core';
+import { html, property, query } from 'lit-element';
 
 export class ListField extends LabeledField<ListFieldDefinition, string> {
   @property({ type: String })
@@ -30,4 +28,4 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
     }
   }
 }
-register("native", "list", "formsey-list", ListField)
+register("formsey-list", ListField, "native", "list", "@formsey/fields-native/ListField")

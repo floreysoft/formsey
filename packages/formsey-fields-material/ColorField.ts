@@ -7,5 +7,4 @@ export class ColorField extends StringField {
     return "color"
   }
 }
-
-register("material", "color", "formsey-color-material", ColorField);
+register("formsey-color-material", ColorField, "material", "color", "@formsey/fields-material/ColorField");

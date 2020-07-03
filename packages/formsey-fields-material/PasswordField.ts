@@ -8,5 +8,4 @@ export class PasswordField extends StringField {
     return "password"
   }
 }
-
-register("material", "password", "formsey-password-material", PasswordField);
+register("formsey-password-material", PasswordField, "material", "password", "@formsey/fields-material/PasswordField");

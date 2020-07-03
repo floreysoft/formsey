@@ -69,5 +69,4 @@ export class DateField extends Field<DateFieldDefinition, string> {
     return "date"
   }
 }
-
-register("material", "date", "formsey-date-material", DateField);
+register("formsey-date-material", DateField, "material", "date", "@formsey/fields-material/DateField");

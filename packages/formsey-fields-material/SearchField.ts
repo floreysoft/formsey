@@ -8,5 +8,4 @@ export class SearchField extends StringField {
     return "search"
   }
 }
-
-register("material", "search", "formsey-search-material", SearchField);
+register("formsey-search-material", SearchField, "material", "search", "@formsey/fields-material/SearchField");

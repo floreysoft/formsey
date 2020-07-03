@@ -27,5 +27,4 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
     }
   }
 }
-
-register("native", "boolean", "formsey-boolean", BooleanField)
+register("formsey-boolean", BooleanField, "native", "boolean", "@formsey/fields-native/BooleanField")

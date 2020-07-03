@@ -75,5 +75,4 @@ export class StringField extends Field<StringFieldDefinition, string> {
     return "text"
   }
 }
-
-register("material", "string", "formsey-string-material", StringField);
+register("formsey-string-material", StringField, "material", "string", "@formsey/fields-material/StringField");

@@ -8,5 +8,4 @@ export class WeekField extends DateField {
     return "week"
   }
 }
-
-register("material", "week", "formsey-week-material", WeekField);
+register("formsey-week-material", WeekField, "material", "week", "@formsey/fields-material/WeekField");

@@ -6,4 +6,4 @@ export class WeekField extends DateField {
     return "week"
   }
 }
-register("native", "week", "formsey-week", WeekField)
+register("formsey-week", WeekField, "native", "week", "@formsey/fields-native/WeekField")

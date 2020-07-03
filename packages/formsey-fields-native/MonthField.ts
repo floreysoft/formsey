@@ -6,4 +6,4 @@ export class MonthField extends DateField {
     return "month"
   }
 }
-register("native", "month", "formsey-month", MonthField)
+register("formsey-month", MonthField, "native", "month", "@formsey/fields-native/MonthField")

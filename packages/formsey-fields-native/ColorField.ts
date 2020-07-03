@@ -26,4 +26,4 @@ export class ColorField extends StringField {
     }
   }
 }
-register("native", "color", "formsey-color", ColorField)
+register("formsey-color", ColorField, "native", "color", "@formsey/fields-native/ColorField")

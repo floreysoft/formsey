@@ -8,5 +8,4 @@ export class URLField extends StringField {
     return "url"
   }
 }
-
-register("material", "url", "formsey-url-material", URLField)
+register("formsey-url-material", URLField, "material", "url", "@formsey/fields-material/URLField");

@@ -8,5 +8,4 @@ export class TimeField extends DateField {
     return "time"
   }
 }
-
-register("material", "time", "formsey-time-material", TimeField)
+register("formsey-time-material", TimeField, "material", "time", "@formsey/fields-material/TimeField");
