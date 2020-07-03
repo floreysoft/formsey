@@ -1,6 +1,6 @@
 {
   "name": "@formsey/react",
-  "version": "0.2.115",
+  "version": "0.2.116",
   "description": "Formsey wrapper for react",
   "files": [
     "/*.js",
@@ -8,7 +8,7 @@
     "!/test/"
   ],
   "dependencies": {
-    "formsey": "^0.2.115"
+    "formsey": "^0.2.116"
   },
   "peerDependencies": {
     "@types/react": "^16.9.41",
