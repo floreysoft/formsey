@@ -70,6 +70,7 @@ export function register(theme: string|string[]|null, type: string|null, tag: st
     console.log("'" + tag + "' already exists, skipping...")
     debugger
   } else {
+    console.log("Registering custom element="+tag);
     customElements.define(tag, constructor)
   }
   if (theme != null && type != null) {

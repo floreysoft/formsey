@@ -1,7 +1,7 @@
 import '@floreysoft/splitter';
 import '@floreysoft/tabs';
 import '@floreysoft/ace';
-import '@formsey/fields-native';
+import '@formsey/fields-native/basic';
 import '@formsey/fields-vaadin';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import { NodePart, directive } from 'lit-html'
