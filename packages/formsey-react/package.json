@@ -1,6 +1,6 @@
 {
   "name": "@formsey/react",
-  "version": "0.2.113",
+  "version": "0.2.114",
   "description": "Formsey wrapper for react",
   "files": [
     "/*.js",
@@ -8,12 +8,12 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.2.113",
-    "@formsey/fields-compound": "^0.2.113",
-    "@formsey/fields-material": "^0.2.113",
-    "@formsey/fields-native": "^0.2.113",
+    "@formsey/core": "^0.2.114",
+    "@formsey/fields-compound": "^0.2.114",
+    "@formsey/fields-material": "^0.2.114",
+    "@formsey/fields-native": "^0.2.114",
     "@formsey/fields-native-extended": "^0.2.112",
-    "@formsey/fields-vaadin": "^0.2.113",
+    "@formsey/fields-vaadin": "^0.2.114",
     "@types/react": "^16.9.41",
     "react": "^16.13.1"
   },
