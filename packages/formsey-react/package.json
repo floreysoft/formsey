@@ -8,9 +8,7 @@
     "!/test/"
   ],
   "dependencies": {
-    "formsey": "^0.2.116"
-  },
-  "peerDependencies": {
+    "formsey": "^0.2.116",
     "@types/react": "^16.9.41",
     "react": "^16.13.1"
   },
