@@ -31,3 +31,6 @@ export { YouTubeField } from './YouTubeField';
 export { ICON_FILE, ICON_UPLOAD, ICON_REMOVE } from './UploadField';
 
 export { ICON_COLOR_FIELD } from './ColorField';
+export { SignatureField } from './SignatureField'
+export { SourceCodeField, SourceCodeFieldDefinition } from './SourceCodeField'
+export { MarkdownField } from './MarkdownField';

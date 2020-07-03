@@ -11,8 +11,12 @@
     "/umd/*"
   ],
   "dependencies": {
+    "@formsey/core": "^0.2.112",
     "@floreysoft/utils": "^0.3.179",
-    "@formsey/core": "^0.2.112"
+    "@floreysoft/ace": ">0.3.0",
+    "@ts-stack/markdown": ">0",
+    "highlight.js": "^10.1.1",
+    "signature_pad": "^3.0.0-beta.3"
   },
   "scripts": {
     "tsc": "tsc",
