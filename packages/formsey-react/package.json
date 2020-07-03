@@ -8,12 +8,9 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.2.115",
-    "@formsey/fields-compound": "^0.2.115",
-    "@formsey/fields-material": "^0.2.115",
-    "@formsey/fields-native": "^0.2.115",
-    "@formsey/fields-native-extended": "^0.2.112",
-    "@formsey/fields-vaadin": "^0.2.115",
+    "formsey": "^0.2.115"
+  },
+  "peerDependencies": {
     "@types/react": "^16.9.41",
     "react": "^16.13.1"
   },
