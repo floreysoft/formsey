@@ -6,8 +6,7 @@ module.exports = {
     "formsey-fields-native": './packages/formsey-fields-native/basic.ts',
     "formsey-fields-native-extended": './packages/formsey-fields-native/extended.ts',
     "formsey-fields-material": './packages/formsey-fields-material/index.ts',
-    "formsey-fields-vaadin": './packages/formsey-fields-vaadin/index.ts',
-    "formsey-react": './packages/formsey-react/index.ts'
+    "formsey-fields-vaadin": './packages/formsey-fields-vaadin/index.ts'
   },
   // mode: 'development',
   // devtool: 'cheap-module-source-map',
