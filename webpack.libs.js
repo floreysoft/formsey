@@ -4,7 +4,6 @@ const path = require('path');
 module.exports = {
   entry: {
     "formsey-fields-native": './packages/formsey-fields-native/index.ts',
-    "formsey-fields-native-extended": './packages/formsey-fields-native-extended/index.ts',
     "formsey-fields-material": './packages/formsey-fields-material/index.ts',
     "formsey-fields-vaadin": './packages/formsey-fields-vaadin/index.ts'
   },
