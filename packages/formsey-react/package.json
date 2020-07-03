@@ -1,0 +1,29 @@
+{
+  "name": "@formsey/react",
+  "version": "0.2.112",
+  "description": "Formsey wrapper for react",
+  "files": [
+    "/*.js",
+    "/*.d.ts",
+    "!/test/"
+  ],
+  "dependencies": {
+    "@formsey/core": "^0.2.112",
+    "@formsey/fields-compound": "^0.2.112",
+    "@formsey/fields-material": "^0.2.112",
+    "@formsey/fields-native": "^0.2.112",
+    "@formsey/fields-native-extended": "^0.2.112",
+    "@formsey/fields-vaadin": "^0.2.112",
+    "@types/react": "^16.9.41",
+    "react": "^16.13.1"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "pub:check": "npm publish --dry-run"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "36536cc222c57d31d09a1a8da547486474820576"
+}

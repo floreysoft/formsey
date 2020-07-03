@@ -16,6 +16,7 @@
       "noImplicitAny": false,
       "noImplicitThis": true,
       "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
       "pretty": true
     },
     "include": [
