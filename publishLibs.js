@@ -27,7 +27,8 @@ fs.readFile('lerna.json', (err, data) => {
       return console.log('Unable to scan directory: ' + err);
     }
     files.forEach(function (file) {
-      uploadFile("umd/"+file, file+"."+lerna.version+".min.js")
+      uploadFile("umd/"+file, file+".min.js")
+      uploadFile("umd/"+file, file+"-"+lerna.version+".min.js")
     });
   });
   console.log(lerna.version);
