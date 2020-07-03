@@ -1,0 +1,23 @@
+{
+  "name": "formsey",
+  "version": "0.2.115",
+  "files": [
+    "/*.js.map",
+    "/*.d.ts.map",
+    "/*.js",
+    "/*.d.ts",
+    "!/test/"
+  ],
+  "description": "Formsey",
+  "dependencies": {
+    "lit-element": "^2.3.0"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "pub:check": "npm publish --dry-run"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  }
+}
