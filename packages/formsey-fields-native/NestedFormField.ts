@@ -8,21 +8,5 @@ export class NestedFormField extends CoreNestedFormField {
     return [...super.styles, NESTED_FORM_STYLE]
   }
 }
-register(["material", "native", "vaadin"], "nestedLayout", "formsey-nested-form", NestedFormField);
-
-//AAA
-registerTheme('material', {
-  components: {
-    'nestedForm': 'formsey-nested-form',
-  }
-});
-registerTheme('native', {
-  components: {
-    'nestedForm': 'formsey-nested-form',
-  }
-});
-registerTheme('vaadin', {
-  components: {
-    'nestedForm': 'formsey-nested-form',
-  }
-});
+register("formsey-nested-form", NestedFormField, ["material", "native", "vaadin"], "nestedLayout", "@formsey/fields-native/NestedFormField")
+register("formsey-nested-form", NestedFormField, ["material", "native", "vaadin"], "nestedForm", "@formsey/fields-native/NestedFormField")
