@@ -19,4 +19,4 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
     }
   }
 }
-register("formsey-button", ButtonField)
+register("native", "button", "formsey-button", ButtonField)

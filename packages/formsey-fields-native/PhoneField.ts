@@ -6,4 +6,4 @@ export class PhoneField extends StringField {
     return "tel"
   }
 }
-register("formsey-phone", PhoneField)
+register("native", "phone", "formsey-phone", PhoneField)

@@ -1,11 +1,10 @@
-import { ListFieldDefinition, ChangeEvent } from '@formsey/core';
+import { ListFieldDefinition, ChangeEvent, register } from '@formsey/core';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
-import { customElement, html, property, query } from 'lit-element';
+import { html, property, query } from 'lit-element';
 import { VaadinField } from './VaadinField';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-list-vaadin")
 export class ListField extends VaadinField<ListFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -41,3 +40,5 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
     }
   }
 }
+
+register(["vaadin"], "list", "formsey-list-vaadin", ListField);

@@ -1,5 +1,5 @@
 import { html, property } from 'lit-element';
-import { createField, ChangeEvent, CompoundField, FieldDefinition, ClickEvent } from '@formsey/core';
+import { createField, ChangeEvent, CompoundField, FieldDefinition, ClickEvent, register } from '@formsey/core';
 
 export interface AddressFieldDefinition extends FieldDefinition {
   includeAddressLine1 : boolean
@@ -39,4 +39,4 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
   }
 }
 
-customElements.define('formsey-address', AddressField);
+register(["native", "material", "vaadin"], "address", "formsey-address", AddressField);

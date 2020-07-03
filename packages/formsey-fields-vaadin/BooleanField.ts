@@ -1,13 +1,12 @@
-import { BooleanFieldDefinition, ChangeEvent } from '@formsey/core';
+import { BooleanFieldDefinition, ChangeEvent, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { css, customElement, html, property, query } from 'lit-element';
+import { css, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 
-@customElement("formsey-boolean-vaadin")
 export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
@@ -54,3 +53,5 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+
+register(["vaadin"], "boolean", "formsey-boolean-vaadin", BooleanField);

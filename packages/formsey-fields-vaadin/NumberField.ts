@@ -1,12 +1,11 @@
-import { NumberFieldDefinition } from '@formsey/core';
+import { NumberFieldDefinition, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { VaadinNumberField } from '@vaadin/vaadin-text-field';
 import "@vaadin/vaadin-text-field/vaadin-number-field.js";
-import { customElement, html, property, query } from 'lit-element';
+import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 
-@customElement("formsey-number-vaadin")
 export class NumberField extends VaadinField<NumberFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -41,3 +40,5 @@ export class NumberField extends VaadinField<NumberFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+
+register(["vaadin"], "number", "formsey-number-vaadin", NumberField);

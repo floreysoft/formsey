@@ -1,5 +1,5 @@
 import { html, property } from 'lit-element';
-import { createField, ChangeEvent, CompoundField, FieldDefinition, ClickEvent } from '@formsey/core';
+import { createField, ChangeEvent, CompoundField, FieldDefinition, ClickEvent, register } from '@formsey/core';
 
 export interface NameFieldDefinition extends FieldDefinition {
   includePrefix : boolean
@@ -29,4 +29,4 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
   }
 }
 
-customElements.define('formsey-name', NameField);
+register(["native", "material","vaadin"], "name", "formsey-name", NameField);

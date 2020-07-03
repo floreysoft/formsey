@@ -63,7 +63,7 @@ export class ImageCheckbox extends LitElement {
     }
   }
 }
-register("formsey-image-checkbox", ImageCheckbox)
+register(["material","native","vaadin"], "imageCheckbox", "formsey-image-checkbox", ImageCheckbox)
 
 export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | string> {
   @property({ type: Object })
@@ -211,4 +211,5 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
     this.columns = columns
   }
 }
-register("formsey-images", ImagesField)
+
+register(["native", "material"], "images", "formsey-images", ImagesField)

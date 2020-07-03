@@ -1,11 +1,10 @@
 import "@material/mwc-textfield/mwc-textfield.js";
-import { Field, StringFieldDefinition } from '@formsey/core';
+import { Field, StringFieldDefinition, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { css, customElement, html, property, query } from 'lit-element';
+import { css, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-string-material")
 export class StringField extends Field<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -76,3 +75,5 @@ export class StringField extends Field<StringFieldDefinition, string> {
     return "text"
   }
 }
+
+register("material", "string", "formsey-string-material", StringField);

@@ -1,11 +1,10 @@
-import { Field, NumberFieldDefinition, ChangeEvent } from '@formsey/core';
+import { Field, NumberFieldDefinition, ChangeEvent, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { css, customElement, html, property, query } from 'lit-element';
+import { css, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-number-material")
 export class NumberField extends Field<NumberFieldDefinition, number> {
   @property({ type: Number })
   value: number;
@@ -75,3 +74,5 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
     this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 }
+
+register("material", "number", "formsey-number-material", NumberField);

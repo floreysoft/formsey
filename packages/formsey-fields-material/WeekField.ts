@@ -1,11 +1,12 @@
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement } from 'lit-element';
 import { DateField } from "./DateField";
+import { register } from "@formsey/core";
 
-@customElement("formsey-week-material")
 export class WeekField extends DateField {
  protected get type() : TextFieldType {
     return "week"
   }
 }
+
+register("material", "week", "formsey-week-material", WeekField);

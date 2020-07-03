@@ -1,4 +1,3 @@
-import { customElement } from 'lit-element';
 import { StringField } from './StringField';
 import { register } from '@formsey/core';
 
@@ -7,4 +6,4 @@ export class EmailField extends StringField {
     return "email"
   }
 }
-register("formsey-email", EmailField)
+register("native", "email", "formsey-email", EmailField)

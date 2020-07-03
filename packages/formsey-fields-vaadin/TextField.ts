@@ -1,12 +1,11 @@
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
-import { TextFieldDefinition } from '@formsey/core';
+import { TextFieldDefinition, register } from '@formsey/core';
 import { VaadinTextArea } from '@vaadin/vaadin-text-field';
-import { customElement, html, property, query } from 'lit-element';
+import { html, property, query } from 'lit-element';
 import { ifDefined } from "lit-html/directives/if-defined";
 import { VaadinField } from './VaadinField';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 
-@customElement("formsey-text-vaadin")
 export class TextField extends VaadinField<TextFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -42,3 +41,5 @@ export class TextField extends VaadinField<TextFieldDefinition, string> {
   }
 
 }
+
+register(["vaadin"], "text", "formsey-text-vaadin", TextField);

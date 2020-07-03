@@ -1,14 +1,12 @@
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { CheckboxesFieldDefinition, Option, ChangeEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangeEvent, register } from '@formsey/core';
 import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
 import { VaadinTextField } from '@vaadin/vaadin-text-field';
-import { css, customElement, html, property, query, TemplateResult } from 'lit-element';
+import { css, html, property, query, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 
-
-@customElement("formsey-checkboxes-vaadin")
 export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, string[]> {
   @property({ converter: Object })
   value: string[] = []
@@ -111,3 +109,5 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+
+register(["vaadin"], "checkboxes", "formsey-checkboxes-vaadin", CheckboxesField);

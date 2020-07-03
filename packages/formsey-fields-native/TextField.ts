@@ -43,4 +43,4 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-text", TextField)
+register("native", "text", "formsey-text", TextField)

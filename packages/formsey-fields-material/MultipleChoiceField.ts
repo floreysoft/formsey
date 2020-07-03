@@ -1,13 +1,12 @@
-import { CheckboxesFieldDefinition, Option, ChangeEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ChangeEvent, register } from '@formsey/core';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-radio/mwc-radio";
 import { Radio } from "@material/mwc-radio/mwc-radio";
 import "@material/mwc-textfield/mwc-textfield";
 import { TextField } from "@material/mwc-textfield/mwc-textfield";
-import { css, customElement, html, property, query, queryAll, TemplateResult } from 'lit-element';
+import { css, html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { MaterialField } from './MaterialField';
 
-@customElement("formsey-multiple-choice-material")
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -85,3 +84,5 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     }
   }
 }
+
+register("material", "multipleChoice", "formsey-multiple-choice-material", MultipleChoiceField);

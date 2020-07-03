@@ -6,4 +6,4 @@ export class TimeField extends DateField {
     return "time"
   }
 }
-register("formsey-time", TimeField)
+register("native", "time", "formsey-time", TimeField)

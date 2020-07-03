@@ -1,12 +1,11 @@
-import { Field, ListFieldDefinition } from '@formsey/core';
+import { Field, ListFieldDefinition, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-list/mwc-list-item";
 import { Select } from "@material/mwc-select";
 import "@material/mwc-select/mwc-select";
-import { css, customElement, html, property, query } from 'lit-element';
+import { css, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-list-material")
 export class ListField extends Field<ListFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -69,3 +68,5 @@ export class ListField extends Field<ListFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+
+register("material", "list", "formsey-list-material", ListField);

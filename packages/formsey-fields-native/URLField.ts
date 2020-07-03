@@ -6,4 +6,4 @@ export class URLField extends StringField {
     return "url"
   }
 }
-register("formsey-url", URLField)
+register("native", "url", "formsey-url", URLField)

@@ -1,6 +1,7 @@
 import { OptionalSectionField as NativeOptionalSectionField } from '@formsey/fields-native/OptionalSectionField';
-import { customElement } from 'lit-element';
+import { register } from '@formsey/core';
 
-@customElement("formsey-optional-section-material")
 export class OptionalSectionField extends NativeOptionalSectionField {
 }
+
+register("material", "optionalSection", "formsey-optional-section-material", OptionalSectionField);

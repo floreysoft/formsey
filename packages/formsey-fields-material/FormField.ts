@@ -20,4 +20,4 @@ export class FormField extends CoreFormField {
       `];
   }
 }
-register('formsey-form-field-material', FormField)
+register("material", "form", "formsey-form-field-material", FormField);

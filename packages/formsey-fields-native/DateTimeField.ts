@@ -1,4 +1,3 @@
-import { customElement } from 'lit-element';
 import { DateField } from './DateField';
 import { register } from '@formsey/core';
 
@@ -7,4 +6,4 @@ export class DateTimeField extends DateField {
     return "datetime-local"
   }
 }
-register("formsey-datetime", DateTimeField)
+register("native", "datetime", "formsey-datetime", DateTimeField)

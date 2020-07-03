@@ -1,7 +1,8 @@
 import { SelectableSectionField as NativeSelectableSectionField } from '@formsey/fields-native/SelectableSectionField';
-import { customElement } from 'lit-element';
+import { register } from '@formsey/core';
 
-@customElement("formsey-selectable-section-material")
 export class SelectableSectionField extends NativeSelectableSectionField {
 
 }
+
+register("material", "selectableSection", "formsey-selectable-section-material", SelectableSectionField);

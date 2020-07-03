@@ -1,11 +1,10 @@
-import { Field, DateFieldDefinition } from '@formsey/core';
+import { Field, DateFieldDefinition, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { css, customElement, html, property, query } from 'lit-element';
+import { css, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-date-material")
 export class DateField extends Field<DateFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -70,3 +69,5 @@ export class DateField extends Field<DateFieldDefinition, string> {
     return "date"
   }
 }
+
+register("material", "date", "formsey-date-material", DateField);

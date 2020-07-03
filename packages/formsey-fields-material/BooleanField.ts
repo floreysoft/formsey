@@ -1,12 +1,11 @@
-import { BooleanFieldDefinition, ChangeEvent } from '@formsey/core';
+import { BooleanFieldDefinition, ChangeEvent, register } from '@formsey/core';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox.js";
-import { customElement, html, property, query } from 'lit-element';
+import { html, property, query } from 'lit-element';
 import { MaterialField } from './MaterialField';
 
-@customElement("formsey-boolean-material")
 export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
@@ -43,3 +42,5 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
     this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
   }
 }
+
+register("material", "boolean", "formsey-boolean-material", BooleanField);

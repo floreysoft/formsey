@@ -1,12 +1,11 @@
 import '@vaadin/vaadin-date-picker';
-import { DateFieldDefinition } from '@formsey/core';
-import { customElement, html, property, query } from 'lit-element';
+import { DateFieldDefinition, register } from '@formsey/core';
+import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 import { VaadinDatePicker } from "@vaadin/vaadin-date-picker";
 import { InvalidEvent, InvalidError } from '@formsey/core/InvalidEvent';
 
-@customElement("formsey-date-vaadin")
 export class DateField extends VaadinField<DateFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -41,3 +40,5 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+
+register(["vaadin"], "date", "formsey-date-vaadin", DateField);

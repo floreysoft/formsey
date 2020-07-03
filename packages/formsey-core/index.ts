@@ -65,15 +65,23 @@ export function getDefaultTheme(): string | undefined {
   return undefined
 }
 
-export function register(theme: string, type: string, tag: string, constructor: CustomElementConstructor) {
+export function register(theme: string|string[]|null, type: string|null, tag: string, constructor: CustomElementConstructor) {
   if (customElements.get(tag)) {
     console.log("'" + tag + "' already exists, skipping...")
+    debugger
   } else {
     customElements.define(tag, constructor)
   }
-  let components = {}
-  components[type] = tag
-  registerTheme(theme, { components })
+  if (theme != null && type != null) {
+    if (typeof theme == "string") {
+      theme = [theme];
+    }
+    for(var i = 0; i < theme.length; i++) {
+      let components = {}
+      components[type] = tag
+      registerTheme(theme[i], { components })
+    }
+  }
 }
 
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {

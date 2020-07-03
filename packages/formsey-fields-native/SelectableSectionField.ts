@@ -50,4 +50,4 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     }
   }
 }
-register("formsey-selectable-section", SelectableSectionField)
+register(["native", "vaadin"], "selectableSection", "formsey-selectable-section", SelectableSectionField)

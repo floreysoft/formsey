@@ -1,5 +1,5 @@
 import { html, property } from 'lit-element';
-import { createField, ChangeEvent, CompoundField, FieldDefinition, ClickEvent } from '@formsey/core';
+import { createField, ChangeEvent, CompoundField, FieldDefinition, ClickEvent, register } from '@formsey/core';
 
 export interface CreditCardFieldDefinition extends FieldDefinition {
   enabledAutofill : boolean
@@ -26,4 +26,4 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
   }
 }
 
-customElements.define('formsey-creditcard', CreditCardField);
+register(["native", "material","vaadin"], "creditCard", "formsey-creditcard", CreditCardField);

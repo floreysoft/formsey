@@ -30,4 +30,4 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
     }
   }
 }
-register("formsey-list", ListField)
+register("native", "list", "formsey-list", ListField)

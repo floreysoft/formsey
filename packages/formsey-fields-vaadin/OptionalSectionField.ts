@@ -1,6 +1,7 @@
 import { OptionalSectionField as NativeOptionalSectionField } from '@formsey/fields-native/OptionalSectionField';
-import { customElement } from 'lit-element';
+import { register } from '@formsey/core';
 
-@customElement("formsey-optional-section-vaadin")
 export class OptionalSectionField extends NativeOptionalSectionField {
 }
+
+register(["vaadin"], "optionalSection", "formsey-optional-section-vaadin", OptionalSectionField);

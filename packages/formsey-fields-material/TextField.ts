@@ -1,11 +1,10 @@
-import { StringFieldDefinition, Field } from '@formsey/core';
+import { StringFieldDefinition, Field, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
-import { css, customElement, html, property, query } from 'lit-element';
+import { css, html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-@customElement("formsey-text-material")
 export class TextField extends Field<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -69,3 +68,5 @@ export class TextField extends Field<StringFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+
+register("material", "text", "formsey-text-material", TextField);

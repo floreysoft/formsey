@@ -1,9 +1,7 @@
-import { InputFieldDefinition, LabeledField, ChangeEvent } from '@formsey/core';
+import { InputFieldDefinition, LabeledField, ChangeEvent, register } from '@formsey/core';
 import '@vaadin/vaadin-rich-text-editor/vaadin-rich-text-editor.js';
-import { customElement, html, property } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html, property } from 'lit-element';
 
-@customElement("formsey-rich-text-vaadin")
 export class RichTextField extends LabeledField<InputFieldDefinition, string> {
   @property()
   value: string;
@@ -19,3 +17,5 @@ export class RichTextField extends LabeledField<InputFieldDefinition, string> {
     }
   }
 }
+
+register(["native", "material","vaadin"], "richText", "formsey-rich-text-vaadin", RichTextField);

@@ -172,4 +172,5 @@ export class Form extends Field<FieldDefinition, any> {
     this.requestUpdate()
   }
 }
-register('formsey-form', Form)
+
+register(null, null, "formsey-form", Form)

@@ -1,11 +1,12 @@
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement } from 'lit-element';
 import { DateField } from "./DateField";
+import { register } from "@formsey/core";
 
-@customElement("formsey-time-material")
 export class TimeField extends DateField {
  protected get type() : TextFieldType {
     return "time"
   }
 }
+
+register("material", "time", "formsey-time-material", TimeField)

@@ -1,10 +1,11 @@
 import { TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement } from 'lit-element';
 import { StringField } from './StringField';
+import { register } from "@formsey/core";
 
-@customElement("formsey-color-material")
 export class ColorField extends StringField {
  protected get type() : TextFieldType {
     return "color"
   }
 }
+
+register("material", "color", "formsey-color-material", ColorField);

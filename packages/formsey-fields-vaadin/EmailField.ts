@@ -1,12 +1,11 @@
 import "@vaadin/vaadin-text-field/vaadin-email-field";
-import { StringFieldDefinition } from '@formsey/core';
+import { StringFieldDefinition, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { EmailFieldElement } from '@vaadin/vaadin-text-field/vaadin-email-field';
-import { customElement, html, property, query } from 'lit-element';
+import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 
-@customElement("formsey-email-vaadin")
 export class EmailField extends VaadinField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -40,3 +39,5 @@ export class EmailField extends VaadinField<StringFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
+
+register(["vaadin"], "email", "formsey-email-vaadin", EmailField);
