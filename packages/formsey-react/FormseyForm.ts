@@ -6,55 +6,55 @@ import { InvalidErrors } from '@formsey/core/InvalidEvent';
 export class FormseyForm extends React.Component {
     private formElement = null;
 
-    set action(action: string) {
+    public set action(action: string) {
         this.formElement.current.action = action;
     }
 
-    get action(): string {
+    public get action(): string {
         return this.formElement.current.action;
     }
 
-    set method(method: "GET" | "POST" | "dialog") {
+    public set method(method: "GET" | "POST" | "dialog") {
         this.formElement.current.method = method;
     }
 
-    get method(): "GET" | "POST" | "dialog" {
+    public get method(): "GET" | "POST" | "dialog" {
         return this.formElement.current.method;
     }
 
-    set src(src: string) {
+    public set src(src: string) {
         this.formElement.current.src = src;
     }
 
-    get src(): string {
+    public get src(): string {
         return this.formElement.current.src;
     }
 
-    set theme(theme: string) {
+    public set theme(theme: string) {
         this.formElement.current.theme = theme;
     }
 
-    set valid(valid: boolean) {
+    public set valid(valid: boolean) {
         this.formElement.current.valid = valid;
     }
 
-    get valid(): boolean {
+    public get valid(): boolean {
         return this.formElement.current.valid;
     }
 
-    set report(report: boolean) {
+    public set report(report: boolean) {
         this.formElement.current.report = report;
     }
 
-    get report(): boolean {
+    public get report(): boolean {
         return this.formElement.current.report;
     }
 
-    set errors(errors: InvalidErrors) {
+    public set errors(errors: InvalidErrors) {
         this.formElement.current.errors = errors;
     }
 
-    get errors(): InvalidErrors {
+    public get errors(): InvalidErrors {
         return this.formElement.current.errors;
     }
 
@@ -88,42 +88,42 @@ export class FormseyForm extends React.Component {
         this.formElement.current.removeEventListener ('click', this.clickEventListenerBound);
     }
 
-    changeEventListenerBound = this.changeEventListener.bind(this);
+    private changeEventListenerBound = this.changeEventListener.bind(this);
     private changeEventListener(e: ValueChangedEvent<any>) {
         if ((this as any).props.onChange) {
             (this as any).props.onChange(e.detail);
         }
     }
 
-    invalidEventListenerBound = this.invalidEventListener.bind(this);
+    private invalidEventListenerBound = this.invalidEventListener.bind(this);
     private invalidEventListener(e: Event) {
         if ((this as any).props.onInvalid) {
             (this as any).props.onInvalid(e);
         }
     }
 
-    inputEventListenerBound = this.inputEventListener.bind(this);
+    private inputEventListenerBound = this.inputEventListener.bind(this);
     private inputEventListener(e: ValueChangedEvent<any>) {
         if ((this as any).props.onInput) {
             (this as any).props.onInput(e.detail);
         }
     }
 
-    blurEventListenerBound = this.blurEventListener.bind(this);
+    private blurEventListenerBound = this.blurEventListener.bind(this);
     private blurEventListener(e: CustomEvent) {
         if ((this as any).props.onBlur) {
             (this as any).props.onBlur(e.detail);
         }
     }
 
-    focusEventListenerBound = this.focusEventListener.bind(this);
+    private focusEventListenerBound = this.focusEventListener.bind(this);
     private focusEventListener(e: CustomEvent) {
         if ((this as any).props.onFocus) {
             (this as any).props.onFocus(e.detail);
         }
     }
 
-    clickEventListenerBound = this.clickEventListener.bind(this);
+    private clickEventListenerBound = this.clickEventListener.bind(this);
     private clickEventListener(e: CustomEvent) {
         if ((this as any).props.onClick) {
             (this as any).props.onClick(e.detail);
