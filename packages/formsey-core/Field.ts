@@ -4,6 +4,7 @@ import { ChangeEvent } from './ChangeEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ClickEvent } from './ClickEvent';
+import { BlurEvent } from '../formsey';
 
 export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
@@ -159,13 +160,13 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   protected focused(e: any) {
     e.stopPropagation()
     e.preventDefault()
-    this.dispatchEvent(new ClickEvent(this.path()));
+    this.dispatchEvent(new FocusEvent(this.path()));
   }
 
   protected blurred(e: any) {
     e.stopPropagation()
     e.preventDefault()
-    this.dispatchEvent(new ClickEvent(this.path()));
+    this.dispatchEvent(new BlurEvent(this.path()));
   }
 
   protected firstPathElement(path: string) {
