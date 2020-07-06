@@ -4,8 +4,8 @@ import { ValueChangedEvent } from './ValueChangedEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ClickEvent } from './ClickEvent';
-import { BlurEvent } from '../formsey';
-import { FocusEvent } from '../formsey';
+import { BlurEvent } from './BlurEvent';
+import { FocusEvent } from './FocusEvent';
 
 export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
