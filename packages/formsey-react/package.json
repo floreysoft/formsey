@@ -1,6 +1,6 @@
 {
   "name": "@formsey/react",
-  "version": "0.2.121",
+  "version": "0.2.122",
   "description": "Formsey wrapper for react",
   "files": [
     "/*.js",
@@ -9,7 +9,7 @@
   ],
   "dependencies": {
     "@types/react": "^16.9.41",
-    "formsey": "^0.2.121",
+    "formsey": "^0.2.122",
     "react": "^16.13.1"
   },
   "scripts": {

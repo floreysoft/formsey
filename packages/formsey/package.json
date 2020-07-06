@@ -1,6 +1,6 @@
 {
   "name": "formsey",
-  "version": "0.2.121",
+  "version": "0.2.122",
   "files": [
     "/*.js.map",
     "/*.d.ts.map",
@@ -10,11 +10,11 @@
   ],
   "description": "Formsey",
   "dependencies": {
-    "@formsey/core": "^0.2.121",
-    "@formsey/fields-compound": "^0.2.121",
-    "@formsey/fields-material": "^0.2.121",
-    "@formsey/fields-native": "^0.2.121",
-    "@formsey/fields-vaadin": "^0.2.121",
+    "@formsey/core": "^0.2.122",
+    "@formsey/fields-compound": "^0.2.122",
+    "@formsey/fields-material": "^0.2.122",
+    "@formsey/fields-native": "^0.2.122",
+    "@formsey/fields-vaadin": "^0.2.122",
     "lit-element": "^2.3.0"
   },
   "scripts": {
