@@ -1,6 +1,7 @@
 import { ChangeEvent, CheckboxesFieldDefinition, createField, LabeledField, register, StringFieldDefinition } from '@formsey/core';
 import { css, html, property, query, TemplateResult } from 'lit-element';
 import { StringField } from './StringField';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 
 export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition, string> {
   @property({ type: String })
@@ -35,7 +36,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     this.value = e.detail.value
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(e.type as "input" | "change", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.definition.name, this.value));
     }
   }
 

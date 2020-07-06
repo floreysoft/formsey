@@ -1,5 +1,6 @@
 import { ChangeEvent, createField, Field, FieldDefinition, FormField, register } from '@formsey/core';
 import { html, property } from 'lit-element';
+import { ValueChangedEvent } from './ValueChangedEvent';
 import { InvalidEvent } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
 
@@ -134,10 +135,10 @@ export class Form extends Field<FieldDefinition, any> {
     }
     const key = e.detail.name ? e.detail.name : this.definition.name
     if ( e.type == "inputChange" || e.type == "input" ) {
-      this.dispatchEvent(new ChangeEvent("input", key, value));
+      this.dispatchEvent(new ValueChangedEvent("input", key, value));
     }
     if ( e.type == "inputChange" || e.type == "change" ) {
-      this.dispatchEvent(new ChangeEvent("change", key, value));
+      this.dispatchEvent(new ValueChangedEvent("change", key, value));
     }
   }
 

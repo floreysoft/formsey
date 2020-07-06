@@ -4,6 +4,7 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
 import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
+import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
 
@@ -210,7 +211,7 @@ export class FormField extends Field<FormDefinition, Object> {
         this.value[name] = e.detail.value;
       }
       this.removeDeletedFields()
-      this.dispatchEvent(new ChangeEvent(e.type as "input" | "change", this.prependPath(e.detail.name), this.value));
+      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.prependPath(e.detail.name), this.value));
     }
   }
 

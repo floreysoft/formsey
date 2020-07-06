@@ -1,5 +1,6 @@
-import { ChangeEvent, createField, Field, NestedFormDefinition, ClickEvent } from '@formsey/core';
+import { ChangeEvent, createField, Field, NestedFormDefinition } from '@formsey/core';
 import { html, query } from 'lit-element';
+import { ValueChangedEvent } from './ValueChangedEvent';
 import { InvalidEvent } from './InvalidEvent';
 
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
@@ -37,9 +38,9 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     this.dispatchEvent(new InvalidEvent(e.errors))
   }
 
-  protected changed(e: ChangeEvent<any>) {
+  protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
     this.value = e.detail.value;
-    this.dispatchEvent(new ChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
   }
 }

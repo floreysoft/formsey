@@ -2,6 +2,7 @@ import { Ace } from '@floreysoft/ace';
 import { ChangeEvent, InputFieldDefinition, LabeledField, register } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 
 export interface SourceCodeFieldDefinition extends InputFieldDefinition {
   theme? : string
@@ -25,7 +26,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     e.stopPropagation()
     this.value = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent("input", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("input", this.definition.name, this.value));
     }
   }
 }

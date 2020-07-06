@@ -3,6 +3,7 @@ import { ChangeEvent, ImagesFieldDefinition, LabeledField, register } from '@for
 import { html, LitElement, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined'
 import ResizeObserver from 'resize-observer-polyfill';
+import { ValueChangedEvent } from "@formsey/core/ValueChangedEvent";
 
 export class ImageCheckbox extends LitElement {
   @property({ type: Boolean })
@@ -148,7 +149,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
         this.value = e.detail.value ? this.extractValue(e.detail.name) : undefined
       }
       if (this.definition.name) {
-        this.dispatchEvent(new ChangeEvent(e.type as "input" | "change", this.definition.name, this.value));
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.definition.name, this.value));
       }
     }
   }
