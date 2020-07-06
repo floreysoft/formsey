@@ -1,8 +1,7 @@
 import { Ace } from '@floreysoft/ace';
-import { ChangeEvent, InputFieldDefinition, LabeledField, register } from '@formsey/core';
+import { InputFieldDefinition, LabeledField, register, ValueChangedEvent } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 
 export interface SourceCodeFieldDefinition extends InputFieldDefinition {
   theme? : string

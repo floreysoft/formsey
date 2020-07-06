@@ -1,10 +1,9 @@
-import { area, ChangeEvent, createField, Field, FormDefinition, register } from '@formsey/core';
+import { area, ValueChangedEvent, createField, Field, FormDefinition, register } from '@formsey/core';
 import { html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
 import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
-import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
 
@@ -97,7 +96,7 @@ export class FormField extends Field<FormDefinition, Object> {
             }
           }
         }
-        let fieldTemplate = html`${createField(this.components, field, value, this.path(), fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
+        let fieldTemplate = html`${createField(this.components, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fff' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {
@@ -196,7 +195,7 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected changed(e: ChangeEvent<any>) {
+  protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
     if ( !this.value ) {
       this.value = {}

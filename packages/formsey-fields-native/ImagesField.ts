@@ -1,9 +1,8 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
-import { ChangeEvent, ImagesFieldDefinition, LabeledField, register } from '@formsey/core';
+import { ImagesFieldDefinition, LabeledField, register, ValueChangedEvent } from '@formsey/core';
 import { html, LitElement, property, query, queryAll, TemplateResult } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined'
+import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
-import { ValueChangedEvent } from "@formsey/core/ValueChangedEvent";
 
 export class ImageCheckbox extends LitElement {
   @property({ type: Boolean })
@@ -52,7 +51,7 @@ export class ImageCheckbox extends LitElement {
   changed(e: Event) {
     e.stopPropagation()
     this.checked = (<HTMLInputElement>e.target).checked;
-    this.dispatchEvent(new ChangeEvent(e.type as "change", this.id, this.checkbox.checked));
+    this.dispatchEvent(new ValueChangedEvent(e.type as "change", this.id, this.checkbox.checked));
   }
 
   private keyDown(e: KeyboardEvent) {

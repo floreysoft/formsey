@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import '@formsey/core';
-import { ChangeEvent } from '@formsey/core';
+import { ValueChangedEvent } from '@formsey/core';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 
 export class FormseyForm extends React.Component {
@@ -89,7 +89,7 @@ export class FormseyForm extends React.Component {
     }
 
     changeEventListenerBound = this.changeEventListener.bind(this);
-    private changeEventListener(e: ChangeEvent<any>) {
+    private changeEventListener(e: ValueChangedEvent<any>) {
         if ((this as any).props.onChange) {
             (this as any).props.onChange(e.detail);
         }
@@ -103,7 +103,7 @@ export class FormseyForm extends React.Component {
     }
 
     inputEventListenerBound = this.inputEventListener.bind(this);
-    private inputEventListener(e: ChangeEvent<any>) {
+    private inputEventListener(e: ValueChangedEvent<any>) {
         if ((this as any).props.onInput) {
             (this as any).props.onInput(e.detail);
         }

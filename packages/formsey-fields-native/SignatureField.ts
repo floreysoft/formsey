@@ -1,4 +1,4 @@
-import { ChangeEvent, LabeledField, register, SignatureFieldDefinition } from '@formsey/core';
+import { ValueChangedEvent, LabeledField, register, SignatureFieldDefinition } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -56,12 +56,12 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   protected clear(e: Event) {
     this.signaturePad.clear();
     this.value = "";
-    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 
   protected onStrokeEnd(e: MouseEvent | Touch) {
     this.value = this.signaturePad.toDataURL();
-    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 }
 register("formsey-signature", SignatureField, ["native", "vaadin", "material"], "signature",  "@formsey/fields-native/SignatureField")

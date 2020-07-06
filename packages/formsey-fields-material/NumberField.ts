@@ -1,4 +1,4 @@
-import { Field, NumberFieldDefinition, ChangeEvent, register } from '@formsey/core';
+import { Field, NumberFieldDefinition, ValueChangedEvent, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
@@ -71,7 +71,7 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
 
   protected changed(e: any) {
     this.value = +e.currentTarget.value;
-    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 }
 register("formsey-number-material", NumberField, "material", "number", "@formsey/fields-material/NumberField");

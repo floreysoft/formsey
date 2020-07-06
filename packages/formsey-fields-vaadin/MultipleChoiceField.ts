@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ChangeEvent, register } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
@@ -81,7 +81,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     }
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
     }
     if (other) {
       this.updateComplete.then(() => {

@@ -1,4 +1,4 @@
-import { ChangeEvent, LabeledField, ListFieldDefinition, register } from '@formsey/core';
+import { ValueChangedEvent, LabeledField, ListFieldDefinition, register } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 
 export class ListField extends LabeledField<ListFieldDefinition, string> {
@@ -24,7 +24,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
   protected changed(e: any) {
     this.value = e.currentTarget.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent(e.type as "change", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent(e.type as "change", this.definition.name, this.value));
     }
   }
 }

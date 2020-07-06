@@ -2,7 +2,7 @@ import { TemplateResult } from 'lit-element'
 import { FieldDefinition } from './FieldDefinitions'
 
 export { BlurEvent } from './BlurEvent'
-export { ValueChangedEvent as ChangeEvent } from './ValueChangedEvent'
+export { ValueChangedEvent } from './ValueChangedEvent'
 export { ClickEvent } from './ClickEvent'
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'

@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ChangeEvent, ClickEvent } from '@formsey/core';
+import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ValueChangedEvent, ClickEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html, property, query } from 'lit-element';
 import { NESTED_FORM_STYLE } from './styles';
@@ -18,7 +18,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined" && this.untouched) {
       this.value = this.definition.default
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+        this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
       }
     }
     if (this.definition.hidden) {
@@ -33,8 +33,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
       checked = true
     }
     this.definition.form.name = this.definition.name
-    let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.path(), this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
-    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.path(), this.errors, (event: ChangeEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
+    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
   }
 
@@ -71,17 +71,17 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.dispatchEvent(new InvalidEvent(e.errors))
   }
 
-  protected selectionChanged(e: ChangeEvent<boolean>) {
+  protected selectionChanged(e: ValueChangedEvent<boolean>) {
     this.value = e.detail.value ? {} : undefined
     this.untouched = false
     this.requestUpdate()
-    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 
-  protected changed(e: ChangeEvent<any>) {
+  protected changed(e: ValueChangedEvent<any>) {
     this.value = e.detail.value;
     this.requestUpdate()
-    this.dispatchEvent(new ChangeEvent("inputChange", e.detail.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
   }
 }
 register("formsey-optional-section", OptionalSectionField, "native", "optionalSection", "@formsey/fields-native/OptionalSectionField")

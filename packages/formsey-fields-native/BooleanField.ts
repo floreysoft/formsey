@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, ChangeEvent, LabeledField, register } from '@formsey/core';
+import { BooleanFieldDefinition, ValueChangedEvent, LabeledField, register } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 
 export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
@@ -14,7 +14,7 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
 
   clicked(e) {
     this.value = this.checkbox.checked
-    this.dispatchEvent(new ChangeEvent("change", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("change", this.definition.name, this.value));
   }
 
   firstUpdated() {

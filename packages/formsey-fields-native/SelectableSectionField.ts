@@ -1,4 +1,4 @@
-import { ChangeEvent, createField, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition, ClickEvent } from '@formsey/core';
+import { ValueChangedEvent, createField, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition, ClickEvent } from '@formsey/core';
 import { css, html, property } from 'lit-element';
 
 export class SelectableSectionValue {
@@ -23,13 +23,13 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       let selection = this.definition.selections[index];
       let value = selection.label ? selection.label : selection.value;
       let errors = {}
-      return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, this.path(), errors, (event: ChangeEvent<string>) => this.selectionChanged(event), null)}
-      <div class="form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, this.path(), errors, (event: ChangeEvent<any>) => this.changed(event), null)}</div>`;
+      return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, this.path(), errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
+      <div class="form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, this.path(), errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
     }
     return undefined
   }
 
-  protected selectionChanged(e: ChangeEvent<string>) {
+  protected selectionChanged(e: ValueChangedEvent<string>) {
     let value = e.detail.value;
     let option = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label=== value))[0].value;
     if (option) {
@@ -37,7 +37,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       this.value.value = {}
       this.requestUpdate()
       if (this.definition.name) {
-        this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+        this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
       }
     }
   }
@@ -46,7 +46,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     this.value.value = e.value;
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
     }
   }
 }

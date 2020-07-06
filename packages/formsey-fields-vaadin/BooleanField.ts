@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, ChangeEvent, register } from '@formsey/core';
+import { BooleanFieldDefinition, ValueChangedEvent, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
@@ -32,7 +32,7 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
 
   protected changed(e: any) {
     this.value = this.vaadinCheckbox.checked;
-    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 
   focusField(path: string) {

@@ -1,4 +1,4 @@
-import { ListFieldDefinition, ChangeEvent, register } from '@formsey/core';
+import { ListFieldDefinition, ValueChangedEvent, register } from '@formsey/core';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
 import { html, property, query } from 'lit-element';
@@ -36,7 +36,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
   protected changed(e: any) {
     this.value = e.currentTarget.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
     }
   }
 }

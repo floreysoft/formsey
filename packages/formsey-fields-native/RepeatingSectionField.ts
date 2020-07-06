@@ -1,4 +1,4 @@
-import { ChangeEvent, ClickEvent, createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition } from '@formsey/core';
+import { ValueChangedEvent, ClickEvent, createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html, property, queryAll, TemplateResult } from 'lit-element';
 
@@ -36,7 +36,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         }
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove"  tabindex="0" @click="${(e: Event) => this.removeForm(i)}">${ICON_MINUS}</button></div>` : undefined}
-        ${createField(this.components, { ...this.definition.form, name: "" }, value, this.path()+"["+i+"]", fieldErrors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+        ${createField(this.components, { ...this.definition.form, name: "" }, value, this.path()+"["+i+"]", fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
         itemTemplates.push(template);
       }
     }
@@ -75,14 +75,14 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
   protected addForm() {
     this.value.push({});
-    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
     this.requestUpdate();
   }
 
   protected removeForm(index: number) {
     this.value.splice(index, 1);
     this.requestUpdate();
-    this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 
   protected drag(e, from: number) {
@@ -101,20 +101,20 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
       this.value[from] = this.value[to];
       this.value[to] = tmp;
       if (this.definition.name) {
-        this.dispatchEvent(new ChangeEvent(this.definition.name, this.value));
+        this.dispatchEvent(new ValueChangedEvent(this.definition.name, this.value));
       }
       this.requestUpdate();
     }
     */
   }
 
-  protected changed(e: ChangeEvent<any>) {
+  protected changed(e: ValueChangedEvent<any>) {
     let path = e.detail.name.split('.')
     let index = path.shift() as string
     index = index.substring(1, index.length-1)
     this.value[+index] = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name+"["+index+"]."+path.shift(), this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name+"["+index+"]."+path.shift(), this.value));
     }
   }
 

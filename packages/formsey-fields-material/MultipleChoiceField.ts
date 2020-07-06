@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ChangeEvent, register } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent, register } from '@formsey/core';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-radio/mwc-radio";
 import { Radio } from "@material/mwc-radio/mwc-radio";
@@ -57,7 +57,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     this.value = (<TextField>e.target).value
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
     }
   }
 
@@ -75,7 +75,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     }
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ChangeEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
     }
     if ( value == "__other" && other) {
       this.updateComplete.then(() => {

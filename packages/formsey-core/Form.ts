@@ -1,6 +1,5 @@
-import { ChangeEvent, createField, Field, FieldDefinition, FormField, register } from '@formsey/core';
+import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from '@formsey/core';
 import { html, property } from 'lit-element';
-import { ValueChangedEvent } from './ValueChangedEvent';
 import { InvalidEvent } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
 
@@ -95,7 +94,7 @@ export class Form extends Field<FieldDefinition, any> {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ChangeEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
+      field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
     }
     if (this.method && this.action) {
       return html`<form action="${this.action}" method="${this.method}">${field}<slot></slot></form>`
@@ -121,7 +120,7 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
-  protected changed(e: ChangeEvent<any>) {
+  protected changed(e: ValueChangedEvent<any>) {
     this.value = e.detail.value;
     if (e.detail.name.startsWith('.')) {
       e.detail.name = e.detail.name.substring(1)
