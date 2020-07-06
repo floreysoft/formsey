@@ -1,8 +1,6 @@
 import { TemplateResult } from 'lit-element'
 import { FieldDefinition } from './FieldDefinitions'
-
 export { BlurEvent } from './BlurEvent'
-export { ValueChangedEvent } from './ValueChangedEvent'
 export { ClickEvent } from './ClickEvent'
 export { CompoundField, createField, Field } from './Field'
 export * from './FieldDefinitions'
@@ -11,6 +9,7 @@ export { Form } from './Form'
 export { FormField } from './FormField'
 export { LabeledField } from './LabeledField'
 export { NestedFormField } from './NestedFormField'
+export { ValueChangedEvent } from './ValueChangedEvent'
 
 export interface Component {
   tag: string,
