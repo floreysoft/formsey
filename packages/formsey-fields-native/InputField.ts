@@ -50,6 +50,10 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
 
   validate(report: boolean) {
     this.input.setCustomValidity("")
+    if ( this.error && this.error.custom ) {
+      this.dispatchEvent(new InvalidEvent(this.errors))
+      return false;
+    }
     return this.input.checkValidity() as boolean
   }
 
