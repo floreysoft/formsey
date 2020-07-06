@@ -1,6 +1,6 @@
 import { InputFieldDefinition, LabeledField, StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { css, html, property, query } from 'lit-element';
+import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { INPUT_STYLE } from './styles';
 
@@ -50,7 +50,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
 
   validate(report: boolean) {
     this.input.setCustomValidity("")
-    if ( this.error && this.error.custom ) {
+    if ( this.error?.custom ) {
       this.dispatchEvent(new InvalidEvent(this.errors))
       return false;
     }
