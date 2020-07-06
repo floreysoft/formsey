@@ -77,11 +77,12 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   _errors: InvalidErrors = {}
   error: InvalidError | undefined
 
-  public setCustomValidity(customErrors: InvalidErrors) {
+  public async setCustomValidity(customErrors: InvalidErrors) {
     if (customErrors) {
       Object.keys(customErrors).forEach((key) => { customErrors[key].custom = true })
     }
     this.errors = customErrors
+    return this.updateComplete
   }
 
   public reportValidity(): boolean {

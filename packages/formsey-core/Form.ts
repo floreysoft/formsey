@@ -58,7 +58,6 @@ export class Form extends Field<FieldDefinition, any> {
       this.definition = data.definition
       this.value = data.value
       this.theme = data.theme
-      this.dispatchEvent(new CustomEvent('load', { detail: { definition: data.definition, value: data.value, theme: data.theme } }))
       this.requestUpdate();
     } catch (reason) {
       console.error(reason.message)
@@ -78,6 +77,7 @@ export class Form extends Field<FieldDefinition, any> {
 
   protected form: any
 
+  private _loaded : boolean = false
 
   static get styles() {
     return [...super.styles, NATIVE_STYLES]
@@ -85,7 +85,7 @@ export class Form extends Field<FieldDefinition, any> {
 
   protected shouldUpdate(): boolean {
     let update = super.shouldUpdate()
-    if ( !update ) {
+    if (!update) {
       update = (typeof this.definition === "undefined")
     }
     return update;
@@ -103,6 +103,13 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
+  updated() {
+    if ( !this._loaded && this.definition ) {
+      this._loaded = true;
+      this.dispatchEvent(new CustomEvent('load', { detail: { definition: this.definition, value: this.value, theme: this.theme } }))
+    }
+  }
+
   protected createRenderRoot(): Element | ShadowRoot {
     return this.attachShadow({ mode: 'open' });
   }
@@ -113,6 +120,7 @@ export class Form extends Field<FieldDefinition, any> {
 
   public validate(report: boolean) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
+    if (!child) return true;
     if (report) {
       return child.reportValidity();
     } else {
@@ -133,10 +141,10 @@ export class Form extends Field<FieldDefinition, any> {
       value = this.value
     }
     const key = e.detail.name ? e.detail.name : this.definition.name
-    if ( e.type == "inputChange" || e.type == "input" ) {
+    if (e.type == "inputChange" || e.type == "input") {
       this.dispatchEvent(new ValueChangedEvent("input", key, value));
     }
-    if ( e.type == "inputChange" || e.type == "change" ) {
+    if (e.type == "inputChange" || e.type == "change") {
       this.dispatchEvent(new ValueChangedEvent("change", key, value));
     }
   }

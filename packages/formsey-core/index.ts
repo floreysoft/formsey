@@ -72,7 +72,6 @@ export function getDefaultTheme(): string | undefined {
 export function register(tag: string, constructor: CustomElementConstructor, themes?: string|string[], type?: string, importPath? : string) {
   if (customElements.get(tag)) {
     console.log("'" + tag + "' already exists, skipping...")
-    debugger
   } else {
     console.log("Registering custom element="+tag);
     customElements.define(tag, constructor)

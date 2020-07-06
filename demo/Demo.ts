@@ -1,12 +1,12 @@
 import '@floreysoft/splitter';
 import '@floreysoft/tabs';
 import '@floreysoft/ace';
-import '@formsey/fields-native/basic';
+import '@formsey/fields-native/extended';
 import '@formsey/fields-vaadin';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import { NodePart, directive } from 'lit-html'
 import { Ace } from '@floreysoft/ace'
-import { Form, FormDefinition } from '@formsey/core';
+import { Form, FormDefinition, InteractiveFieldDefinition } from '@formsey/core';
 import { get } from '@formsey/core/Form';
 
 @customElement("formsey-demo1")
@@ -102,6 +102,62 @@ export class FormseyDemo2 extends LitElement {
   }
 }
 
+@customElement("formsey-demo3")
+export class CustomValidityDemo extends LitElement {
+  @query("#right")
+  form: Form
+
+  value = directive((key : string, placeholder? : string) => (part : NodePart) => part.setValue(get(this.form?.value, key) || placeholder ))
+
+  private definition: FormDefinition = {
+    type: "form",
+    fields: [
+      {
+        type: "string",
+        name: "name",
+        label: "Name"
+      },
+      {
+        type: "number",
+        name: "age",
+        label: "Age",
+        required: true
+      } as InteractiveFieldDefinition
+    ]
+  }
+
+  static get styles(): CSSResult {
+    return css`
+    fs-splitter {
+      border-top: 1px solid var(--fs-border-color);
+      height: 100%;
+    }
+    .form {
+      border-left: 1px solid var(--fs-border-color);
+      overflow-y: auto;
+    }
+    .description {
+      background-color: var(--fs-background-color);
+      overflow-y: auto;
+    }
+    `
+  }
+
+  render() {
+    return html`<fs-splitter><div class="description"><button @click="${this.setCustomValidity}">Report custom validity</button><button @click="${this.clearCustomErrors}">Clear custom errors</button></div><div class="form"><formsey-form id="right" .definition="${this.definition}"></formsey-form></div></fs-splitter>`
+  }
+
+  async setCustomValidity() {
+    await this.form.setCustomValidity({ "age": { "validityMessage": "My custom error message" } });
+    this.form.reportValidity()
+  }
+
+  async clearCustomErrors() {
+    this.form.setCustomValidity({})
+    this.form.reportValidity()
+  }
+}
+
 @customElement("fs-demo")
 export class Demo extends LitElement {
   static get styles(): CSSResult {
@@ -121,6 +177,7 @@ export class Demo extends LitElement {
       <fs-tabs>
         <fs-tab label="Simple" selected><formsey-demo1></formsey-demo1></fs-tab>
         <fs-tab label="Zwo" selected><formsey-demo2></formsey-demo2></fs-tab>
+        <fs-tab label="Drei" selected><formsey-demo3></formsey-demo3></fs-tab>
       </fs-tabs>
     </fs-theme>`
   }
