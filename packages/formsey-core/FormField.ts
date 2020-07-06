@@ -49,7 +49,7 @@ export class FormField extends Field<FormDefinition, Object> {
   protected _value: Object = {}
   protected _definition: FormDefinition
 
-  @queryAll(".fs-form-field")
+  @queryAll(".fff")
   protected _fields: HTMLElement[]
 
   private resizeObserver: ResizeObserver
