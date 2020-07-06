@@ -79,7 +79,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   public setCustomValidity(customErrors: InvalidErrors) {
     if (customErrors) {
-      Object.keys(customErrors.errors).forEach((key) => { customErrors.errors[key].custom = true })
+      Object.keys(customErrors).forEach((key) => { customErrors[key].custom = true })
     }
     this.errors = customErrors
   }
