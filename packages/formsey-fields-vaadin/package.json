@@ -22,6 +22,8 @@
   "main": "./index.js",
   "scripts": {
     "tsc": "tsc && yarn copy-lib",
+    "link": "yarn link",
+    "unlink": "yarn unlink",
     "copy-lib": "copyfiles -f ./src/webpack-resolver.js dist"
   },
   "license": "Apache-2.0",
