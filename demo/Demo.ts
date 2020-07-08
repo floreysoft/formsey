@@ -6,7 +6,7 @@ import '@formsey/fields-vaadin';
 import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
 import { NodePart, directive } from 'lit-html'
 import { Ace } from '@floreysoft/ace'
-import { Form, FormDefinition, InteractiveFieldDefinition } from '@formsey/core';
+import { Form, FormDefinition, InteractiveFieldDefinition, ButtonFieldDefinition } from '@formsey/core';
 import { get } from '@formsey/core/Form';
 
 @customElement("formsey-demo1")
@@ -122,7 +122,13 @@ export class CustomValidityDemo extends LitElement {
         name: "age",
         label: "Age",
         required: true
-      } as InteractiveFieldDefinition
+      } as InteractiveFieldDefinition,
+      {
+        type: "button",
+        buttonType: "submit",
+        name: "submit",
+        label: "Submit"
+      } as ButtonFieldDefinition
     ]
   }
 

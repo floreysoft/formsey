@@ -1,5 +1,6 @@
 import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from '@formsey/core';
-import { html, property } from 'lit-element';
+import { html, property, query } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined'
 import { InvalidEvent, InvalidErrors } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
 
@@ -75,9 +76,7 @@ export class Form extends Field<FieldDefinition, any> {
   @property()
   method: "GET" | "POST" | "dialog"
 
-  protected form: any
-
-  private _loaded : boolean = false
+  private _loaded: boolean = false
 
   static get styles() {
     return [...super.styles, NATIVE_STYLES]
@@ -96,18 +95,19 @@ export class Form extends Field<FieldDefinition, any> {
     if (this.definition) {
       field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
     }
-    if (this.method && this.action) {
-      return html`<form action="${this.action}" method="${this.method}">${field}<slot></slot></form>`
-    } else {
-      return field
-    }
+    return html`<form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}">${field}<slot></slot></form>`
   }
 
   updated() {
-    if ( !this._loaded && this.definition ) {
+    if (!this._loaded && this.definition) {
       this._loaded = true;
       this.dispatchEvent(new CustomEvent('load', { detail: { definition: this.definition, value: this.value, theme: this.theme } }))
     }
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.addEventListener('click', this.clicked)
   }
 
   protected createRenderRoot(): Element | ShadowRoot {
@@ -120,24 +120,30 @@ export class Form extends Field<FieldDefinition, any> {
 
   public clearCustomValidity() {
     super.clearCustomValidity()
-    let child = this.renderRoot.firstElementChild as Field<any, any>
-    if (!child) return;
-    child.clearCustomValidity()
+    this.form().clearCustomValidity()
   }
 
   public setCustomValidity(customErrors: InvalidErrors) {
-    let child = this.renderRoot.firstElementChild as Field<any, any>
-    if (!child) return;
-    child.setCustomValidity(customErrors)
+    this.form().setCustomValidity(customErrors)
   }
 
   public validate(report: boolean) {
-    let child = this.renderRoot.firstElementChild as Field<any, any>
-    if (!child) return true;
     if (report) {
-      return child.reportValidity();
+      return this.form().reportValidity();
     } else {
-      return child.checkValidity();
+      return this.form().checkValidity();
+    }
+  }
+
+  protected submit(e: Event) {
+    if (!this.reportValidity()) {
+      e.preventDefault()
+    }
+  }
+
+  protected clicked(e) {
+    if ( !e.details ) {
+    e.stopPropagation()
     }
   }
 
@@ -195,6 +201,10 @@ export class Form extends Field<FieldDefinition, any> {
 
   public setValidityMessage(path: string, validityMessage: string) {
     set(this.errors, path, validityMessage)
+  }
+
+  private form() {
+    return this.renderRoot.firstElementChild.firstElementChild as Field<any, any>
   }
 }
 

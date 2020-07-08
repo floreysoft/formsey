@@ -57,7 +57,8 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
     return this.input.checkValidity() as boolean
   }
 
-  invalid() {
+  invalid(e) {
+    e.preventDefault()
     let validityState = {}
     for (let key in this.input.validity) {
       if (this.input.validity[key]) {

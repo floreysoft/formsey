@@ -101,7 +101,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.helpText) {
       header.push(html`<div class="ffd">${this.definition.helpText}</div>`)
     }
-    return html`<fieldset style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div></fieldset>`
+    return html`<section style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div></section>`
   }
 
   gridSizeChanged(e: CustomEvent) {

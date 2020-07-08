@@ -16,7 +16,7 @@
     "link": "lerna run link",
     "unlink": "lerna run unlink",
     "build": "webpack --config webpack.prod.js",
-    "start": "webpack-dev-server --open  --config webpack.dev.js",
+    "start": "webpack-dev-server --watch --open  --config webpack.dev.js",
     "test": "karma start",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "lib": "webpack --config webpack.libs.js",
