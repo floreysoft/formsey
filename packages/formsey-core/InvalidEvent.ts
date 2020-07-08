@@ -15,6 +15,9 @@ export class InvalidError {
 }
 
 export class InvalidErrors extends Map<string, InvalidError> {
+    constructor(map? : Map<string,InvalidError>){
+        super(map);
+    }
 }
 
 export class InvalidEvent extends Event {
