@@ -144,16 +144,18 @@ export class CustomValidityDemo extends LitElement {
   }
 
   render() {
-    return html`<fs-splitter><div class="description"><button @click="${this.setCustomValidity}">Report custom validity</button><button @click="${this.clearCustomErrors}">Clear custom errors</button></div><div class="form"><formsey-form id="right" .definition="${this.definition}"></formsey-form></div></fs-splitter>`
+    return html`<fs-splitter><div class="description"><button @click="${this.setCustomValidity}">Report custom validity</button><button @click="${this.clearCustomErrors}">Clear custom errors</button><button @click="${this.reportValidity}">Report validity</button></div><div class="form"><formsey-form id="right" .definition="${this.definition}"></formsey-form></div></fs-splitter>`
   }
 
-  async setCustomValidity() {
-    await this.form.setCustomValidity({ "age": { "validityMessage": "My custom error message" } });
-    this.form.reportValidity()
+  setCustomValidity() {
+    this.form.setCustomValidity({ "name": { "validityMessage": "My custom error message" } });
   }
 
-  async clearCustomErrors() {
-    this.form.setCustomValidity({})
+   clearCustomErrors() {
+    this.form.clearCustomValidity()
+  }
+
+  reportValidity() {
     this.form.reportValidity()
   }
 }

@@ -1,6 +1,6 @@
 import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from '@formsey/core';
 import { html, property } from 'lit-element';
-import { InvalidEvent } from './InvalidEvent';
+import { InvalidEvent, InvalidErrors } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
 
 export function get(data: Object, path: string): any {
@@ -118,6 +118,19 @@ export class Form extends Field<FieldDefinition, any> {
     return
   }
 
+  public clearCustomValidity() {
+    super.clearCustomValidity()
+    let child = this.renderRoot.firstElementChild as Field<any, any>
+    if (!child) return;
+    child.clearCustomValidity()
+  }
+
+  public setCustomValidity(customErrors: InvalidErrors) {
+    let child = this.renderRoot.firstElementChild as Field<any, any>
+    if (!child) return;
+    child.setCustomValidity(customErrors)
+  }
+
   public validate(report: boolean) {
     let child = this.renderRoot.firstElementChild as Field<any, any>
     if (!child) return true;
@@ -178,6 +191,10 @@ export class Form extends Field<FieldDefinition, any> {
   public setField(path: string, value: any): any {
     set(this.definition, path, value);
     this.requestUpdate()
+  }
+
+  public setValidityMessage(path: string, validityMessage: string) {
+    set(this.errors, path, validityMessage)
   }
 }
 

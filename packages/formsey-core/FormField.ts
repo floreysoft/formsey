@@ -1,9 +1,9 @@
-import { area, ValueChangedEvent, createField, Field, FormDefinition, register } from '@formsey/core';
+import { area, createField, Field, FormDefinition, register, ValueChangedEvent } from '@formsey/core';
 import { html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
 import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
-import { InvalidEvent } from './InvalidEvent';
+import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
 
@@ -84,17 +84,7 @@ export class FormField extends Field<FormDefinition, Object> {
           this.applyNestedErrors(fieldErrors, <NestedFormDefinition>field)
         } else {
           value = this.value && field.name ? this.value[field.name] : undefined
-          if (this.errors) {
-            for (let error in this.errors) {
-              if (this.definition.name && (error == this.definition.name + "." + field.name || error.startsWith(this.definition.name + "." + field.name + ".") || error.startsWith(this.definition.name + "." + field.name + "["))) {
-                fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
-              } else if (error.startsWith(field.name + "[")) {
-                fieldErrors[error] = this.errors[error]
-              } else if (error == field.name || error.startsWith(field.name + ".")) {
-                fieldErrors[error] = this.errors[error]
-              }
-            }
-          }
+          this.addFieldErrors(fieldErrors, field.name)
         }
         let fieldTemplate = html`${createField(this.components, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
@@ -131,6 +121,30 @@ export class FormField extends Field<FormDefinition, Object> {
         child.setIndex(counter)
         counter++
       }
+    }
+  }
+
+  public clearCustomValidity() {
+    super.clearCustomValidity()
+    for (let field of this._fields) {
+      let child = field.firstElementChild as Field<any, any>
+      child.clearCustomValidity()
+    }
+  }
+
+  public setCustomValidity(customErrors: InvalidErrors) {
+    super.setCustomValidity(customErrors)
+    for (let field of this._fields) {
+      let child = field.firstElementChild as Field<any, any>
+      child.clearCustomValidity()
+      let fieldDefinition = child.definition
+      let fieldErrors = {}
+      if (fieldDefinition.hasOwnProperty('form') && !fieldDefinition.name) {
+        this.applyNestedErrors(fieldErrors, <NestedFormDefinition>fieldDefinition)
+      } else {
+        this.addFieldErrors(fieldErrors, fieldDefinition.name)
+      }
+      child.setCustomValidity(fieldErrors)
     }
   }
 
@@ -197,7 +211,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
-    if ( !this.value ) {
+    if (!this.value) {
       this.value = {}
     }
     if (e.detail?.name) {
@@ -275,17 +289,7 @@ export class FormField extends Field<FormDefinition, Object> {
   protected applyNestedErrors(fieldErrors: Object, field: NestedFormDefinition) {
     for (let nestedField of field.form.fields) {
       if (nestedField) {
-        if (this.errors) {
-          for (let error in this.errors) {
-            if (this.definition.name && (error == this.definition.name + "." + nestedField.name || error.startsWith(this.definition.name + "." + nestedField.name + ".") || error.startsWith(this.definition.name + "." + nestedField.name + "["))) {
-              fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
-            } else if (error.startsWith(nestedField.name + "[")) {
-              fieldErrors[error] = this.errors[error]
-            } else if (error == nestedField.name || error.startsWith(nestedField.name + ".")) {
-              fieldErrors[error] = this.errors[error]
-            }
-          }
-        }
+        this.addFieldErrors(fieldErrors, nestedField.name)
         if (nestedField.hasOwnProperty('form') && !nestedField.name) {
           this.applyNestedErrors(fieldErrors, <NestedFormDefinition>nestedField)
         }
@@ -299,6 +303,20 @@ export class FormField extends Field<FormDefinition, Object> {
       this.errors[this.definition.name ? this.definition.name + "." + error : error] = e.errors[error]
     }
     this.dispatchEvent(new InvalidEvent(this.errors))
+  }
+
+  private addFieldErrors(fieldErrors: Object, field: string) {
+    if (this.errors) {
+      for (let error in this.errors) {
+        if (this.definition.name && (error == this.definition.name + "." + field || error.startsWith(this.definition.name + "." + field + ".") || error.startsWith(this.definition.name + "." + field + "["))) {
+          fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
+        } else if (error.startsWith(field + "[")) {
+          fieldErrors[error] = this.errors[error]
+        } else if (error == field || error.startsWith(field + ".")) {
+          fieldErrors[error] = this.errors[error]
+        }
+      }
+    }
   }
 
   private domPath() {
@@ -323,4 +341,4 @@ export class FormField extends Field<FormDefinition, Object> {
     return __closestFrom(base);
   }
 }
-register("formsey-form-field", FormField, ["native","vaadin"], "form", "@formsey/fields-native/FormField")
+register("formsey-form-field", FormField, ["native", "vaadin"], "form", "@formsey/fields-native/FormField")

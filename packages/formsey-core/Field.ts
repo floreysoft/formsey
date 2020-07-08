@@ -77,12 +77,20 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   _errors: InvalidErrors = {}
   error: InvalidError | undefined
 
-  public async setCustomValidity(customErrors: InvalidErrors) {
+  public clearCustomValidity() {
+    this.clearErrors(true)
+  }
+
+  public setCustomValidity(customErrors: InvalidErrors) {
     if (customErrors) {
-      Object.keys(customErrors).forEach((key) => { customErrors[key].custom = true })
+      Object.keys(customErrors).forEach((key) => {
+        customErrors[key].custom = true
+        this.errors[key] = customErrors[key]
+        if (key = this.definition.name) {
+          this.error = customErrors[key]
+        }
+      })
     }
-    this.errors = customErrors
-    return this.updateComplete
   }
 
   public reportValidity(): boolean {
@@ -179,23 +187,23 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return (this.definition.name ? this.definition.name : "") + "." + path
   }
 
-  protected path() : string {
-    return this.definition.name ? (this.parentPath ? (this.parentPath+"."+this.definition.name) : this.definition.name) : this.parentPath
+  protected path(): string {
+    return this.definition.name ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath
   }
 
-  private clearErrors() {
+  protected clearErrors(removeCustomErrors?: boolean) {
     // Keep custom errors
     if (this.errors) {
       for (let key in this.errors) {
         let error = this.errors[key]
-        if (!error.custom) {
+        if (error.custom == removeCustomErrors) {
           delete this.errors[key]
         }
       }
     } else {
       this.errors = {}
     }
-    if (this.error && !this.error.custom) {
+    if (this.error && this.error.custom == removeCustomErrors) {
       this.error = undefined
     }
   }
