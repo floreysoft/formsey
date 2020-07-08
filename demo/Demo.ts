@@ -8,6 +8,7 @@ import { NodePart, directive } from 'lit-html'
 import { Ace } from '@floreysoft/ace'
 import { Form, FormDefinition, InteractiveFieldDefinition, ButtonFieldDefinition } from '@formsey/core';
 import { get } from '@formsey/core/Form';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
 
 @customElement("formsey-demo1")
 export class FormseyDemo1 extends LitElement {
@@ -154,7 +155,7 @@ export class CustomValidityDemo extends LitElement {
   }
 
   setCustomValidity() {
-    this.form.setCustomValidity({ "name": { "validityMessage": "My custom error message" } });
+    this.form.setCustomValidity(new InvalidErrors().set("name", { "validityMessage": "My custom error message" }));
   }
 
    clearCustomErrors() {

@@ -75,16 +75,16 @@ export class FormField extends Field<FormDefinition, Object> {
     }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
-        let fieldErrors = {}
+        let fieldErrors = new InvalidErrors()
         let value: any
         if (field.hasOwnProperty('form') && !field.name) {
           // Anonymous nested form, so let's copy all form fields
           value = {}
           this.applyNestedFields(value, <NestedFormDefinition>field)
-          this.applyNestedErrors(fieldErrors, <NestedFormDefinition>field)
+          this.applyNestedErrors(this.errors, fieldErrors, <NestedFormDefinition>field)
         } else {
           value = this.value && field.name ? this.value[field.name] : undefined
-          this.addFieldErrors(fieldErrors, field.name)
+          this.addFieldErrors(this.errors, fieldErrors, field.name)
         }
         let fieldTemplate = html`${createField(this.components, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
@@ -138,11 +138,11 @@ export class FormField extends Field<FormDefinition, Object> {
       let child = field.firstElementChild as Field<any, any>
       child.clearCustomValidity()
       let fieldDefinition = child.definition
-      let fieldErrors = {}
+      let fieldErrors = new InvalidErrors()
       if (fieldDefinition.hasOwnProperty('form') && !fieldDefinition.name) {
-        this.applyNestedErrors(fieldErrors, <NestedFormDefinition>fieldDefinition)
+        this.applyNestedErrors(customErrors, fieldErrors, <NestedFormDefinition>fieldDefinition)
       } else {
-        this.addFieldErrors(fieldErrors, fieldDefinition.name)
+        this.addFieldErrors(customErrors, fieldErrors, fieldDefinition.name)
       }
       child.setCustomValidity(fieldErrors)
     }
@@ -286,12 +286,12 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected applyNestedErrors(fieldErrors: Object, field: NestedFormDefinition) {
+  protected applyNestedErrors(errors: InvalidErrors, fieldErrors: InvalidErrors, field: NestedFormDefinition) {
     for (let nestedField of field.form.fields) {
       if (nestedField) {
-        this.addFieldErrors(fieldErrors, nestedField.name)
+        this.addFieldErrors(errors, fieldErrors, nestedField.name)
         if (nestedField.hasOwnProperty('form') && !nestedField.name) {
-          this.applyNestedErrors(fieldErrors, <NestedFormDefinition>nestedField)
+          this.applyNestedErrors(errors, fieldErrors, <NestedFormDefinition>nestedField)
         }
       }
     }
@@ -299,23 +299,23 @@ export class FormField extends Field<FormDefinition, Object> {
 
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()
-    for (let error in e.errors) {
-      this.errors[this.definition.name ? this.definition.name + "." + error : error] = e.errors[error]
-    }
+    e.errors.forEach((error, path) => {
+      this.errors.set(this.definition.name ? this.definition.name + "." + path : path, error)
+    })
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 
-  private addFieldErrors(fieldErrors: Object, field: string) {
-    if (this.errors) {
-      for (let error in this.errors) {
-        if (this.definition.name && (error == this.definition.name + "." + field || error.startsWith(this.definition.name + "." + field + ".") || error.startsWith(this.definition.name + "." + field + "["))) {
-          fieldErrors[error.substring((this.definition.name + ".").length)] = this.errors[error]
-        } else if (error.startsWith(field + "[")) {
-          fieldErrors[error] = this.errors[error]
-        } else if (error == field || error.startsWith(field + ".")) {
-          fieldErrors[error] = this.errors[error]
+  private addFieldErrors(errors : InvalidErrors, fieldErrors: InvalidErrors, field: string) {
+    if (errors) {
+      errors.forEach((error, path) => {
+        if (this.definition.name && (path == this.definition.name + "." + field || path.startsWith(this.definition.name + "." + field + ".") || path.startsWith(this.definition.name + "." + field + "["))) {
+          fieldErrors.set(path.substring((this.definition.name + ".").length), error)
+        } else if (path.startsWith(field + "[")) {
+          fieldErrors.set(path, error)
+        } else if (path == field || path.startsWith(field + ".")) {
+          fieldErrors.set(path, error)
         }
-      }
+      })
     }
   }
 

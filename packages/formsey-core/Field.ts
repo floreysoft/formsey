@@ -1,4 +1,5 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined'
 import { Components, getDefaultTheme, getTheme } from '.';
 import { ValueChangedEvent } from './ValueChangedEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
@@ -15,10 +16,10 @@ export function hacktml(parts, ...args) {
   return html(newParts, ...newArgs);
 }
 
-export const createField = (components: Components, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any): TemplateResult => {
+export const createField = (components: Components, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
   const component = components[definition.type];
   if (component) {
-    return hacktml`<${component.tag} .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
+    return hacktml`<${component.tag} id="${ifDefined(id)}" .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching component has been registered!");
   }
@@ -64,7 +65,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   set errors(errors: InvalidErrors) {
     this.error = undefined
     if (errors && this.definition.name) {
-      this.error = errors[this.definition.name];
+      this.error = errors.get(this.definition.name)
     }
     this._errors = errors;
     this.requestUpdate();
@@ -74,7 +75,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return this._errors
   }
 
-  _errors: InvalidErrors = {}
+  _errors: InvalidErrors = new InvalidErrors()
   error: InvalidError | undefined
 
   public clearCustomValidity() {
@@ -83,11 +84,11 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   public setCustomValidity(customErrors: InvalidErrors) {
     if (customErrors) {
-      Object.keys(customErrors).forEach((key) => {
-        customErrors[key].custom = true
-        this.errors[key] = customErrors[key]
-        if (key = this.definition.name) {
-          this.error = customErrors[key]
+      customErrors.forEach((error, path) => {
+        error.custom = true
+        this.errors.set(path, error)
+        if (path = this.definition.name) {
+          this.error = error
         }
       })
     }
@@ -192,14 +193,13 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   protected clearErrors(removeCustomErrors?: boolean) {
     // Keep custom errors
     if (this.errors) {
-      for (let key in this.errors) {
-        let error = this.errors[key]
+      this.errors.forEach((error, path) => {
         if (error.custom == removeCustomErrors) {
-          delete this.errors[key]
+          this.errors.delete(path)
         }
-      }
+      })
     } else {
-      this.errors = {}
+      this.errors = new InvalidErrors()
     }
     if (this.error && this.error.custom == removeCustomErrors) {
       this.error = undefined

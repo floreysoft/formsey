@@ -5,32 +5,31 @@ export class InvalidError {
 
     constructor(validityMessage: string, custom?: boolean, validityState?: any) {
         this.validityMessage = validityMessage
-        if ( custom ) {
+        if (custom) {
             this.custom = custom
         }
-        if ( validityState ) {
+        if (validityState) {
             this.validityState = validityState
         }
     }
 }
 
-export interface InvalidErrors {
-    [index: string]: InvalidError
-  }
+export class InvalidErrors extends Map<string, InvalidError> {
+}
 
 export class InvalidEvent extends Event {
     errors: InvalidErrors;
 
-    constructor(errors : InvalidErrors) {
+    constructor(errors: InvalidErrors) {
         super("invalid");
-        if ( errors ) {
+        if (errors) {
             this.errors = errors
         } else {
-            this.errors = {}
+            this.errors = new InvalidErrors()
         }
     }
 
-    public addError(path: string, error : InvalidError) {
+    public addError(path: string, error: InvalidError) {
         this.errors[path] = error
     }
 }

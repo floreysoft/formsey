@@ -68,7 +68,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
     if (this.definition.customValidity && !this.input.validity.valid) {
       this.input.setCustomValidity(this.definition.customValidity)
     }
-    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(this.input.validationMessage, false, validityState)
+    this.errors.set(this.definition.name, this.error ? this.error : new InvalidError(this.input.validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 

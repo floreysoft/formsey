@@ -76,6 +76,9 @@ export class Form extends Field<FieldDefinition, any> {
   @property()
   method: "GET" | "POST" | "dialog"
 
+  @query('#form')
+  form: FormField
+
   private _loaded: boolean = false
 
   static get styles() {
@@ -93,7 +96,7 @@ export class Form extends Field<FieldDefinition, any> {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event));
+      field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
     return html`<form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}">${field}<slot></slot></form>`
   }
@@ -120,18 +123,18 @@ export class Form extends Field<FieldDefinition, any> {
 
   public clearCustomValidity() {
     super.clearCustomValidity()
-    this.form().clearCustomValidity()
+    this.form.clearCustomValidity()
   }
 
   public setCustomValidity(customErrors: InvalidErrors) {
-    this.form().setCustomValidity(customErrors)
+    this.form.setCustomValidity(customErrors)
   }
 
   public validate(report: boolean) {
     if (report) {
-      return this.form().reportValidity();
+      return this.form.reportValidity();
     } else {
-      return this.form().checkValidity();
+      return this.form.checkValidity();
     }
   }
 
@@ -171,6 +174,7 @@ export class Form extends Field<FieldDefinition, any> {
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()
     this.errors = e.errors
+    console.log(JSON.stringify([...e.errors], null, 2))
     this.dispatchEvent(new InvalidEvent(e.errors));
   }
 
@@ -201,10 +205,6 @@ export class Form extends Field<FieldDefinition, any> {
 
   public setValidityMessage(path: string, validityMessage: string) {
     set(this.errors, path, validityMessage)
-  }
-
-  private form() {
-    return this.renderRoot.firstElementChild.firstElementChild as Field<any, any>
   }
 }
 

@@ -1,5 +1,6 @@
 import { ValueChangedEvent, createField, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition, ClickEvent } from '@formsey/core';
 import { css, html, property } from 'lit-element';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
 
 export class SelectableSectionValue {
   selection: string;
@@ -22,7 +23,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       }
       let selection = this.definition.selections[index];
       let value = selection.label ? selection.label : selection.value;
-      let errors = {}
+      let errors = new InvalidErrors()
       return html`${createField(this.components, { type : "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, this.path(), errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
       <div class="form">${createField(this.components, selection.form, this.value ? this.value.value : undefined, this.path(), errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
     }
