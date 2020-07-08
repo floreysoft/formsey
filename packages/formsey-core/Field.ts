@@ -4,9 +4,9 @@ import { Components, getDefaultTheme, getTheme } from '.';
 import { ValueChangedEvent } from './ValueChangedEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
-import { ClickEvent } from './ClickEvent';
-import { BlurEvent } from './BlurEvent';
-import { FocusEvent } from './FocusEvent';
+import { FieldClickEvent } from './FieldClickEvent';
+import { FieldBlurEvent } from './FieldBlurEvent';
+import { FieldFocusEvent } from './FieldFocusEvent';
 
 export function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
@@ -163,19 +163,19 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected clicked(e: any) {
-    this.dispatchEvent(new ClickEvent(this.path()));
+    this.dispatchEvent(new FieldClickEvent(this.path()));
   }
 
   protected focused(e: any) {
     e.stopPropagation()
     e.preventDefault()
-    this.dispatchEvent(new FocusEvent(this.path()));
+    this.dispatchEvent(new FieldFocusEvent(this.path()));
   }
 
   protected blurred(e: any) {
     e.stopPropagation()
     e.preventDefault()
-    this.dispatchEvent(new BlurEvent(this.path()));
+    this.dispatchEvent(new FieldBlurEvent(this.path()));
   }
 
   protected firstPathElement(path: string) {

@@ -1,11 +1,11 @@
 import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined'
-import { InvalidEvent, InvalidErrors } from './InvalidEvent';
+import { InvalidEvent, InvalidErrors, InvalidError } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
 
 export function get(data: Object, path: string): any {
-  if (!data) {
+  if (!data || !path) {
     return undefined
   }
   let tokens = path.split('.')
@@ -27,6 +27,9 @@ export function get(data: Object, path: string): any {
 }
 
 export function set(data: Object, path: string, value: any): any {
+  if (!data || !path) {
+    return
+  }
   let tokens = path.split('.')
   let token = tokens.shift()
   path = tokens.join('.')
@@ -98,7 +101,7 @@ export class Form extends Field<FieldDefinition, any> {
     if (this.definition) {
       field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
-    return html`<form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}">${field}<slot></slot></form>`
+    return html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}">${field}<slot></slot></form>`
   }
 
   updated() {
@@ -119,6 +122,35 @@ export class Form extends Field<FieldDefinition, any> {
 
   renderHeader() {
     return
+  }
+
+
+  public getValue(path: string): any {
+    return get(this.value, path);
+  }
+
+  public setValue(path: string, value: any): any {
+    set(this.value, path, value);
+    this.requestUpdate()
+  }
+
+  public getField(path: string): any {
+    return get(this.definition, path);
+  }
+
+  public setField(path: string, value: any): any {
+    set(this.definition, path, value);
+    this.requestUpdate()
+  }
+
+  public focusField(path: string) {
+    if (this.form && typeof this.form['focusField'] === "function") {
+      this.form.focusField(path)
+    }
+  }
+
+  public setValidityMessage(path: string, validityMessage: string) {
+    set(this.errors, path, validityMessage)
   }
 
   public clearCustomValidity() {
@@ -178,34 +210,10 @@ export class Form extends Field<FieldDefinition, any> {
     this.dispatchEvent(new InvalidEvent(e.errors));
   }
 
-  public focusField(path: string) {
-    let child = this.shadowRoot?.firstElementChild as FormField
-    if (child && typeof child['focusField'] === "function") {
-      child.focusField(path)
-    }
+  protected focusError(path: string, error: InvalidError ) {
+  console.log(JSON.stringify(error))
   }
 
-  public getValue(path: string): any {
-    return get(this.value, path);
-  }
-
-  public setValue(path: string, value: any): any {
-    set(this.value, path, value);
-    this.requestUpdate()
-  }
-
-  public getField(path: string): any {
-    return get(this.definition, path);
-  }
-
-  public setField(path: string, value: any): any {
-    set(this.definition, path, value);
-    this.requestUpdate()
-  }
-
-  public setValidityMessage(path: string, validityMessage: string) {
-    set(this.errors, path, validityMessage)
-  }
 }
 
 register("formsey-form", Form)

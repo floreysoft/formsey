@@ -1,14 +1,17 @@
+import '@floreysoft/ace';
+import { Ace } from '@floreysoft/ace';
 import '@floreysoft/splitter';
 import '@floreysoft/tabs';
-import '@floreysoft/ace';
+import { FocusEvent, ButtonFieldDefinition, Form, FormDefinition, InteractiveFieldDefinition } from '@formsey/core';
+import '@formsey/core/FormNavigator';
+import { get } from '@formsey/core/Form';
+import { FormNavigator } from '@formsey/core/FormNavigator';
+import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import '@formsey/fields-native/extended';
 import '@formsey/fields-vaadin';
-import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
-import { NodePart, directive } from 'lit-html'
-import { Ace } from '@floreysoft/ace'
-import { Form, FormDefinition, InteractiveFieldDefinition, ButtonFieldDefinition } from '@formsey/core';
-import { get } from '@formsey/core/Form';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { css, CSSResult, customElement, html, LitElement, query } from "lit-element";
+import { directive, NodePart } from 'lit-html';
+import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 
 @customElement("formsey-demo1")
 export class FormseyDemo1 extends LitElement {
@@ -63,7 +66,7 @@ export class FormseyDemo2 extends LitElement {
   @query("#right")
   form: Form
 
-  value = directive((key : string, placeholder? : string) => (part : NodePart) => part.setValue(get(this.form?.value, key) || placeholder ))
+  value = directive((key: string, placeholder?: string) => (part: NodePart) => part.setValue(get(this.form?.value, key) || placeholder))
 
   private definition: FormDefinition = {
     type: "form",
@@ -108,7 +111,8 @@ export class CustomValidityDemo extends LitElement {
   @query("#right")
   form: Form
 
-  value = directive((key : string, placeholder? : string) => (part : NodePart) => part.setValue(get(this.form?.value, key) || placeholder ))
+  @query("formsey-form-navigator")
+  formNavigator: FormNavigator
 
   private definition: FormDefinition = {
     type: "form",
@@ -141,6 +145,11 @@ export class CustomValidityDemo extends LitElement {
     }
     .form {
       border-left: 1px solid var(--fs-border-color);
+      display: flex;
+      flex-direction: column;
+    }
+    .form formsey-form {
+      padding: .5em;
       overflow-y: auto;
     }
     .description {
@@ -151,14 +160,18 @@ export class CustomValidityDemo extends LitElement {
   }
 
   render() {
-    return html`<fs-splitter><div class="description"><button @click="${this.setCustomValidity}">Report custom validity</button><button @click="${this.clearCustomErrors}">Clear custom errors</button><button @click="${this.reportValidity}">Report validity</button></div><div class="form"><formsey-form id="right" .definition="${this.definition}"></formsey-form></div></fs-splitter>`
+    return html`<fs-splitter><div class="description"><button @click="${this.setCustomValidity}">Report custom validity</button><button @click="${this.clearCustomErrors}">Clear custom errors</button><button @click="${this.reportValidity}">Report validity</button></div>
+    <div class="form">
+      <formsey-form-navigator @focusField="${(e: CustomEvent) => { console.log(e.detail); this.form.focusField(e.detail) }}"></formsey-form-navigator>
+      <formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @load="${e => { this.formNavigator.definition = this.form.definition; this.formNavigator.value = this.form.value }}" @change="${e => { this.formNavigator.value = e.detail.value }}" @focus="${(e: FieldFocusEvent) => this.formNavigator.focusedPath = e.detail.name}" @invalid="${(e: InvalidEvent) => this.formNavigator.errors = e.errors}"></formsey-form>
+    </div></fs-splitter>`
   }
 
   setCustomValidity() {
     this.form.setCustomValidity(new InvalidErrors().set("name", { "validityMessage": "My custom error message" }));
   }
 
-   clearCustomErrors() {
+  clearCustomErrors() {
     this.form.clearCustomValidity()
   }
 
