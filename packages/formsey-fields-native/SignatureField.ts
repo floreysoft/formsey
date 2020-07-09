@@ -31,7 +31,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   }
 
   renderField() {
-    return html`<div class="input" width="${ifDefined(this.definition.width)}px" height="${ifDefined(this.definition.height)}px"><canvas id="signature-pad" tabindex="0"></canvas><svg viewBox="0 0 32 32" @click="${this.clear}"><title>Clear</title><path d="M20 4v-4h-8v4h-8v4h24v-4zM24 10v16h-4v-16h-2v16h-4v-16h-2v16h-4v-16h-2v17c0 2 1 3 3 3h14c2 0 3-1 3-3v-17h-2z"></path></svg></div>`;
+    return html`<div class="input" width="${ifDefined(this.definition.width)}px" height="${ifDefined(this.definition.height)}px"><canvas id="signature-pad" tabindex="0" @focus="${this.focused}" @blur="${this.blurred}"></canvas><svg viewBox="0 0 32 32" @click="${this.clear}"><title>Clear</title><path d="M20 4v-4h-8v4h-8v4h24v-4zM24 10v16h-4v-16h-2v16h-4v-16h-2v16h-4v-16h-2v17c0 2 1 3 3 3h14c2 0 3-1 3-3v-17h-2z"></path></svg></div>`;
   }
 
   firstUpdated() {
@@ -40,6 +40,12 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
       this.signaturePad.on();
       this.signaturePad.onEnd = (event: MouseEvent | Touch) => this.onStrokeEnd(event);
       this.resizeObserver.observe(this.canvas)
+    }
+  }
+
+  focusField(path: string) {
+    if (path == this.definition.name && this.canvas) {
+      this.canvas.focus()
     }
   }
 

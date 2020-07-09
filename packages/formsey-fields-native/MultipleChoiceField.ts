@@ -1,5 +1,5 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, register, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { html, property, query, TemplateResult } from 'lit-element';
+import { html, property, query, TemplateResult, queryAll } from 'lit-element';
 import { StringField } from './StringField';
 
 export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition, string> {
@@ -8,6 +8,9 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
 
   @query("formsey-string")
   otherTextField: StringField
+
+  @queryAll("input[type=radio]")
+  protected radios: HTMLInputElement[]
 
   renderField() {
     let templates: TemplateResult[] = [];
@@ -36,6 +39,12 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     this.requestUpdate()
     if (this.definition.name) {
       this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.definition.name, this.value));
+    }
+  }
+
+  focusField(path: string) {
+    if (path == this.definition.name && this.radios) {
+      this.radios[0].focus()
     }
   }
 

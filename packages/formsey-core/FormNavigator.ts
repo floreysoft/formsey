@@ -1,6 +1,6 @@
 import { html, LitElement, property, query, TemplateResult, css } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
-import { FieldDefinition, register, InputFieldDefinition } from ".";
+import { FieldDefinition, register, InputFieldDefinition, NestedFormDefinition } from ".";
 import { FormDefinition } from "../formsey";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";
 import { get } from "./Form";
@@ -40,9 +40,20 @@ export class FormNavigator extends LitElement {
     .dots {
       display: flex;
       flex-direction: row;
-      padding: .2em;
+      align-items: center;
       overflow-x: auto;
       scrollbar-width: none;
+      line-height: 0;
+    }
+    .fieldset {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: #00000011;
+      border-radius: 2em;
+      margin: 0 0.15em;
+      padding: 1px 4px;
+      line-height: 0;
     }
     .dots::-webkit-scrollbar {
       width: 0;
@@ -50,22 +61,21 @@ export class FormNavigator extends LitElement {
     }
     .dot {
       cursor: pointer;
-      width: 1.5em;
-      height: 1.5em;
-      min-width: 1.5em;
+      width: 1em;
+      height: 1em;
+      min-width: 1em;
       border-radius: 50%;
-      background-color: #d5d5d5;
+      background-color: #a0a0a0;
       margin: .1em;
       border: 1px solid transparent;
       transition: all .2s ease-out;
-      transform: scale(.5);
+      transform: scale(.65);
     }
     .focused {
       transform: scale(1);
-      border: 1px solid var(--formsey-primary-color);
     }
     .required {
-      background-color: blue;
+      background-color: orange;
     }
     .invalid {
       background-color: red;
@@ -88,12 +98,6 @@ export class FormNavigator extends LitElement {
     return html`<div class="dots">${dots}<div class="errors">${errors}</div></div>`
   }
 
-  updated() {
-    if (this.focused) {
-      // this.focused.scrollIntoView()
-    }
-  }
-
   focusError(index: number) {
     this.focusedError = index
     this.previous.disabled = index == 0
@@ -103,12 +107,17 @@ export class FormNavigator extends LitElement {
 
   private addDots(dots: TemplateResult[], fieldDefinition: FieldDefinition, path?: string) {
     path = path ? path + "." + fieldDefinition.name : fieldDefinition.name
+    let nestedDots : TemplateResult[] = []
+    if (fieldDefinition.hasOwnProperty('form')) {
+      fieldDefinition = (<NestedFormDefinition>fieldDefinition).form
+    }
     if (fieldDefinition.hasOwnProperty('fields')) {
       for (let field of (<FormDefinition>fieldDefinition).fields) {
-        this.addDots(dots, field, path)
+        this.addDots(nestedDots, field, path)
       }
+      dots.push(html`<div class="fieldset">${nestedDots}</div>`)
     } else {
-      dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path), invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path="+path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
+      dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path), invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name }" @click="${(e: Event) => { console.log("Dot path="+path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
     }
   }
 }

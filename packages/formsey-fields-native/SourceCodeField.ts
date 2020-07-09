@@ -18,7 +18,13 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   editor : Ace
 
   protected renderField() {
-    return html`<fs-ace class="input" style="height:${ifDefined(this.definition.height)}" .value=${this.value} ?gutter="${this.definition.gutter}" mode="${ifDefined(this.definition.mode)}" theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @change=${this.changed}></fs-ace>`;
+    return html`<fs-ace class="input" style="height:${ifDefined(this.definition.height)}" .value=${this.value} ?gutter="${this.definition.gutter}" mode="${ifDefined(this.definition.mode)}" theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @change=${this.changed} @focus="${this.focused}" @blur="${this.blurred}"></fs-ace>`;
+  }
+
+  focusField(path: string) {
+    if (path == this.definition.name && this.editor) {
+      this.editor.focus()
+    }
   }
 
   protected changed(e: any) {

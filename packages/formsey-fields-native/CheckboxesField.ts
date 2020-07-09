@@ -43,6 +43,12 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     }
   }
 
+  focusField(path: string) {
+    if (path == this.definition.name && this.checkboxes) {
+      this.checkboxes[0].focus()
+    }
+  }
+
   changed(e: Event) {
     let values = []
     let other = false
