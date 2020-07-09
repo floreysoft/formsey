@@ -1,4 +1,4 @@
-import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from '.';
+import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from './index';
 import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined'
 import { InvalidEvent, InvalidErrors, InvalidError } from './InvalidEvent';
