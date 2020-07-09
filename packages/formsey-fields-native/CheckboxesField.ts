@@ -20,13 +20,13 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
         let label = option.label ? option.label : option.value;
         let value = option.value ? option.value : option.label;
         let checked = this.value.includes(value);
-        templates.push(html`<div><label><input type="checkbox" .checked="${checked}" value="${value}" @change="${this.changed}">${label}</label></div>`);
+        templates.push(html`<div><label><input type="checkbox" .checked="${checked}" value="${value}" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">${label}</label></div>`);
       }
     }
     if (this.definition.other) {
       let other = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
       let checked = other.length > 0
-      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}">Other</label>${createField(this.components, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", this.path(), null, (e) => this.changed(e), null)}</div>`);
+      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField(this.components, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", this.path(), null, (e) => this.changed(e), null)}</div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
