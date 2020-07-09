@@ -192,7 +192,7 @@ export const NATIVE_STYLES = css`
       opacity: 0.8;
     }
 
-    .lfw:focus-within .lfl {
+    .lfw:focus-within>.lfl {
       color: var(--formsey-primary-color, var(--fs-accent-color, inherit));
       opacity: 1;
     }

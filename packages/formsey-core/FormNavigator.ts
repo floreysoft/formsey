@@ -49,6 +49,7 @@ export class FormNavigator extends LitElement {
       height: 0;
     }
     .dot {
+      cursor: pointer;
       width: 1.5em;
       height: 1.5em;
       min-width: 1.5em;
@@ -57,8 +58,10 @@ export class FormNavigator extends LitElement {
       margin: .1em;
       border: 1px solid transparent;
       transition: all .2s ease-out;
+      transform: scale(.5);
     }
     .focused {
+      transform: scale(1);
       border: 1px solid var(--formsey-primary-color);
     }
     .required {
@@ -74,6 +77,7 @@ export class FormNavigator extends LitElement {
   }
 
   render() {
+    console.log("Focused path="+this.focusedPath)
     let dots: TemplateResult[] = []
     if (this.definition) {
       this.addDots(dots, this.definition)
@@ -104,7 +108,7 @@ export class FormNavigator extends LitElement {
         this.addDots(dots, field, path)
       }
     } else {
-      dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path), invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.name}" @click="${(e: Event) => { this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
+      dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path), invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path="+path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
     }
   }
 }

@@ -163,8 +163,12 @@ export class CustomValidityDemo extends LitElement {
     return html`<fs-splitter><div class="description"><button @click="${this.setCustomValidity}">Report custom validity</button><button @click="${this.clearCustomErrors}">Clear custom errors</button><button @click="${this.reportValidity}">Report validity</button></div>
     <div class="form">
       <formsey-form-navigator @focusField="${(e: CustomEvent) => { console.log(e.detail); this.form.focusField(e.detail) }}"></formsey-form-navigator>
-      <formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @load="${e => { this.formNavigator.definition = this.form.definition; this.formNavigator.value = this.form.value }}" @change="${e => { this.formNavigator.value = e.detail.value }}" @focus="${(e: FieldFocusEvent) => this.formNavigator.focusedPath = e.detail.name}" @invalid="${(e: InvalidEvent) => this.formNavigator.errors = e.errors}"></formsey-form>
+      <formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @load="${e => { this.formNavigator.definition = this.form.definition; this.formNavigator.value = this.form.value }}" @change="${e => { this.formNavigator.value = e.detail.value }}" @focus="${this.f}" @invalid="${(e: InvalidEvent) => this.formNavigator.errors = e.errors}"></formsey-form>
     </div></fs-splitter>`
+  }
+
+  f(e) {
+    this.formNavigator.focusedPath = e.detail.name
   }
 
   setCustomValidity() {

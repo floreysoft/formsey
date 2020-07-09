@@ -33,7 +33,7 @@ export class ImageCheckbox extends LitElement {
   checkbox: HTMLInputElement
 
   render() {
-    return html`<input id="${this.path}.${this.id}.cb" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @change="${this.changed}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.path}.${this.id}.cb"><img src="${this.src}" alt="${this.alt}"/>${ifDefined(this.label)}</label>`;
+    return html`<input id="${this.path}.${this.id}.cb" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @change="${this.changed}" @focus="${e => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('focus'))}}"  @blur="${e => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('blur'))}}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.path}.${this.id}.cb"><img src="${this.src}" alt="${this.alt}"/>${ifDefined(this.label)}</label>`;
   }
 
   protected createRenderRoot(): Element | ShadowRoot {
@@ -115,7 +115,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
         const image = this.definition.images[i]
         const value = typeof image.value !== "undefined" ? image.value : image.label;
         const checked = this.definition.multiple ? this.value.includes(value) : this.value === value
-        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" path="${this.path()}" id="${value}" ?checked="${checked}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
+        templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" path="${this.path()}" id="${value}" ?checked="${checked}" @focus="${this.focused}" @blur="${this.blurred}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
       }
     }
     let customValidity = this.definition.customValidity
@@ -130,7 +130,8 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   }
 
   focusField(path: string) {
-    if (path == this.definition.name) {
+    if (path == this.definition.name && this.checkboxes) {
+      this.checkboxes[0].focus()
     }
   }
 
