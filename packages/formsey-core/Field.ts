@@ -1,6 +1,6 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined'
-import { Components, getDefaultTheme, getTheme } from '.';
+import { Components, getDefaultTheme, getTheme } from './index';
 import { ValueChangedEvent } from './ValueChangedEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';

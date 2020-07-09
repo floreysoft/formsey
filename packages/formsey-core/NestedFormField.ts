@@ -1,4 +1,4 @@
-import { ValueChangedEvent, createField, Field, NestedFormDefinition } from '.';
+import { ValueChangedEvent, createField, Field, NestedFormDefinition } from './index';
 import { html, query } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 
