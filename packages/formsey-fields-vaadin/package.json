@@ -7,9 +7,11 @@
     "/*.d.ts",
     "!/test/"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "@formsey/core": "^0.2.125",
-    "@formsey/fields-compound": "^0.2.125",
+    "@formsey/fields-compound": "^0.2.125"
+  },
+  "dependencies": {
     "@vaadin/vaadin-checkbox": "^2.2.12",
     "@vaadin/vaadin-combo-box": "^5.0.11",
     "@vaadin/vaadin-date-picker": "^4.0.8",

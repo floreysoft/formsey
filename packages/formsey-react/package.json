@@ -7,9 +7,11 @@
     "/*.d.ts",
     "!/test/"
   ],
+  "peerDependencies": {
+    "@formsey/core": "^0.2.125"
+  },
   "dependencies": {
     "@types/react": "^16.9.41",
-    "formsey": "^0.2.125",
     "react": "^16.13.1"
   },
   "scripts": {
