@@ -1,4 +1,4 @@
-import { ValueChangedEvent, createField, Field, NestedFormDefinition } from '@formsey/core';
+import { ValueChangedEvent, createField, Field, NestedFormDefinition } from '.';
 import { html, query } from 'lit-element';
 import { InvalidEvent } from './InvalidEvent';
 

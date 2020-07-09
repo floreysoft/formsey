@@ -1,4 +1,4 @@
-import { area, createField, Field, FormDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { area, createField, Field, FormDefinition, register, ValueChangedEvent } from '.';
 import { html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
