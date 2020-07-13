@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.2.128",
+  "version": "0.2.130",
   "description": "Native fields",
   "files": [
     "/*.js.map",
@@ -11,7 +11,7 @@
     "/umd/*"
   ],
   "peerDependencies": {
-    "@formsey/core": "^0.2.125"
+    "@formsey/core": "^0.2.130"
   },
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
@@ -30,5 +30,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e3888294bd1026110241e0c6aa792da31723e472"
+  "gitHead": "e5ebe3633dc3e0e7601665841bea58e4c8c19a43"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@formsey/react",
-  "version": "0.2.126",
+  "version": "0.2.130",
   "description": "Formsey wrapper for react",
   "files": [
     "/*.js",
@@ -8,7 +8,7 @@
     "!/test/"
   ],
   "peerDependencies": {
-    "@formsey/core": "^0.2.125"
+    "@formsey/core": "^0.2.130"
   },
   "dependencies": {
     "@types/react": "^16.9.41",
@@ -24,5 +24,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "36536cc222c57d31d09a1a8da547486474820576"
+  "gitHead": "003ba06895b20985ed7a24ad9e94a4bfea2d4488"
 }
