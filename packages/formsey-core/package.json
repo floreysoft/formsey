@@ -9,8 +9,6 @@
     "!/test/"
   ],
   "description": "Formsey core components",
-  "peerDependencies": {
-  },
   "dependencies": {
     "lit-element": "^2.3.0"
   },

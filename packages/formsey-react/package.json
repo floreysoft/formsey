@@ -1,6 +1,6 @@
 {
   "name": "@formsey/react",
-  "version": "0.2.126",
+  "version": "0.2.129",
   "description": "Formsey wrapper for react",
   "files": [
     "/*.js",
