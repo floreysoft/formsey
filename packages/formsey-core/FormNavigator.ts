@@ -1,9 +1,9 @@
 import { html, LitElement, property, query, TemplateResult, css } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
 import { FieldDefinition, register, InputFieldDefinition, NestedFormDefinition } from ".";
-import { FormDefinition } from "../formsey";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";
 import { get } from "./Form";
+import { FormDefinition } from "./FieldDefinitions";
 
 export class FormNavigator extends LitElement {
   @property({ type: Object })

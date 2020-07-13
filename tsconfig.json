@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
       "target": "es2017",
-      "module": "UMD",
+      "module": "es2015",
       "moduleResolution": "node",
       "lib": ["es2018", "dom"],
       "declaration": true,
