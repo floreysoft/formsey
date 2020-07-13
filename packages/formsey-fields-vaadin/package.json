@@ -8,8 +8,8 @@
     "!/test/"
   ],
   "peerDependencies": {
-    "@formsey/core": "^0.2.125",
-    "@formsey/fields-compound": "^0.2.125"
+    "@formsey/core": "^0.2.129",
+    "@formsey/fields-compound": "^0.2.129"
   },
   "dependencies": {
     "@vaadin/vaadin-checkbox": "^2.2.12",
@@ -32,5 +32,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e3888294bd1026110241e0c6aa792da31723e472"
+  "gitHead": "x"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-material",
-  "version": "0.2.126",
+  "version": "0.2.129",
   "description": "Material design fields",
   "files": [
     "/*.js.map",
@@ -10,7 +10,7 @@
     "!/test/"
   ],
   "peerDependencies": {
-    "@formsey/fields-native": "^0.2.125"
+    "@formsey/fields-native": "^0.2.129"
   },
   "dependencies": {
     "@material/mwc-checkbox": "^0.14.1",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e3888294bd1026110241e0c6aa792da31723e472"
+  "gitHead": "x"
 }

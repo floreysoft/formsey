@@ -1,6 +1,6 @@
 {
   "name": "@formsey/core",
-  "version": "0.2.128",
+  "version": "0.2.129",
   "files": [
     "/*.js.map",
     "/*.d.ts.map",
@@ -9,6 +9,8 @@
     "!/test/"
   ],
   "description": "Formsey core components",
+  "peerDependencies": {
+  },
   "dependencies": {
     "lit-element": "^2.3.0"
   },
@@ -22,5 +24,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "e3888294bd1026110241e0c6aa792da31723e472"
+  "gitHead": "x"
 }
