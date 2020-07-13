@@ -162,11 +162,11 @@ export class Form extends Field<FieldDefinition, any> {
     this.form.setCustomValidity(customErrors)
   }
 
-  public validate(report: boolean) {
+  public validate(report: boolean, path?: string) {
     if (report) {
-      return this.form.reportValidity();
+      return this.form.reportValidity(path);
     } else {
-      return this.form.checkValidity();
+      return this.form.checkValidity(path);
     }
   }
 

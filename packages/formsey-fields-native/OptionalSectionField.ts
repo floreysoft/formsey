@@ -32,7 +32,6 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     if (this.value) {
       checked = true
     }
-    this.definition.form.name = this.definition.name
     let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
     return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
@@ -79,7 +78,11 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    this.value = e.detail.value;
+    let name = e.detail.name.substring(this.path().length+1).split('.')[0]
+    if (!this.value) {
+      this.value = {}
+    }
+    this.value[name] = e.detail.value;
     this.requestUpdate()
     this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
   }

@@ -98,27 +98,27 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     }
   }
 
-  public reportValidity(): boolean {
+  public reportValidity(path?: string): boolean {
     this.clearErrors()
     this.report = true
-    this.valid = this.validate(true)
+    this.valid = this.validate(true, path)
     if (this.valid && this.error) {
       this.valid = false
     }
     return this.valid
   }
 
-  public checkValidity(): boolean {
+  public checkValidity(path?: string): boolean {
     this.clearErrors()
     this.report = false
-    this.valid = this.validate(false)
+    this.valid = this.validate(false, path)
     if (this.valid && this.error) {
       this.valid = false
     }
     return this.valid
   }
 
-  public validate(report: boolean): boolean {
+  public validate(report: boolean, path?: string): boolean {
     return true
   }
 

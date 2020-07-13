@@ -9,7 +9,7 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label class="bfl"><input id="checkbox" type="checkbox" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?checked="${this.value}" ?required="${this.definition.required}">${this.definition.label}</label>`;
+    return html`<label class="bfl"><input id="checkbox" type="checkbox" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?checked="${this.value}" @change="${ e => { console.log("C"); e.stopPropagation()}}" @input="${ e => { console.log("I"); e.stopPropagation()}}" ?required="${this.definition.required}">${this.definition.label}</label>`;
   }
 
   clicked(e) {
