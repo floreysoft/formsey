@@ -184,10 +184,8 @@ export class Form extends Field<FieldDefinition, any> {
 
   protected changed(e: ValueChangedEvent<any>) {
     if (this.definition.type == "form") {
-      if (!this.value) {
-        this.value = {}
-      }
-      this.value[e.detail.name] = e.detail.value
+      let name = e.detail.name.split('.')[0].split('[')[0]
+      this.value[name] = e.detail.value
     } else {
       this.value = e.detail.value
     }

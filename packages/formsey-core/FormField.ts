@@ -213,7 +213,7 @@ export class FormField extends Field<FormDefinition, Object> {
         // If this is an unnamed form, just pass event to parent
         this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", e.detail.name, e.detail.value));
       } else {
-        let name = e.detail.name.substring(this.definition.name.length+1).split('.')[0]
+        let name = e.detail.name.substring(this.path().length+1).split('.')[0]
         if (!this.value) {
           this.value = {}
         }
