@@ -35,35 +35,26 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
           }
         }
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
-        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove"  tabindex="0" @click="${(e: Event) => this.removeForm(i)}">${ICON_MINUS}</button></div>` : undefined}
-        ${createField(this.components, { ...this.definition.form, name: "" }, value, this.path()+"["+i+"]", fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove"  tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${ICON_MINUS}</button></div>` : undefined}
+        ${createField(this.components, { ...this.definition.form }, value, this.path() + "[" + i + "]", fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
         itemTemplates.push(template);
       }
     }
-    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<button  tabindex="0" @click="${(e: Event) => this.addForm()}" class="fs-add">${ICON_PLUS}</button>` : undefined}`;
+    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<button  tabindex="0" @click="${this.addForm}" class="fs-add">${ICON_PLUS}</button>` : undefined}`;
   }
 
   public focusField(path: string) {
-    let index
-    if (path.startsWith(this.definition.name + "[")) {
-      index = path.substring(this.definition.name.length + 1, path.indexOf(']'))
-      path = path.substring(path.indexOf(']')+1)
-    }
-    let i = 0
-    for (let field of this._fields) {
-      if (index == i) {
-        let child = field.firstElementChild as Field<any, any>
-        if (child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
-          (<any>child).focusField(path)
-        }
+    for (let i = 0; i < this._fields.length; i++) {
+      let child = this._fields[i].lastElementChild as Field<any, any>
+      if (child && typeof child['focusField'] == "function" && path.startsWith(child.path())) {
+        (<any>child).focusField(path)
       }
-      i++
     }
   }
 
   public validate(report: boolean) {
     for (let field of this._fields) {
-      let child = field.firstElementChild as Field<any, any>
+      let child = field.lastElementChild as Field<any, any>
       if (report) {
         child.reportValidity();
       } else {
@@ -73,16 +64,20 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     return true;
   }
 
-  protected addForm() {
+  protected addForm(e: Event) {
+    e.preventDefault()
+    e.stopPropagation()
     this.value.push({});
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
     this.requestUpdate();
   }
 
-  protected removeForm(index: number) {
+  protected removeForm(e: Event, index: number) {
+    e.preventDefault()
+    e.stopPropagation()
     this.value.splice(index, 1);
-    this.requestUpdate();
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.requestUpdate();
   }
 
   protected drag(e, from: number) {
@@ -111,10 +106,10 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   protected changed(e: ValueChangedEvent<any>) {
     let path = e.detail.name.split('.')
     let index = path.shift() as string
-    index = index.substring(1, index.length-1)
+    index = index.substring(1, index.length - 1)
     this.value[+index] = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name+"["+index+"]."+path.shift(), this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name + "[" + index + "]." + path.shift(), this.value));
     }
   }
 
@@ -127,4 +122,4 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-repeating-section", RepeatingSectionField, ["native","material","vaadin"], "repeatingSection", "@formsey/fields-native/RepeatingSectionField")
+register("formsey-repeating-section", RepeatingSectionField, ["native", "material", "vaadin"], "repeatingSection", "@formsey/fields-native/RepeatingSectionField")

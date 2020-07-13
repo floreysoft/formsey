@@ -22,9 +22,7 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   }
 
   focusField(path: string) {
-    if (path == this.definition.name) {
-      this.checkbox.focus()
-    }
+     this.checkbox.focus()
   }
 }
 register("formsey-boolean", BooleanField, "native", "boolean", "@formsey/fields-native/BooleanField")

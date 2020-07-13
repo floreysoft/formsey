@@ -124,6 +124,15 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
+  public focusField(path: string) {
+    for (let field of this._fields) {
+      let child = field.firstElementChild as Field<any, any>
+      if (child && typeof child['focusField'] == "function" && path.startsWith(child.path())) {
+        (<any>child).focusField(path)
+      }
+    }
+  }
+
   public clearCustomValidity() {
     super.clearCustomValidity()
     for (let field of this._fields) {
@@ -148,7 +157,7 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  public validate(report: boolean) {
+  public validate(report: boolean, path?: string) {
     let validity = true;
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
@@ -165,7 +174,7 @@ export class FormField extends Field<FormDefinition, Object> {
     return validity;
   }
 
-  public layout(availableWidth: number) {
+  protected layout(availableWidth: number) {
     // If available with larger than larges breakpoint, default to the largest
     let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
     for (let size of SUPPORTED_BREAKPOINTS) {
@@ -197,34 +206,20 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  public focusField(path: string) {
-    if (path.startsWith(this.definition.name + ".")) {
-      path = path.substring(this.definition.name.length + 1)
-    }
-    for (let field of this._fields) {
-      let child = field.firstElementChild as Field<any, any>
-      if (child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
-        (<any>child).focusField(path)
-      }
-    }
-  }
-
   protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
-    if (!this.value) {
-      this.value = {}
-    }
     if (e.detail?.name) {
-      let name = e.detail.name
-      if (name.startsWith('.')) {
-        name = name.substring(1)
-        this.value = { ...this.value, ...e.detail.value }
+      if ( !this.definition.name ) {
+        // If this is an unnamed form, just pass event to parent
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", e.detail.name, e.detail.value));
       } else {
-        name = this.firstPathElement(e.detail.name);
+        let name = e.detail.name.substring(this.definition.name.length+1).split('.')[0]
+        if (!this.value) {
+          this.value = {}
+        }
         this.value[name] = e.detail.value;
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.path(), this.value));
       }
-      this.removeDeletedFields()
-      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.prependPath(e.detail.name), this.value));
     }
   }
 

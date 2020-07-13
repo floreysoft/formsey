@@ -41,7 +41,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   public focusField(path: string) {
     if (this.form) {
       let child = this.form.firstElementChild as Field<any, any>
-      if ( child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
+      if ( child && path.startsWith(child.path()) && typeof child['focusField'] == "function") {
         (<any>child).focusField(path)
       }
     }

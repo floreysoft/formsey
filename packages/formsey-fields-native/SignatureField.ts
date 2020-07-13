@@ -43,8 +43,8 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     }
   }
 
-  focusField(path: string) {
-    if (path == this.definition.name && this.canvas) {
+  focusField() {
+    if (this.canvas) {
       this.canvas.focus()
     }
   }

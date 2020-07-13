@@ -44,7 +44,7 @@ export class FormseyDemo1 extends LitElement {
   }
 
   render() {
-    return html`<fs-splitter><div class="description"><formsey-form id="left" src="https://cdn.formsey.com/MonYjcP85Txw9jbHgjEg/rqp4BEKkVMjUfU1LmJl9" @change="${this.descriptionChanged}"></formsey-form></div><div class="form"><formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @change="${this.formChanged}" @load="${this.formLoaded}"></formsey-form></div></fs-splitter>`
+    return html`<fs-splitter><div class="description"><formsey-form id="left" src="https://cdn.formsey.com/MonYjcP85Txw9jbHgjEg/rqp4BEKkVMjUfU1LmJl9" @input="${this.descriptionChanged}"></formsey-form></div><div class="form"><formsey-form id="right" src="https://www.formsey.com/live/Qsk52cW5nqILic2lMikh" @input="${this.formChanged}" @load="${this.formLoaded}"></formsey-form></div></fs-splitter>`
   }
 
   descriptionChanged(e: CustomEvent) {
@@ -163,7 +163,7 @@ export class CustomValidityDemo extends LitElement {
     return html`<fs-splitter><div class="description"><button @click="${this.setCustomValidity}">Report custom validity</button><button @click="${this.clearCustomErrors}">Clear custom errors</button><button @click="${this.reportValidity}">Report validity</button></div>
     <div class="form">
       <formsey-form-navigator @focusField="${(e: CustomEvent) => { console.log(e.detail); this.form.focusField(e.detail) }}"></formsey-form-navigator>
-      <formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @load="${e => { this.formNavigator.definition = this.form.definition; this.formNavigator.value = this.form.value }}" @change="${e => { this.formNavigator.value = e.detail.value }}" @focus="${this.f}" @invalid="${(e: InvalidEvent) => this.formNavigator.errors = e.errors}"></formsey-form>
+      <formsey-form id="right" src="https://www.formsey.com/live/GICKa9Zi7VFBEuWofBC4" @load="${e => { this.formNavigator.definition = this.form.definition; this.formNavigator.value = this.form.value }}" @change="${e => { console.log("Value changed"); this.formNavigator.value = e.detail.value }}" @focus="${this.f}" @invalid="${(e: InvalidEvent) => this.formNavigator.errors = e.errors}"></formsey-form>
     </div></fs-splitter>`
   }
 

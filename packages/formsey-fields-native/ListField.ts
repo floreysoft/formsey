@@ -6,7 +6,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
   value: string;
 
   @query("select")
-  selectBox : HTMLSelectElement
+  selectBox: HTMLSelectElement
 
   renderField() {
     return html`
@@ -15,10 +15,8 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
     </select>`;
   }
 
-  focusField(path: string) {
-    if ( path == this.definition.name ) {
-      this.selectBox.focus()
-    }
+  focusField() {
+    this.selectBox.focus()
   }
 
   protected changed(e: any) {

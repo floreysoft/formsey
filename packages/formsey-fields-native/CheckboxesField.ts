@@ -43,10 +43,8 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     }
   }
 
-  focusField(path: string) {
-    if (path == this.definition.name && this.checkboxes) {
-      this.checkboxes[0].focus()
-    }
+  focusField() {
+    this.checkboxes[0].focus()
   }
 
   changed(e: Event) {
@@ -59,7 +57,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
         values.push(this.otherTextField.value)
         this.otherTextField.requestUpdate()
         this.otherTextField.updateComplete.then(() => {
-          this.otherTextField.focusField("other")
+          this.otherTextField.focusField()
         })
       } else {
         values.push(value)

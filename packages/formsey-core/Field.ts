@@ -19,7 +19,7 @@ export function hacktml(parts, ...args) {
 export const createField = (components: Components, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
   const component = components[definition.type];
   if (component) {
-    return hacktml`<${component.tag} id="${ifDefined(id)}" .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
+    return hacktml`<${component.tag} id="${ifDefined(id)}" .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching component has been registered!");
   }
@@ -77,6 +77,10 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   _errors: InvalidErrors = new InvalidErrors()
   error: InvalidError | undefined
+
+  public path(): string {
+    return this.definition.name ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath
+  }
 
   public clearCustomValidity() {
     this.clearErrors(true)
@@ -153,13 +157,13 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected changed(e: any) {
     this.value = e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent("change", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
   }
 
   protected inputted(e: any) {
     e.stopPropagation()
     this.value = e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent("input", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
   }
 
   protected clicked(e: any) {
@@ -185,10 +189,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected prependPath(path: string) {
     return (this.definition.name ? this.definition.name : "") + "." + path
-  }
-
-  protected path(): string {
-    return this.definition.name ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath
   }
 
   protected clearErrors(removeCustomErrors?: boolean) {

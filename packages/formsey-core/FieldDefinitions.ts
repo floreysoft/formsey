@@ -1,5 +1,31 @@
 import { TemplateResult } from "lit-element"
 
+export interface Breakpoints {
+  xxs?: number
+  xs?: number
+  s?: number
+  m?: number
+  l?: number
+  xl?: number
+  xxl?: number
+}
+
+export interface Grids {
+  xxs?: string
+  xs?: string
+  s?: string
+  m?: string
+  l?: string
+  xl?: string
+  xxl?: string
+}
+
+export interface Layout {
+  style?: string
+  breakpoints?: Breakpoints
+  grids?: Grids
+}
+
 export interface FieldDefinition {
   name?: string
   type?: string
@@ -95,32 +121,6 @@ export interface ListFieldDefinition extends InputFieldDefinition {
 export interface CheckboxesFieldDefinition extends InputFieldDefinition {
   options: Option[]
   other?: boolean
-}
-
-export interface Breakpoints {
-  xxs?: number
-  xs?: number
-  s?: number
-  m?: number
-  l?: number
-  xl?: number
-  xxl?: number
-}
-
-export interface Grids {
-  xxs?: string
-  xs?: string
-  s?: string
-  m?: string
-  l?: string
-  xl?: string
-  xxl?: string
-}
-
-export interface Layout {
-  style?: string
-  breakpoints?: Breakpoints
-  grids?: Grids
 }
 
 export interface FormDefinition extends FieldDefinition {

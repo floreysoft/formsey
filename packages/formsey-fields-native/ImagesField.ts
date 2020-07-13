@@ -129,8 +129,8 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
     this.ro.observe(this.images)
   }
 
-  focusField(path: string) {
-    if (path == this.definition.name && this.checkboxes) {
+  focusField() {
+    if (this.checkboxes) {
       this.checkboxes[0].focus()
     }
   }

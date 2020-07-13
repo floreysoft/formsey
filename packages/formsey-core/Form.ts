@@ -177,29 +177,26 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   protected clicked(e) {
-    if ( !e.details ) {
-    e.stopPropagation()
+    if (!e.details) {
+      e.stopPropagation()
     }
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    this.value = e.detail.value;
-    if (e.detail.name.startsWith('.')) {
-      e.detail.name = e.detail.name.substring(1)
-    }
-    let value: any
-    if (this.definition.name) {
-      value = {}
-      value[this.definition.name] = this.value
+    if (this.definition.type == "form") {
+      if (!this.value) {
+        this.value = {}
+      }
+      this.value[e.detail.name] = e.detail.value
     } else {
-      value = this.value
+      this.value = e.detail.value
     }
     const key = e.detail.name ? e.detail.name : this.definition.name
     if (e.type == "inputChange" || e.type == "input") {
-      this.dispatchEvent(new ValueChangedEvent("input", key, value));
+      this.dispatchEvent(new ValueChangedEvent("input", key, this.value));
     }
     if (e.type == "inputChange" || e.type == "change") {
-      this.dispatchEvent(new ValueChangedEvent("change", key, value));
+      this.dispatchEvent(new ValueChangedEvent("change", key, this.value));
     }
   }
 
@@ -210,8 +207,8 @@ export class Form extends Field<FieldDefinition, any> {
     this.dispatchEvent(new InvalidEvent(e.errors));
   }
 
-  protected focusError(path: string, error: InvalidError ) {
-  console.log(JSON.stringify(error))
+  protected focusError(path: string, error: InvalidError) {
+    console.log(JSON.stringify(error))
   }
 
 }

@@ -21,8 +21,8 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     return html`<fs-ace class="input" style="height:${ifDefined(this.definition.height)}" .value=${this.value} ?gutter="${this.definition.gutter}" mode="${ifDefined(this.definition.mode)}" theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @change=${this.changed} @focus="${this.focused}" @blur="${this.blurred}"></fs-ace>`;
   }
 
-  focusField(path: string) {
-    if (path == this.definition.name && this.editor) {
+  focusField() {
+    if (this.editor) {
       this.editor.focus()
     }
   }
@@ -31,7 +31,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     e.stopPropagation()
     this.value = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("input", this.definition.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
     }
   }
 }

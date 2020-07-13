@@ -31,7 +31,7 @@ export class FormNavigator extends LitElement {
   @query(".focused")
   focused: HTMLElement
 
-  private _errors : InvalidErrors
+  private _errors: InvalidErrors
   private _errorsArray: [string, InvalidError][]
   private focusedError: number = -1
 
@@ -71,6 +71,9 @@ export class FormNavigator extends LitElement {
       transition: all .2s ease-out;
       transform: scale(.65);
     }
+    .filled {
+      background-color: green;
+    }
     .focused {
       transform: scale(1);
     }
@@ -80,14 +83,10 @@ export class FormNavigator extends LitElement {
     .invalid {
       background-color: red;
     }
-    .filled {
-      background-color: green;
-    }
     `
   }
 
   render() {
-    console.log("Focused path="+this.focusedPath)
     let dots: TemplateResult[] = []
     if (this.definition) {
       this.addDots(dots, this.definition)
@@ -106,18 +105,30 @@ export class FormNavigator extends LitElement {
   }
 
   private addDots(dots: TemplateResult[], fieldDefinition: FieldDefinition, path?: string) {
-    path = path ? path + "." + fieldDefinition.name : fieldDefinition.name
-    let nestedDots : TemplateResult[] = []
-    if (fieldDefinition.hasOwnProperty('form')) {
+    path = path ? path + (fieldDefinition.name ? "." + fieldDefinition.name : '') : fieldDefinition.name
+    let nestedDots: TemplateResult[] = []
+    if (fieldDefinition.type == "repeatingSection") {
       fieldDefinition = (<NestedFormDefinition>fieldDefinition).form
-    }
-    if (fieldDefinition.hasOwnProperty('fields')) {
-      for (let field of (<FormDefinition>fieldDefinition).fields) {
-        this.addDots(nestedDots, field, path)
+      const sections = get(this.value, path)
+      if (sections) {
+        for (let i = 0; i < sections.length; i++) {
+          this.addDots(nestedDots, fieldDefinition, path+"["+i+"]")
+        }
       }
       dots.push(html`<div class="fieldset">${nestedDots}</div>`)
     } else {
-      dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path), invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name }" @click="${(e: Event) => { console.log("Dot path="+path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
+      if (fieldDefinition.hasOwnProperty('form')) {
+        fieldDefinition = (<NestedFormDefinition>fieldDefinition).form
+      }
+      if (fieldDefinition.hasOwnProperty('fields')) {
+        for (let field of (<FormDefinition>fieldDefinition).fields) {
+          this.addDots(nestedDots, field, path)
+        }
+        dots.push(html`<div class="fieldset">${nestedDots}</div>`)
+      } else {
+        // console.log("Dot path="+path+", value="+get(this.value, path))
+        dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path) && !this._errors, invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path=" + path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
+      }
     }
   }
 }
