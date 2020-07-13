@@ -104,14 +104,16 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    let path = e.detail.name.substring(this.path().length+1)
-    let index = path.substring(0, path.indexOf("]"))
-    let name = path.substring(path.indexOf("]")+2).split('.')[0]
-    if ( !this.value[+index] ) {
-      this.value[+index] = {}
+    if (e.detail.name.startsWith(this.path())) {
+      let path = e.detail.name.substring(this.path().length + 1)
+      let index = path.substring(0, path.indexOf("]"))
+      let name = path.substring(path.indexOf("]") + 2).split('.')[0]
+      if (!this.value[+index]) {
+        this.value[+index] = {}
+      }
+      this.value[+index][name] = e.detail.value;
+      this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
     }
-    this.value[+index][name] = e.detail.value;
-    this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
   }
 
   protected invalid(e: InvalidEvent) {
