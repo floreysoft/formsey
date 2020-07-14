@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-compound",
-  "version": "0.2.130",
+  "version": "0.2.131",
   "description": "Compound fields",
   "files": [
     "/*.js.map",
