@@ -31,7 +31,6 @@ export interface FieldDefinition {
   type?: string
   label?: string | TemplateResult
   helpText?: string | TemplateResult
-  hidden?: boolean
   default?: any
 }
 

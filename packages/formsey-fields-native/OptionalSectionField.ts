@@ -21,9 +21,6 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
         this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
       }
     }
-    if (this.definition.hidden) {
-      return false
-    }
     return true
   }
 

@@ -142,9 +142,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
         this.dispatchEvent(new ValueChangedEvent("change", this.definition.name, this.value));
       }
     }
-    if (this.definition.hidden) {
-      return false
-    }
     if (!this.components) {
       let defaultTheme = getDefaultTheme()
       if (typeof defaultTheme != "undefined") {

@@ -74,6 +74,9 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   @property()
+  target: string
+
+  @property()
   action: string
 
   @property()
@@ -101,7 +104,7 @@ export class Form extends Field<FieldDefinition, any> {
     if (this.definition) {
       field = createField(this.components, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
-    return html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}">${field}<slot></slot></form>`
+    return html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}" >${field}<slot></slot></form>`
   }
 
   updated() {
