@@ -117,7 +117,7 @@ export class FormField extends Field<FormDefinition, Object> {
     let counter = 0;
     for (let field of this._fields) {
       let child = field.firstElementChild as any
-      if (typeof child['setIndex'] == "function") {
+      if (child && typeof child['setIndex'] == "function") {
         child.setIndex(counter)
         counter++
       }
