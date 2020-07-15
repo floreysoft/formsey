@@ -98,4 +98,4 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     return values;
   }
 }
-register("formsey-checkboxes-material", CheckboxesField, "material", "checkboxes", "@formsey/fields-material/CheckboxesField");
+register("formsey-checkboxes-material", CheckboxesField, "material", "checkboxes", { importPath: "@formsey/fields-material/CheckboxesField"});

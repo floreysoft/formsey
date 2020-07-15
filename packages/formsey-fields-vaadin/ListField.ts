@@ -40,4 +40,4 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
     }
   }
 }
-register("formsey-list-vaadin", ListField, "vaadin", "list", "@formsey/fields-vaadin/ListField")
+register("formsey-list-vaadin", ListField, "vaadin", "list", { importPath: "@formsey/fields-vaadin/ListField"})

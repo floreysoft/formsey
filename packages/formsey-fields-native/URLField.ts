@@ -6,4 +6,4 @@ export class URLField extends StringField {
     return "url"
   }
 }
-register("formsey-url", URLField, "native", "url", "@formsey/fields-native/URLField")
+register("formsey-url", URLField, "native", "url", { importPath: "@formsey/fields-native/URLField"})

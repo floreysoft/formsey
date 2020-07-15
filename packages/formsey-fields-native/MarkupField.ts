@@ -10,4 +10,4 @@ export class MarkupField extends LabeledField<FieldDefinition, string> {
     return html`${unsafeHTML(this.definition.default ? this.definition.default : "")}`
   }
 }
-register("formsey-markup", MarkupField, ["native", "vaadin", "material"], "markup", "@formsey/fields-native/MarkupField")
+register("formsey-markup", MarkupField, ["native", "vaadin", "material"], "markup", { importPath: "@formsey/fields-native/MarkupField"})

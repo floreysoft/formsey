@@ -40,4 +40,4 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-date-vaadin", DateField, "vaadin", "date", "@formsey/fields-vaadin/DateField")
+register("formsey-date-vaadin", DateField, "vaadin", "date", { importPath: "@formsey/fields-vaadin/DateField"})

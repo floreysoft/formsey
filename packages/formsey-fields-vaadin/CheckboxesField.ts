@@ -109,4 +109,4 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-checkboxes-vaadin", CheckboxesField, "vaadin", "checkboxes", "@formsey/fields-vaadin/CheckboxesField")
+register("formsey-checkboxes-vaadin", CheckboxesField, "vaadin", "checkboxes", { importPath: "@formsey/fields-vaadin/CheckboxesField"})

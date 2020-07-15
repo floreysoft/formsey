@@ -10,11 +10,11 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   button: HTMLButtonElement
 
   renderField() {
-    return html`<button class="input" type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" ?disabled="${this.definition.disabled}">${this.definition.text}</button>`;
+    return html`<button class="input" type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}">${this.definition.text}</button>`;
   }
 
   focusField() {
     this.button.focus()
   }
 }
-register("formsey-button", ButtonField, "native", "button", "@formsey/fields-native/ButtonField")
+register("formsey-button", ButtonField, "native", "button", { importPath: "@formsey/fields-native/ButtonField"})

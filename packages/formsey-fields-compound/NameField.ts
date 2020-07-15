@@ -2,13 +2,13 @@ import { html, property } from 'lit-element';
 import { createField, ValueChangedEvent, CompoundField, FieldDefinition, ClickEvent, register } from '@formsey/core';
 
 export interface NameFieldDefinition extends FieldDefinition {
-  includePrefix : boolean
-  includeAdditionalName : boolean
-  includeSuffix : boolean
+  includePrefix: boolean
+  includeAdditionalName: boolean
+  includeSuffix: boolean
 }
 
 export class NameField extends CompoundField<NameFieldDefinition, Object> {
-  @property({ converter: Object})
+  @property({ converter: Object })
   value: Object;
 
   renderField() {
@@ -28,4 +28,4 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
     return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
   }
 }
-register("formsey-name", NameField, ["native", "material", "vaadin"], "address", "@formsey/fields-compound/NameField");
+register("formsey-name", NameField, ["native", "material", "vaadin"], "address", { importPath: "@formsey/fields-compound/NameField" });

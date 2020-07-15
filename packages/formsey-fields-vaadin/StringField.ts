@@ -43,4 +43,4 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-string-vaadin", StringField, "vaadin", "string", "@formsey/fields-vaadin/StringField")
+register("formsey-string-vaadin", StringField, "vaadin", "string", { importPath: "@formsey/fields-vaadin/StringField"})

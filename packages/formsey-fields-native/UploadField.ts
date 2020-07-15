@@ -102,4 +102,4 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     })
   }
 }
-register("formsey-upload", UploadField, "native", "upload", "@formsey/fields-native/UploadField")
+register("formsey-upload", UploadField, "native", "upload", { importPath: "@formsey/fields-native/UploadField"})

@@ -68,4 +68,4 @@ export class TextField extends Field<StringFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-text-material", TextField, "material", "text", "@formsey/fields-material/TextField");
+register("formsey-text-material", TextField, "material", "text", { importPath: "@formsey/fields-material/TextField"});

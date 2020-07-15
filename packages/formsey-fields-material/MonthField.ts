@@ -8,4 +8,4 @@ export class MonthField extends DateField {
     return "month"
   }
 }
-register("formsey-month-material", MonthField, "material", "month", "@formsey/fields-material/MonthField");
+register("formsey-month-material", MonthField, "material", "month", { importPath: "@formsey/fields-material/MonthField"});

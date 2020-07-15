@@ -4,4 +4,4 @@ import { register } from '@formsey/core';
 export class SelectableSectionField extends NativeSelectableSectionField {
 
 }
-register("formsey-selectable-section-material", SelectableSectionField, "material", "selectableSection", "@formsey/fields-material/SelectableSectionField");
+register("formsey-selectable-section-material", SelectableSectionField, "material", "selectableSection", { importPath: "@formsey/fields-material/SelectableSectionField"});

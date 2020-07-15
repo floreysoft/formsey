@@ -26,4 +26,4 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
   }
 }
 
-register("formsey-creditcard", CreditCardField, ["native", "material","vaadin"], "creditCard", "@formsey/fields-compound/CreditCardField");
+register("formsey-creditcard", CreditCardField, ["native", "material","vaadin"], "creditCard", { importPath: "@formsey/fields-compound/CreditCardField"});

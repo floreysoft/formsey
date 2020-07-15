@@ -68,4 +68,4 @@ export class ListField extends Field<ListFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-list-material", ListField, "material", "list", "@formsey/fields-material/ListField");
+register("formsey-list-material", ListField, "material", "list", { importPath: "@formsey/fields-material/ListField"});

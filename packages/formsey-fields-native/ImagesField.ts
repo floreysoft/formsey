@@ -212,4 +212,4 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
     this.columns = columns
   }
 }
-register("formsey-images", ImagesField, ["native", "material","vaadin"], "images", "@formsey/fields-native/ImagesField")
+register("formsey-images", ImagesField, ["native", "material","vaadin"], "images", { importPath: "@formsey/fields-native/ImagesField"})

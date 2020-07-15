@@ -11,4 +11,4 @@ export class UploadField extends LabeledField<DateFieldDefinition, string> {
     }
 }
 
-register("formsey-upload-vaadin", UploadField, ["material","vaadin"], "upload", "@formsey/fields-vaadin/UploadField")
+register("formsey-upload-vaadin", UploadField, ["material","vaadin"], "upload", { importPath: "@formsey/fields-vaadin/UploadField"})

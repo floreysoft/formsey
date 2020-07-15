@@ -6,4 +6,4 @@ export class EmailField extends StringField {
     return "email"
   }
 }
-register("formsey-email", EmailField, "native", "email", "@formsey/fields-native/EmailField")
+register("formsey-email", EmailField, "native", "email", { importPath: "@formsey/fields-native/EmailField"})

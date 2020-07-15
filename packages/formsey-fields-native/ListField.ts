@@ -25,4 +25,4 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
     this.dispatchEvent(new ValueChangedEvent(e.type as "change", this.path(), this.value));
   }
 }
-register("formsey-list", ListField, "native", "list", "@formsey/fields-native/ListField")
+register("formsey-list", ListField, "native", "list", { importPath: "@formsey/fields-native/ListField"})

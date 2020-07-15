@@ -52,4 +52,4 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     }
   }
 }
-register("formsey-selectable-section", SelectableSectionField, ["native", "vaadin"], "selectableSection", "@formsey/fields-native/SelectableSectionField")
+register("formsey-selectable-section", SelectableSectionField, ["native", "vaadin"], "selectableSection", { importPath: "@formsey/fields-native/SelectableSectionField"})

@@ -6,4 +6,4 @@ export class SearchField extends StringField {
     return "search"
   }
 }
-register("formsey-search", SearchField, "native", "search", "@formsey/fields-native/SearchField")
+register("formsey-search", SearchField, "native", "search", { importPath: "@formsey/fields-native/SearchField"})

@@ -12,4 +12,4 @@ export class StringField extends InputField<StringFieldDefinition> {
     }
   }
 }
-register("formsey-string", StringField, "native", "string", "@formsey/fields-native/StringField")
+register("formsey-string", StringField, "native", "string", { importPath: "@formsey/fields-native/StringField"})

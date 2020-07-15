@@ -7,4 +7,4 @@ export class HiddenField extends Field<FieldDefinition, any> {
     return html`<input type="hidden" name="${ifDefined(this.definition.name)}" .value="${this.value ? this.value : ''}">`
   }
 }
-register("formsey-hidden", HiddenField, "native", "hidden", "@formsey/fields-native/HiddenField")
+register("formsey-hidden", HiddenField, "native", "hidden", { importPath: "@formsey/fields-native/HiddenField"})

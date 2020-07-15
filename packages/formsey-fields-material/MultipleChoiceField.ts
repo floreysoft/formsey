@@ -84,4 +84,4 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     }
   }
 }
-register("formsey-multiple-choice-material", MultipleChoiceField, "material", "multipleChoice", "@formsey/fields-material/MultipleChoiceField");
+register("formsey-multiple-choice-material", MultipleChoiceField, "material", "multipleChoice", { importPath: "@formsey/fields-material/MultipleChoiceField"});

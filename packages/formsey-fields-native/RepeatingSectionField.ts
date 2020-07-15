@@ -125,4 +125,4 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-repeating-section", RepeatingSectionField, ["native", "material", "vaadin"], "repeatingSection", "@formsey/fields-native/RepeatingSectionField")
+register("formsey-repeating-section", RepeatingSectionField, ["native", "material", "vaadin"], "repeatingSection", { importPath: "@formsey/fields-native/RepeatingSectionField"})

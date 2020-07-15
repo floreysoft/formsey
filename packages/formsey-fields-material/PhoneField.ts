@@ -8,4 +8,4 @@ export class PhoneField extends StringField {
     return "tel"
   }
 }
-register("formsey-phone-material", PhoneField, "material", "phone", "@formsey/fields-material/PhoneField");
+register("formsey-phone-material", PhoneField, "material", "phone", { importPath: "@formsey/fields-material/PhoneField"});

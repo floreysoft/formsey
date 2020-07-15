@@ -39,4 +39,4 @@ export class EmailField extends VaadinField<StringFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-email-vaadin", EmailField, "vaadin", "email", "@formsey/fields-vaadin/EmailField")
+register("formsey-email-vaadin", EmailField, "vaadin", "email", { importPath: "@formsey/fields-vaadin/EmailField"})

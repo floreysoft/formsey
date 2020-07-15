@@ -3,4 +3,4 @@ import { register } from '@formsey/core';
 
 export class OptionalSectionField extends NativeOptionalSectionField {
 }
-register("formsey-optional-section-vaadin", OptionalSectionField, "vaadin", "optional-section", "@formsey/fields-vaadin/OptionalSectionField")
+register("formsey-optional-section-vaadin", OptionalSectionField, "vaadin", "optional-section", { importPath: "@formsey/fields-vaadin/OptionalSectionField"})

@@ -25,4 +25,4 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
      this.checkbox.focus()
   }
 }
-register("formsey-boolean", BooleanField, "native", "boolean", "@formsey/fields-native/BooleanField")
+register("formsey-boolean", BooleanField, "native", "boolean", { importPath: "@formsey/fields-native/BooleanField"})

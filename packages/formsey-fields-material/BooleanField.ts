@@ -42,4 +42,4 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 }
-register("formsey-boolean-material", BooleanField, "material", "boolean", "@formsey/fields-material/BooleanField");
+register("formsey-boolean-material", BooleanField, "material", "boolean", { importPath: "@formsey/fields-material/BooleanField"});

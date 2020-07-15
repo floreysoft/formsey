@@ -1,5 +1,5 @@
-import { TemplateResult } from 'lit-element'
-import { FieldDefinition } from './FieldDefinitions'
+import { TemplateResult, SVGTemplateResult } from 'lit-element'
+import { FieldDefinition, FormDefinition } from './FieldDefinitions'
 export { FieldBlurEvent as BlurEvent } from './FieldBlurEvent'
 export { FieldClickEvent as ClickEvent } from './FieldClickEvent'
 export { CompoundField, createField, Field } from './Field'
@@ -12,8 +12,11 @@ export { NestedFormField } from './NestedFormField'
 export { ValueChangedEvent } from './ValueChangedEvent'
 
 export interface Component {
-  tag: string,
-  importPath: string
+  importPath: string,
+  tag?: string,
+  focusable?: boolean,
+  icon?: SVGTemplateResult,
+  editor?: string | FormDefinition
 }
 
 export interface Components {
@@ -69,18 +72,19 @@ export function getDefaultTheme(): string | undefined {
   return undefined
 }
 
-export function register(tag: string, constructor: CustomElementConstructor, themes?: string|string[], type?: string, importPath? : string) {
+export function register(tag: string, constructor: CustomElementConstructor, themes?: string|string[], type?: string, component?: Component) {
   if (customElements.get(tag)) {
     console.log("'" + tag + "' already exists, skipping...")
   } else {
     console.log("Registering custom element="+tag);
     customElements.define(tag, constructor)
   }
-  if (themes && type && importPath) {
+  if (themes && type && component) {
+    component.tag = tag
     themes = [].concat(themes)
     for(let theme of themes) {
       let components = {} as Components
-      components[type] = { tag, importPath }
+      components[type] = component
       registerTheme(theme, { components })
     }
   }

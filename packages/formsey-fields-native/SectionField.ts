@@ -10,4 +10,4 @@ export class SectionField extends Field<FieldDefinition, void> {
     return html`<header>${ifDefined(this.definition.label)}</header><footer>${ifDefined(this.definition.helpText)}</footer>`
   }
 }
-register("formsey-section", SectionField, ["native", "vaadin"], "section", "@formsey/fields-native/SectionField")
+register("formsey-section", SectionField, ["native", "vaadin"], "section", { importPath: "@formsey/fields-native/SectionField"})

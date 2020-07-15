@@ -6,4 +6,4 @@ export class TimeField extends DateField {
     return "time"
   }
 }
-register("formsey-time", TimeField, "native", "time", "@formsey/fields-native/TimeField")
+register("formsey-time", TimeField, "native", "time", { importPath: "@formsey/fields-native/TimeField"})

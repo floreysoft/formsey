@@ -6,4 +6,4 @@ export class NumberField extends InputField<NumberFieldDefinition> {
     return "number"
   }
 }
-register("formsey-number", NumberField, "native", "number", "@formsey/fields-native/NumberField")
+register("formsey-number", NumberField, "native", "number", { importPath: "@formsey/fields-native/NumberField"})

@@ -6,4 +6,4 @@ export class DateField extends InputField<DateFieldDefinition> {
     return "date"
   }
 }
-register("formsey-date", DateField, "native", "date", "@formsey/fields-native/DateField")
+register("formsey-date", DateField, "native", "date", { importPath: "@formsey/fields-native/DateField"})

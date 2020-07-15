@@ -6,4 +6,4 @@ export class PasswordField extends StringField {
     return "password"
   }
 }
-register("formsey-password", PasswordField, "native", "password", "@formsey/fields-native/PasswordField")
+register("formsey-password", PasswordField, "native", "password", { importPath: "@formsey/fields-native/PasswordField"})

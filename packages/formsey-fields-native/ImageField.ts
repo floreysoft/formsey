@@ -9,4 +9,4 @@ export class ImageField extends LabeledField<ImageFieldDefinition, string> {
     return html`<div class="if" style="text-align: ${this.definition.align}"><img src="${this.definition.url}" title="${this.definition.label}" style="width: ${this.definition.width}"></div>`
   }
 }
-register("formsey-image", ImageField, ["native", "material","vaadin"], "image", "@formsey/fields-native/ImageField")
+register("formsey-image", ImageField, ["native", "material","vaadin"], "image", { importPath: "@formsey/fields-native/ImageField"})

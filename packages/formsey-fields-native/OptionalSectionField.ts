@@ -84,4 +84,4 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
   }
 }
-register("formsey-optional-section", OptionalSectionField, "native", "optionalSection", "@formsey/fields-native/OptionalSectionField")
+register("formsey-optional-section", OptionalSectionField, "native", "optionalSection", { importPath: "@formsey/fields-native/OptionalSectionField"})

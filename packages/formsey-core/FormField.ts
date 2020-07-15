@@ -336,4 +336,4 @@ export class FormField extends Field<FormDefinition, Object> {
     return __closestFrom(base);
   }
 }
-register("formsey-form-field", FormField, ["native", "vaadin"], "form", "@formsey/fields-native/FormField")
+register("formsey-form-field", FormField, ["native", "vaadin"], "form", { importPath: "@formsey/fields-native/FormField" })
