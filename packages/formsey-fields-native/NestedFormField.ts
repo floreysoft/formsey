@@ -1,6 +1,5 @@
 import { register } from '@formsey/core';
 import { NestedFormField as CoreNestedFormField } from '@formsey/core/NestedFormField';
-import { css } from 'lit-element';
 import { NESTED_FORM_STYLE } from './styles';
 
 export class NestedFormField extends CoreNestedFormField {

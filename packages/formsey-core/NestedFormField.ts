@@ -1,6 +1,8 @@
-import { ValueChangedEvent, createField, Field, NestedFormDefinition } from './index';
 import { html, query } from 'lit-element';
+import { createField, Field } from './Field';
+import { NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
+import { ValueChangedEvent } from './ValueChangedEvent';
 
 export class NestedFormField extends Field<NestedFormDefinition, Object> {
   value: Object = {}

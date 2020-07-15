@@ -1,4 +1,3 @@
-export { HiddenField } from './HiddenField';
 export { BooleanField } from './BooleanField';
 export { ButtonField } from './ButtonField';
 export { CheckboxesField } from './CheckboxesField';

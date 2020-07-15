@@ -126,7 +126,6 @@ export class FormNavigator extends LitElement {
         }
         dots.push(html`<div class="fieldset">${nestedDots}</div>`)
       } else {
-        // console.log("Dot path="+path+", value="+get(this.value, path))
         dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path) && !this._errors, invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path=" + path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
       }
     }

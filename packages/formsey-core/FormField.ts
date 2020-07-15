@@ -1,9 +1,11 @@
-import { area, createField, Field, FormDefinition, register, ValueChangedEvent } from './index';
 import { html, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
-import { Breakpoints, NestedFormDefinition } from './FieldDefinitions';
+import { area, register } from './Components';
+import { createField, Field } from './Field';
+import { Breakpoints, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
+import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
 

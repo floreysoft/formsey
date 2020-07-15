@@ -1,8 +1,12 @@
-import { createField, Field, FieldDefinition, FormField, register, ValueChangedEvent } from './index';
 import { html, property, query } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined'
-import { InvalidEvent, InvalidErrors, InvalidError } from './InvalidEvent';
+import { ifDefined } from 'lit-html/directives/if-defined';
+import { register } from './Components';
+import { createField, Field } from './Field';
+import { FieldDefinition } from './FieldDefinitions';
+import { FormField } from './FormField';
+import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { NATIVE_STYLES } from './styles';
+import { ValueChangedEvent } from './ValueChangedEvent';
 
 export function get(data: Object, path: string): any {
   if (!data || !path) {

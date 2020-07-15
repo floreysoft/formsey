@@ -1,0 +1,1 @@
+Did anyone manage to create a rollup config that bundles a number of webcomponents to be published on npm as a single package including umd (to support unpkg) so that they can then be consumed by both static html + Stackblitz, Codesandbox and others?

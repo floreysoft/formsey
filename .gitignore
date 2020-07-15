@@ -15,3 +15,4 @@ yarn-error.log
 !packages/formsey-fields-vaadin/webpack-resolver.js
 !webpack*.js
 !karma.conf.js
+!rollup*.js
