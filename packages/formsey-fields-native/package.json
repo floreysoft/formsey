@@ -10,10 +10,8 @@
     "!/test/",
     "/umd/*"
   ],
-  "peerDependencies": {
-    "@formsey/core": "^0.2.130"
-  },
   "dependencies": {
+    "@formsey/core": "^0.2.130",
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/utils": "^0.3.179",
     "@ts-stack/markdown": ">0",

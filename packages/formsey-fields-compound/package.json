@@ -9,11 +9,9 @@
     "/*.d.ts",
     "!/test/"
   ],
-  "peerDependencies": {
-    "@formsey/core": "^0.2.130",
-    "@formsey/fields-native": "^0.2.130"
-  },
   "dependencies": {
+    "@formsey/core": "^0.2.130",
+    "@formsey/fields-native": "^0.2.130",
     "lit-element": "^2.3.0"
   },
   "scripts": {
