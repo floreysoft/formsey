@@ -361,7 +361,7 @@ export const NATIVE_STYLES = css`
       height: 0.1px;
       opacity: 0;
       overflow: hidden;
-      position: absolute;
+      position: relative;
       z-index: -1;
     }
 

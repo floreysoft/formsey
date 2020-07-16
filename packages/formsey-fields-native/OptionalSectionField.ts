@@ -1,7 +1,7 @@
 import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ValueChangedEvent, ClickEvent } from '@formsey/core';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html, property, query } from 'lit-element';
-import { NESTED_FORM_STYLE } from './styles';
+import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, Object> {
   @property({ converter: Object })
@@ -30,12 +30,16 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
       checked = true
     }
     let form = checked ? html`<div id="form">${createField(this.components, this.definition.form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
-    return html`${createField(this.components, { type: "boolean", name: this.definition.name, label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    return html`${createField(this.components, { type: "boolean", name: "", label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
   }
 
   public focusField(path: string) {
-    if (this.form) {
+    if ( path == this.path() ) {
+      let child = this.firstElementChild as Field<any, any>
+      (<any>child).focusField(path)
+      this.dispatchEvent(new FieldFocusEvent(this.path()));
+    } else if (this.form) {
       let child = this.form.firstElementChild as Field<any, any>
       if ( child && path.startsWith(child.path()) && typeof child['focusField'] == "function") {
         (<any>child).focusField(path)
@@ -71,7 +75,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.value = e.detail.value ? {} : undefined
     this.untouched = false
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange",  this.path(), this.value));
+    this.focused(e)
   }
 
   protected changed(e: ValueChangedEvent<any>) {
@@ -81,7 +86,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     }
     this.value[name] = e.detail.value;
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
   }
 }
 register("formsey-optional-section", OptionalSectionField, "native", "optionalSection", { importPath: "@formsey/fields-native/OptionalSectionField"})

@@ -74,7 +74,7 @@ export function register(tag: string, constructor: CustomElementConstructor, the
     themes = [].concat(themes)
     for(let theme of themes) {
       let components = {} as Components
-      components[type] = component
+      components[type] = { focusable: true, ...component }
       registerTheme(theme, { components })
     }
   }

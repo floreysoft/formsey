@@ -1,15 +1,18 @@
 import { html, LitElement, property, query, TemplateResult, css } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
-import { FieldDefinition, register, InputFieldDefinition, NestedFormDefinition } from ".";
+import { FieldDefinition, register, InputFieldDefinition, NestedFormDefinition, Components } from ".";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";
 import { get } from "./Form";
-import { FormDefinition } from "./FieldDefinitions";
+import { FormDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
 
 export class FormNavigator extends LitElement {
+  @property({ converter: Object })
+  components: Components
+
   @property({ type: Object })
   definition: FieldDefinition
 
-  @property({ type: Object })
+  @property({ type: Object, hasChanged(newVal, oldVal) { return true } })
   value: any
 
   @property({ type: Object })
@@ -112,7 +115,29 @@ export class FormNavigator extends LitElement {
       const sections = get(this.value, path)
       if (sections) {
         for (let i = 0; i < sections.length; i++) {
-          this.addDots(nestedDots, fieldDefinition, path+"["+i+"]")
+          this.addDots(nestedDots, fieldDefinition, path + "[" + i + "]")
+        }
+      }
+      dots.push(html`<div class="fieldset">${nestedDots}</div>`)
+    } else if (fieldDefinition.type == "optionalSection") {
+      const checked = get(this.value, path)
+      if (checked) {
+        this.addDot(nestedDots, fieldDefinition, path)
+        for (let field of ((<OptionalSectionFieldDefinition>fieldDefinition).form).fields) {
+          this.addDots(nestedDots, field, path)
+        }
+        dots.push(html`<div class="fieldset">${nestedDots}</div>`)
+      } else {
+        this.addDot(dots, fieldDefinition, path)
+      }
+    } else if (fieldDefinition.type == "selectableSection") {
+      this.addDot(nestedDots, fieldDefinition, path+".selection")
+      let values = (<SelectableSectionFieldDefinition>fieldDefinition).selections.map(selection => (selection.value ? selection.value : selection.label));
+      let index = values.indexOf(get(this.value, path+".selection"));
+      const selection = (<SelectableSectionFieldDefinition>fieldDefinition).selections[index]
+      if (selection) {
+        for (let field of selection.form.fields) {
+          this.addDots(nestedDots, field, path+".value")
         }
       }
       dots.push(html`<div class="fieldset">${nestedDots}</div>`)
@@ -126,9 +151,16 @@ export class FormNavigator extends LitElement {
         }
         dots.push(html`<div class="fieldset">${nestedDots}</div>`)
       } else {
-        dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path) && !this._errors, invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path=" + path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
+        const component = this.components[fieldDefinition.type]
+        if (component.focusable) {
+          this.addDot(dots, fieldDefinition, path)
+        }
       }
     }
+  }
+
+  private addDot(dots: TemplateResult[], fieldDefinition: FieldDefinition, path: string) {
+    dots.push(html`<div class="${classMap({ dot: true, filled: !!get(this.value, path) && !this._errors, invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused: this.focusedPath == path })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path=" + path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
   }
 }
 register("formsey-form-navigator", FormNavigator)
