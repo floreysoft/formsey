@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.2.134",
+  "version": "0.2.135",
   "description": "Native fields",
   "files": [
     "/*.js.map",
@@ -11,9 +11,9 @@
     "/umd/*"
   ],
   "dependencies": {
-    "@formsey/core": "^0.2.130",
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/utils": "^0.3.179",
+    "@formsey/core": "^0.2.130",
     "@ts-stack/markdown": ">0",
     "highlight.js": "^10.1.1",
     "signature_pad": "^3.0.0-beta.3"
