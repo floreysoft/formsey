@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-vaadin",
-  "version": "0.2.137",
+  "version": "0.2.138",
   "description": "Vaadin fields",
   "files": [
     "/umd/*.js",
@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "@formsey/core": "^0.2.136",
-    "@formsey/fields-compound": "^0.2.137",
+    "@formsey/fields-compound": "^0.2.138",
     "@vaadin/vaadin-checkbox": "^2.2.12",
     "@vaadin/vaadin-combo-box": "^5.0.11",
     "@vaadin/vaadin-date-picker": "^4.0.8",

@@ -1,8 +1,8 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.2.137",
+  "version": "0.2.138",
   "description": "Native fields",
-  "unpkg" : "/umd/formsey-fields-native.min.js",
+  "unpkg": "/umd/formsey-fields-native.min.js",
   "files": [
     "/umd/*.js",
     "/*.js.map",
