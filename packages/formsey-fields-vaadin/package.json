@@ -3,6 +3,7 @@
   "version": "0.2.136",
   "description": "Vaadin fields",
   "files": [
+    "/umd/*.js",
     "/*.js",
     "/*.d.ts",
     "!/test/"

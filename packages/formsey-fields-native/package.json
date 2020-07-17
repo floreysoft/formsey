@@ -3,6 +3,7 @@
   "version": "0.2.136",
   "description": "Native fields",
   "files": [
+    "/umd/*.js",
     "/*.js.map",
     "/*.d.ts.map",
     "/*.js",

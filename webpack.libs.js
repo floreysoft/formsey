@@ -34,7 +34,7 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(__dirname, 'umd'),
-    filename: "[name]"
+    path: path.resolve(__dirname),
+    filename: "./packages/[name]/umd/[name].min.js"
   }
 };

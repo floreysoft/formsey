@@ -4,7 +4,7 @@
 /.cache
 /coverage
 ./lib-stats.json
-
+**/umd
 *.js
 **/*.js.map
 **/*.d.ts
