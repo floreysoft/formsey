@@ -1,6 +1,6 @@
 {
   "name": "demos",
-  "version": "0.2.136",
+  "version": "0.2.137",
   "private": true,
   "dependencies": {
     "@floreysoft/ace": ">0.3.77",
@@ -9,6 +9,6 @@
     "@floreysoft/tabs": "^0.3.184",
     "@floreysoft/theme": "^0.3.184",
     "@formsey/core": "^0.2.136",
-    "@formsey/fields-native": "^0.2.136"
+    "@formsey/fields-native": "^0.2.137"
   }
 }
