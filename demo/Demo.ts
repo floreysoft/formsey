@@ -2,16 +2,15 @@ import '@floreysoft/ace';
 import { Ace } from '@floreysoft/ace';
 import '@floreysoft/splitter';
 import '@floreysoft/tabs';
-import { FocusEvent, ButtonFieldDefinition, Form, FormDefinition, InteractiveFieldDefinition } from '@formsey/core';
-import '@formsey/core/FormNavigator';
+import { ButtonFieldDefinition, Form, FormDefinition, InteractiveFieldDefinition } from '@formsey/core';
 import { get } from '@formsey/core/Form';
+import '@formsey/core/FormNavigator';
 import { FormNavigator } from '@formsey/core/FormNavigator';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import '@formsey/fields-native/extended';
+import '@formsey/fields-native-extended';
 import '@formsey/fields-vaadin';
 import { css, CSSResult, customElement, html, LitElement, query } from "lit-element";
 import { directive, NodePart } from 'lit-html';
-import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 
 @customElement("formsey-demo1")
 export class FormseyDemo1 extends LitElement {
