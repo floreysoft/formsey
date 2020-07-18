@@ -2,6 +2,7 @@ import '@floreysoft/ace';
 import { Ace } from '@floreysoft/ace';
 import '@floreysoft/splitter';
 import '@floreysoft/tabs';
+import '@floreysoft/theme';
 import { ButtonFieldDefinition, Form, FormDefinition, InteractiveFieldDefinition } from '@formsey/core';
 import { get } from '@formsey/core/Form';
 import '@formsey/core/FormNavigator';

@@ -9,7 +9,6 @@
     "@floreysoft/tabs": "^0.3.184",
     "@floreysoft/theme": "^0.3.184",
     "@formsey/core": "^0.2.140",
-    "@formsey/fields-native": "^0.2.140",
     "@formsey/fields-native-extended": "^0.2.140"
   }
 }
