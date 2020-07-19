@@ -35,4 +35,4 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     }
   }
 }
-register("formsey-sourcecode", SourceCodeField, ["native", "vaadin", "material"], "sourceCode", { importPath: "@formsey/fields-native/SourceCodeField"})
+register("formsey-sourcecode", SourceCodeField, ["native", "vaadin", "material"], "sourceCode", { importPath: "@formsey/fields-native-extended/SourceCodeField"})

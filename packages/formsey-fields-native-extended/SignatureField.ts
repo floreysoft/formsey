@@ -70,4 +70,4 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 }
-register("formsey-signature", SignatureField, ["native", "vaadin", "material"], "signature",  { importPath: "@formsey/fields-native/SignatureField"})
+register("formsey-signature", SignatureField, ["native", "vaadin", "material"], "signature",  { importPath: "@formsey/fields-native-extended/SignatureField"})
