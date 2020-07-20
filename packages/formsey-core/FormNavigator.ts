@@ -49,19 +49,28 @@ export class FormNavigator extends LitElement {
 
   private _errors: InvalidErrors
   private _errorsArray: [string, InvalidError][]
+  private _allFields: FieldInfo[] = []
+  private _requiredFields: FieldInfo[] = []
   private focusedError: number = -1
   private focusedField: number = -1
   private focusedRequired: number = -1
 
   static get styles() {
     return css`
-    .dots {
-      display: flex;
-      flex-direction: row;
+    :host {
+      display: grid;
+      grid-template-columns: auto max-content;
       align-items: center;
+    }
+    .dots {
       overflow-x: auto;
       scrollbar-width: none;
       line-height: 0;
+    }
+    .nav {
+      display: flex;
+      flex-direction: columns;
+      align-items: center;
     }
     .fieldset {
       display: flex;
@@ -103,33 +112,47 @@ export class FormNavigator extends LitElement {
     .invalid {
       background-color: red;
     }
+    .requiredFields {
+      background-color: orange;
+      border-radius: 3px;
+      padding: 3px;
+    }
+    button {
+      border: none;
+      border-radius: 50%;
+    }
     `
   }
 
   render() {
-    let fields : FieldInfo[] = []
+    this._allFields = []
+    this._requiredFields = []
     let dots: TemplateResult[] = []
     if (this.definition) {
-      this.addFields(fields, dots, this.definition)
+      this.addFields(this._allFields, dots, this.definition)
     }
-    let required = 0, requiredFilled = 0, totalFilled = 0
-    fields.forEach(fieldInfo=> {
-      required += fieldInfo.required ? 1 : 0;
+    let requiredFilled = 0, totalFilled = 0
+    this._allFields.forEach(fieldInfo => {
+      if (fieldInfo.required) this._requiredFields.push(fieldInfo)
       requiredFilled += fieldInfo.required && fieldInfo.filled ? 1 : 0;
       totalFilled += fieldInfo.filled ? 1 : 0;
     })
-    let nav = html`${totalFilled} / ${fields.length}, ${requiredFilled} / ${required} <button id="prevRequired" disabled @click="${e => { this.focusRequired(this.focusedRequired - 1) }}"><</button><button id="nextRequired" disabled @click="${e => { this.focusRequired(this.focusedRequired + 1) }}">></button>`
+    let nav = html`<div class="allFields">${totalFilled} / ${this._allFields.length}</div><div class="requiredFields">${requiredFilled} / ${this._requiredFields.length} <button id="prevRequired" @click="${e => { this.focusRequired(this.focusedRequired - 1) }}"><</button><button id="nextRequired" @click="${e => { this.focusRequired(this.focusedRequired + 1) }}">></button></div>`
     let errors = this._errorsArray ?
       html`${this._errorsArray.length} errors <button id="prev" disabled @click="${e => { this.focusError(this.focusedError - 1) }}">Prev</button><button id="next" @click="${e => { this.focusError(this.focusedError + 1) }}">Next</button>` :
       html`No errors`
-    return html`<div class="dots">${dots}<div class="errors">${nav}${errors}</div></div>`
+    return html`<div class="dots">${dots}</div><div class="nav">${nav}${errors}</div>`
   }
 
   focusRequired(index: number) {
     this.focusedRequired = index
-    this.previousRequired.disabled = index == 0
-    this.nextError.disabled = index == this._errorsArray.length - 1
-    this.dispatchEvent(new CustomEvent('focusField', { detail: this._errorsArray[index][0] }))
+    this._requiredFields.forEach((fieldInfo, required) => {
+      if (required == index) {
+        this.previousRequired.disabled = index == 0
+        this.nextRequired.disabled = index == this._requiredFields.length - 1
+        this.dispatchEvent(new CustomEvent('focusField', { detail: fieldInfo.path }))
+      }
+    })
   }
 
   focusError(index: number) {
@@ -162,13 +185,13 @@ export class FormNavigator extends LitElement {
         this.addField(fields, dots, fieldDefinition, path)
       }
     } else if (fieldDefinition.type == "selectableSection") {
-      this.addField(fields, nestedDots, fieldDefinition, path+".selection")
+      this.addField(fields, nestedDots, fieldDefinition, path + ".selection")
       let values = (<SelectableSectionFieldDefinition>fieldDefinition).selections.map(selection => (selection.value ? selection.value : selection.label));
-      let index = values.indexOf(get(this.value, path+".selection"));
+      let index = values.indexOf(get(this.value, path + ".selection"));
       const selection = (<SelectableSectionFieldDefinition>fieldDefinition).selections[index]
       if (selection) {
         for (let field of selection.form.fields) {
-          this.addFields(fields, nestedDots, field, path+".value")
+          this.addFields(fields, nestedDots, field, path + ".value")
         }
       }
       dots.push(html`<div class="fieldset">${nestedDots}</div>`)
