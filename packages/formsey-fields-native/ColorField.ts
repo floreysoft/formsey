@@ -12,7 +12,7 @@ export class ColorField extends StringField {
 
   protected renderField() {
     this.definition.maxlength = 9
-    return html`<div class="cf" @keydown="${this.keyDown}">${super.renderField()}<div class="cfp" style="background-color:${ifDefined(this.value)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}" tabindex="-1"></div></div>`
+    return html`<div class="cf" @keydown="${this.keyDown}">${super.renderField()}<div class="cfp" style="border:1px solid #B1ACAA;background-color:${ifDefined(this.value)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}" tabindex="-1"></div></div>`
   }
 
   protected get type(): "text" {
