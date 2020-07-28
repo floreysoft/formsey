@@ -156,15 +156,19 @@ export const NATIVE_STYLES = css`
       text-transform: uppercase;
     }
 
-
     .cfp {
       position: absolute;
       top: 0;
       right: 0;
-      margin: .4em;
+      margin: calc(.4em - 1px);
       width: 1.2em;
       height: 1.2em;
       border-radius: 50%;
+      border: 1px solid transparent;
+    }
+
+    .cf:focus-within .cfps {
+      border-color: var(--formsey-border-color-focus, var(--fs-border-color-focus, #020b2f));
     }
 
     .cf svg {

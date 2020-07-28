@@ -48,7 +48,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     if (option) {
       this.value.selection = option;
       this.value.value = {}
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
       this.requestUpdate()
     }
   }
@@ -64,7 +64,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       } else {
         this.value.value = e.detail.value
       }
-      this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", this.path(), this.value));
+      this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail.name, this.value));
     }
   }
 }

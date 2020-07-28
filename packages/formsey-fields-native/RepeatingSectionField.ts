@@ -112,7 +112,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         this.value[+index] = {}
       }
       this.value[+index][name] = e.detail.value;
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
     }
   }
 
