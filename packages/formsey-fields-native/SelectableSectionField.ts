@@ -56,8 +56,15 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   protected changed(e: ValueChangedEvent<any>) {
     if ( e.detail.name.startsWith(this.path()+".value")) {
       let name = e.detail.name.substring((this.path()+".value").length+1).split('.')[0]
-      this.value.value[name] = e.detail.value;
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+      if ( name ) {
+        if ( typeof this.value.value != "object" ) {
+          this.value.value = {}
+        }
+        this.value.value[name] = e.detail.value;
+      } else {
+        this.value.value = e.detail.value
+      }
+      this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", this.path(), this.value));
     }
   }
 }

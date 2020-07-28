@@ -68,7 +68,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     e.preventDefault()
     e.stopPropagation()
     this.value.push({});
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     this.requestUpdate();
   }
 
@@ -76,7 +76,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     e.preventDefault()
     e.stopPropagation()
     this.value.splice(index, 1);
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     this.requestUpdate();
   }
 
@@ -112,7 +112,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         this.value[+index] = {}
       }
       this.value[+index][name] = e.detail.value;
-      this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     }
   }
 
