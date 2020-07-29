@@ -26,7 +26,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       if (selection) {
         let value = selection.value ? selection.value : selection.label;
         let errors = new InvalidErrors()
-        return html`${createField(this.components, { type: "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, this.path(), errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
+        return html`${createField(this.components, { type: "list", name: "selection", options } as ListFieldDefinition, value, this.path(), errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
       <div class="form">${createField(this.components, selection.form, this.value?.value, this.path()+".value", errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
 
       }
