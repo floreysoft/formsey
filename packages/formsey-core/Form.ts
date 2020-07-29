@@ -150,10 +150,11 @@ export class Form extends Field<FieldDefinition, any> {
     this.requestUpdate()
   }
 
-  public focusField(path: string) {
+  public focusField(path: string) : boolean {
     if (this.form && typeof this.form['focusField'] === "function") {
-      this.form.focusField(path)
+      return this.form.focusField(path)
     }
+    return false
   }
 
   public setValidityMessage(path: string, validityMessage: string) {

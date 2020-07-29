@@ -45,7 +45,9 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
   focusField() {
     if (this.radios) {
       this.radios[0].focus()
+      return true
     }
+    return false
   }
 
   changed(e: Event) {

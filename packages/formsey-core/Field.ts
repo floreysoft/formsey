@@ -170,7 +170,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   protected focused(e: any) {
     e.stopPropagation()
     e.preventDefault()
-    console.log("Focus field:"+this.path())
     this.dispatchEvent(new FieldFocusEvent(this.path()));
   }
 

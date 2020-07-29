@@ -23,11 +23,12 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
     return html`<div class="nf">${createField(this.components, this.definition.form, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
   }
 
-  public focusField(path: string) {
+  public focusField(path: string) : boolean {
     let child = this.div.firstElementChild as Field<any, any>
     if (child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
-      (<any>child).focusField(path)
+      return (<any>child).focusField(path)
     }
+    return false
   }
 
   public validate(report: boolean) {

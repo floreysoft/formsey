@@ -21,6 +21,7 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
 
   focusField() {
     this.textArea.focus()
+    return true
   }
 
   validate(report: boolean) {

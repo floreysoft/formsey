@@ -41,6 +41,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
 
   focusField() {
     this.input.focus()
+    return true
   }
 
   focus() {

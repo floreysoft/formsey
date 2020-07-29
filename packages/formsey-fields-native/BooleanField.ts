@@ -21,8 +21,9 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
     this.checkbox.indeterminate = this.definition.indeterminate
   }
 
-  focusField(path: string) {
+  focusField(path: string) : boolean {
      this.checkbox.focus()
+     return true
   }
 }
 register("formsey-boolean", BooleanField, "native", "boolean", { importPath: "@formsey/fields-native/BooleanField"})

@@ -47,9 +47,10 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     for (let i = 0; i < this._fields.length; i++) {
       let child = this._fields[i].lastElementChild as Field<any, any>
       if (child && typeof child['focusField'] == "function" && path.startsWith(child.path())) {
-        (<any>child).focusField(path)
+        return (<any>child).focusField(path)
       }
     }
+    return false
   }
 
   public validate(report: boolean) {

@@ -132,7 +132,9 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   focusField() {
     if (this.checkboxes) {
       this.checkboxes[0].focus()
+      return true
     }
+    return false
   }
 
   changed(e: CustomEvent) {

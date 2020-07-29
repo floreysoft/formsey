@@ -37,9 +37,10 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   public focusField(path : string) {
     if ( path == this.path()+".selection" ) {
       let child = this.firstElementChild.firstElementChild.nextElementSibling as Field<any, any>
-      (<any>child).focusField()
       this.dispatchEvent(new FieldFocusEvent(this.path()+".selection"));
+      return (<any>child).focusField()
     }
+    return false
   }
 
   protected selectionChanged(e: ValueChangedEvent<string>) {

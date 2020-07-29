@@ -126,13 +126,14 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  public focusField(path: string) {
+  public focusField(path: string) : boolean {
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
       if (child && typeof child['focusField'] == "function" && path.startsWith(child.path())) {
-        (<any>child).focusField(path)
+        return (<any>child).focusField(path)
       }
     }
+    return false
   }
 
   public clearCustomValidity() {

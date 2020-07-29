@@ -43,6 +43,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
 
   focusField() {
     this.checkboxes[0].focus()
+    return true
   }
 
   changed(e: Event) {
