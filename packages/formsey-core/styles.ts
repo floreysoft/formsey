@@ -185,6 +185,7 @@ export const NATIVE_STYLES = css`
     }
 
     .lfl {
+      position: relative;
       font-family: var(--formsey-label-font-family, var(--formsey-font-family, inherit));
       font-size: var(--formsey-label-font-size, inherit);
       font-weight: var(--formsey-label-font-weight, inherit);
@@ -225,6 +226,24 @@ export const NATIVE_STYLES = css`
 
     .lfet {
       color: var(--formsey-error-text-color, var(--lumo-error-text-color, #FC0000));
+    }
+
+    .lfhtb {
+      position: absolute;
+      left: var(--formsey-padding);
+      bottom: 1.8em;
+      z-index: 1;
+      color: var(--formsey-help-text-color, var(--fs-text-color, inherit));
+      border: 1px solid var(--formsey-border-color);
+      border-radius: var(--fs-border-radius);
+      background: var(--fs-widget-background-color);
+      padding: var(--formsey-padding);
+      opacity: 0;
+      transition: all 0.12s ease-out;
+    }
+
+    .lfw:focus-within .lfhtb {
+      opacity: 1;
     }
 
     .lfht {
