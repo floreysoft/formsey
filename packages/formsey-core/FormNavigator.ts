@@ -206,7 +206,7 @@ export class FormNavigator extends LitElement {
         dots.push(html`<div class="fieldset">${nestedDots}</div>`)
       } else {
         const component = this.components[fieldDefinition.type]
-        if (component.focusable) {
+        if (component && component.focusable) {
           this.addField(fields, dots, fieldDefinition, path)
         }
       }
