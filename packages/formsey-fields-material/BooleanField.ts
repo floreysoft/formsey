@@ -18,9 +18,8 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
   }
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
-      this.materialCheckbox.focus()
-    }
+    this.materialCheckbox.focus()
+    return true
   }
 
   public validate(report: boolean) {

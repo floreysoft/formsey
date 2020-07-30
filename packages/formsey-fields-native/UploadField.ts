@@ -57,7 +57,9 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
   public focusField(path: string) {
     if ( this.input ) {
       this.input.focus()
+      return true
     }
+    return false
  }
 
   private dragOver(e: DragEvent) {

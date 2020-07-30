@@ -35,16 +35,17 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   public focusField(path: string) {
-    if ( path == this.path() ) {
+    if (path == this.path()) {
       let child = this.firstElementChild as Field<any, any>
-      (<any>child).focusField(path)
       this.dispatchEvent(new FieldFocusEvent(this.path()));
+      return (<any>child).focusField(path)
     } else if (this.form) {
       let child = this.form.firstElementChild as Field<any, any>
-      if ( child && path.startsWith(child.path()) && typeof child['focusField'] == "function") {
-        (<any>child).focusField(path)
+      if (child && path.startsWith(child.path()) && typeof child['focusField'] == "function") {
+        return (<any>child).focusField(path)
       }
     }
+    return false
   }
 
   public validate(report: boolean) {
@@ -75,18 +76,18 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.value = e.detail.value ? {} : undefined
     this.untouched = false
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent("inputChange",  this.path(), this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     this.focused(e)
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    let name = e.detail.name.substring(this.path().length+1).split('.')[0]
+    let name = e.detail.name.substring(this.path().length + 1).split('.')[0]
     if (!this.value) {
       this.value = {}
     }
     this.value[name] = e.detail.value;
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
   }
 }
-register("formsey-optional-section", OptionalSectionField, "native", "optionalSection", { importPath: "@formsey/fields-native/OptionalSectionField,@formsey/fields-native/BooleanField,@formsey/fields-native/StringField"})
+register("formsey-optional-section", OptionalSectionField, "native", "optionalSection", { importPath: "@formsey/fields-native/OptionalSectionField,@formsey/fields-native/BooleanField,@formsey/fields-native/StringField" })

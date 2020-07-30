@@ -50,6 +50,15 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
     });
   }
 
+  protected shouldUpdate(): boolean {
+    if (typeof this.definition === "undefined") {
+      return false
+    } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
+      this.value = this.definition.default
+    }
+    return true
+  }
+
   renderField() {
     return html`${unsafeHTML(this.markup)}`
   }

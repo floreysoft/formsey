@@ -20,13 +20,13 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
         let label = option.label ? option.label : option.value;
         let value = option.value ? option.value : option.label;
         let checked = this.value.includes(value);
-        templates.push(html`<div><label><input type="checkbox" .checked="${checked}" value="${value}" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">${label}</label></div>`);
+        templates.push(html`<div><label><input type="checkbox" .checked="${checked}" value="${value}" @change="${this.changed}" @input="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">${label}</label></div>`);
       }
     }
     if (this.definition.other) {
       let other = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
       let checked = other.length > 0
-      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField(this.components, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", this.path(), null, (e) => this.changed(e), null)}</div>`);
+      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}" @input="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField(this.components, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", this.path(), null, (e) => this.changed(e), null)}</div>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
@@ -38,16 +38,16 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
   otherChanged(e: ValueChangedEvent<string>) {
     this.value = e.detail.value
     this.requestUpdate()
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input", this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.path(), this.value));
   }
 
   focusField() {
     this.checkboxes[0].focus()
+    return true
   }
 
   changed(e: Event) {
+    e.stopPropagation();
     let values = []
     let other = false
     for (let value of this.values()) {
@@ -67,9 +67,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
       this.otherTextField.value = ""
     }
     this.value = values
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input", this.definition.name, this.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.path(), this.value));
   }
 
   private values(): string[] {

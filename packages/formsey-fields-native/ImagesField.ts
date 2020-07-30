@@ -132,7 +132,9 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   focusField() {
     if (this.checkboxes) {
       this.checkboxes[0].focus()
+      return true
     }
+    return false
   }
 
   changed(e: CustomEvent) {
@@ -148,9 +150,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
       } else {
         this.value = e.detail.value ? this.extractValue(e.detail.name) : undefined
       }
-      if (this.definition.name) {
-        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.definition.name, this.value));
-      }
+      this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     }
   }
 

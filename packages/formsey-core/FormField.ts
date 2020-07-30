@@ -126,13 +126,14 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  public focusField(path: string) {
+  public focusField(path: string) : boolean {
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
       if (child && typeof child['focusField'] == "function" && path.startsWith(child.path())) {
-        (<any>child).focusField(path)
+        return (<any>child).focusField(path)
       }
     }
+    return false
   }
 
   public clearCustomValidity() {
@@ -213,14 +214,14 @@ export class FormField extends Field<FormDefinition, Object> {
     if (e.detail?.name) {
       if ( !this.definition.name ) {
         // If this is an unnamed form, just pass event to parent
-        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", e.detail.name, e.detail.value));
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
       } else {
         let name = e.detail.name.substring(this.path().length+1).split('.')[0]
         if (!this.value) {
           this.value = {}
         }
         this.value[name] = e.detail.value;
-        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.path(), this.value));
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
       }
     }
   }

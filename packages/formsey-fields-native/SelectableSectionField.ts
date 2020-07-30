@@ -26,7 +26,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       if (selection) {
         let value = selection.value ? selection.value : selection.label;
         let errors = new InvalidErrors()
-        return html`${createField(this.components, { type: "list", name: "selection", label: this.definition.label, helpText: this.definition.helpText, options } as ListFieldDefinition, value, this.path(), errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
+        return html`${createField(this.components, { type: "list", name: "selection", options } as ListFieldDefinition, value, this.path(), errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
       <div class="form">${createField(this.components, selection.form, this.value?.value, this.path()+".value", errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
 
       }
@@ -37,9 +37,10 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   public focusField(path : string) {
     if ( path == this.path()+".selection" ) {
       let child = this.firstElementChild.firstElementChild.nextElementSibling as Field<any, any>
-      (<any>child).focusField()
       this.dispatchEvent(new FieldFocusEvent(this.path()+".selection"));
+      return (<any>child).focusField()
     }
+    return false
   }
 
   protected selectionChanged(e: ValueChangedEvent<string>) {
@@ -48,7 +49,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     if (option) {
       this.value.selection = option;
       this.value.value = {}
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+      this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
       this.requestUpdate()
     }
   }
@@ -56,8 +57,15 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   protected changed(e: ValueChangedEvent<any>) {
     if ( e.detail.name.startsWith(this.path()+".value")) {
       let name = e.detail.name.substring((this.path()+".value").length+1).split('.')[0]
-      this.value.value[name] = e.detail.value;
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+      if ( name ) {
+        if ( typeof this.value.value != "object" ) {
+          this.value.value = {}
+        }
+        this.value.value[name] = e.detail.value;
+      } else {
+        this.value.value = e.detail.value
+      }
+      this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail.name, this.value));
     }
   }
 }

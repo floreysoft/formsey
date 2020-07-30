@@ -47,9 +47,10 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     for (let i = 0; i < this._fields.length; i++) {
       let child = this._fields[i].lastElementChild as Field<any, any>
       if (child && typeof child['focusField'] == "function" && path.startsWith(child.path())) {
-        (<any>child).focusField(path)
+        return (<any>child).focusField(path)
       }
     }
+    return false
   }
 
   public validate(report: boolean) {
@@ -68,7 +69,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     e.preventDefault()
     e.stopPropagation()
     this.value.push({});
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     this.requestUpdate();
   }
 
@@ -76,7 +77,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     e.preventDefault()
     e.stopPropagation()
     this.value.splice(index, 1);
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     this.requestUpdate();
   }
 
@@ -112,7 +113,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         this.value[+index] = {}
       }
       this.value[+index][name] = e.detail.value;
-      this.dispatchEvent(new ValueChangedEvent("inputChange", e.detail.name, this.value));
+      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
     }
   }
 

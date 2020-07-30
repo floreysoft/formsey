@@ -13,8 +13,9 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
     return html`<button class="input" type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}">${this.definition.text}</button>`;
   }
 
-  focusField() {
+  focusField() : boolean {
     this.button.focus()
+    return true
   }
 }
 register("formsey-button", ButtonField, "native", "button", { importPath: "@formsey/fields-native/ButtonField"})

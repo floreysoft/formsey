@@ -1,6 +1,6 @@
 import { register } from '@formsey/core';
 import { css, html, query } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { StringField } from './StringField';
 import { INPUT_STYLE } from './styles';
 
@@ -12,7 +12,8 @@ export class ColorField extends StringField {
 
   protected renderField() {
     this.definition.maxlength = 9
-    return html`<div class="cf" @keydown="${this.keyDown}">${super.renderField()}<div class="cfp" style="border:1px solid #B1ACAA;background-color:${ifDefined(this.value)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}" tabindex="-1"></div></div>`
+    const style = this.value ? "background-color:"+this.value : undefined
+    return html`<div class="cf" @keydown="${this.keyDown}">${super.renderField()}<div class="${this.value ? 'cfp cfps' : 'cfp'}" style="${ifDefined(style)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}" tabindex="-1"></div></div>`
   }
 
   protected get type(): "text" {
