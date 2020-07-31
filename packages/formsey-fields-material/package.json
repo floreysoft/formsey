@@ -19,6 +19,8 @@
     "@material/mwc-select": "^0.14.1",
     "@material/mwc-textarea": "^0.14.1",
     "@material/mwc-textfield": "^0.14.1",
+    "@material/mwc-ripple": "^0.14.1",
+    "@material/mwc-line-ripple": "^0.14.1",
     "lit-element": "^2.3.0"
   },
   "scripts": {
@@ -31,5 +33,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5a306ebc264142a52xccfb83f2d74bdb7839e702c"
+  "gitHead": "a8df229db4aeb07440b167816ee516a34c253036"
 }
