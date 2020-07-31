@@ -15,6 +15,7 @@ export interface Components {
 
 export interface Theme {
   components: Components,
+  defaultImports: string[],
   icon?: TemplateResult,
   displayName?: string
 }
@@ -27,7 +28,7 @@ export function getThemes() : Themes {
   return window['__formseyThemes'] as Themes
 }
 
-export function registerTheme(name: string, theme: Theme) {
+export function registerTheme(name: string, components: Components) {
   let themes = window['__formseyThemes'] as Themes
   if (typeof themes === "undefined") {
     console.log("Create themes registry")
@@ -37,10 +38,10 @@ export function registerTheme(name: string, theme: Theme) {
   let registeredTheme = themes[name]
   if ( typeof registeredTheme !== "undefined") {
     console.log("Add components to registered theme='"+name+"'")
-    themes[name] = { ...registerTheme, components: { ...registeredTheme.components, ...theme.components }}
+    themes[name] = { ...registerTheme, components: { ...registeredTheme.components, ...components }, defaultImports : registeredTheme.defaultImports}
   } else {
     console.log("Add new theme='"+name+"' to registry")
-    themes[name] = theme
+    themes[name] = { components, defaultImports : null }
   }
 }
 
@@ -75,8 +76,25 @@ export function register(tag: string, constructor: CustomElementConstructor, the
     for(let theme of themes) {
       let components = {} as Components
       components[type] = { focusable: true, ...component }
-      registerTheme(theme, { components })
+      registerTheme(theme, components)
     }
+  }
+}
+
+export function registerDefaultImport(name: string, defaultImport: string) {
+  let themes = window['__formseyThemes'] as Themes
+  if (typeof themes === "undefined") {
+    console.log("Create themes registry")
+    themes = {}
+    window['__formseyThemes'] = themes
+  }
+  let registeredTheme = themes[name]
+  if ( typeof registeredTheme !== "undefined") {
+    console.log("Add defaultImport to registered theme='"+name+"'")
+    themes[name].defaultImports = themes[name].defaultImports ? themes[name].defaultImports.concat(defaultImport) : [defaultImport]
+  } else {
+    console.log("Add new theme='"+name+"' to registry")
+    themes[name] = { components : {}, defaultImports : [defaultImport] }
   }
 }
 
