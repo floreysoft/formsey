@@ -34,13 +34,15 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
       }
     }
     let help = this.definition.helpText
+    let helpText = help ? html`<div class="lfht">${help}</div>` : undefined
+    /*
     let helpText
     if ( typeof help == "string" ) {
       help = Marked.parse(help)
       helpText = html`<div class="lfht">${unsafeHTML(help)}</div>`
     } else {
-      helpText = help ? html`<div class="lfht">${help}</div>` : undefined
     }
+    */
     return !this.valid && this.report && validityMessage ? html`<div class="lfet">${validityMessage}</div>` : helpText
   }
 }

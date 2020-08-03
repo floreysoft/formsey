@@ -11,7 +11,6 @@ export class ColorField extends StringField {
   color: HTMLInputElement
 
   protected renderField() {
-    this.definition.maxlength = 9
     const style = this.value ? "background-color:"+this.value : undefined
     return html`<div class="cf" @keydown="${this.keyDown}">${super.renderField()}<div class="${this.value ? 'cfp cfps' : 'cfp'}" style="${ifDefined(style)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : "#ff0000"}" @input="${this.changed}" tabindex="-1"></div></div>`
   }

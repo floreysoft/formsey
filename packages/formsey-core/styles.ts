@@ -6,6 +6,7 @@ export const NATIVE_STYLES = css`
       align-items: center;
       overflow: hidden;
       white-space: nowrap;
+      justify-content: center;
     }
     button:hover:not([disabled]) {
       cursor: pointer;
@@ -106,7 +107,7 @@ export const NATIVE_STYLES = css`
       font-weight: var(--formsey-title-font-weight, inherit);
       line-height: var(--formsey-title-line-height, inherit);
       color: var(--formsey-title-color, inherit);
-      margin: var(--formsey-title-margin, var(--fs-padding, 12px 0 4px 0));
+      margin: var(--formsey-title-margin, 12px 0 4px 0);
       padding: 0;
     }
     .ffd {
@@ -114,8 +115,8 @@ export const NATIVE_STYLES = css`
       font-family: var(--formsey-description-font-family, var(--formsey-font-family, inherit));
       font-weight: var(--formsey-description-font-weight, inherit);
       line-height: var(--formsey-description-line-height, inherit);
-      color: var(--formsey-description-color, #757c98);
-      margin: var(--formsey-description-margin, var(--fs-padding, 12px 0 4px 0));
+      color: var(--formsey-description-color, inherit);
+      margin: var(--formsey-description-margin, 12px 0 4px 0);
     }
     .ffg {
       display: inline-grid;
@@ -533,13 +534,13 @@ export const NATIVE_STYLES = css`
 
     /* Selectable section */
     formsey-selectable-section .fft {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 18px);
+      margin: var(--formsey-selectable-title-margin, var(--fs-widget-padding, 4px 0 0 0));
+      font-size: var(--formsey-selectable-title-font-size, larger);
     }
 
     formsey-selectable-section .ffd {
-      margin: var(--formsey-selectable-title-margin, 4px 0 2px 0);
-      font-size: var(--formsey-selectable-title-font-size, 16px);
+      font-size: var(--formsey-selectable-description-font-size, inherit);
+      margin: var(--formsey-selectable-description-margin, var(--fs-widget-padding, 4px 0 0 0));
     }
 
     /* Section field */
