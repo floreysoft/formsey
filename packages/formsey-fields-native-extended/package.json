@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native-extended",
-  "version": "0.2.148",
+  "version": "0.2.149",
   "description": "Native fields",
   "unpkg": "/umd/formsey-fields-native-extended.min.js",
   "files": [
@@ -15,7 +15,7 @@
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/utils": "^0.3.179",
-    "@formsey/fields-native": "^0.2.148",
+    "@formsey/fields-native": "^0.2.149",
     "@ts-stack/markdown": ">0",
     "highlight.js": "^10.1.1",
     "signature_pad": "^3.0.0-beta.3"
@@ -30,5 +30,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5a306ebc264142a52ccfdb83f2d74bdb7839e702c"
+  "gitHead": "a8df229db4aeb07440b167816ee516a34c253036"
 }

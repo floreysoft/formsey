@@ -1,6 +1,6 @@
 {
   "name": "@formsey/core",
-  "version": "0.2.148",
+  "version": "0.2.149",
   "files": [
     "/*.js.map",
     "/*.d.ts.map",
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5a306ebc26414s2a52ccfb83f2d74bdb7839e702c"
+  "gitHead": "a8df229db4aeb07440b167816ee516a34c253036"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-vaadin",
-  "version": "0.2.148",
+  "version": "0.2.149",
   "description": "Vaadin fields",
   "files": [
     "/umd/*.js",
@@ -9,8 +9,8 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.2.148",
-    "@formsey/fields-compound": "^0.2.148",
+    "@formsey/core": "^0.2.149",
+    "@formsey/fields-compound": "^0.2.149",
     "@vaadin/vaadin-checkbox": "^2.2.12",
     "@vaadin/vaadin-combo-box": "^5.0.11",
     "@vaadin/vaadin-date-picker": "^4.0.8",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5a306ebc264142a52ccfb83ef2d74bdb7839e702c"
+  "gitHead": "a8df229db4aeb07440b167816ee516a34c253036"
 }

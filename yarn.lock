@@ -1935,7 +1935,7 @@
     lit-html "^1.1.2"
     tslib "^1.10.0"
 
-"@material/mwc-list@^0.14.1":
+"@material/mwc-list@0.14.1", "@material/mwc-list@^0.14.1":
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/@material/mwc-list/-/mwc-list-0.14.1.tgz#3f451a3f087c66391d62c5720fb5f044e2f0bd1b"
   integrity sha512-FEe0wlH69iJslkfLVjjEZSgV2yjYvIOGNvafmJjW4Wy0FsXoLV2qtUbvphcwdjPsdzG412CCSo4oeV+BBr0IWw==

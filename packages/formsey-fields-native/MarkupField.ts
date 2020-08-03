@@ -7,7 +7,7 @@ export class MarkupField extends LabeledField<FieldDefinition, string> {
   definition: FieldDefinition;
 
   renderField() {
-    return html`${unsafeHTML(this.definition.default ? this.definition.default : "")}`
+    return html`<div style="width:100%;">${unsafeHTML(this.definition.default ? this.definition.default : "")}</div>`
   }
 }
 register("formsey-markup", MarkupField, ["native", "vaadin", "material"], "markup", { importPath: "@formsey/fields-native/MarkupField", focusable : false})
