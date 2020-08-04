@@ -1,5 +1,3 @@
-import { registerDefaultImport } from '@formsey/fields-native'
-
 export { FormField } from './FormField'
 export { BooleanField } from './BooleanField'
 export { CheckboxesField } from './CheckboxesField'
@@ -21,5 +19,3 @@ export { StringField } from './StringField'
 export { TextField } from './TextField'
 export { TimeField } from './TimeField'
 export { WeekField } from './WeekField'
-
-registerDefaultImport("material", "@formsey/fields-material/FormField");

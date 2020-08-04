@@ -13,88 +13,71 @@ export interface Components {
   [index: string]: Component
 }
 
-export interface Theme {
+export interface Library {
   components: Components,
   defaultImports: string[],
   icon?: TemplateResult,
   displayName?: string
 }
 
-export interface Themes {
-  [index: string]: Theme
+export interface Libraries {
+  [index: string]: Library
 }
 
-export function getThemes() : Themes {
-  return window['__formseyThemes'] as Themes
+export function getLibraries() : Libraries {
+  return window['__formseyLibraries'] as Libraries
 }
 
-export function registerTheme(name: string, components: Components) {
-  let themes = window['__formseyThemes'] as Themes
-  if (typeof themes === "undefined") {
-    console.log("Create themes registry")
-    themes = {}
-    window['__formseyThemes'] = themes
+export function registerLibrary(name: string, components: Components) {
+  let libraries = window['__formseyLibraries'] as Libraries
+  if (typeof libraries === "undefined") {
+    console.log("Create library registry")
+    libraries = {}
+    window['__formseyLibraries'] = libraries
   }
-  let registeredTheme = themes[name]
-  if ( typeof registeredTheme !== "undefined") {
-    console.log("Add components to registered theme='"+name+"'")
-    themes[name] = { ...registerTheme, components: { ...registeredTheme.components, ...components }, defaultImports : registeredTheme.defaultImports}
+  let registeredLibrary = libraries[name]
+  if ( typeof registeredLibrary !== "undefined") {
+    console.log("Add components to registered library='"+name+"'")
+    libraries[name] = { ...registerLibrary, components: { ...registeredLibrary.components, ...components }, defaultImports : registeredLibrary.defaultImports}
   } else {
-    console.log("Add new theme='"+name+"' to registry")
-    themes[name] = { components, defaultImports : null }
+    console.log("Add new library='"+name+"' to registry")
+    libraries[name] = { components, defaultImports : null }
   }
 }
 
-export function getTheme(name: string): Theme | undefined {
-  let themes = window['__formseyThemes'] as Themes
-  return themes ? themes[name] : undefined
+export function getLibrary(name: string): Library | undefined {
+  let libraries = window['__formseyLibraries'] as Libraries
+  return libraries ? libraries[name] : undefined
 }
 
-export function getDefaultTheme(): string | undefined {
-  let themes = window['__formseyThemes'] as Themes
-  if (typeof themes != "undefined") {
-    let avaliableThemes = Object.keys(themes)
-    if (avaliableThemes.length == 0) {
+export function getDefaultLibrary(): string | undefined {
+  let libraries = window['__formseyLibraries'] as Libraries
+  if (typeof libraries != "undefined") {
+    let avaliableLibraries = Object.keys(libraries)
+    if (avaliableLibraries.length == 0) {
       return undefined;
     } else {
-      return avaliableThemes[0]
+      return avaliableLibraries[0]
     }
   }
   return undefined
 }
 
-export function register(tag: string, constructor: CustomElementConstructor, themes?: string|string[], type?: string, component?: Component) {
+export function register(tag: string, constructor: CustomElementConstructor, libraries?: string|string[], type?: string, component?: Component) {
   if (customElements.get(tag)) {
     console.log("'" + tag + "' already exists, skipping...")
   } else {
     console.log("Registering custom element="+tag);
     customElements.define(tag, constructor)
   }
-  if (themes && type && component) {
+  if (libraries && type && component) {
     component.tag = tag
-    themes = [].concat(themes)
-    for(let theme of themes) {
+    libraries = [].concat(libraries)
+    for(let theme of libraries) {
       let components = {} as Components
       components[type] = { focusable: true, ...component }
-      registerTheme(theme, components)
+      registerLibrary(theme, components)
     }
-  }
-}
-
-export function registerDefaultImport(name: string, defaultImport: string) {
-  let themes = window['__formseyThemes'] as Themes
-  if (typeof themes === "undefined") {
-    console.log("Create themes registry")
-    themes = {}
-    window['__formseyThemes'] = themes
-  }
-  let registeredTheme = themes[name]
-  if ( typeof registeredTheme !== "undefined") {
-    console.log("Add defaultImport to registered theme='"+name+"'")
-    themes[name].defaultImports = themes[name].defaultImports ? themes[name].defaultImports.concat(defaultImport) : [defaultImport]
-  } else {
-    console.log("Add new theme='"+name+"' to registry")
-    themes[name] = { components : {}, defaultImports : [defaultImport] }
   }
 }
 

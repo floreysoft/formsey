@@ -1,6 +1,6 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined'
-import { Components, getDefaultTheme, getTheme } from './Components';
+import { Components, getDefaultLibrary, getLibrary } from './Components';
 import { ValueChangedEvent } from './ValueChangedEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
@@ -41,14 +41,14 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   @property({ type: String })
   set theme(theme: string) {
-    let registeredTheme = getTheme(theme)
+    let registeredTheme = getLibrary(theme)
     if (registeredTheme) {
       this.components = registeredTheme.components
     } else {
-      let defaultTheme = getDefaultTheme()
+      let defaultTheme = getDefaultLibrary()
       if (defaultTheme) {
         console.warn("Theme '" + theme + "' not availble, using '" + defaultTheme + "' instead")
-        this.components = getTheme[defaultTheme].components
+        this.components = getLibrary[defaultTheme].components
       } else {
         console.error("Theme '" + theme + "' not availble, no theme installed!")
       }
@@ -143,9 +143,9 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
       }
     }
     if (!this.components) {
-      let defaultTheme = getDefaultTheme()
+      let defaultTheme = getDefaultLibrary()
       if (typeof defaultTheme != "undefined") {
-        this.components = getTheme(defaultTheme).components
+        this.components = getLibrary(defaultTheme).components
       }
       return typeof this.components != "undefined"
     }
