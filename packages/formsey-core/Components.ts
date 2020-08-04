@@ -24,6 +24,7 @@ export interface Library {
   icon?: TemplateResult,
   displayName?: string,
   settingsEditor?: FormDefinition
+  onSettingsChanged?: (settings : Settings ) => Settings
 }
 
 export interface Libraries {
