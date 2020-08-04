@@ -88,7 +88,7 @@ export class FormField extends Field<FormDefinition, Object> {
           value = this.value && field.name ? this.value[field.name] : undefined
           this.addFieldErrors(this.errors, fieldErrors, field.name)
         }
-        let fieldTemplate = html`${createField(this.components, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
+        let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
           templates.push(html`<div class='fff' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
         } else {

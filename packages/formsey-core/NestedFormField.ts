@@ -20,7 +20,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
       }
     }
     this.definition.form.name = this.definition.name
-    return html`<div class="nf">${createField(this.components, this.definition.form, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+    return html`<div class="nf">${createField(this.components, this.settings, this.definition.form, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
   }
 
   public focusField(path: string) : boolean {

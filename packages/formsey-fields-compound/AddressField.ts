@@ -35,7 +35,7 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField(this.components, form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
+    return html`<div class="fs-nested-form">${createField(this.components, this.settings, form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
   }
 }
 register("formsey-address", AddressField, ["native", "material", "vaadin"], "address", { importPath: "@formsey/fields-compound/AddessField"});

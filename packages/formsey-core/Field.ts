@@ -1,6 +1,6 @@
 import { css, html, LitElement, property, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined'
-import { Components, getDefaultLibrary, getLibrary } from './Components';
+import { Components, getDefaultLibrary, getLibrary, Settings } from './Components';
 import { ValueChangedEvent } from './ValueChangedEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
@@ -16,10 +16,10 @@ export function hacktml(parts, ...args) {
   return html(newParts, ...newArgs);
 }
 
-export const createField = (components: Components, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
+export const createField = (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
   const component = components[definition.type];
   if (component) {
-    return hacktml`<${component.tag} id="${ifDefined(id)}" .components=${components} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
+    return hacktml`<${component.tag} id="${ifDefined(id)}" .components=${components} .settings="${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching component has been registered!");
   }
@@ -29,6 +29,9 @@ export const createField = (components: Components, definition: FieldDefinition,
 export class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ converter: Object })
   components: Components
+
+  @property({ converter: Object })
+  settings: Settings
 
   @property({ type: Object })
   definition: T

@@ -13,6 +13,11 @@ export interface Components {
   [index: string]: Component
 }
 
+export interface Settings {
+  customProperties: Object
+  options: Object
+}
+
 export interface Library {
   components: Components,
   defaultImports: string[],
