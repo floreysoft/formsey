@@ -58,6 +58,7 @@ export interface ImageFieldDefinition extends FieldDefinition {
 }
 
 export interface BooleanFieldDefinition extends InputFieldDefinition {
+  controlLabel?: string
   indeterminate?: boolean
   default?: boolean
 }

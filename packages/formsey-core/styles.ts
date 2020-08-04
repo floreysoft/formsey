@@ -130,21 +130,13 @@ export const NATIVE_STYLES = css`
 
     /* Nested form field */
     .nf .fft {
-      font-size: var(--formsey-title-font-size, larger);
-      font-family: var(--formsey-title-font-family, var(--formsey-font-family, inherit));
-      font-weight: var(--formsey-title-font-weight, inherit);
-      line-height: var(--formsey-title-line-height, inherit);
-      color: var(--formsey-title-color, inherit);
-      margin: var(--formsey-title-margin, var(--fs-padding, 12px 0 4px 0));
+      margin: var(--formsey-selectable-title-margin, var(--fs-widget-padding, 4px 0 0 0));
+      font-size: var(--formsey-selectable-title-font-size, larger);
     }
 
-    .nf .ffd {
-      font-size: var(--formsey-description-font-size, inherit);
-      font-family: var(--formsey-description-font-family, var(--formsey-font-family, inherit));
-      font-weight: var(--formsey-description-font-weight, inherit);
-      line-height: var(--formsey-description-line-height, inherit);
-      color: var(--formsey-description-color, #757c98);
-      margin: var(--formsey-description-margin, var(--fs-padding, 12px 0 4px 0));
+    .nf  .ffd {
+      font-size: var(--formsey-selectable-description-font-size, inherit);
+      margin: var(--formsey-selectable-description-margin, var(--fs-widget-padding, 4px 0 0 0));
     }
 
     /* .Color field */
