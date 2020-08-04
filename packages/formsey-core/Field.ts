@@ -19,7 +19,7 @@ export function hacktml(parts, ...args) {
 export const createField = (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
   const component = components[definition.type];
   if (component) {
-    return hacktml`<${component.tag} id="${ifDefined(id)}" .components=${components} .settings="${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
+    return hacktml`<${component.tag} id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${component.tag}>`;
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching component has been registered!");
   }
