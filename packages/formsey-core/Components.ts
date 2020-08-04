@@ -22,7 +22,8 @@ export interface Library {
   components: Components,
   defaultImports: string[],
   icon?: TemplateResult,
-  displayName?: string
+  displayName?: string,
+  settingsEditor?: FormDefinition
 }
 
 export interface Libraries {
