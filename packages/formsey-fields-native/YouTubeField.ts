@@ -30,7 +30,16 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
 			let heightInPixel = widthInPixel * 9 / 16;
 			style += widthInPixel + "px;height:"+heightInPixel+"px"
 		}
-		return html`<div class="fs-video" style="${style};float:${this.definition.align}"><iframe src="//youtube.com/embed/${this.extractVideoId(this.definition.url)}"></iframe></div>`
+		var align = "";
+		switch (this.definition.align) {
+			case "center":
+				align = "margin-left: auto;margin-right: auto;"
+				break;
+			case "right":
+				align = "margin-left: auto;"
+				break;
+		}
+		return html`<div class="fs-video" style="${style};${align}"><iframe src="//youtube.com/embed/${this.extractVideoId(this.definition.url)}"></iframe></div>`
   }
 
   protected extractVideoId(videoUrl: string) : string {
