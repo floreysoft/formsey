@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-vaadin",
-  "version": "0.2.156",
+  "version": "0.2.157",
   "description": "Vaadin fields",
   "unpkg": "/umd/formsey-fields-vaadin.min.js",
   "files": [
