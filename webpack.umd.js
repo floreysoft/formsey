@@ -14,12 +14,14 @@ module.exports = {
   resolve: {
     extensions: [".js", ".ts"]
   },
+  /*
   externals: {
     "lit-html": {
       commonjs: 'lit-html',
       root: 'html'
     }
   },
+  */
   module: {
     rules: [
       {
