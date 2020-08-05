@@ -15,8 +15,10 @@ module.exports = {
     extensions: [".js", ".ts"]
   },
   externals: {
-    "lit-html": 'lit-html',
-    "lit-element": 'lit-element'
+    "lit-html": {
+      commonjs: 'lit-html',
+      root: 'html'
+    }
   },
   module: {
     rules: [
