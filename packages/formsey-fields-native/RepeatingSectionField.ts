@@ -40,7 +40,8 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         itemTemplates.push(template);
       }
     }
-    return html`<div id='fs-repeat'>${itemTemplates}</div>${this.value.length < this.definition.max ? html`<button  tabindex="0" @click="${this.addForm}" class="fs-add">${ICON_PLUS}</button>` : undefined}`;
+    const addButton = this.value.length < this.definition.max ? html`<button @click="${this.addForm}" class="fs-add" tabindex="0">${ICON_PLUS}</button>` : undefined
+    return html`<div id='fs-repeat'>${itemTemplates}</div>${addButton}`;
   }
 
   public focusField(path: string) {

@@ -55,7 +55,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
       let filtered = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label))
       let checked = (typeof this.value != "undefined") && (filtered.length == 0)
       templates.push(html`<vaadin-radio-button class="other" value="__other" .checked="${checked}">Other</vaadin-radio-button>
-      <vaadin-text-field @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}" .value="${checked ? this.value : ""}"></vaadin-text-field>`);
+      <vaadin-text-field @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}".value="${checked ? this.value : ''}"></vaadin-text-field>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {

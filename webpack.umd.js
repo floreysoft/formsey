@@ -14,20 +14,40 @@ module.exports = {
   resolve: {
     extensions: [".js", ".ts"]
   },
+  externals: {
+    "lit-html": 'lit-html',
+    "lit-element": 'lit-element'
+  },
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
         test: /\.ts?$/,
-        use: ["babel-loader", 'ts-loader'],
+        use: [ {
+          loader: 'minify-lit-html-loader',
+          options: {
+            htmlMinifier: {
+              ignoreCustomFragments: [
+                /<\s/,
+                /<=/
+              ]
+            }
+          }
+        }, 'ts-loader'],
         exclude: /node_modules/
       },
       {
         test: /\.(js)$/,
-        use: ["babel-loader"],
+        use: [{
+          loader: 'minify-lit-html-loader',
+          options: {
+            htmlMinifier: {
+              ignoreCustomFragments: [
+                /<\s/,
+                /<=/
+              ]
+            }
+          }
+        }],
         exclude: {
           test: path.resolve(__dirname, "node_modules/localforage")
         }
