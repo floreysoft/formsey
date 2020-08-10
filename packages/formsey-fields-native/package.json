@@ -4,13 +4,13 @@
   "description": "Native fields",
   "unpkg": "/esm/formsey-fields-native.min.js",
   "files": [
-    "/umd/*.js",
+    "/esm/*.js",
     "/*.js.map",
     "/*.d.ts.map",
     "/*.js",
     "/*.d.ts",
     "!/test/",
-    "/umd/*"
+    "/esm/*"
   ],
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
