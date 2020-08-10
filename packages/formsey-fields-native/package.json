@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Native fields",
   "unpkg": "/esm/formsey-fields-native.min.js",
   "files": [
@@ -15,7 +15,7 @@
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/utils": "^0.3.179",
-    "@formsey/core": "^0.3.5"
+    "@formsey/core": "^0.3.6"
   },
   "scripts": {
     "tsc": "tsc",
