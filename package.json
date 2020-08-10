@@ -12,7 +12,7 @@
     "compile": "tsc",
     "watch": "tsc -w",
     "clean": "rm -rf ./output && rm -rf ./dist && rm -rf ./umd  && rm -rf ./esm && rm -rf ./lib && node_modules/.bin/del packages/**/*.js !packages/formsey-fields-native/rollup.config.js !packages/formsey-fields-vaadin/webpack-resolver.js packages/**/*.js.map packages/**/umd packages/**/esm packages/**/es packages/**/*.d.ts packages/**/*.d.ts.map demos/**/*.js demos/**/*.js.map demos/**/*.d.ts demos/**/*.d.ts.map",
-    "pub": "rollup && lerna publish",
+    "pub": "tsc && lerna run rollup && lerna publish",
     "forcePub": "lerna run tsc && yarn umd && lerna publish --force-publish",
     "link": "lerna run link",
     "unlink": "lerna run unlink",
