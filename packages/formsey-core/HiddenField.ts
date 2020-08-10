@@ -1,6 +1,8 @@
-import { Field, FieldDefinition, register } from '@formsey/core';
 import { html } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { register } from "./Components";
+import { FieldDefinition } from "./FieldDefinitions";
+import { Field } from './Field';
 
 export class HiddenField extends Field<FieldDefinition, any> {
   render() {

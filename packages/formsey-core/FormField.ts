@@ -90,7 +90,8 @@ export class FormField extends Field<FormDefinition, Object> {
         }
         let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
-          templates.push(html`<div class='fff' style="grid-area:_${area(field, this.definition.fields)}">${fieldTemplate}</div>`)
+          const style = "grid-area:_"+area(field, this.definition.fields)
+          templates.push(html`<div class='fff' style="${style}">${fieldTemplate}</div>`)
         } else {
           templates.push(html`<div class='fff'>${fieldTemplate}</div>`)
         }
