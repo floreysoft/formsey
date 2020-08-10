@@ -2,9 +2,9 @@
   "name": "@formsey/fields-vaadin",
   "version": "0.3.7",
   "description": "Vaadin fields",
-  "unpkg": "/umd/formsey-fields-vaadin.min.js",
+  "unpkg": "/esm/formsey-fields-vaadin.min.js",
   "files": [
-    "/umd/*.js",
+    "/esm/*.js",
     "/*.js",
     "/*.d.ts",
     "!/test/"
@@ -27,7 +27,8 @@
     "tsc": "tsc && yarn copy-lib",
     "link": "yarn link",
     "unlink": "yarn unlink",
-    "copy-lib": "copyfiles -f ./src/webpack-resolver.js dist"
+    "copy-lib": "copyfiles -f ./src/webpack-resolver.js dist",
+    "rollup": "rollup --config"
   },
   "license": "Apache-2.0",
   "publishConfig": {
