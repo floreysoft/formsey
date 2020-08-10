@@ -6,7 +6,7 @@ export default {
   external: ['lit-element', 'lit-html'],
   input: './index.js',
   output: {
-    file: 'umd/formsey-fields-native.min.js',
+    file: 'esm/formsey-fields-native.min.js',
     sourcemap: false
   },
   plugins: [
