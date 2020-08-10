@@ -8,7 +8,7 @@ module.exports = merge(common, {
     mode: 'production',
     devtool: 'source-map',
     module: {
-        rules: [                   
+        rules: [
             {
                 test: /\.ts?$/,
                 use: ["babel-loader", 'ts-loader'],
@@ -16,17 +16,13 @@ module.exports = merge(common, {
             },
             {
                 test: /\.(js)$/,
-                use: ["babel-loader"],
-                exclude: {
-                    test   : path.resolve(__dirname, "node_modules/localforage"),
-                    //exclude: path.resolve(__dirname, "node_modules/@polymer") // or your module - also can be an array (read doc)
-                }
-            }         
+                use: ["babel-loader"]
+            }
         ]
-    },    
+    },
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
-        })     
+        })
     ]
 });

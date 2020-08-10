@@ -59,7 +59,7 @@
     "source-map-loader": "^0.2.4",
     "ts-loader": "^7.0.1",
     "typescript": "^3.3.3",
-    "webpack": "^4.29.6",
+    "webpack": "^5.0.0-beta.24",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1"

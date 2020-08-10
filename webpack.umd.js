@@ -9,8 +9,11 @@ module.exports = {
     "formsey-fields-material": './packages/formsey-fields-material/index.ts',
     "formsey-fields-vaadin": './packages/formsey-fields-vaadin/index.ts'
   },
-  // mode: 'development',
+  mode: 'production',
   // devtool: 'cheap-module-source-map',
+  experiments: {
+    outputModule: true
+  },
   resolve: {
     extensions: [".js", ".ts"]
   },
@@ -51,10 +54,7 @@ module.exports = {
               ]
             }
           }
-        }],
-        exclude: {
-          test: path.resolve(__dirname, "node_modules/localforage")
-        }
+        }]
       }
     ]
   },
