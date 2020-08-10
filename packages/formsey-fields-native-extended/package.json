@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native-extended",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Native fields",
   "unpkg": "/umd/formsey-fields-native-extended.min.js",
   "files": [
@@ -15,7 +15,7 @@
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/utils": "^0.3.179",
-    "@formsey/fields-native": "^0.3.1",
+    "@formsey/fields-native": "^0.3.2",
     "@ts-stack/markdown": ">0",
     "highlight.js": "^10.1.1",
     "signature_pad": "^3.0.0-beta.3"
