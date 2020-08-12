@@ -1,9 +1,9 @@
 import { FieldDefinition, LabeledField, register } from '@formsey/core';
 import { Marked, Renderer } from '@ts-stack/markdown';
-import hljs from 'highlight.js/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
 import { css, html, property } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
 hljs.registerLanguage('javascript', javascript);
 
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
