@@ -2,7 +2,7 @@
   "name": "@formsey/fields-native",
   "version": "0.3.7",
   "description": "Native fields",
-  "unpkg": "/esm/formsey-fields-native.min.js",
+  "module": "/esm/formsey-fields-native.min.js",
   "files": [
     "/esm/*.js",
     "/*.js.map",
