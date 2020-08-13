@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-material",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "Material design fields",
   "files": [
     "/umd/*.js",
