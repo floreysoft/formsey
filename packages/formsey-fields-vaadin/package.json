@@ -2,7 +2,7 @@
   "name": "@formsey/fields-vaadin",
   "version": "0.3.9",
   "description": "Vaadin fields",
-  "unpkg": "/esm/formsey-fields-vaadin.min.js",
+  "module": "/esm/formsey-fields-vaadin.min.js",
   "files": [
     "/esm/*.js",
     "/*.js",
@@ -22,7 +22,6 @@
     "@vaadin/vaadin-upload": "^4.2.1"
   },
   "main": "./index.js",
-  "module": "./index.js",
   "scripts": {
     "tsc": "tsc && yarn copy-lib",
     "link": "yarn link",
