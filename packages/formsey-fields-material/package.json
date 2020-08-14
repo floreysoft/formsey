@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-material",
-  "version": "0.3.22",
+  "version": "0.3.23",
   "description": "Material design fields",
   "module": "/esm/formsey-fields-material.min.js",
   "files": [
