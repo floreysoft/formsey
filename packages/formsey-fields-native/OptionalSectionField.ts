@@ -1,7 +1,7 @@
-import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ValueChangedEvent, ClickEvent } from '@formsey/core';
+import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html, property, query } from 'lit-element';
-import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, Object> {
   @property({ converter: Object })

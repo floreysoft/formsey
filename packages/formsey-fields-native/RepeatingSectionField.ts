@@ -1,5 +1,5 @@
-import { ValueChangedEvent, ClickEvent, createField, Field, FormDefinition, LabeledField, register, RepeatingFieldDefinition } from '@formsey/core';
-import { InvalidEvent, InvalidErrors } from '@formsey/core/InvalidEvent';
+import { createField, Field, LabeledField, register, RepeatingFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html, property, queryAll, TemplateResult } from 'lit-element';
 
 export const ICON_MINUS = html`<svg viewBox="0 0 24 24"><title>Remove section</title><path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg>`
