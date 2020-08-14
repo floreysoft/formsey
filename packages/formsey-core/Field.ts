@@ -8,7 +8,7 @@ import { FieldClickEvent } from './FieldClickEvent';
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldFocusEvent } from './FieldFocusEvent';
 
-export function hacktml(parts, ...args) {
+function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)
   const newParts = parts.concat().slice(1, -1)
   newParts[0] = "<" + args[0] + newParts[0]
