@@ -12,7 +12,7 @@
 yarn-error.log
 
 !publishLibs.js
-!packages/formsey-fields-vaadin/webpack-resolver.js
+!packages/**/rollup.config.js
 !webpack*.js
 !karma.conf.js
 !rollup*.js
