@@ -5,7 +5,7 @@ import minifyHTML from 'rollup-plugin-minify-html-literals';
 export default {
   input: './index.js',
   output: {
-    file: 'esm/formsey-fields-native.min.js',
+    file: 'esm/formsey-fields-native-extended.min.js',
     sourcemap: false
   },
   plugins: [
