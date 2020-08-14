@@ -1,7 +1,9 @@
 {
   "name": "@formsey/core",
   "version": "0.3.13",
+  "module": "/esm/formsey-core.min.js",
   "files": [
+    "/esm/*",
     "/*.js.map",
     "/*.d.ts.map",
     "/*.js",
@@ -16,7 +18,8 @@
     "tsc": "tsc",
     "link": "yarn link",
     "unlink": "yarn unlink",
-    "pub:check": "npm publish --dry-run"
+    "pub:check": "npm publish --dry-run",
+    "rollup": "rollup --config"
   },
   "license": "Apache-2.0",
   "publishConfig": {
