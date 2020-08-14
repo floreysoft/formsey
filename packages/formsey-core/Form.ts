@@ -5,7 +5,7 @@ import { createField, Field } from './Field';
 import { FieldDefinition } from './FieldDefinitions';
 import { FormField } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
-import NATIVE_STYLES from './styles';
+import { NATIVE_STYLES } from './styles';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export function get(data: Object, path: string): any {

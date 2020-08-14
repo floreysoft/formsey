@@ -1,6 +1,6 @@
 import { css } from 'lit-element';
 
-export default css`
+export const NATIVE_STYLES = css`
     button {
       display: flex;
       align-items: center;
