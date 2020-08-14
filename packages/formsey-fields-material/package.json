@@ -2,8 +2,9 @@
   "name": "@formsey/fields-material",
   "version": "0.3.21",
   "description": "Material design fields",
+  "module": "/esm/formsey-fields-material.min.js",
   "files": [
-    "/umd/*.js",
+    "/esm/*",
     "/*.js.map",
     "/*.d.ts.map",
     "/*.js",
