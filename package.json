@@ -52,6 +52,7 @@
     "minify-lit-html-loader": "^0.0.3",
     "rimraf": "^3.0.2",
     "rollup": "^2.21.0",
+    "rollup-plugin-filesize": "^9.0.2",
     "rollup-plugin-minify-html-literals": "^1.2.4",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-styles": "^3.10.0",
