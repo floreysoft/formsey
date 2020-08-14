@@ -5,7 +5,7 @@ import minifyHTML from 'rollup-plugin-minify-html-literals';
 export default {
   input: './index.js',
   output: {
-    file: 'esm/formsey-fields-vaadin.min.js',
+    file: 'esm/formsey-fields-native.min.js',
     sourcemap: false
   },
   plugins: [
@@ -16,9 +16,6 @@ export default {
         }
         if (id.startsWith('@formsey/core')) {
           return { id: `https://unpkg.com/@formsey/core?module`, external: true };
-        }
-        if (id.startsWith('@formsey/fields-native')) {
-          return { id: `https://unpkg.com/@formsey/fields-native?module`, external: true };
         }
       }
     },

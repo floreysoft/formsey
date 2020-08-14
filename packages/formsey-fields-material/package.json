@@ -27,7 +27,8 @@
     "tsc": "tsc",
     "link": "yarn link",
     "unlink": "yarn unlink",
-    "pub:check": "npm publish --dry-run"
+    "pub:check": "npm publish --dry-run",
+    "rollup": "rollup --config"
   },
   "license": "Apache-2.0",
   "publishConfig": {

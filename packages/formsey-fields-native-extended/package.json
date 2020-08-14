@@ -1,16 +1,15 @@
 {
   "name": "@formsey/fields-native-extended",
   "version": "0.3.17",
-  "description": "Native fields",
-  "unpkg": "/umd/formsey-fields-native-extended.min.js",
+  "description": "Heavy-weight fields",
+  "module": "/esm/formsey-fields-native-extended.min.js",
   "files": [
-    "/umd/*.js",
     "/*.js.map",
     "/*.d.ts.map",
     "/*.js",
     "/*.d.ts",
     "!/test/",
-    "/umd/*"
+    "/esm/*"
   ],
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
