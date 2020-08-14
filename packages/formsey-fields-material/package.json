@@ -35,10 +35,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "14c1a65fd8073cf349a9f39512e6fbc13c79f36a",
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^15.0.0",
-    "boxen": "^4.2.0",
-    "rollup-plugin-filesize": "^9.0.2"
-  }
+  "gitHead": "14c1a65fd8073cf349a9f39512e6fbc13c79f36a"
 }
