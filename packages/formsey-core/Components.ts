@@ -44,7 +44,7 @@ export function registerLibrary(name: string, components: Components) {
   let registeredLibrary = libraries[name]
   if ( typeof registeredLibrary !== "undefined") {
     console.log("Add components to registered library='"+name+"'")
-    libraries[name] = { ...registerLibrary, components: { ...registeredLibrary.components, ...components } }
+    libraries[name] = { ...registeredLibrary, components: { ...registeredLibrary.components, ...components } }
   } else {
     console.log("Add new library='"+name+"' to registry")
     libraries[name] = { components }
