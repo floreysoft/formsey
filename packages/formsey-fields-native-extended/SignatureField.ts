@@ -31,7 +31,8 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   }
 
   renderField() {
-    return html`<div class="input" width="${ifDefined(this.definition.width)}px" height="${ifDefined(this.definition.height)}px"><canvas id="signature-pad" tabindex="0" @focus="${this.focused}" @blur="${this.blurred}"></canvas><svg viewBox="0 0 32 32" @click="${this.clear}"><title>Clear</title><path d="M20 4v-4h-8v4h-8v4h24v-4zM24 10v16h-4v-16h-2v16h-4v-16h-2v16h-4v-16h-2v17c0 2 1 3 3 3h14c2 0 3-1 3-3v-17h-2z"></path></svg></div>`;
+    let fieldstyle = `width:${(this.definition.width && this.definition.width.length > 0) ? this.definition.width: "100%"};height:${(this.definition.height && this.definition.height.length > 0) ? this.definition.height : "100px"}`;
+    return html`<div class="input" style="${fieldstyle}"><canvas id="signature-pad" tabindex="0" @focus="${this.focused}" @blur="${this.blurred}"></canvas><svg viewBox="0 0 32 32" @click="${this.clear}"><title>Clear</title><path d="M20 4v-4h-8v4h-8v4h24v-4zM24 10v16h-4v-16h-2v16h-4v-16h-2v16h-4v-16h-2v17c0 2 1 3 3 3h14c2 0 3-1 3-3v-17h-2z"></path></svg></div>`;
   }
 
   firstUpdated() {
