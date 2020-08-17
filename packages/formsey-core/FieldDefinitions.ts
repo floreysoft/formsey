@@ -153,6 +153,6 @@ export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
 }
 
 export interface SignatureFieldDefinition extends InputFieldDefinition {
-  width: number
-  height: number
+  width: string
+  height: string
 }
