@@ -3,6 +3,7 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions'
 
 export interface Component {
   importPath: string | string[],
+  module?: string,
   tag?: string,
   focusable?: boolean,
   icon?: SVGTemplateResult,
