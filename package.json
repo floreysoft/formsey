@@ -39,7 +39,6 @@
     "copyfiles": "^2.1.0",
     "cross-env": "^7.0.2",
     "del-cli": "^3.0.0",
-    "es-dev-server": "^1.56.1",
     "karma": "^5.0.2",
     "lerna": "^3.13.0",
     "lerna-update-wizard": "^0.17.8",
