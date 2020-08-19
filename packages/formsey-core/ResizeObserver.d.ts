@@ -240,5 +240,3 @@ interface ResizeObserverEntryBoxSize {
 interface Window {
   ResizeObserver: typeof ResizeObserver;
 }
-
-export = ResizeObserver
