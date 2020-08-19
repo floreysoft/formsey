@@ -1,7 +1,7 @@
 import { ValueChangedEvent, LabeledField, register, SignatureFieldDefinition } from '@formsey/core';
 import { html, property, query } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import ResizeObserver from 'resize-observer-polyfill';
+import ResizeObserver from '../formsey-core/ResizeObserver';
 import SignaturePad from 'signature_pad';
 
 export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {
