@@ -11,6 +11,7 @@
 **/*.d.ts.map
 yarn-error.log
 
+!packages/**/ResizeObserver.d.ts
 !publishLibs.js
 !packages/**/rollup.config.js
 !webpack*.js
