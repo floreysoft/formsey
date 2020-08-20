@@ -67,5 +67,8 @@
       "img": "https://joeschmoe.io/api/v1/random",
       "url": "https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md"
     }
-  ]
+  ],
+  "dependencies": {
+    "resize-observer-polyfill": "^1.5.1"
+  }
 }

@@ -1,8 +1,8 @@
-/// <reference path="../formsey-core/ResizeObserver.d.ts" />
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ImagesFieldDefinition, LabeledField, register, ValueChangedEvent } from '@formsey/core';
 import { html, LitElement, property, query, queryAll, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
+import ResizeObserver from 'resize-observer-polyfill'
 
 export class ImageCheckbox extends LitElement {
   @property({ type: Boolean })
