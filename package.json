@@ -49,7 +49,8 @@
     "rollup-plugin-styles": "^3.10.0",
     "rollup-plugin-terser": "^7.0.0",
     "terser": "^5.0.0",
-    "typescript": "^3.3.3"
+    "typescript": "^3.9.3",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "contributors": [
     {
@@ -67,8 +68,5 @@
       "img": "https://joeschmoe.io/api/v1/random",
       "url": "https://github.com/andreasbm/weightless/blob/master/CONTRIBUTING.md"
     }
-  ],
-  "dependencies": {
-    "resize-observer-polyfill": "^1.5.1"
-  }
+  ]
 }
