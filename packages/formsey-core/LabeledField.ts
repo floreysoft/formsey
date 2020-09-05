@@ -1,9 +1,7 @@
-import { TemplateResult, html, css } from 'lit-element';
+import { html, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
-import { InputFieldDefinition, FieldDefinition } from './FieldDefinitions';
 import { Field } from './Field';
-import { Marked, Renderer } from '@ts-stack/markdown';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
   protected render(): void | TemplateResult {
@@ -17,7 +15,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     if (this.definition.hasOwnProperty('required')) {
       required = (<InputFieldDefinition>this.definition).required
     }
-    return html`${this.definition.label ? html`<label class="lfl">${this.definition.label}${required ? html`<span class="lfr">&#10033;${this.renderField()}</label>` : html``}</div>` : this.renderField()}`
+    return html`${this.definition.label ? html`<label class="lfl">${this.definition.label}${required ? html`<span class="lfr">&#10033;</span>` : html``}${this.renderField()}</label>` : this.renderField()}`
   }
 
   protected renderFooter(): TemplateResult | void {
