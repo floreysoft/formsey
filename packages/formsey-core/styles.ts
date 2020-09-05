@@ -178,6 +178,7 @@ export const NATIVE_STYLES = css`
     }
 
     .lfl {
+      display: block;
       position: relative;
       font-family: var(--formsey-label-font-family, var(--formsey-font-family, inherit));
       font-size: var(--formsey-label-font-size, inherit);
