@@ -50,8 +50,7 @@ export const NATIVE_STYLES = css`
     }
 
     label {
-      display: flex;
-      align-items: center;
+      display: block;
       box-sizing: border-box;
     }
 
@@ -177,10 +176,6 @@ export const NATIVE_STYLES = css`
       flex-direction: column;
     }
 
-    .lfw label {
-      display: block;
-    }
-
     .lfl {
       display: block;
       position: relative;
@@ -195,7 +190,7 @@ export const NATIVE_STYLES = css`
       opacity: 0.8;
     }
 
-    .lfw:focus-within>.lfl {
+    .lfw:focus-within>label>.lfl {
       color: var(--formsey-primary-color, var(--fs-accent-color, inherit));
       opacity: 1;
     }
