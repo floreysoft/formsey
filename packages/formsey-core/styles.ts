@@ -177,6 +177,10 @@ export const NATIVE_STYLES = css`
       flex-direction: column;
     }
 
+    .lfw label {
+      display: block;
+    }
+
     .lfl {
       display: block;
       position: relative;
