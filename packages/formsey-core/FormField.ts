@@ -71,6 +71,7 @@ export class FormField extends Field<FormDefinition, Object> {
 
   render() {
     let templates: TemplateResult[] = []
+    let hidden: TemplateResult[] = []
     let style = "padding:10px"
     if (this.definition.layout) {
       style = this.definition.layout.style
@@ -89,7 +90,9 @@ export class FormField extends Field<FormDefinition, Object> {
           this.addFieldErrors(this.errors, fieldErrors, field.name)
         }
         let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
-        if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
+        if ( field.type == "hidden" ) {
+          hidden.push(fieldTemplate)
+        } else if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
           const style = "grid-area:_"+area(field, this.definition.fields)
           templates.push(html`<div class='fff' style="${style}">${fieldTemplate}</div>`)
         } else {
@@ -104,7 +107,7 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.helpText) {
       header.push(html`<div class="ffd">${this.definition.helpText}</div>`)
     }
-    return html`<section style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div></section>`
+    return html`<section style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
   }
 
   gridSizeChanged(e: CustomEvent) {

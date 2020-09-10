@@ -56,7 +56,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   protected changed(e: ValueChangedEvent<any>) {
     if ( e.detail.name.startsWith(this.path()+".value")) {
-      let name = e.detail.name.substring((this.path()+".value").length+1).split('.')[0]
+      let name = e.detail.name.substring((this.path()+".value").length+1).split('.')[0].split('[')[0]
       if ( name ) {
         if ( typeof this.value.value != "object" ) {
           this.value.value = {}

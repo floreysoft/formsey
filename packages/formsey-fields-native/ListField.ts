@@ -10,7 +10,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
 
   renderField() {
     return html`
-    <select class="input" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" @change="${this.changed}" @input="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}" name="${this.definition.name}" ?disabled="${this.definition.disabled}" .value="${this.value}">
+    <select class="input" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" @change="${this.changed}" @input="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}" name="${this.path()}" ?disabled="${this.definition.disabled}" .value="${this.value}">
     ${this.definition.options.map(item => html`<option ?selected="${item.value ? item.value == this.value : item.label == this.value}" value="${item.value ? item.value : item.label}">${item.label ? item.label : item.value}</option>`)}
     </select>`;
   }

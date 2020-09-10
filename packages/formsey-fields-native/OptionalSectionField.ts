@@ -81,7 +81,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    let name = e.detail.name.substring(this.path().length + 1).split('.')[0]
+    let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
     if (!this.value) {
       this.value = {}
     }
