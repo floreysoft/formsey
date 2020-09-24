@@ -1,8 +1,10 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ImagesFieldDefinition, LabeledField, register, ValueChangedEvent } from '@formsey/core';
-import { html, LitElement, property, query, queryAll, TemplateResult } from 'lit-element';
+import { html, LitElement, TemplateResult } from "lit-element";
+import { property, query, queryAll } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import ResizeObserver from 'resize-observer-polyfill'
+import ResizeObserver from 'resize-observer-polyfill';
+
 
 export class ImageCheckbox extends LitElement {
   @property({ type: Boolean })
@@ -67,6 +69,7 @@ register("formsey-image-checkbox", ImageCheckbox)
 
 export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | string> {
   @property({ type: Object })
+  // @ts-ignore
   set definition(definition: ImagesFieldDefinition) {
     this._definition = definition
     if (this.images) {

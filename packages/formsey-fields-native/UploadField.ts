@@ -1,5 +1,6 @@
-import { ValueChangedEvent, LabeledField, register, UploadFieldDefinition } from '@formsey/core';
-import { html, property, query, TemplateResult } from 'lit-element';
+import { LabeledField, register, UploadFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { html, TemplateResult } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 interface FileObject {

@@ -1,10 +1,11 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent, register } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, register, ValueChangedEvent } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-group';
-import { VaadinTextField } from '@vaadin/vaadin-text-field';
-import { css, html, property, query, TemplateResult } from 'lit-element';
+import { TextFieldElement } from '@vaadin/vaadin-text-field';
+import { css, html, TemplateResult } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 
@@ -16,7 +17,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
   private vaadinRadioGroup: RadioGroupElement;
 
   @query("vaadin-text-field")
-  otherTextField: VaadinTextField
+  otherTextField: TextFieldElement
 
   static get styles() {
     return [...super.styles, css`
@@ -55,7 +56,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
       let filtered = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label))
       let checked = (typeof this.value != "undefined") && (filtered.length == 0)
       templates.push(html`<vaadin-radio-button class="other" value="__other" .checked="${checked}">Other</vaadin-radio-button>
-      <vaadin-text-field @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}".value="${checked ? this.value : ''}"></vaadin-text-field>`);
+      <vaadin-text-field @input="${this.changed}" ?disabled=${this.definition.disabled || !checked} .value="${checked ? this.value : ''}"></vaadin-text-field>`);
     }
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
@@ -101,7 +102,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinRadioGroup.errorMessage, false, { ...this.vaadinRadioGroup.validity })
+    this.errors[this.definition.name] = new InvalidError(this.vaadinRadioGroup.errorMessage, false, { })
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

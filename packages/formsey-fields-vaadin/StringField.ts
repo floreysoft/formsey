@@ -1,7 +1,8 @@
 import { StringFieldDefinition, register } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
-import { html, property, query } from 'lit-element';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 
@@ -39,7 +40,7 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinTextField.errorMessage, false, { ...this.vaadinTextField.validity })
+    this.errors[this.definition.name] = new InvalidError(this.vaadinTextField.errorMessage, false, {  })
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

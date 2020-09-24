@@ -1,5 +1,6 @@
 import { LabeledField, register, SignatureFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { html, property, query } from 'lit-element';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import ResizeObserver from 'resize-observer-polyfill';
 import SignaturePad from 'signature_pad';
 

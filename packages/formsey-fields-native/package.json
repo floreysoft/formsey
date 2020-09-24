@@ -13,9 +13,10 @@
     "/esm/*"
   ],
   "dependencies": {
+    "lit-element": "^3.0.0-pre.1",
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/utils": "^0.3.179",
-    "@formsey/core": "^0.3.36"
+    "@formsey/core": "^0.3.37"
   },
   "scripts": {
     "tsc": "tsc",

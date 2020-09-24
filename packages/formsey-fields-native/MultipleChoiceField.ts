@@ -1,6 +1,8 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, register, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { html, property, query, TemplateResult, queryAll } from 'lit-element';
+import { html, TemplateResult } from "lit-element";
+import { property, query, queryAll } from "lit-element/lib/decorators.js";
 import { StringField } from './StringField';
+
 
 export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition, string> {
   @property({ type: String })

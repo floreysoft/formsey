@@ -10,8 +10,8 @@ import { FormNavigator } from '@formsey/core/FormNavigator';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import '@formsey/fields-native-extended';
 import '@formsey/fields-vaadin';
-import { css, CSSResult, customElement, html, LitElement, query } from "lit-element";
-import { directive, NodePart } from 'lit-html';
+import { css, html, LitElement } from "lit-element";
+import { customElement, query } from "lit-element/lib/decorators.js";
 
 @customElement("formsey-demo1")
 export class FormseyDemo1 extends LitElement {
@@ -24,7 +24,7 @@ export class FormseyDemo1 extends LitElement {
   @query("#right")
   right: Form
 
-  static get styles(): CSSResult {
+  static get styles() {
     return css`
     fs-splitter {
       border-top: 1px solid var(--fs-border-color);
@@ -66,11 +66,12 @@ export class FormseyDemo2 extends LitElement {
   @query("#right")
   form: Form
 
-  value = directive((key: string, placeholder?: string) => (part: NodePart) => part.setValue(get(this.form?.value, key) || placeholder))
+  //value = directive((key: string, placeholder?: string) => (part: NodePart) => part.setValue(get(this.form?.value, key) || placeholder))
 
   private definition: FormDefinition = {
     type: "form",
     fields: [
+      /*
       {
         type: "string",
         name: "name",
@@ -81,10 +82,11 @@ export class FormseyDemo2 extends LitElement {
         name: "age",
         label: html`Hello ${this.value("name", "Organization")}, Enter your age`
       }
+      */
     ]
   }
 
-  static get styles(): CSSResult {
+  static get styles() {
     return css`
     fs-splitter {
       border-top: 1px solid var(--fs-border-color);
@@ -137,7 +139,7 @@ export class CustomValidityDemo extends LitElement {
     ]
   }
 
-  static get styles(): CSSResult {
+  static get styles() {
     return css`
     fs-splitter {
       border-top: 1px solid var(--fs-border-color);
@@ -186,7 +188,7 @@ export class CustomValidityDemo extends LitElement {
 
 @customElement("fs-demo")
 export class Demo extends LitElement {
-  static get styles(): CSSResult {
+  static get styles() {
     return css`
     :host {
       height: 100%;

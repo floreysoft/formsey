@@ -1,5 +1,6 @@
 import { FieldDefinition, LabeledField, register } from '@formsey/core';
-import { css, html, property } from 'lit-element';
+import { html } from "lit-element";
+import { property } from "lit-element/lib/decorators.js";
 
 interface YouTubeFieldDefinition extends FieldDefinition {
   url: string

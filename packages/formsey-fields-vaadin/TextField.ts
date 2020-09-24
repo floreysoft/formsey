@@ -1,17 +1,18 @@
+import { register, TextFieldDefinition } from '@formsey/core';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { TextAreaElement } from '@vaadin/vaadin-text-field/vaadin-text-area';
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
-import { TextFieldDefinition, register } from '@formsey/core';
-import { VaadinTextArea } from '@vaadin/vaadin-text-field';
-import { html, property, query } from 'lit-element';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from "lit-html/directives/if-defined";
 import { VaadinField } from './VaadinField';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 
 export class TextField extends VaadinField<TextFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
   @query("vaadin-text-area")
-  vaadinTextArea: VaadinTextArea
+  vaadinTextArea: TextAreaElement
 
   renderField() {
     let customValidity = this.definition.customValidity
@@ -36,7 +37,7 @@ export class TextField extends VaadinField<TextFieldDefinition, string> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinTextArea.errorMessage, false, { ...this.vaadinTextArea.validity })
+    this.errors[this.definition.name] = new InvalidError(this.vaadinTextArea.errorMessage, false, { })
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 

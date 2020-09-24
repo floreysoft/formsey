@@ -1,5 +1,7 @@
-import { BooleanFieldDefinition, ValueChangedEvent, LabeledField, register } from '@formsey/core';
-import { html, property, query } from 'lit-element';
+import { BooleanFieldDefinition, LabeledField, register, ValueChangedEvent } from '@formsey/core';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
+
 
 export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })

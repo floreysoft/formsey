@@ -10,6 +10,7 @@
     "!/test/"
   ],
   "dependencies": {
+    "lit-element": "^3.0.0-pre.1",
     "@formsey/core": "^0.3.36",
     "@vaadin/vaadin-checkbox": "^2.2.12",
     "@vaadin/vaadin-combo-box": "^5.0.11",

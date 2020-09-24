@@ -1,6 +1,8 @@
 import { FieldDefinition, LabeledField, register } from '@formsey/core';
-import { css, html, property } from 'lit-element';
+import { html } from "lit-element";
+import { property } from "lit-element/lib/decorators.js";
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+
 
 export class MarkupField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })

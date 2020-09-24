@@ -1,8 +1,9 @@
-import { StringFieldDefinition, Field, register } from '@formsey/core';
+import { Field, register, StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
-import { css, html, property, query } from 'lit-element';
+import { css, html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class TextField extends Field<StringFieldDefinition, string> {

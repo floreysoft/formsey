@@ -1,17 +1,18 @@
-import '@vaadin/vaadin-date-picker';
 import { DateFieldDefinition, register } from '@formsey/core';
-import { html, property, query } from 'lit-element';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import '@vaadin/vaadin-date-picker';
+import { DatePickerElement } from "@vaadin/vaadin-date-picker";
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
-import { VaadinDatePicker } from "@vaadin/vaadin-date-picker";
-import { InvalidEvent, InvalidError } from '@formsey/core/InvalidEvent';
 
 export class DateField extends VaadinField<DateFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
   @query("vaadin-date-picker")
-  vaadinDatePicker: VaadinDatePicker
+  vaadinDatePicker: DatePickerElement
 
   renderField() {
     let customValidity = this.definition.customValidity
@@ -36,7 +37,7 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinDatePicker.errorMessage, false, { ...this.vaadinDatePicker.validity })
+    this.errors[this.definition.name] = new InvalidError(this.vaadinDatePicker.errorMessage, false, {})
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

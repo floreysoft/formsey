@@ -1,5 +1,7 @@
-import { html, property, query } from 'lit-element';
 import { ImageFieldDefinition, LabeledField, register } from '@formsey/core';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
+
 
 export class ImageField extends LabeledField<ImageFieldDefinition, string> {
   @property({ converter: Object })

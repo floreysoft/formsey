@@ -1,13 +1,15 @@
 import { FieldDefinition, LabeledField, register } from '@formsey/core';
 import { Marked, Renderer } from '@ts-stack/markdown';
-import { css, html, property } from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
+import { css, html } from "lit-element";
+import { property } from "lit-element/lib/decorators.js";
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 hljs.registerLanguage('javascript', javascript);
 
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })
+  // @ts-ignore
   set definition(definition: FieldDefinition) {
     this._definition = definition
     this.markup = Marked.parse(definition?.default ? definition.default : "")

@@ -1,7 +1,9 @@
-import { createField, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition, ValueChangedEvent, Field } from '@formsey/core';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { html, property } from 'lit-element';
+import { createField, Field, LabeledField, ListFieldDefinition, register, SelectableSectionFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { html } from "lit-element";
+import { property } from "lit-element/lib/decorators.js";
+
 
 export class SelectableSectionValue {
   selection: string;

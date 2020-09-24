@@ -1,9 +1,10 @@
-import { BooleanFieldDefinition, ValueChangedEvent, register } from '@formsey/core';
+import { BooleanFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { css, html, property, query } from 'lit-element';
+import { css, html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { VaadinField } from './VaadinField';
 
@@ -49,7 +50,7 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinCheckbox.errorMessage, false, { ...this.vaadinCheckbox.validity })
+    this.errors[this.definition.name] = new InvalidError("Please check", false, { })
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

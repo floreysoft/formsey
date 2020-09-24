@@ -1,6 +1,8 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, register, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { html, query, queryAll, TemplateResult } from 'lit-element';
+import { html, TemplateResult } from "lit-element";
+import { query, queryAll } from "lit-element/lib/decorators.js";
 import { StringField } from './StringField';
+
 
 export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, string[]> {
   @query("formsey-string")

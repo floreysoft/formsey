@@ -1,5 +1,6 @@
 import { ButtonFieldDefinition, LabeledField, register } from '@formsey/core';
-import { html, property, query } from 'lit-element';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {

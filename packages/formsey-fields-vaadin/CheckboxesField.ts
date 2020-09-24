@@ -1,11 +1,13 @@
-import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent, register } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, register, ValueChangedEvent } from '@formsey/core';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
-import { VaadinTextField } from '@vaadin/vaadin-text-field';
-import { css, html, property, query, TemplateResult } from 'lit-element';
+import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
+import { TextFieldElement } from '@vaadin/vaadin-text-field';
+import { css, html, TemplateResult } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+
 
 export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, string[]> {
   @property({ converter: Object })
@@ -15,7 +17,7 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
   private vaadinCheckboxGroup: CheckboxGroupElement;
 
   @query("vaadin-text-field")
-  otherTextField: VaadinTextField
+  otherTextField: TextFieldElement
 
   static get styles() {
     return [...super.styles, css`
@@ -105,7 +107,7 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinCheckboxGroup.errorMessage, false, { ...this.vaadinCheckboxGroup.validity })
+    this.errors[this.definition.name] = new InvalidError(this.vaadinCheckboxGroup.errorMessage, false, { })
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

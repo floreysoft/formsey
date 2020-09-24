@@ -1,9 +1,10 @@
-import { ListFieldDefinition, ValueChangedEvent, register } from '@formsey/core';
-import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
+import { ListFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
 import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
-import { html, property, query } from 'lit-element';
-import { VaadinField } from './VaadinField';
+import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { VaadinField } from './VaadinField';
 
 export class ListField extends VaadinField<ListFieldDefinition, string> {
   @property({ type: String })

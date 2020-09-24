@@ -1,8 +1,9 @@
+import { KEYCODE } from '@floreysoft/utils';
 import { LabeledField, register, StringFieldDefinition, TextFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { html, property, query } from 'lit-element';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { KEYCODE } from '@floreysoft/utils';
 
 export class TextField extends LabeledField<TextFieldDefinition, string> {
   @property({ type: String })

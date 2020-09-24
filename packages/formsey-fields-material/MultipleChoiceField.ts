@@ -1,10 +1,11 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent, register } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, register, ValueChangedEvent } from '@formsey/core';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-radio/mwc-radio";
 import { Radio } from "@material/mwc-radio/mwc-radio";
 import "@material/mwc-textfield/mwc-textfield";
 import { TextField } from "@material/mwc-textfield/mwc-textfield";
-import { css, html, property, query, queryAll, TemplateResult } from 'lit-element';
+import { css, html, TemplateResult } from "lit-element";
+import { property, query, queryAll } from "lit-element/lib/decorators.js";
 import { MaterialField } from './MaterialField';
 
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {

@@ -1,5 +1,6 @@
 import { Field, FieldDefinition, register } from '@formsey/core';
-import { css, html, property } from 'lit-element';
+import { css, html } from "lit-element";
+import { property } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class SectionField extends Field<FieldDefinition, void> {

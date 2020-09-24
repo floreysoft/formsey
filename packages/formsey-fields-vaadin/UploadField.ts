@@ -1,6 +1,7 @@
 import { DateFieldDefinition, LabeledField, register } from '@formsey/core';
 import '@vaadin/vaadin-upload/vaadin-upload.js';
-import { html, property } from 'lit-element';
+import { html } from "lit-element";
+import { property } from "lit-element/lib/decorators.js";
 
 export class UploadField extends LabeledField<DateFieldDefinition, string> {
     @property({ type: String })

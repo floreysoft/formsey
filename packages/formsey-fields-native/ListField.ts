@@ -1,5 +1,7 @@
-import { ValueChangedEvent, LabeledField, ListFieldDefinition, register } from '@formsey/core';
-import { html, property, query } from 'lit-element';
+import { LabeledField, ListFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
+
 
 export class ListField extends LabeledField<ListFieldDefinition, string> {
   @property({ type: String })

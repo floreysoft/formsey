@@ -3,7 +3,8 @@ import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
-import { html, property, query } from 'lit-element';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { MaterialField } from './MaterialField';
 
 export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean> {
