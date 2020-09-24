@@ -12,7 +12,7 @@
     "compile": "tsc",
     "watch": "tsc -w",
     "clean": "rm -rf ./output && rm -rf ./dist && rm -rf ./umd  && rm -rf ./esm && rm -rf ./lib && node_modules/.bin/del packages/**/*.js !packages/**/rollup.config.js packages/**/*.js.map packages/**/umd packages/**/esm packages/**/es packages/**/*.d.ts !packages/**/ResizeObserver.d.ts  packages/**/*.d.ts.map demos/**/*.js demos/**/*.js.map demos/**/*.d.ts demos/**/*.d.ts.map",
-    "pub": "tsc && lerna run rollup && lerna publish",
+    "pub": "tsc -v && tsc && lerna run rollup && lerna publish",
     "forcePub": "lerna run tsc && yarn umd && lerna publish --force-publish",
     "link": "lerna run link",
     "unlink": "lerna run unlink",
@@ -54,7 +54,7 @@
     "rollup-plugin-styles": "^3.10.0",
     "rollup-plugin-terser": "^7.0.0",
     "terser": "^5.0.0",
-    "typescript": "^3.9.3"
+    "typescript": "^4.0.3"
   },
   "contributors": [
     {
