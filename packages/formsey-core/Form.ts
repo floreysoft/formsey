@@ -1,4 +1,5 @@
-import { html, property, query } from 'lit-element';
+import { html } from "lit-element";
+import { property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { register } from './Components';
 import { createField, Field } from './Field';
@@ -78,7 +79,7 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   @property()
-  target: string
+  target: "_blank" | "_parent" | "_self" | "_top"
 
   @property()
   action: string

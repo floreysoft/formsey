@@ -1,11 +1,12 @@
-import { html, property, query, queryAll, TemplateResult } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html, TemplateResult } from "lit-element";
+import { property, query, queryAll } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
+import ResizeObserver from 'resize-observer-polyfill';
 import { area, register } from './Components';
 import { createField, Field } from './Field';
 import { Breakpoints, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
-import ResizeObserver from 'resize-observer-polyfill'
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
 
@@ -21,6 +22,7 @@ const DEFAULT_LAYOUT = "grid-template-columns:1fr;grid-gap:5px 5px"
 
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
+  // @ts-ignore()
   set value(value: Object) {
     this._value = value
     this.applyHiddenFields()
@@ -33,6 +35,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   @property({ converter: Object })
+  // @ts-ignore()
   set definition(definition: FormDefinition) {
     this._definition = definition;
     this.applyHiddenFields();
@@ -334,7 +337,7 @@ export class FormField extends Field<FormDefinition, Object> {
   private closestElement(selector: string, base: Element = this) {
     function __closestFrom(el: Element | Window | Document): Element {
       if (!el || el === document || el === window) return null;
-      if ((el as Slotable).assignedSlot) el = (el as Slotable).assignedSlot;
+      if ((el as any).assignedSlot) el = (el as any).assignedSlot;
       let found = (el as Element).closest(selector);
       return found
         ? found

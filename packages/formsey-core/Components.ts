@@ -1,4 +1,4 @@
-import { SVGTemplateResult, TemplateResult } from 'lit-element'
+import { TemplateResult } from 'lit-element'
 import { FieldDefinition, FormDefinition } from './FieldDefinitions'
 
 export interface Component {
@@ -6,7 +6,7 @@ export interface Component {
   module?: string,
   tag?: string,
   focusable?: boolean,
-  icon?: SVGTemplateResult,
+  icon?: TemplateResult,
   editor?: string | FormDefinition
 }
 

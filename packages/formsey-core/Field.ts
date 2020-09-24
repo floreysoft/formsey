@@ -1,12 +1,13 @@
-import { css, html, LitElement, property, TemplateResult } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined'
+import { css, html, LitElement, TemplateResult } from "lit-element";
+import { property } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { Components, getDefaultLibrary, getLibrary, Settings } from './Components';
-import { ValueChangedEvent } from './ValueChangedEvent';
-import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
-import { InvalidError, InvalidErrors } from './InvalidEvent';
-import { FieldClickEvent } from './FieldClickEvent';
 import { FieldBlurEvent } from './FieldBlurEvent';
+import { FieldClickEvent } from './FieldClickEvent';
+import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
+import { InvalidError, InvalidErrors } from './InvalidEvent';
+import { ValueChangedEvent } from './ValueChangedEvent';
 
 function hacktml(parts, ...args) {
   const newArgs = args.concat().slice(1, -1)

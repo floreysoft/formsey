@@ -1,4 +1,5 @@
-import { html, query } from 'lit-element';
+import { html } from 'lit-element';
+import { query } from "lit-element/lib/decorators.js";
 import { createField, Field } from './Field';
 import { NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
