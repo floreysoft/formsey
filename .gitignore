@@ -9,6 +9,7 @@
 **/*.js.map
 **/*.d.ts
 **/*.d.ts.map
+**/node_modules
 yarn-error.log
 
 !packages/**/ResizeObserver.d.ts
