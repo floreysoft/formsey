@@ -1,6 +1,5 @@
 import { css, html, LitElement, TemplateResult } from "lit-element";
 import { property } from "lit-element/lib/decorators.js";
-import { ifDefined } from 'lit-html/directives/if-defined';
 import { Components, getDefaultLibrary, getLibrary, Settings } from './Components';
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';
@@ -8,17 +7,11 @@ import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
-import { asStatic, asTag } from 'static-params';
 
 export const createField = (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
   const component = components[definition.type];
   if (component) {
-    if (component.factory) {
-      return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
-    } else {
-      const tag = asStatic(component.tag);
-      return asTag(html)`<${tag} id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${tag}>`;
-    }
+    return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching component has been registered!");
   }
