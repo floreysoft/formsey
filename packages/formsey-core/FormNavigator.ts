@@ -1,5 +1,5 @@
 import { css, html, LitElement, TemplateResult } from "lit-element";
-import { property, query } from "lit-element/lib/decorators.js";
+import { customElement, property, query } from "lit-element/lib/decorators.js";
 import { classMap } from 'lit-html/directives/class-map';
 import { Components, register } from "./Components";
 import { FieldDefinition, FormDefinition, InputFieldDefinition, NestedFormDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
@@ -13,6 +13,7 @@ interface FieldInfo {
   focused: boolean
 }
 
+@customElement("formsey-form-navigator")
 export class FormNavigator extends LitElement {
   @property({ converter: Object })
   components: Components
@@ -221,4 +222,3 @@ export class FormNavigator extends LitElement {
     dots.push(html`<div class="${classMap({ dot: true, filled: filled && !this._errors, invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path=" + path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
   }
 }
-register("formsey-form-navigator", FormNavigator)

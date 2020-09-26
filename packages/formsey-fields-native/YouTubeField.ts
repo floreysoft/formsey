@@ -1,6 +1,10 @@
-import { FieldDefinition, LabeledField, register } from '@formsey/core';
+import { LabeledField } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
 import { property } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 interface YouTubeFieldDefinition extends FieldDefinition {
   url: string
@@ -64,4 +68,14 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
 		return videoId;
   }
 }
-register("formsey-youtube", YouTubeField, "native", "youtube", { importPath: "@formsey/fields-native/YouTubeField"})
+
+register({
+  type: "youtube",
+  tag: "formsey-youtube",
+  constructor: YouTubeField,
+  libraries: ["native" ],
+  importPath: "@formsey/fields-native/YouTubeField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-youtube id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-youtube>`
+  }
+})

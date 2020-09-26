@@ -2,9 +2,9 @@ import { html, TemplateResult } from "lit-element";
 import { property, query, queryAll } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
-import { area, register } from './Components';
+import { area, Components, register, Settings } from './Components';
 import { createField, Field } from './Field';
-import { Breakpoints, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
+import { Breakpoints, FieldDefinition, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -93,10 +93,10 @@ export class FormField extends Field<FormDefinition, Object> {
           this.addFieldErrors(this.errors, fieldErrors, field.name)
         }
         let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
-        if ( field.type == "hidden" ) {
+        if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
-          const style = "grid-area:_"+area(field, this.definition.fields)
+          const style = "grid-area:_" + area(field, this.definition.fields)
           templates.push(html`<div class='fff' style="${style}">${fieldTemplate}</div>`)
         } else {
           templates.push(html`<div class='fff'>${fieldTemplate}</div>`)
@@ -133,7 +133,7 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  public focusField(path: string) : boolean {
+  public focusField(path: string): boolean {
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
       if (child && typeof child['focusField'] == "function" && path.startsWith(child.path())) {
@@ -219,11 +219,11 @@ export class FormField extends Field<FormDefinition, Object> {
   protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
     if (e.detail?.name) {
-      if ( !this.definition.name ) {
+      if (!this.definition.name) {
         // If this is an unnamed form, just pass event to parent
         this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
       } else {
-        let name = e.detail.name.substring(this.path().length+1).split('.')[0]
+        let name = e.detail.name.substring(this.path().length + 1).split('.')[0]
         if (!this.value) {
           this.value = {}
         }
@@ -310,7 +310,7 @@ export class FormField extends Field<FormDefinition, Object> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 
-  private addFieldErrors(errors : InvalidErrors, fieldErrors: InvalidErrors, field: string) {
+  private addFieldErrors(errors: InvalidErrors, fieldErrors: InvalidErrors, field: string) {
     if (errors) {
       errors.forEach((error, path) => {
         if (this.definition.name && (path == this.definition.name + "." + field || path.startsWith(this.definition.name + "." + field + ".") || path.startsWith(this.definition.name + "." + field + "["))) {
@@ -346,4 +346,14 @@ export class FormField extends Field<FormDefinition, Object> {
     return __closestFrom(base);
   }
 }
-register("formsey-form-field", FormField, ["native", "vaadin"], "form", { importPath: "@formsey/fields-native/FormField" })
+
+register({
+  type: "form",
+  tag: "formsey-form-field",
+  constructor: FormField,
+  libraries: ["native", "vaadin"],
+  importPath: "@formsey/fields-native/FormField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
+  }
+})

@@ -1,5 +1,7 @@
 import { Field, register, StringFieldDefinition } from '@formsey/core';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { Components, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
 import { css, html } from "lit-element";
@@ -76,4 +78,14 @@ export class StringField extends Field<StringFieldDefinition, string> {
     return "text"
   }
 }
-register("formsey-string-material", StringField, "material", "string", { importPath: "@formsey/fields-material/StringField"});
+
+register({
+  type: "string",
+  tag: "formsey-string-material",
+  constructor: StringField,
+  libraries: ["material" ],
+  importPath: "@formsey/fields-material/StringField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-string-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-string-material>`
+  }
+})

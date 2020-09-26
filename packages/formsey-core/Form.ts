@@ -1,7 +1,6 @@
 import { html } from "lit-element";
-import { property, query } from "lit-element/lib/decorators.js";
+import { customElement, property, query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { register } from './Components';
 import { createField, Field } from './Field';
 import { FieldDefinition } from './FieldDefinitions';
 import { FormField } from './FormField';
@@ -57,6 +56,7 @@ export function set(data: Object, path: string, value: any): any {
   }
 }
 
+@customElement("formsey-form")
 export class Form extends Field<FieldDefinition, any> {
   value: any
 
@@ -222,5 +222,3 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
 }
-
-register("formsey-form", Form)

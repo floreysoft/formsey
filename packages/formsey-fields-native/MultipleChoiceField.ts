@@ -1,6 +1,11 @@
-import { CheckboxesFieldDefinition, createField, LabeledField, register, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html, TemplateResult } from "lit-element";
 import { property, query, queryAll } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { StringField } from './StringField';
 
 
@@ -75,4 +80,14 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
   }
 }
-register("formsey-multiple-choice", MultipleChoiceField, "native", "multipleChoice", { importPath: "@formsey/fields-native/MultipleChoiceField"})
+
+register({
+  type: "multipleChoice",
+  tag: "formsey-multiple-choice",
+  constructor: MultipleChoiceField,
+  libraries: ["native" ],
+  importPath: "@formsey/fields-native/MultipleChoiceField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-multiple-choice id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice>`
+  }
+})

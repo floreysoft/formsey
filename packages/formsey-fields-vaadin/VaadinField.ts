@@ -1,5 +1,10 @@
-import { Field, FieldDefinition } from '@formsey/core';
-import { css, html, TemplateResult } from 'lit-element';
+import { Field } from '@formsey/core';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import "@material/mwc-checkbox/mwc-checkbox.js";
+import "@material/mwc-formfield/mwc-formfield.js";
+import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
+import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
+import { css, html, TemplateResult } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
 
 export abstract class VaadinField<T extends FieldDefinition, V> extends Field<T, V> {

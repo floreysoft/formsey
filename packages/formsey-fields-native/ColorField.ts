@@ -1,4 +1,6 @@
-import { register } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
 import { query } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -27,4 +29,14 @@ export class ColorField extends StringField {
     }
   }
 }
-register("formsey-color", ColorField, "native", "color", { importPath: "@formsey/fields-native/ColorField"})
+
+register({
+  type: "color",
+  tag: "formsey-color",
+  constructor: ColorField,
+  libraries: ["native" ],
+  importPath: "@formsey/fields-native/ColorField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-color id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-color>`
+  }
+})

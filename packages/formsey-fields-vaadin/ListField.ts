@@ -1,10 +1,18 @@
 import { ListFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { Components, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import "@material/mwc-checkbox/mwc-checkbox.js";
+import "@material/mwc-formfield/mwc-formfield.js";
+import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
+import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { html } from "lit-element";
 import { property, query } from "lit-element/lib/decorators.js";
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
+
 
 export class ListField extends VaadinField<ListFieldDefinition, string> {
   @property({ type: String })
@@ -41,4 +49,14 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
     }
   }
 }
-register("formsey-list-vaadin", ListField, "vaadin", "list", { importPath: "@formsey/fields-vaadin/ListField"})
+
+register({
+  type: "email",
+  tag: "formsey-list-vaadin",
+  constructor: ListField,
+  libraries: ["vaadin" ],
+  importPath: "@formsey/fields-vaadin/ListField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-list-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list-vaadin>`
+  }
+})

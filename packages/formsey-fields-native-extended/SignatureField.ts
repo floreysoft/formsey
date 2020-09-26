@@ -1,6 +1,11 @@
-import { LabeledField, register, SignatureFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { LabeledField, SignatureFieldDefinition } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit-element";
 import { property, query } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
 import SignaturePad from 'signature_pad';
 
@@ -71,4 +76,14 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }
 }
-register("formsey-signature", SignatureField, ["native", "vaadin", "material"], "signature",  { importPath: "@formsey/fields-native-extended/SignatureField"})
+
+register({
+  type: "signature",
+  tag: "formsey-signature",
+  constructor: SignatureField,
+  libraries: ["material" ],
+  importPath: "@formsey/fields-native-extended/SignatureField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-signature id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-signature>`
+  }
+})

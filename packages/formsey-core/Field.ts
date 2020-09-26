@@ -8,22 +8,17 @@ import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
 import { InvalidError, InvalidErrors } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
-import {asStatic, asTag} from 'static-params';
-/*
-function hacktml(parts, ...args) {
-  const newArgs = args.concat().slice(1, -1)
-  const newParts = parts.concat().slice(1, -1)
-  newParts[0] = "<" + args[0] + newParts[0]
-  newParts[newParts.length - 1] = newParts[newParts.length - 1] + args[0] + ">";
-  return html(newParts, ...newArgs);
-}*/
+import { asStatic, asTag } from 'static-params';
 
 export const createField = (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
   const component = components[definition.type];
   if (component) {
-    const tag = asStatic(component.tag);
-    const hacktml = asTag(html);
-    return hacktml`<${tag} id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${tag}>`;
+    if (component.factory) {
+      return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
+    } else {
+      const tag = asStatic(component.tag);
+      return asTag(html)`<${tag} id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></${tag}>`;
+    }
   } else {
     console.error("Your form is using a field of type=" + definition.type + " but no matching component has been registered!");
   }

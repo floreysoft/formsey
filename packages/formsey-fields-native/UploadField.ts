@@ -1,7 +1,11 @@
-import { LabeledField, register, UploadFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { LabeledField, UploadFieldDefinition } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html, TemplateResult } from "lit-element";
 import { property, query } from "lit-element/lib/decorators.js";
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 interface FileObject {
   name: string
@@ -111,4 +115,14 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     })
   }
 }
-register("formsey-upload", UploadField, "native", "upload", { importPath: "@formsey/fields-native/UploadField"})
+
+register({
+  type: "upload",
+  tag: "formsey-upload",
+  constructor: UploadField,
+  libraries: ["native" ],
+  importPath: "@formsey/fields-native/UploadField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-upload id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-upload>`
+  }
+})

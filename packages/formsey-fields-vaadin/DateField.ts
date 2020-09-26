@@ -1,10 +1,16 @@
 import { DateFieldDefinition, register } from '@formsey/core';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { Components, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import "@material/mwc-checkbox/mwc-checkbox.js";
+import "@material/mwc-formfield/mwc-formfield.js";
+import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
+import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-date-picker';
 import { DatePickerElement } from "@vaadin/vaadin-date-picker";
 import { html } from "lit-element";
 import { property, query } from "lit-element/lib/decorators.js";
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
 
 export class DateField extends VaadinField<DateFieldDefinition, string> {
@@ -41,4 +47,14 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-date-vaadin", DateField, "vaadin", "date", { importPath: "@formsey/fields-vaadin/DateField"})
+
+register({
+  type: "date",
+  tag: "formsey-date-vaadin",
+  constructor: DateField,
+  libraries: ["vaadin" ],
+  importPath: "@formsey/fields-vaadin/DateField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-date-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-date-vaadin>`
+  }
+})

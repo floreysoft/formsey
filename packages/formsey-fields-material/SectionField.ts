@@ -1,4 +1,6 @@
 import { Field, FieldDefinition, register } from '@formsey/core';
+import { Components, Settings } from '@formsey/core/Components';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { css, html } from "lit-element";
 import { property } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -34,4 +36,14 @@ export class SectionField extends Field<FieldDefinition, void> {
     return html`<header>${ifDefined(this.definition.label)}</header><footer>${ifDefined(this.definition.helpText)}</footer>`
   }
 }
-register("formsey-section-material", SectionField, "material", "section", { importPath: "@formsey/fields-material/SectionField"});
+
+register({
+  type: "section",
+  tag: "formsey-section-material",
+  constructor: SectionField,
+  libraries: ["material" ],
+  importPath: "@formsey/fields-material/SectionField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-section-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-section-material>`
+  }
+})

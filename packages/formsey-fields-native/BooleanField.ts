@@ -1,7 +1,11 @@
-import { BooleanFieldDefinition, LabeledField, register, ValueChangedEvent } from '@formsey/core';
+import { BooleanFieldDefinition, LabeledField } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit-element";
 import { property, query } from "lit-element/lib/decorators.js";
-
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
@@ -28,4 +32,14 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
      return true
   }
 }
-register("formsey-boolean", BooleanField, "native", "boolean", { importPath: "@formsey/fields-native/BooleanField"})
+
+register({
+  type: "boolean",
+  tag: "formsey-boolean",
+  constructor: BooleanField,
+  libraries: ["native" ],
+  importPath: "@formsey/fields-native/BooleanField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-boolean id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-boolean>`
+  }
+})

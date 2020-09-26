@@ -1,11 +1,15 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
-import { ImagesFieldDefinition, LabeledField, register, ValueChangedEvent } from '@formsey/core';
+import { ImagesFieldDefinition, LabeledField } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html, LitElement, TemplateResult } from "lit-element";
-import { property, query, queryAll } from "lit-element/lib/decorators.js";
+import { customElement, property, query, queryAll } from "lit-element/lib/decorators.js";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
 
-
+@customElement("formsey-image-checkbox")
 export class ImageCheckbox extends LitElement {
   @property({ type: Boolean })
   required: boolean;
@@ -65,7 +69,6 @@ export class ImageCheckbox extends LitElement {
     }
   }
 }
-register("formsey-image-checkbox", ImageCheckbox)
 
 export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | string> {
   @property({ type: Object })
@@ -215,4 +218,14 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
     this.columns = columns
   }
 }
-register("formsey-images", ImagesField, ["native", "material","vaadin"], "images", { importPath: "@formsey/fields-native/ImagesField"})
+
+register({
+  type: "images",
+  tag: "formsey-images",
+  constructor: ImagesField,
+  libraries: ["native" ],
+  importPath: "@formsey/fields-native/ImagesField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-images id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-images>`
+  }
+})

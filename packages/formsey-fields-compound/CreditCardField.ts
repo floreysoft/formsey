@@ -1,6 +1,12 @@
-import { CompoundField, createField, FieldDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { CompoundField } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { createField } from '@formsey/core/Field';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit-element";
 import { property } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 
 export interface CreditCardFieldDefinition extends FieldDefinition {
@@ -28,4 +34,13 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
   }
 }
 
-register("formsey-creditcard", CreditCardField, ["native", "material","vaadin"], "creditCard", { importPath: "@formsey/fields-compound/CreditCardField"});
+register({
+  type: "creditCard",
+  tag: "formsey-creditcard",
+  constructor: CreditCardField,
+  libraries: ["native", "material", "vaadin"],
+  importPath: "@formsey/fields-compound/CreditCardField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-creditcard id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-creditcard>`
+  }
+})

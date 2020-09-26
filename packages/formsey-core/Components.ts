@@ -1,10 +1,15 @@
 import { TemplateResult } from 'lit-element'
 import { FieldDefinition, FormDefinition } from './FieldDefinitions'
+import { InvalidErrors } from './InvalidEvent'
 
 export interface Component {
+  tag: string,
+  constructor: CustomElementConstructor
+  type: string,
+  libraries: string|string[],
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => TemplateResult
   importPath: string | string[],
   module?: string,
-  tag?: string,
   focusable?: boolean,
   icon?: TemplateResult,
   editor?: string | FormDefinition
@@ -70,19 +75,18 @@ export function getDefaultLibrary(): string | undefined {
   return undefined
 }
 
-export function register(tag: string, constructor: CustomElementConstructor, libraries?: string|string[], type?: string, component?: Component) {
-  if (customElements.get(tag)) {
-    console.log("'" + tag + "' already exists, skipping...")
+export function register(component: Component) {
+  if (customElements.get(component.tag)) {
+    console.log("'" + component.tag + "' already exists, skipping...")
   } else {
-    console.log("Registering custom element="+tag);
-    customElements.define(tag, constructor)
+    console.log("Registering custom element="+component.tag);
+    customElements.define(component.tag, component.constructor)
   }
-  if (libraries && type && component) {
-    component.tag = tag
-    libraries = [].concat(libraries)
+  if (component.libraries && component.type ) {
+    const libraries = [].concat(component.libraries)
     for(let theme of libraries) {
       let components = {} as Components
-      components[type] = { focusable: true, ...component }
+      components[component.type] = { focusable: true, ...component }
       registerLibrary(theme, components)
     }
   }

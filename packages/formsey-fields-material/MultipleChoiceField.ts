@@ -1,4 +1,7 @@
 import { CheckboxesFieldDefinition, Option, register, ValueChangedEvent } from '@formsey/core';
+import { Components, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-radio/mwc-radio";
 import { Radio } from "@material/mwc-radio/mwc-radio";
@@ -6,6 +9,7 @@ import "@material/mwc-textfield/mwc-textfield";
 import { TextField } from "@material/mwc-textfield/mwc-textfield";
 import { css, html, TemplateResult } from "lit-element";
 import { property, query, queryAll } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { MaterialField } from './MaterialField';
 
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {
@@ -85,4 +89,14 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     }
   }
 }
-register("formsey-multiple-choice-material", MultipleChoiceField, "material", "multipleChoice", { importPath: "@formsey/fields-material/MultipleChoiceField"});
+
+register({
+  type: "multipleChoice",
+  tag: "formsey-multiple-choice-material",
+  constructor: MultipleChoiceField,
+  libraries: ["material" ],
+  importPath: "@formsey/fields-material/MultipleChoiceField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-multiple-choice-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice-material>`
+  }
+})

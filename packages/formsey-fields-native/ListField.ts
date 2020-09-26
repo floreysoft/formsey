@@ -1,6 +1,11 @@
-import { LabeledField, ListFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { LabeledField, ListFieldDefinition } from '@formsey/core';
+import { Components, register, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit-element";
 import { property, query } from "lit-element/lib/decorators.js";
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 
 export class ListField extends LabeledField<ListFieldDefinition, string> {
@@ -27,4 +32,14 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
     this.dispatchEvent(new ValueChangedEvent(e.type, this.path(), this.value));
   }
 }
-register("formsey-list", ListField, "native", "list", { importPath: "@formsey/fields-native/ListField"})
+
+register({
+  type: "list",
+  tag: "formsey-list",
+  constructor: ListField,
+  libraries: ["native" ],
+  importPath: "@formsey/fields-native/ListField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-list id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
+  }
+})

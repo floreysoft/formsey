@@ -1,5 +1,7 @@
 import { Field, ListFieldDefinition, register } from '@formsey/core';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { Components, Settings } from '@formsey/core/Components';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-list/mwc-list-item";
 import { Select } from "@material/mwc-select";
 import "@material/mwc-select/mwc-select";
@@ -69,4 +71,14 @@ export class ListField extends Field<ListFieldDefinition, string> {
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
-register("formsey-list-material", ListField, "material", "list", { importPath: "@formsey/fields-material/ListField"});
+
+register({
+  type: "list",
+  tag: "formsey-list-material",
+  constructor: ListField,
+  libraries: ["material" ],
+  importPath: "@formsey/fields-material/ListField",
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    return html`<formsey-list-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list-material>`
+  }
+})
