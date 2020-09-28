@@ -9,7 +9,6 @@ export default {
     sourcemap: false
   },
   plugins: [
-    /*
     {
       resolveId(id) {
         if (id.startsWith('lit-element') || id.startsWith('lit-html')) {
@@ -17,7 +16,6 @@ export default {
         }
       }
     },
-    */
     resolve(),
     minifyHTML(),
     terser({
