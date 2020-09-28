@@ -11,7 +11,7 @@ import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import '@formsey/fields-native-extended';
 import '@formsey/fields-vaadin';
 import { css, html, LitElement } from "lit-element";
-import { customElement, query } from "lit-element/lib/decorators.js";
+import { customElement, query } from "lit-element";
 
 @customElement("formsey-demo1")
 export class FormseyDemo1 extends LitElement {

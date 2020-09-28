@@ -1,5 +1,5 @@
 import { css, html, LitElement, TemplateResult } from "lit-element";
-import { property } from "lit-element/lib/decorators.js";
+import { property } from "lit-element";
 import { Components, getDefaultLibrary, getLibrary, Settings } from './Components';
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';

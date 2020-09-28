@@ -3,7 +3,7 @@ import { Components, register, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html, TemplateResult } from "lit-element";
-import { query, queryAll } from "lit-element/lib/decorators.js";
+import { query, queryAll } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { StringField } from './StringField';
 

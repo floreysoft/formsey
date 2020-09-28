@@ -9,7 +9,7 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import "@vaadin/vaadin-text-field/vaadin-number-field";
 import { NumberFieldElement } from '@vaadin/vaadin-text-field/vaadin-number-field';
 import { html } from "lit-element";
-import { property, query } from "lit-element/lib/decorators.js";
+import { property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
 

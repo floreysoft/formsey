@@ -5,7 +5,7 @@ import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html, LitElement, TemplateResult } from "lit-element";
-import { customElement, property, query, queryAll } from "lit-element/lib/decorators.js";
+import { customElement, property, query, queryAll } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
 

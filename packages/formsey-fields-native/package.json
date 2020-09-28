@@ -16,7 +16,7 @@
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/utils": "^0.3.179",
     "@formsey/core": "^0.3.40",
-    "lit-element": "^3.0.0-pre.1"
+    "lit-element": "^2.3.0"
   },
   "scripts": {
     "tsc": "tsc",

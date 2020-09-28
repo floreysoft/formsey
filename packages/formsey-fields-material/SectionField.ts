@@ -2,7 +2,7 @@ import { Field, FieldDefinition, register } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { css, html } from "lit-element";
-import { property } from "lit-element/lib/decorators.js";
+import { property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class SectionField extends Field<FieldDefinition, void> {

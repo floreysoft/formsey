@@ -8,7 +8,7 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-upload/vaadin-upload.js';
 import { html } from "lit-element";
-import { property } from "lit-element/lib/decorators.js";
+import { property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class UploadField extends LabeledField<DateFieldDefinition, string> {

@@ -5,7 +5,7 @@ import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/Invalid
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
 import { css, html } from "lit-element";
-import { property, query } from "lit-element/lib/decorators.js";
+import { property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class TextField extends Field<StringFieldDefinition, string> {

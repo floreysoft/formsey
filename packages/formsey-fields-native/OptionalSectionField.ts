@@ -5,7 +5,7 @@ import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit-element";
-import { property, query } from "lit-element/lib/decorators.js";
+import { property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, Object> {

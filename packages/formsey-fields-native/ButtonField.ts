@@ -3,7 +3,7 @@ import { Components, register, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
-import { property, query } from "lit-element/lib/decorators.js";
+import { property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {

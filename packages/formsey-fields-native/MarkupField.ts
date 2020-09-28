@@ -3,7 +3,7 @@ import { Components, register, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
-import { property } from "lit-element/lib/decorators.js";
+import { property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 

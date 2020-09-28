@@ -8,7 +8,7 @@ import { Radio } from "@material/mwc-radio/mwc-radio";
 import "@material/mwc-textfield/mwc-textfield";
 import { TextField } from "@material/mwc-textfield/mwc-textfield";
 import { css, html, TemplateResult } from "lit-element";
-import { property, query, queryAll } from "lit-element/lib/decorators.js";
+import { property, query, queryAll } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { MaterialField } from './MaterialField';
 

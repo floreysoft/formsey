@@ -4,7 +4,7 @@ import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html, TemplateResult } from "lit-element";
-import { property, queryAll } from "lit-element/lib/decorators.js";
+import { property, queryAll } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export const ICON_MINUS = html`<svg viewBox="0 0 24 24"><title>Remove section</title><path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg>`

@@ -1,5 +1,5 @@
 import { html, TemplateResult } from "lit-element";
-import { property, query, queryAll } from "lit-element/lib/decorators.js";
+import { property, query, queryAll } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
 import { area, Components, register, Settings } from './Components';

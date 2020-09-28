@@ -6,7 +6,7 @@ import "@material/mwc-list/mwc-list-item";
 import { Select } from "@material/mwc-select";
 import "@material/mwc-select/mwc-select";
 import { css, html } from "lit-element";
-import { property, query } from "lit-element/lib/decorators.js";
+import { property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class ListField extends Field<ListFieldDefinition, string> {

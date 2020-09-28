@@ -6,7 +6,7 @@ import { Marked, Renderer } from '@ts-stack/markdown';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import { css, html } from "lit-element";
-import { property } from "lit-element/lib/decorators.js";
+import { property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 hljs.registerLanguage('javascript', javascript);
