@@ -3,9 +3,9 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions'
 import { InvalidErrors } from './InvalidEvent'
 
 export interface Component {
+  type: string,
   tag: string,
   constructor: CustomElementConstructor
-  type: string,
   libraries: string|string[],
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => TemplateResult
   importPath: string | string[],
