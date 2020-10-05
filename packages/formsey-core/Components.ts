@@ -25,9 +25,10 @@ export interface Settings {
 }
 
 export interface Library {
-  components: Components,
-  icon?: TemplateResult,
-  displayName?: string,
+  components: Components
+  icon?: TemplateResult
+  displayName?: string
+  canvas? : (settings: Settings, content: TemplateResult) => TemplateResult
   settingsEditor?: FormDefinition
   onSettingsChanged?: (settings : Settings ) => Settings
 }

@@ -1,6 +1,7 @@
-import { html } from "lit-element";
+import { html, TemplateResult } from "lit-element";
 import { customElement, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { Settings } from "./Components";
 import { createField, Field } from './Field';
 import { FieldDefinition } from './FieldDefinitions';
 import { FormField } from './FormField';
@@ -90,6 +91,8 @@ export class Form extends Field<FieldDefinition, any> {
   @query('#form')
   form: FormField
 
+  canvas = (settings: Settings, content: TemplateResult) => TemplateResult
+
   private _loaded: boolean = false
 
   static get styles() {
@@ -109,7 +112,12 @@ export class Form extends Field<FieldDefinition, any> {
     if (this.definition) {
       field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
-    return html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}" >${field}<slot></slot></form>`
+    const content = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
+    if ( this.canvas ) {
+      return this.canvas(this.settings, content)
+    } else {
+      return content
+    }
   }
 
   updated() {
