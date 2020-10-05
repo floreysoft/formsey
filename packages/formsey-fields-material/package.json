@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-material",
-  "version": "0.3.48",
+  "version": "0.3.49",
   "description": "Material design fields",
   "module": "/esm/formsey-fields-material.min.js",
   "files": [
@@ -12,7 +12,7 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/fields-native": "^0.3.48",
+    "@formsey/fields-native": "^0.3.49",
     "@material/mwc-checkbox": "^0.14.1",
     "@material/mwc-formfield": "^0.14.1",
     "@material/mwc-line-ripple": "^0.14.1",
