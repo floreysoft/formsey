@@ -113,11 +113,7 @@ export class Form extends Field<FieldDefinition, any> {
       field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
     const content = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
-    if ( this.canvas ) {
-      return this.canvas(this.settings, content)
-    } else {
-      return content
-    }
+    return content
   }
 
   updated() {
