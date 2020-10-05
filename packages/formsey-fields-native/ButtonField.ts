@@ -1,5 +1,5 @@
 import { ButtonFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, register, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
@@ -22,8 +22,9 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
     return true
   }
 }
+
 register({
-  type: "boolean",
+  type: "button",
   tag: "formsey-button",
   constructor: ButtonField,
   libraries: ["native" ],
