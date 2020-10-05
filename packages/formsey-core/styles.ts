@@ -1,6 +1,30 @@
 import { css } from 'lit-element';
 
 export const NATIVE_STYLES = css`
+    :host {
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+          -webkit-animation: autofill 0s forwards;
+          animation: autofill 0s forwards;
+      }
+    }
+
+    @keyframes autofill {
+      100% {
+          background: transparent;
+          color: inherit;
+      }
+    }
+
+    @-webkit-keyframes autofill {
+        100% {
+            background: transparent;
+            color: inherit;
+        }
+    }
+
     button {
       display: flex;
       align-items: center;

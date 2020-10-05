@@ -51,11 +51,21 @@ if (nativeLibrary) {
           "type": "form",
           "fields": [
             {
-              "type": "boolean",
-              "label": "Help text above form fields",
-              "name": "helpTextAboveFormFields",
-              "helpText": "Showing help text above form fields may screw up the alignment of the input fields",
-              "default": false
+              "type": "list",
+              "label": "Theme",
+              "name": "theme",
+              "options": [
+                {
+                  "label": "Dark",
+                  "name": "dark",
+                  "value": "dark"
+                },
+                {
+                  "label": "Light",
+                  "name": "light",
+                  "value": "light"
+                }
+              ]
             }
           ],
           "name": "settings",
