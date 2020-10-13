@@ -358,6 +358,11 @@ export const NATIVE_STYLES = css`
       display:block;
     }
 
+    /* List field */
+    formsey-list option {
+      background-color: var(--formsey-background-color, var(--fs-background-color));
+    }
+
     /* Sourcecode field */
     formsey-sourcecode .input {
       height: 150px;
