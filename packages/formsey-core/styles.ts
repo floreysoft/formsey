@@ -374,6 +374,7 @@ export const NATIVE_STYLES = css`
     formsey-signature .input {
       position: relative;
       height: 150px;
+      max-width: 100%;
     }
 
     formsey-signature .input:focus-within {
