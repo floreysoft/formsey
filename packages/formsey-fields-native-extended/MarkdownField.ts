@@ -78,7 +78,7 @@ register({
   type: "markdown",
   tag: "formsey-markdown",
   constructor: MarkdownField,
-  libraries: ["material" ],
+  libraries: ["native" ],
   importPath: "@formsey/fields-native-extended/MarkdownField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-markdown id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-markdown>`
