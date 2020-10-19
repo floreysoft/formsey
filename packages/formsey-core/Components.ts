@@ -7,8 +7,8 @@ export interface Component {
   tag: string,
   constructor: CustomElementConstructor
   libraries: string|string[],
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => TemplateResult
   importPath: string | string[],
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => TemplateResult
   module?: string,
   focusable?: boolean,
   icon?: TemplateResult,

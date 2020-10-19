@@ -102,7 +102,7 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   render() {
-    return this.components["styledForm"].factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event),(event: InvalidEvent) => this.invalid(event), this.id)
+    return this.components?.["styledForm"]?.factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, undefined, undefined)
   }
 
   updated() {
