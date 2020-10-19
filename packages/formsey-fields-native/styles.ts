@@ -130,8 +130,7 @@ export const FORM_STYLES = css`
     font-weight: var(--formsey-title-font-weight, inherit);
     line-height: var(--formsey-title-line-height, inherit);
     color: var(--formsey-title-color, inherit);
-    margin: var(--formsey-title-margin, 12px 0 4px 0);
-    padding: 0;
+    padding: var(--formsey-title-margin, 12px 0 4px 0);
   }
   .ffd {
     font-size: var(--formsey-description-font-size, inherit);

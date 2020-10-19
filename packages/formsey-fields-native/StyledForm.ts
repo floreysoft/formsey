@@ -4,13 +4,17 @@ import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { html } from "lit-element";
+import { css, html } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { FORM_STYLES } from './styles';
 
 export class StyledForm extends Form {
   static get styles() {
-    return [...super.styles, FORM_STYLES]
+    return [...super.styles, FORM_STYLES, css`
+    .themed {
+      background-color: var(--formsey-background-color, var(--fs-background-color, inherit));
+    }
+  `]
   }
 
   render() {
@@ -18,8 +22,8 @@ export class StyledForm extends Form {
     if (this.definition) {
       field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
-    const content = html`<fs-theme theme=${ifDefined(this.settings?.options['theme'])}><slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form></fs-theme>`
-    return content
+    const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
+    return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.options['theme'])}><div class="themed">${form}</div></fs-theme>` : form
   }
 
   protected changed(e: ValueChangedEvent<any>) {
