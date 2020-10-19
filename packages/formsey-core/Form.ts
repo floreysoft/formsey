@@ -1,12 +1,10 @@
-import { html, TemplateResult } from "lit-element";
-import { customElement, property, query } from "lit-element";
+import { customElement, html, property, query, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { Settings } from "./Components";
 import { createField, Field } from './Field';
-import { FieldDefinition } from './FieldDefinitions';
+import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { FormField } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
-import { NATIVE_STYLES } from './styles';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export function get(data: Object, path: string): any {
@@ -95,10 +93,6 @@ export class Form extends Field<FieldDefinition, any> {
 
   private _loaded: boolean = false
 
-  static get styles() {
-    return [...super.styles, NATIVE_STYLES]
-  }
-
   protected shouldUpdate(): boolean {
     let update = super.shouldUpdate()
     if (!update) {
@@ -108,12 +102,7 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   render() {
-    let field = undefined
-    if (this.definition) {
-      field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
-    }
-    const content = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
-    return content
+    return this.components["styledForm"].factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event),(event: InvalidEvent) => this.invalid(event), this.id)
   }
 
   updated() {
@@ -135,7 +124,6 @@ export class Form extends Field<FieldDefinition, any> {
   renderHeader() {
     return
   }
-
 
   public getValue(path: string): any {
     return get(this.value, path);

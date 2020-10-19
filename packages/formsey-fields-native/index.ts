@@ -1,4 +1,5 @@
 export * from '@formsey/core';
+export { StyledForm } from './StyledForm';
 export { BooleanField } from './BooleanField';
 export { ButtonField } from './ButtonField';
 export { CheckboxesField } from './CheckboxesField';
