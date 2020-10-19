@@ -21,6 +21,15 @@ export class StyledForm extends Form {
     const content = html`<fs-theme theme=${ifDefined(this.settings?.options['theme'])}><slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form></fs-theme>`
     return content
   }
+
+  protected changed(e: ValueChangedEvent<any>) {
+     this.dispatchEvent(new ValueChangedEvent(e.type as  "change" | "input" | "inputChange", e.detail.name, e.detail.value));
+  }
+
+  protected invalid(e: InvalidEvent) {
+    e.stopPropagation()
+    this.dispatchEvent(new InvalidEvent(e.errors));
+  }
 }
 
 register({
