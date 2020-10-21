@@ -1,11 +1,10 @@
 import { CompoundField } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { html } from "lit-element";
-import { property } from "lit-element";
+import { customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export interface NameFieldDefinition extends FieldDefinition {
@@ -13,7 +12,7 @@ export interface NameFieldDefinition extends FieldDefinition {
   includeAdditionalName: boolean
   includeSuffix: boolean
 }
-
+@customElement("formsey-name")
 export class NameField extends CompoundField<NameFieldDefinition, Object> {
   @property({ converter: Object })
   value: Object;
@@ -36,11 +35,7 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
   }
 }
 
-registerComponent({
-  type: "name",
-  tag: "formsey-name",
-  cstr: NameField,
-  libraries: ["native", "material", "vaadin"],
+getLibrary("native").registerComponent("name", {
   importPath: "@formsey/fields-compound/NameField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-name id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-name>`

@@ -1,10 +1,9 @@
-import { customElement, html, TemplateResult } from "lit-element";
-import { property, query, queryAll } from "lit-element";
+import { customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
-import { area, Components, getLibrary, registerComponent, Settings } from './Components';
+import { area, Components, getLibrary, Settings } from './Components';
 import { createField, Field } from './Field';
-import { Breakpoints, FieldDefinition, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
+import { Breakpoints, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
