@@ -1,5 +1,5 @@
-import { CheckboxesFieldDefinition, Option, registerComponent, ValueChangedEvent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
@@ -10,12 +10,11 @@ import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
-import { css, html, TemplateResult } from "lit-element";
-import { property, query } from "lit-element";
+import { css, customElement, html, property, query, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
 
-
+@customElement("formsey-multiple-choice-vaadin")
 export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, String> {
   @property({ type: String })
   value: string;
@@ -114,13 +113,9 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
   }
 }
 
-registerComponent({
-  type: "multipleChoice",
-  tag: "formsey-multiple-choice-vaadin",
-  cstr: MultipleChoiceField,
-  libraries: ["vaadin" ],
+getLibrary("vaadin").registerComponent("multipleChoice", {
   importPath: "@formsey/fields-vaadin/MultipleChoiceField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-multiple-choice-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice-vaadin>`
   }
 })

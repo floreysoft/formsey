@@ -1,5 +1,5 @@
-import { registerComponent, StringFieldDefinition } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { StringFieldDefinition } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
@@ -7,11 +7,10 @@ import "@material/mwc-formfield/mwc-formfield.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
-import { html } from "lit-element";
-import { property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
-
+@customElement("formsey-string-vaadin")
 export class StringField extends VaadinField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -51,13 +50,9 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "string",
-  tag: "formsey-string-vaadin",
-  cstr: StringField,
-  libraries: ["vaadin" ],
+getLibrary("vaadin").registerComponent("string", {
   importPath: "@formsey/fields-vaadin/StringField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-string-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-string-vaadin>`
   }
 })

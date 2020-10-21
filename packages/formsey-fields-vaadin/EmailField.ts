@@ -1,5 +1,5 @@
-import { registerComponent, StringFieldDefinition } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { StringFieldDefinition } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
@@ -8,11 +8,10 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import "@vaadin/vaadin-text-field/vaadin-email-field";
 import { EmailFieldElement } from '@vaadin/vaadin-text-field/vaadin-email-field';
-import { html } from "lit-element";
-import { property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
-
+@customElement("formsey-email-vaadin")
 export class EmailField extends VaadinField<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -47,13 +46,9 @@ export class EmailField extends VaadinField<StringFieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "email",
-  tag: "formsey-email-vaadin",
-  cstr: EmailField,
-  libraries: ["vaadin" ],
+getLibrary("vaadin").registerComponent("email", {
   importPath: "@formsey/fields-vaadin/EmailField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-email-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-email-vaadin>`
   }
 })

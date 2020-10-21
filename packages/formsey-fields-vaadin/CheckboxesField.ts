@@ -1,5 +1,5 @@
-import { CheckboxesFieldDefinition, Option, registerComponent, ValueChangedEvent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
@@ -9,12 +9,11 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
-import { css, html, TemplateResult } from "lit-element";
-import { property, query } from "lit-element";
+import { css, customElement, html, property, query, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
 
-
+@customElement("formsey-checkboxes-vaadin")
 export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, string[]> {
   @property({ converter: Object })
   value: string[] = []
@@ -118,13 +117,9 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
   }
 }
 
-registerComponent({
-  type: "checkboxes",
-  tag: "formsey-checkboxes-vaadin",
-  cstr: CheckboxesField,
-  libraries: ["vaadin" ],
+getLibrary("vaadin").registerComponent("checkboxes", {
   importPath: "@formsey/fields-vaadin/CheckboxesField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string[], parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-checkboxes-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-vaadin>`
   }
 })
