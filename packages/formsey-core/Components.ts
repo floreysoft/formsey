@@ -19,7 +19,7 @@ export interface Settings {
 }
 
 export class Library {
-  components: Components
+  components: Components = {}
   icon?: TemplateResult
   displayName?: string
   settingsEditor?: FormDefinition
