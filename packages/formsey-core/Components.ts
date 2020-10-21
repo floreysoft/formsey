@@ -67,8 +67,14 @@ export function getLibraries(): Libraries {
   return libraries
 }
 
-export function getLibrary(name: string): Library | undefined {
-  return getLibraries()?.[name]
+export function getLibrary(name: string): Library {
+  const libraries = getLibraries()
+  let library = libraries[name]
+  if ( typeof library === "undefined" ) {
+    library = new Library()
+    libraries[name] = library
+  }
+  return library
 }
 
 export function getDefaultLibrary(): string | undefined {
