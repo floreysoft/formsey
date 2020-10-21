@@ -1,8 +1,6 @@
-import { customElement, html, property, query, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
-import { Settings } from "./Components";
-import { createField, Field } from './Field';
-import { FieldDefinition, FormDefinition } from './FieldDefinitions';
+import { customElement, property, query } from "lit-element";
+import { Field } from './Field';
+import { FieldDefinition } from './FieldDefinitions';
 import { FormField } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
@@ -203,7 +201,6 @@ export class Form extends Field<FieldDefinition, any> {
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()
     this.errors = e.errors
-    console.log(JSON.stringify([...e.errors], null, 2))
     this.dispatchEvent(new InvalidEvent(e.errors));
   }
 
