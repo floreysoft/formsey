@@ -53,8 +53,8 @@ export interface Editors {
 export interface Category {
   name: string
   displayName: string
-  icon: string
   types: string[];
+  icon?: TemplateResult
 }
 
 export type Categories = Category[]
