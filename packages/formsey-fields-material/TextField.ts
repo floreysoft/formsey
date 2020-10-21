@@ -1,13 +1,13 @@
-import { Field, registerComponent, StringFieldDefinition } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { Field, StringFieldDefinition } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
-import { css, html } from "lit-element";
-import { property, query } from "lit-element";
+import { css, customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
+@customElement("formsey-text-material")
 export class TextField extends Field<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -72,13 +72,9 @@ export class TextField extends Field<StringFieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "text",
-  tag: "formsey-text-material",
-  cstr: TextField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("text", {
   importPath: "@formsey/fields-material/TextField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-text-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text-material>`
   }
 })

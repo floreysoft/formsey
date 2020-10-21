@@ -1,5 +1,5 @@
-import { CheckboxesFieldDefinition, Option, registerComponent, ValueChangedEvent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import "@material/mwc-formfield/mwc-formfield";
@@ -7,11 +7,10 @@ import "@material/mwc-radio/mwc-radio";
 import { Radio } from "@material/mwc-radio/mwc-radio";
 import "@material/mwc-textfield/mwc-textfield";
 import { TextField } from "@material/mwc-textfield/mwc-textfield";
-import { css, html, TemplateResult } from "lit-element";
-import { property, query, queryAll } from "lit-element";
+import { css, customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { MaterialField } from './MaterialField';
-
+@customElement("formsey-multiple-choice-material")
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -90,13 +89,9 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
   }
 }
 
-registerComponent({
-  type: "multipleChoice",
-  tag: "formsey-multiple-choice-material",
-  cstr: MultipleChoiceField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("multipleChoice", {
   importPath: "@formsey/fields-material/MultipleChoiceField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-multiple-choice-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice-material>`
   }
 })

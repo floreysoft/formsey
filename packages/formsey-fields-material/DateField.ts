@@ -1,14 +1,13 @@
-import { DateFieldDefinition, Field, registerComponent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { DateFieldDefinition, Field } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { css, html } from "lit-element";
-import { property, query } from "lit-element";
+import { css, customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-
+@customElement("formsey-date-material")
 export class DateField extends Field<DateFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -74,13 +73,9 @@ export class DateField extends Field<DateFieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "date",
-  tag: "formsey-date-material",
-  cstr: DateField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("date", {
   importPath: "@formsey/fields-material/DateField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-date-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-date-material>`
   }
 })

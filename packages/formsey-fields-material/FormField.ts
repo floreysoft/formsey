@@ -1,10 +1,10 @@
-import { FormField as CoreFormField, registerComponent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FormField as CoreFormField } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { css, html } from 'lit-element';
+import { css, customElement, html } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
-
+@customElement("formsey-form-field-material")
 export class FormField extends CoreFormField {
   static get styles() {
     return [...super.styles, css`
@@ -25,13 +25,9 @@ export class FormField extends CoreFormField {
   }
 }
 
-registerComponent({
-  type: "form",
-  tag: "formsey-form-field-material",
-  cstr: FormField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("form", {
   importPath: "@formsey/fields-material/FormField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-form-field-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field-material>`
   }
 })

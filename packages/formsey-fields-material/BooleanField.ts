@@ -1,15 +1,15 @@
-import { BooleanFieldDefinition, registerComponent, ValueChangedEvent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { BooleanFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
-import { html } from "lit-element";
-import { property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { MaterialField } from './MaterialField';
 
+@customElement("formsey-boolean-material")
 export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
@@ -46,13 +46,9 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
   }
 }
 
-registerComponent({
-  type: "boolean",
-  tag: "formsey-boolean-material",
-  cstr: BooleanField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("boolean", {
   importPath: "@formsey/fields-material/BooleanField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: boolean, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-boolean-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-boolean-material>`
   }
 })

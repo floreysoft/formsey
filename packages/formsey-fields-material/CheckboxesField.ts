@@ -1,5 +1,5 @@
-import { CheckboxesFieldDefinition, Option, registerComponent, ValueChangedEvent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
@@ -7,12 +7,11 @@ import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from "@material/mwc-textfield/mwc-textfield.js";
-import { css, html, TemplateResult } from "lit-element";
-import { property, query, queryAll } from "lit-element";
+import { css, customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { MaterialField } from './MaterialField';
 
-
+@customElement("formsey-checkboxes-material")
 export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, string[]> {
   @property({ converter: Object })
   value: string[] = []
@@ -105,13 +104,9 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
   }
 }
 
-registerComponent({
-  type: "checkboxes",
-  tag: "formsey-checkboxes-material",
-  cstr: CheckboxesField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("checkboxes", {
   importPath: "@formsey/fields-material/CheckboxesField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string[], parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-checkboxes-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-material>`
   }
 })

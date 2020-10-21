@@ -1,10 +1,9 @@
-import { Field, FieldDefinition, registerComponent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { Field, FieldDefinition } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { css, html } from "lit-element";
-import { property } from "lit-element";
+import { css, customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-
+@customElement("formsey-section-material")
 export class SectionField extends Field<FieldDefinition, void> {
   @property({ converter: Object })
   definition: FieldDefinition;
@@ -37,11 +36,7 @@ export class SectionField extends Field<FieldDefinition, void> {
   }
 }
 
-registerComponent({
-  type: "section",
-  tag: "formsey-section-material",
-  cstr: SectionField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("section", {
   importPath: "@formsey/fields-material/SectionField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-section-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-section-material>`

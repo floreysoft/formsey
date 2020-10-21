@@ -1,13 +1,12 @@
-import { Field, NumberFieldDefinition, registerComponent, ValueChangedEvent } from '@formsey/core';
-import { Components, Settings } from '@formsey/core/Components';
+import { Field, NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { css, html } from "lit-element";
-import { property, query } from "lit-element";
+import { css, customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-
+@customElement("formsey-number-material")
 export class NumberField extends Field<NumberFieldDefinition, number> {
   @property({ type: Number })
   value: number;
@@ -78,13 +77,9 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
   }
 }
 
-registerComponent({
-  type: "number",
-  tag: "formsey-number-material",
-  cstr: NumberField,
-  libraries: ["material" ],
+getLibrary("material").registerComponent("number", {
   importPath: "@formsey/fields-material/NumberField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: number, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-number-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-number-material>`
   }
 })
