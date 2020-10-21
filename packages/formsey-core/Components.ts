@@ -57,7 +57,7 @@ export interface Category {
   types: string[];
 }
 
-type Categories = Category[]
+export type Categories = Category[]
 
 export function getLibraries(): Libraries {
   let libraries = window['__formseyLibraries'] as Libraries
