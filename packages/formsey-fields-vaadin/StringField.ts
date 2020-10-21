@@ -54,7 +54,7 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
 registerComponent({
   type: "string",
   tag: "formsey-string-vaadin",
-  constructor: StringField,
+  cstr: StringField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/StringField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

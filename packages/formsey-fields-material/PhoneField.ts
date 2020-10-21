@@ -17,7 +17,7 @@ export class PhoneField extends StringField {
 registerComponent({
   type: "phone",
   tag: "formsey-phone-material",
-  constructor: PhoneField,
+  cstr: PhoneField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/PhoneField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

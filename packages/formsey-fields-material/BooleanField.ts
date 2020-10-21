@@ -49,7 +49,7 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
 registerComponent({
   type: "boolean",
   tag: "formsey-boolean-material",
-  constructor: BooleanField,
+  cstr: BooleanField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/BooleanField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

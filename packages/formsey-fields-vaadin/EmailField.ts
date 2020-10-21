@@ -50,7 +50,7 @@ export class EmailField extends VaadinField<StringFieldDefinition, string> {
 registerComponent({
   type: "email",
   tag: "formsey-email-vaadin",
-  constructor: EmailField,
+  cstr: EmailField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/EmailField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

@@ -1,15 +1,15 @@
 import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { html, TemplateResult } from "lit-element";
-import { property, queryAll } from "lit-element";
+import { customElement, html, property, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export const ICON_MINUS = html`<svg viewBox="0 0 24 24"><title>Remove section</title><path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg>`
 export const ICON_PLUS = html`<svg viewBox="0 0 24 24"><title>Add section</title><path d="M5 13h6v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6h6c0.552 0 1-0.448 1-1s-0.448-1-1-1h-6v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1v6h-6c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg>`
 
+@customElement("formsey-repeating-section")
 export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, Object[]> {
   @property({ converter: Object })
   value: Object[] = [];
@@ -133,13 +133,9 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   }
 }
 
-registerComponent({
-  type: "repeatingSection",
-  tag: "formsey-repeating-section",
-  constructor: RepeatingSectionField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("repeatingSection", {
   importPath: "@formsey/fields-native/RepeatingSectionField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object[], parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-repeating-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-repeating-section>`
   }
 })

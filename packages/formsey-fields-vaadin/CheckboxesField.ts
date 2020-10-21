@@ -121,7 +121,7 @@ export class CheckboxesField extends VaadinField<CheckboxesFieldDefinition, stri
 registerComponent({
   type: "checkboxes",
   tag: "formsey-checkboxes-vaadin",
-  constructor: CheckboxesField,
+  cstr: CheckboxesField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/CheckboxesField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

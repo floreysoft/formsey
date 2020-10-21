@@ -1,19 +1,18 @@
 import { createField, Field, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { html } from "lit-element";
-import { property } from "lit-element";
+import { customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-
 
 export class SelectableSectionValue {
   selection: string;
   value: Object = {}
 }
 
+@customElement("formsey-selectable-section")
 export class SelectableSectionField extends LabeledField<SelectableSectionFieldDefinition, SelectableSectionValue> {
   @property({ converter: Object })
   value: SelectableSectionValue;
@@ -75,13 +74,10 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     }
   }
 }
-registerComponent({
-  type: "selectableSection",
-  tag: "formsey-selectable-section",
-  constructor: SelectableSectionField,
-  libraries: ["native" ],
+
+getLibrary("native").registerComponent("selectableSection", {
   importPath: "@formsey/fields-native/SelectableSectionField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: SelectableSectionValue, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-selectable-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-selectable-section>`
   }
 })

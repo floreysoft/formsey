@@ -1,11 +1,11 @@
 import { ButtonFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, getLibrary, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { html } from "lit-element";
-import { property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
+@customElement("formsey-button")
 export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
@@ -23,13 +23,9 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   }
 }
 
-registerComponent({
-  type: "button",
-  tag: "formsey-button",
-  constructor: ButtonField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("button", {
   importPath: "@formsey/fields-native/ButtonField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: boolean, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-button id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-button>`
   }
 })

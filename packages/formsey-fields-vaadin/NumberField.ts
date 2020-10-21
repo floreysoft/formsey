@@ -51,7 +51,7 @@ export class NumberField extends VaadinField<NumberFieldDefinition, string> {
 registerComponent({
   type: "number",
   tag: "formsey-number-vaadin",
-  constructor: NumberField,
+  cstr: NumberField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/NumberField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

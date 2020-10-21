@@ -17,7 +17,7 @@ export class WeekField extends DateField {
 registerComponent({
   type: "week",
   tag: "formsey-week-material",
-  constructor: WeekField,
+  cstr: WeekField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/WeekField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

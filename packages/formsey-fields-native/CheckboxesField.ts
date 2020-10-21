@@ -1,13 +1,12 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { html, TemplateResult } from "lit-element";
-import { query, queryAll } from "lit-element";
+import { customElement, html, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { StringField } from './StringField';
 
-
+@customElement("formsey-checkboxes")
 export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, string[]> {
   @query("formsey-string")
   otherTextField: StringField
@@ -87,11 +86,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
   }
 }
 
-registerComponent({
-  type: "checkboxes",
-  tag: "formsey-checkboxes",
-  constructor: CheckboxesField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("checkboxes", {
   importPath: "@formsey/fields-native/CheckboxesField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-checkboxes id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes>`

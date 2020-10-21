@@ -81,7 +81,7 @@ export class NumberField extends Field<NumberFieldDefinition, number> {
 registerComponent({
   type: "number",
   tag: "formsey-number-material",
-  constructor: NumberField,
+  cstr: NumberField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/NumberField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

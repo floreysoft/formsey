@@ -17,7 +17,7 @@ export class SearchField extends StringField {
 registerComponent({
   type: "search",
   tag: "formsey-search-material",
-  constructor: SearchField,
+  cstr: SearchField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/SearchField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

@@ -75,7 +75,7 @@ export class ListField extends Field<ListFieldDefinition, string> {
 registerComponent({
   type: "list",
   tag: "formsey-list-material",
-  constructor: ListField,
+  cstr: ListField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/ListField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

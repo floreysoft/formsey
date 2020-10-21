@@ -1,13 +1,12 @@
 import { LabeledField, ListFieldDefinition } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { html } from "lit-element";
-import { property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
-
+@customElement("formsey-list")
 export class ListField extends LabeledField<ListFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -33,13 +32,9 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "list",
-  tag: "formsey-list",
-  constructor: ListField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("list", {
   importPath: "@formsey/fields-native/ListField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-list id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
   }
 })

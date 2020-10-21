@@ -1,13 +1,13 @@
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { css, html } from "lit-element";
+import { css, customElement, html } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { FORM_STYLES } from './styles';
-
+@customElement("formsey-styled-form")
 export class StyledForm extends Form {
   static get styles() {
     return [...super.styles, FORM_STYLES, css`
@@ -36,11 +36,7 @@ export class StyledForm extends Form {
   }
 }
 
-registerComponent({
-  type: "styledForm",
-  tag: "formsey-styled-form",
-  constructor: StyledForm,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("styledForm", {
   importPath: "@formsey/fields-native/StyledForm",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-styled-form id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form>`

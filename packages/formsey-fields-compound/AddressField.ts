@@ -49,7 +49,7 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
 registerComponent({
   type: "address",
   tag: "formsey-address",
-  constructor: AddressField,
+  cstr: AddressField,
   libraries: ["native", "material", "vaadin"],
   importPath: "@formsey/fields-compound/AddessField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

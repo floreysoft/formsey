@@ -16,7 +16,7 @@ export class ColorField extends StringField {
 registerComponent({
   type: "color",
   tag: "formsey-color-material",
-  constructor: ColorField,
+  cstr: ColorField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/ColorField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

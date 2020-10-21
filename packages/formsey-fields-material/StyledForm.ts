@@ -38,7 +38,7 @@ export class StyledForm extends Form {
 registerComponent({
   type: "styledForm",
   tag: "formsey-styled-form-material",
-  constructor: StyledForm,
+  cstr: StyledForm,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/StyledForm",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

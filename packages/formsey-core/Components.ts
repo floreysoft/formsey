@@ -3,16 +3,10 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions'
 import { InvalidErrors } from './InvalidEvent'
 
 export interface Component {
-  type: string,
-  tag: string,
-  constructor: CustomElementConstructor
-  libraries: string | string[],
   importPath: string | string[],
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => TemplateResult
   module?: string,
   focusable?: boolean,
-  icon?: TemplateResult,
-  editor?: string | FormDefinition
 }
 
 export interface Components {
@@ -24,12 +18,16 @@ export interface Settings {
   options: Object
 }
 
-export interface Library {
+export class Library {
   components: Components
   icon?: TemplateResult
   displayName?: string
   settingsEditor?: FormDefinition
   onSettingsChanged?: (settings: Settings) => Settings
+
+  registerComponent(type: string, component: Component) {
+      this.components[type] = { focusable: true, ...component }
+  }
 }
 
 export interface Libraries {
@@ -86,37 +84,6 @@ export function getDefaultLibrary(): string | undefined {
   return undefined
 }
 
-export function registerLibrary(name: string, components: Components) {
-  let libraries = getLibraries()
-  let registeredLibrary = libraries[name]
-  if (typeof registeredLibrary !== "undefined") {
-    console.log("Add components to registered library='" + name + "'")
-    libraries[name] = { ...registeredLibrary, components: { ...registeredLibrary.components, ...components } }
-  } else {
-    console.log("Add new library='" + name + "' to registry")
-    libraries[name] = { components }
-  }
-}
-
-export function registerComponent(component: Component) {
-  if (component.tag && component.constructor) {
-    if (customElements.get(component.tag)) {
-      console.log("'" + component.tag + "' already exists, skipping...")
-    } else {
-      console.log("Registering custom element=" + component.tag);
-      customElements.define(component.tag, component.constructor)
-    }
-  }
-  if (component.libraries && component.type) {
-    const libraries = [].concat(component.libraries)
-    for (let library of libraries) {
-      let components = {} as Components
-      components[component.type] = { focusable: true, ...component }
-      registerLibrary(library, components)
-    }
-  }
-}
-
 export function getEditors(): Editors {
   let editors = window['__formseyEditors'] as Editors
   if (typeof editors === "undefined") {
@@ -145,9 +112,9 @@ export function getCategories(): Categories {
   return categories
 }
 
-export function getCategory(name: string) : Category {
-  for ( let category of getCategories() ) {
-    if ( category.name == name ) {
+export function getCategory(name: string): Category {
+  for (let category of getCategories()) {
+    if (category.name == name) {
       return category
     }
   }

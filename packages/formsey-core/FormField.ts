@@ -1,8 +1,8 @@
-import { html, TemplateResult } from "lit-element";
+import { customElement, html, TemplateResult } from "lit-element";
 import { property, query, queryAll } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
-import { area, Components, registerComponent, Settings } from './Components';
+import { area, Components, getLibrary, registerComponent, Settings } from './Components';
 import { createField, Field } from './Field';
 import { Breakpoints, FieldDefinition, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
@@ -20,6 +20,7 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
 
 const DEFAULT_LAYOUT = "grid-template-columns:1fr;grid-gap:5px 5px"
 
+@customElement("formsey-form-field")
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
   // @ts-ignore()
@@ -349,13 +350,9 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 }
 
-registerComponent({
-  type: "form",
-  tag: "formsey-form-field",
-  constructor: FormField,
-  libraries: ["native", "vaadin"],
+getLibrary("native").registerComponent("form", {
   importPath: "@formsey/fields-native/FormField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   }
 })

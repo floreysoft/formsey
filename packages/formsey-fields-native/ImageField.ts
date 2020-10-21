@@ -1,13 +1,10 @@
 import { ImageFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { html } from "lit-element";
-import { property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
-
-
+@customElement("formsey-image")
 export class ImageField extends LabeledField<ImageFieldDefinition, string> {
   @property({ converter: Object })
   definition: ImageFieldDefinition;
@@ -31,13 +28,9 @@ export class ImageField extends LabeledField<ImageFieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "image",
-  tag: "formsey-image",
-  constructor: ImageField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("image", {
   importPath: "@formsey/fields-native/ImageField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: ImageFieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-image id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-image>`
   }
 })

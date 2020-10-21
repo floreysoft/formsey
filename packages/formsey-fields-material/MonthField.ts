@@ -17,7 +17,7 @@ export class MonthField extends DateField {
 registerComponent({
   type: "month",
   tag: "formsey-month-material",
-  constructor: MonthField,
+  cstr: MonthField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/MonthField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

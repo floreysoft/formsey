@@ -28,7 +28,7 @@ export class FormField extends CoreFormField {
 registerComponent({
   type: "form",
   tag: "formsey-form-field-material",
-  constructor: FormField,
+  cstr: FormField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/FormField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

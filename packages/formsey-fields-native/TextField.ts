@@ -1,12 +1,11 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { LabeledField, StringFieldDefinition, TextFieldDefinition } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { html } from "lit-element";
-import { property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-
+@customElement("formsey-text")
 export class TextField extends LabeledField<TextFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -58,13 +57,9 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "text",
-  tag: "formsey-text",
-  constructor: TextField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("text", {
   importPath: "@formsey/fields-native/TextField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-text id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text>`
   }
 })

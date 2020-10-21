@@ -52,7 +52,7 @@ export class TextField extends VaadinField<TextFieldDefinition, string> {
 registerComponent({
   type: "text",
   tag: "formsey-text-vaadin",
-  constructor: TextField,
+  cstr: TextField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/TextField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

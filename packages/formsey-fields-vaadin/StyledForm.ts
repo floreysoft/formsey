@@ -38,7 +38,7 @@ export class StyledForm extends Form {
 registerComponent({
   type: "styledForm",
   tag: "formsey-styled-form-vaadin",
-  constructor: StyledForm,
+  cstr: StyledForm,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/StyledForm",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

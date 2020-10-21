@@ -117,7 +117,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
 registerComponent({
   type: "multipleChoice",
   tag: "formsey-multiple-choice-vaadin",
-  constructor: MultipleChoiceField,
+  cstr: MultipleChoiceField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/MultipleChoiceField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

@@ -16,7 +16,7 @@ export class DateTimeField extends DateField {
 registerComponent({
   type: "datetime",
   tag: "formsey-datetime-material",
-  constructor: DateTimeField,
+  cstr: DateTimeField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/DateTimeField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

@@ -77,7 +77,7 @@ export class DateField extends Field<DateFieldDefinition, string> {
 registerComponent({
   type: "date",
   tag: "formsey-date-material",
-  constructor: DateField,
+  cstr: DateField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/DateField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

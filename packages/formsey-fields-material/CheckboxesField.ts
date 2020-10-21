@@ -108,7 +108,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
 registerComponent({
   type: "checkboxes",
   tag: "formsey-checkboxes-material",
-  constructor: CheckboxesField,
+  cstr: CheckboxesField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/CheckboxesField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

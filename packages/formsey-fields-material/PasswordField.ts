@@ -17,7 +17,7 @@ export class PasswordField extends StringField {
 registerComponent({
   type: "password",
   tag: "formsey-password-material",
-  constructor: PasswordField,
+  cstr: PasswordField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/PasswordField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

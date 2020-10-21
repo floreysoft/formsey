@@ -89,8 +89,6 @@ export class Form extends Field<FieldDefinition, any> {
   @query('#form')
   form: FormField
 
-  canvas = (settings: Settings, content: TemplateResult) => TemplateResult
-
   private _loaded: boolean = false
 
   protected shouldUpdate(): boolean {

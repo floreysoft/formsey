@@ -37,7 +37,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
 registerComponent({
   type: "creditCard",
   tag: "formsey-creditcard",
-  constructor: CreditCardField,
+  cstr: CreditCardField,
   libraries: ["native", "material", "vaadin"],
   importPath: "@formsey/fields-compound/CreditCardField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

@@ -53,7 +53,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
 registerComponent({
   type: "email",
   tag: "formsey-list-vaadin",
-  constructor: ListField,
+  cstr: ListField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/ListField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

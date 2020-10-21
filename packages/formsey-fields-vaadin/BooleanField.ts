@@ -62,7 +62,7 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
 registerComponent({
   type: "boolean",
   tag: "formsey-boolean-vaadin",
-  constructor: BooleanField,
+  cstr: BooleanField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/BooleanField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

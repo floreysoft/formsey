@@ -93,7 +93,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
 registerComponent({
   type: "multipleChoice",
   tag: "formsey-multiple-choice-material",
-  constructor: MultipleChoiceField,
+  cstr: MultipleChoiceField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/MultipleChoiceField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

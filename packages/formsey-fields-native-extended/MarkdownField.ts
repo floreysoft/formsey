@@ -1,16 +1,15 @@
 import { LabeledField } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { Marked, Renderer } from '@ts-stack/markdown';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
-import { css, html } from "lit-element";
-import { property } from "lit-element";
+import { css, customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 hljs.registerLanguage('javascript', javascript);
-
+@customElement("formsey-markdown")
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })
   // @ts-ignore
@@ -74,11 +73,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
   }
 }
 
-registerComponent({
-  type: "markdown",
-  tag: "formsey-markdown",
-  constructor: MarkdownField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("markdown", {
   importPath: "@formsey/fields-native-extended/MarkdownField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-markdown id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-markdown>`

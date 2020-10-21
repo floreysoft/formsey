@@ -40,7 +40,7 @@ export class SectionField extends Field<FieldDefinition, void> {
 registerComponent({
   type: "section",
   tag: "formsey-section-material",
-  constructor: SectionField,
+  cstr: SectionField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/SectionField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

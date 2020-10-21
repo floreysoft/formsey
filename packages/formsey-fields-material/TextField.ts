@@ -75,7 +75,7 @@ export class TextField extends Field<StringFieldDefinition, string> {
 registerComponent({
   type: "text",
   tag: "formsey-text-material",
-  constructor: TextField,
+  cstr: TextField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/TextField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

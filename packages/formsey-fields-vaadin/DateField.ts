@@ -51,7 +51,7 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
 registerComponent({
   type: "date",
   tag: "formsey-date-vaadin",
-  constructor: DateField,
+  cstr: DateField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/DateField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

@@ -39,7 +39,7 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
 registerComponent({
   type: "name",
   tag: "formsey-name",
-  constructor: NameField,
+  cstr: NameField,
   libraries: ["native", "material", "vaadin"],
   importPath: "@formsey/fields-compound/NameField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

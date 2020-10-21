@@ -12,7 +12,7 @@ export class OptionalSectionField extends NativeOptionalSectionField {
 registerComponent({
   type: "optionalSection",
   tag: "formsey-optional-section-material",
-  constructor: OptionalSectionField,
+  cstr: OptionalSectionField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/OptionalSectionField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

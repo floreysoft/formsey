@@ -13,7 +13,7 @@ export class SelectableSectionField extends NativeSelectableSectionField {
 registerComponent({
   type: "selectableSection",
   tag: "formsey-selectable-section-material",
-  constructor: SelectableSectionField,
+  cstr: SelectableSectionField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/SelectableSectionField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

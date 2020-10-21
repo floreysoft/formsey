@@ -1,14 +1,13 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition } from '@formsey/core';
-import { Components, registerComponent, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { html, TemplateResult } from "lit-element";
-import { property, query, queryAll } from "lit-element";
+import { customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { StringField } from './StringField';
 
-
+@customElement("formsey-multiple-choice")
 export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition, string> {
   @property({ type: String })
   value: string;
@@ -81,13 +80,9 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
   }
 }
 
-registerComponent({
-  type: "multipleChoice",
-  tag: "formsey-multiple-choice",
-  constructor: MultipleChoiceField,
-  libraries: ["native" ],
+getLibrary("native").registerComponent("multipleChoice", {
   importPath: "@formsey/fields-native/MultipleChoiceField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-multiple-choice id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice>`
   }
 })

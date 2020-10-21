@@ -82,7 +82,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
 registerComponent({
   type: "string",
   tag: "formsey-string-material",
-  constructor: StringField,
+  cstr: StringField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/StringField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

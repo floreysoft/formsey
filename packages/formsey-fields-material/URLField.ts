@@ -17,7 +17,7 @@ export class URLField extends StringField {
 registerComponent({
   type: "url",
   tag: "formsey-url-material",
-  constructor: URLField,
+  cstr: URLField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/URLField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

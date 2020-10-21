@@ -16,7 +16,7 @@ export class EmailField extends StringField {
 registerComponent({
   type: "email",
   tag: "formsey-email-material",
-  constructor: EmailField,
+  cstr: EmailField,
   libraries: ["material" ],
   importPath: "@formsey/fields-material/EmailField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

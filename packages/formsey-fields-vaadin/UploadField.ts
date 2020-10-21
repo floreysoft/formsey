@@ -23,7 +23,7 @@ export class UploadField extends LabeledField<DateFieldDefinition, string> {
 registerComponent({
     type: "upload",
     tag: "formsey-upload-vaadin",
-    constructor: UploadField,
+    cstr: UploadField,
     libraries: ["vaadin" ],
     importPath: "@formsey/fields-vaadin/UploadField",
     factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

@@ -16,7 +16,7 @@ export class OptionalSectionField extends NativeOptionalSectionField {
 registerComponent({
   type: "optional-section",
   tag: "formsey-optional-section-vaadin",
-  constructor: OptionalSectionField,
+  cstr: OptionalSectionField,
   libraries: ["vaadin" ],
   importPath: "@formsey/fields-vaadin/OptionalSectionField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
