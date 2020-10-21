@@ -1,5 +1,5 @@
 import { LabeledField } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { Marked, Renderer } from '@ts-stack/markdown';
@@ -74,7 +74,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "markdown",
   tag: "formsey-markdown",
   constructor: MarkdownField,

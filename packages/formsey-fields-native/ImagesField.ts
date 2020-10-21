@@ -1,6 +1,6 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ImagesFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -219,7 +219,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
   }
 }
 
-register({
+registerComponent({
   type: "images",
   tag: "formsey-images",
   constructor: ImagesField,

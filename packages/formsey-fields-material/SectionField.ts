@@ -1,4 +1,4 @@
-import { Field, FieldDefinition, register } from '@formsey/core';
+import { Field, FieldDefinition, registerComponent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { css, html } from "lit-element";
@@ -37,7 +37,7 @@ export class SectionField extends Field<FieldDefinition, void> {
   }
 }
 
-register({
+registerComponent({
   type: "section",
   tag: "formsey-section-material",
   constructor: SectionField,

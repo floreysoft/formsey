@@ -1,4 +1,4 @@
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
@@ -11,7 +11,7 @@ export class SearchField extends StringField {
   }
 }
 
-register({
+registerComponent({
   type: "search",
   tag: "formsey-search",
   constructor: SearchField,

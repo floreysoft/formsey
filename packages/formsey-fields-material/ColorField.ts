@@ -1,4 +1,4 @@
-import { register } from "@formsey/core";
+import { registerComponent } from "@formsey/core";
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -13,7 +13,7 @@ export class ColorField extends StringField {
   }
 }
 
-register({
+registerComponent({
   type: "color",
   tag: "formsey-color-material",
   constructor: ColorField,

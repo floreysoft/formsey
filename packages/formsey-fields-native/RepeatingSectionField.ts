@@ -1,5 +1,5 @@
 import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -133,7 +133,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   }
 }
 
-register({
+registerComponent({
   type: "repeatingSection",
   tag: "formsey-repeating-section",
   constructor: RepeatingSectionField,

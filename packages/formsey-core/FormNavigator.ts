@@ -1,7 +1,7 @@
 import { css, html, LitElement, TemplateResult } from "lit-element";
 import { customElement, property, query } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
-import { Components, register } from "./Components";
+import { Components, registerComponent } from "./Components";
 import { FieldDefinition, FormDefinition, InputFieldDefinition, NestedFormDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
 import { get } from "./Form";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";

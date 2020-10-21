@@ -1,4 +1,4 @@
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
@@ -35,7 +35,7 @@ export class StyledForm extends Form {
   }
 }
 
-register({
+registerComponent({
   type: "styledForm",
   tag: "formsey-styled-form-material",
   constructor: StyledForm,

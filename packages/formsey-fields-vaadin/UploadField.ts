@@ -1,4 +1,4 @@
-import { DateFieldDefinition, LabeledField, register } from '@formsey/core';
+import { DateFieldDefinition, LabeledField, registerComponent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -20,7 +20,7 @@ export class UploadField extends LabeledField<DateFieldDefinition, string> {
     }
 }
 
-register({
+registerComponent({
     type: "upload",
     tag: "formsey-upload-vaadin",
     constructor: UploadField,

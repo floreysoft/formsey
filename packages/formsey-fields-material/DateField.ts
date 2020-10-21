@@ -1,4 +1,4 @@
-import { DateFieldDefinition, Field, register } from '@formsey/core';
+import { DateFieldDefinition, Field, registerComponent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -74,7 +74,7 @@ export class DateField extends Field<DateFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "date",
   tag: "formsey-date-material",
   constructor: DateField,

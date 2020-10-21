@@ -1,4 +1,4 @@
-import { ListFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { ListFieldDefinition, registerComponent, ValueChangedEvent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -50,7 +50,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "email",
   tag: "formsey-list-vaadin",
   constructor: ListField,

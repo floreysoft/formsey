@@ -1,4 +1,4 @@
-import { Field, ListFieldDefinition, register } from '@formsey/core';
+import { Field, ListFieldDefinition, registerComponent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -72,7 +72,7 @@ export class ListField extends Field<ListFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "list",
   tag: "formsey-list-material",
   constructor: ListField,

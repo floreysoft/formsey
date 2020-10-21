@@ -106,6 +106,5 @@ if (nativeLibrary) {
         "name": "customProperties"
       } as FieldDefinition
     ]
-  } as FormDefinition,
-  nativeLibrary.canvas = (settings: Settings, content: TemplateResult ) => html`<fs-theme theme=${ifDefined(settings?.options['theme'])}>${content}</fs-theme>`
+  } as FormDefinition
 }

@@ -1,5 +1,5 @@
 import { CompoundField } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -46,7 +46,7 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
   }
 }
 
-register({
+registerComponent({
   type: "address",
   tag: "formsey-address",
   constructor: AddressField,

@@ -1,4 +1,4 @@
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { NestedFormField as CoreNestedFormField } from '@formsey/core/NestedFormField';
@@ -12,7 +12,7 @@ export class NestedFormField extends CoreNestedFormField {
   }
 }
 
-register({
+registerComponent({
   type: "nestedForm",
   tag: "formsey-nested-form",
   constructor: NestedFormField,

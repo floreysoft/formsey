@@ -1,5 +1,5 @@
 import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -96,7 +96,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 }
 
-register({
+registerComponent({
   type: "optionalSection",
   tag: "formsey-optional-section",
   constructor: OptionalSectionField,

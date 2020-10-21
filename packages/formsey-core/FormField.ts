@@ -2,7 +2,7 @@ import { html, TemplateResult } from "lit-element";
 import { property, query, queryAll } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import ResizeObserver from 'resize-observer-polyfill';
-import { area, Components, register, Settings } from './Components';
+import { area, Components, registerComponent, Settings } from './Components';
 import { createField, Field } from './Field';
 import { Breakpoints, FieldDefinition, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
@@ -349,7 +349,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 }
 
-register({
+registerComponent({
   type: "form",
   tag: "formsey-form-field",
   constructor: FormField,

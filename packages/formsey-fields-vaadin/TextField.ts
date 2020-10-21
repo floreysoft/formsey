@@ -1,4 +1,4 @@
-import { register, TextFieldDefinition } from '@formsey/core';
+import { registerComponent, TextFieldDefinition } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -49,7 +49,7 @@ export class TextField extends VaadinField<TextFieldDefinition, string> {
 
 }
 
-register({
+registerComponent({
   type: "text",
   tag: "formsey-text-vaadin",
   constructor: TextField,

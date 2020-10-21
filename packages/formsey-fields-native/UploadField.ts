@@ -1,5 +1,5 @@
 import { LabeledField, UploadFieldDefinition } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -116,7 +116,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
   }
 }
 
-register({
+registerComponent({
   type: "upload",
   tag: "formsey-upload",
   constructor: UploadField,

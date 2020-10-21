@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, register, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, registerComponent, ValueChangedEvent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -114,7 +114,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
   }
 }
 
-register({
+registerComponent({
   type: "multipleChoice",
   tag: "formsey-multiple-choice-vaadin",
   constructor: MultipleChoiceField,

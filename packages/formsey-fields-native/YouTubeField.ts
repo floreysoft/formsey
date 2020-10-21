@@ -1,5 +1,5 @@
 import { LabeledField } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
@@ -69,7 +69,7 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "youtube",
   tag: "formsey-youtube",
   constructor: YouTubeField,

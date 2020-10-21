@@ -1,4 +1,4 @@
-import { FormField as CoreFormField, register } from '@formsey/core';
+import { FormField as CoreFormField, registerComponent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -25,7 +25,7 @@ export class FormField extends CoreFormField {
   }
 }
 
-register({
+registerComponent({
   type: "form",
   tag: "formsey-form-field-material",
   constructor: FormField,

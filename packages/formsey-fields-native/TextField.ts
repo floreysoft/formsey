@@ -1,6 +1,6 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { LabeledField, StringFieldDefinition, TextFieldDefinition } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
@@ -58,7 +58,7 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "text",
   tag: "formsey-text",
   constructor: TextField,

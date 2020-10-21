@@ -1,4 +1,4 @@
-import { register } from '@formsey/core';
+import { registerComponent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -9,7 +9,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 export class OptionalSectionField extends NativeOptionalSectionField {
 }
 
-register({
+registerComponent({
   type: "optionalSection",
   tag: "formsey-optional-section-material",
   constructor: OptionalSectionField,

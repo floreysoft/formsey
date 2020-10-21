@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { Components, register, Settings } from "./Components";
+import { Components, registerComponent, Settings } from "./Components";
 import { FieldDefinition } from "./FieldDefinitions";
 import { Field } from './Field';
 import { InvalidErrors } from './InvalidEvent';
@@ -11,7 +11,7 @@ export class HiddenField extends Field<FieldDefinition, any> {
   }
 }
 
-register({
+registerComponent({
   type: "hidden",
   tag: "formsey-hidden",
   constructor: HiddenField,

@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, register, ValueChangedEvent } from '@formsey/core';
+import { BooleanFieldDefinition, registerComponent, ValueChangedEvent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -46,7 +46,7 @@ export class BooleanField extends MaterialField<BooleanFieldDefinition, boolean>
   }
 }
 
-register({
+registerComponent({
   type: "boolean",
   tag: "formsey-boolean-material",
   constructor: BooleanField,

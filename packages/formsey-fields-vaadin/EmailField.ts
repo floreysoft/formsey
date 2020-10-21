@@ -1,4 +1,4 @@
-import { register, StringFieldDefinition } from '@formsey/core';
+import { registerComponent, StringFieldDefinition } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -47,7 +47,7 @@ export class EmailField extends VaadinField<StringFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "email",
   tag: "formsey-email-vaadin",
   constructor: EmailField,

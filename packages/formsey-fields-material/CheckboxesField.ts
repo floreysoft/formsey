@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, register, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option, registerComponent, ValueChangedEvent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -105,7 +105,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
   }
 }
 
-register({
+registerComponent({
   type: "checkboxes",
   tag: "formsey-checkboxes-material",
   constructor: CheckboxesField,

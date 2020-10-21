@@ -1,5 +1,5 @@
 import { LabeledField, ListFieldDefinition } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -33,7 +33,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "list",
   tag: "formsey-list",
   constructor: ListField,

@@ -1,4 +1,4 @@
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
@@ -10,7 +10,7 @@ export class PhoneField extends StringField {
     return "tel"
   }
 }
-register({
+registerComponent({
   type: "phone",
   tag: "formsey-phone",
   constructor: PhoneField,

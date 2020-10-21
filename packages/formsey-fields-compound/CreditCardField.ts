@@ -1,5 +1,5 @@
 import { CompoundField } from '@formsey/core';
-import { Components, register, Settings } from '@formsey/core/Components';
+import { Components, registerComponent, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -34,7 +34,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
   }
 }
 
-register({
+registerComponent({
   type: "creditCard",
   tag: "formsey-creditcard",
   constructor: CreditCardField,

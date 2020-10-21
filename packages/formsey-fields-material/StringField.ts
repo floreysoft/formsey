@@ -1,4 +1,4 @@
-import { Field, register, StringFieldDefinition } from '@formsey/core';
+import { Field, registerComponent, StringFieldDefinition } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -79,7 +79,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "string",
   tag: "formsey-string-material",
   constructor: StringField,

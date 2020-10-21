@@ -1,4 +1,4 @@
-import { NumberFieldDefinition, register } from '@formsey/core';
+import { NumberFieldDefinition, registerComponent } from '@formsey/core';
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -48,7 +48,7 @@ export class NumberField extends VaadinField<NumberFieldDefinition, string> {
   }
 }
 
-register({
+registerComponent({
   type: "number",
   tag: "formsey-number-vaadin",
   constructor: NumberField,

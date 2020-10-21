@@ -1,4 +1,4 @@
-import { register } from "@formsey/core";
+import { registerComponent } from "@formsey/core";
 import { Components, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -14,7 +14,7 @@ export class WeekField extends DateField {
   }
 }
 
-register({
+registerComponent({
   type: "week",
   tag: "formsey-week-material",
   constructor: WeekField,
