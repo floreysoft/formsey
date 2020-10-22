@@ -1,6 +1,6 @@
 import { css, html, LitElement, TemplateResult } from "lit-element";
 import { property } from "lit-element";
-import { Components, getDefaultLibrary, getLibrary, Settings } from './Components';
+import { Components, getDefaultLibrary, getLibraries, getLibrary, Settings } from './Components';
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
@@ -13,7 +13,15 @@ export const createField = (components: Components, settings: Settings, definiti
   if (component) {
     return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
   } else {
-    console.error("Your form is using a field of type=" + definition.type + " but no matching component has been registered!");
+    const libraries = getLibraries()
+    for ( let key of Object.keys(libraries) ) {
+      const library = libraries[key]
+      if ( library.components[definition.type] ) {
+        console.warn(`Field of type=${definition.type} not found in your components library, returning it from library=${key}}`);
+        return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
+      }
+    }
+    console.error(`Your form is using a field of type=${definition.type} but no matching component has been registered in any library!`);
   }
   return html``;
 }
