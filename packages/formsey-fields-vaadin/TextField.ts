@@ -1,6 +1,5 @@
-import { TextFieldDefinition } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldDefinition, TextFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";

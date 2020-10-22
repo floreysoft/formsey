@@ -1,7 +1,7 @@
-import { DateFieldDefinition, LabeledField } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { DateFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { LabeledField } from '@formsey/core/LabeledField';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";

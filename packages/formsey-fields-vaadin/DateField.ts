@@ -1,4 +1,4 @@
-import { DateFieldDefinition } from '@formsey/core';
+import { DateFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';

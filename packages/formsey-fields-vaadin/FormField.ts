@@ -1,6 +1,6 @@
-import { FormField as CoreFormField } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
+import { FormField as CoreFormField } from '@formsey/core/FormField';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { customElement, html } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';

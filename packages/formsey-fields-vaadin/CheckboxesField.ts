@@ -1,7 +1,7 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { CheckboxesFieldDefinition, FieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
 import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
