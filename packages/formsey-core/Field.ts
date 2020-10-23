@@ -16,7 +16,8 @@ export const createField = (components: Components, settings: Settings, definiti
     const libraries = getLibraries()
     for ( let key of Object.keys(libraries) ) {
       const library = libraries[key]
-      if ( library.components[definition.type] ) {
+      const component = library.components[definition.type]
+      if ( component ) {
         console.warn(`Field of type=${definition.type} not found in your components library, returning it from library=${key}}`);
         return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
       }
