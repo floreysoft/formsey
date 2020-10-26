@@ -31,6 +31,7 @@ export const FORM_STYLES = css`
     margin-left: calc(var(--lumo-border-radius-m) / 4);
     transition: color 0.2s;
     line-height: 1;
+    padding-top: var(--lumo-space-m);
     padding-bottom: 0.5em;
     overflow: hidden;
     white-space: nowrap;
