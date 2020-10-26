@@ -1,4 +1,5 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Field } from '@formsey/core/Field';
 import { BooleanFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -9,9 +10,8 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { css, customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 @customElement("formsey-boolean-vaadin")
-export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
+export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
@@ -26,12 +26,12 @@ export class BooleanField extends VaadinField<BooleanFieldDefinition, boolean> {
     }`]
   }
 
-  renderField() {
+  render() {
     let customValidity = this.definition.customValidity
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label)}" theme="vertical"><vaadin-checkbox @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label}</vaadin-checkbox></vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="vertical"><vaadin-checkbox @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label}</vaadin-checkbox></vaadin-checkbox-group>`;
   }
 
   protected changed(e: any) {

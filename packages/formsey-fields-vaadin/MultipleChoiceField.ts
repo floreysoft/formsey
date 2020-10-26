@@ -1,4 +1,5 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Field } from '@formsey/core/Field';
 import { CheckboxesFieldDefinition, FieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -12,10 +13,9 @@ import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-grou
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { css, customElement, html, property, query, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 
 @customElement("formsey-multiple-choice-vaadin")
-export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, String> {
+export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String> {
   @property({ type: String })
   value: string;
 
@@ -47,7 +47,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     }`]
   }
 
-  renderField() {
+  render() {
     let templates: TemplateResult[] = [];
     if (this.definition.options) {
       for (let i = 0; i < this.definition.options.length; i++) {
@@ -68,7 +68,7 @@ export class MultipleChoiceField extends VaadinField<CheckboxesFieldDefinition, 
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
+    return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
   focusField(path: string) {

@@ -20,6 +20,39 @@ export const FORM_STYLES = css`
     width: 100%;
   }
 
+  .lfw {
+    color: var(--lumo-secondary-text-color);
+  }
+
+  .lfl {
+    align-self: flex-start;
+    font-weight: 500;
+    font-size: var(--lumo-font-size-s);
+    margin-left: calc(var(--lumo-border-radius-m) / 4);
+    transition: color 0.2s;
+    line-height: 1;
+    padding-bottom: 0.5em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .lfht {
+    display: block;
+    font-size: var(--lumo-font-size-xs);
+    line-height: var(--lumo-line-height-xs);
+    margin-top: .4em;
+    margin-left: calc(var(--lumo-border-radius-m)/ 4);
+    transition: color .2s;
+  }
+
+  .lfw:hover .lfht,  .lfw:hover .lfl {
+    color: var(--lumo-body-text-color);
+  }
+
   /* YouTube field */
   formsey-youtube {
     display: table;
@@ -192,5 +225,54 @@ export const FORM_STYLES = css`
     fill: currentColor;
     cursor: pointer;
   }
+
+  /* Repeating section */
+  formsey-repeating-section .form {
+    position: relative;
+    margin: 0.5em 0 0 0.8em;
+    padding: 0 0 5px 15px;
+    border-left: 1px solid var(--lumo-contrast-10pct);
+    font-size: var(--lumo-font-size-m);
+    transition: all 0.12s ease-out;
+  }
+  formsey-repeating-section .form:hover {
+    border-left: 1px solid var(--lumo-contrast-30pct);
+  }
+  formsey-repeating-section .fs-remove-wrapper {
+    position: absolute;
+    line-height: 0;
+    padding: 0.4em 0;
+    top: calc(50% - 1em);
+    left: -0.8em;
+  }
+  formsey-repeating-section button svg {
+    width: 1em;
+    height: auto;
+    stroke-width: 0;
+    fill: currentColor;
+  }
+  formsey-repeating-section button {
+    display: flex;
+    width: 1.4em;
+    height: 1.4em;
+    font-size: var(--lumo-font-size-m);
+    border-radius: 50%;
+    background-color: var(--lumo-base-color);
+    transition: background-color 0.12s ease-out 0s;
+    border: 1px solid var(--lumo-contrast-30pct);
+    padding: 0.2em;
+    color: var(--lumo-secondary-text-color);
+  }
+  formsey-repeating-section button:focus {
+    outline: none;
+    border: 1px solid var(--lumo-contrast-90pct);
+  }
+  formsey-repeating-section .form:hover .fs-remove, formsey-repeating-section .fs-add:hover {
+    border: 1px solid var(--lumo-contrast-50pct);
+  }
+  formsey-repeating-section .fs-add {
+    margin: 0.2em 0.1em 0.1em;
+  }
+
 
 `
