@@ -1,16 +1,26 @@
 export { BooleanField } from './BooleanField'
+export { ButtonField } from './ButtonField'
 export { CheckboxesField } from './CheckboxesField'
+export { ColorField } from './ColorField'
 export { DateField } from './DateField'
+export { DateTimeField } from './DateTimeField'
 export { EmailField } from './EmailField'
 export { FormField } from './FormField'
 export { ListField } from './ListField'
+export { MonthField } from './MonthField'
 export { MultipleChoiceField } from './MultipleChoiceField'
 export { NumberField } from './NumberField'
 export { OptionalSectionField } from './OptionalSectionField'
+export { PhoneField } from './PhoneField'
+export { SearchField } from './SearchField'
 export { StringField } from './StringField'
 export { StyledForm } from './StyledForm'
 export { TextField } from './TextField'
+export { TimeField } from './TimeField'
+export { URLField } from './URLField'
 export { VaadinField } from './VaadinField'
+export { WeekField } from './WeekField'
+export { PasswordField } from './PasswordField'
 import { getLibrary, Settings } from '@formsey/core/Components'
 import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions'
 import { html } from 'lit-html'
@@ -21,63 +31,73 @@ let vaadinLibrary = getLibrary('vaadin')
 if ( vaadinLibrary ) {
     vaadinLibrary.icon = ICON_VAADIN
     vaadinLibrary.displayName = "Vaadin"
-    vaadinLibrary.settingsEditor = {
-        "type": "form",
-        "layout": {
-          "style": "padding:0px;"
-        },
-        "fields": [
-          {
-            "type": "nestedForm",
-            "form": {
-              "type": "form",
-              "fields": [
-                {
-                  "type": "boolean",
-                  "label": "Help text above form fields",
-                  "name": "helpTextAboveFormFields",
-                  "helpText": "Showing help text above form fields may screw up the alignment of the input fields",
-                  "default": false
-                }
-              ],
-              "name": "settings",
-              "label": "Settings",
-              "layout": {
-                "style": "padding:0px;"
-              },
-              "helpText": ""
+    vaadinLibrary.settingsEditor ={
+      "type": "form",
+      "layout": {
+        "style": "padding:0px;"
+      },
+      "fields": [
+        {
+          "type": "nestedForm",
+          "form": {
+            "type": "form",
+            "fields": [
+              {
+                "type": "list",
+                "label": "Theme",
+                "name": "theme",
+                "options": [
+                  {
+                    "label": "Dark",
+                    "name": "dark",
+                    "value": "dark"
+                  },
+                  {
+                    "label": "Light",
+                    "name": "light",
+                    "value": "light"
+                  }
+                ]
+              }
+            ],
+            "name": "options",
+            "label": "Options",
+            "layout": {
+              "style": "padding:0px;background-color:undefined;border-bottom:undefined;border-color:undefined"
             },
-            "name": "settings"
+            "helpText": ""
           },
-          {
-            "type": "nestedForm",
-            "form": {
-              "type": "form",
-              "fields": [
-                {
-                  "type": "color",
-                  "label": "Primary color",
-                  "name": "--lumo-primary-color"
-                },
-                {
-                  "type": "string",
-                  "label": "Border radius",
-                  "name": "--lumo-border-radius"
-                }
-              ],
-              "name": "customProperties",
-              "layout": {
-                "style": "padding:0px;"
+          "name": "options"
+        },
+        {
+          "type": "nestedForm",
+          "form": {
+            "type": "form",
+            "fields": [
+              {
+                "type": "color",
+                "label": "Primary color",
+                "name": "--lumo-primary-color"
               },
-              "label": "Custom properties",
-              "helpText": "Configure the lumo styles"
+              {
+                "type": "string",
+                "label": "Border radius",
+                "name": "--lumo-border-radius"
+              }
+            ],
+            "name": "customProperties",
+            "layout": {
+              "style": "padding:0px;"
             },
-            "name": "customProperties"
-          } as FieldDefinition
-        ]
-      } as FormDefinition,
-      vaadinLibrary.onSettingsChanged = ( settings : Settings ) : Settings => {
-          settings.customProperties['--lumo-calculated'] = "50px"
-          return settings
-      }
+            "label": "Styles",
+            "helpText": "Configure the style of the components in this library"
+          },
+          "name": "customProperties"
+        } as FieldDefinition
+      ]
+    } as FormDefinition
+    vaadinLibrary.onSettingsChanged = ( settings : Settings ) : Settings => {
+        settings.customProperties['--lumo-calculated'] = "50px"
+        return settings
+    }
 }

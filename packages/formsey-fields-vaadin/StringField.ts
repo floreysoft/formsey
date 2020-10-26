@@ -11,6 +11,10 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import { VaadinField } from './VaadinField';
 @customElement("formsey-string-vaadin")
 export class StringField extends VaadinField<StringFieldDefinition, string> {
+  protected get type() : "text" | "search" | "tel" | "url" | "email" | "password" | "time" | "datetime-local" | "week" | "month" | "color" {
+    return "text"
+  }
+
   @property({ type: String })
   value: string;
 
@@ -23,6 +27,10 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
       customValidity = this.error.validityMessage
     }
     return html`<vaadin-text-field style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?readonly="${this.definition.readonly}" ?autoselect="${this.definition.autoselect}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.inputted}" @changed="${this.changed}"  name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${this.definition.disabled}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}">`;
+  }
+
+  firstUpdated() {
+    (this.vaadinTextField.focusElement as any).type = this.type
   }
 
   renderFooter() {

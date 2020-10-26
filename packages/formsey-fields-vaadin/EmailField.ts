@@ -1,29 +1,25 @@
+import { Field } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { StringFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import "@material/mwc-checkbox/mwc-checkbox.js";
-import "@material/mwc-formfield/mwc-formfield.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import "@vaadin/vaadin-text-field/vaadin-email-field";
 import { EmailFieldElement } from '@vaadin/vaadin-text-field/vaadin-email-field';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 @customElement("formsey-email-vaadin")
-export class EmailField extends VaadinField<StringFieldDefinition, string> {
+export class EmailField extends Field<StringFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
   @query("vaadin-email-field")
   vaadinEmailField: EmailFieldElement
 
-  renderField() {
+  render() {
     let customValidity = this.definition.customValidity
     if ( this.error && this.error.validityMessage ) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-email-field style="display:flex" label="${ifDefined(this.definition.label)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.inputted}" @change="${this.changed}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${this.definition.disabled}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}"></vaadin-email-field>`
+    return html`<vaadin-email-field style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText as string}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.inputted}" @change="${this.changed}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${this.definition.disabled}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}"></vaadin-email-field>`
   }
 
   focusField(path: string) {
