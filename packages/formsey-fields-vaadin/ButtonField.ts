@@ -1,13 +1,12 @@
-import { ButtonFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { ButtonFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { LabeledField } from '@formsey/core/LabeledField';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 
 @customElement("formsey-button-vaadin")
-export class ButtonField extends VaadinField<ButtonFieldDefinition, boolean> {
+export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 

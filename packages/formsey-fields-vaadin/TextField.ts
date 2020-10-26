@@ -10,7 +10,6 @@ import { TextAreaElement } from '@vaadin/vaadin-text-field/vaadin-text-area';
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 @customElement("formsey-text-vaadin")
 export class TextField extends Field<TextFieldDefinition, string> {
   @property({ type: String })

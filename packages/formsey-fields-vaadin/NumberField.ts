@@ -10,7 +10,6 @@ import "@vaadin/vaadin-text-field/vaadin-number-field";
 import { NumberFieldElement } from '@vaadin/vaadin-text-field/vaadin-number-field';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 @customElement("formsey-number-vaadin")
 export class NumberField extends Field<NumberFieldDefinition, string> {
   @property({ type: String })

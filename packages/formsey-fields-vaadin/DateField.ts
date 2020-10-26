@@ -1,6 +1,6 @@
-import { DateFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { Field } from '@formsey/core/Field';
+import { DateFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
@@ -10,9 +10,8 @@ import '@vaadin/vaadin-date-picker';
 import { DatePickerElement } from "@vaadin/vaadin-date-picker";
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 @customElement("formsey-date-vaadin")
-export class DateField extends VaadinField<DateFieldDefinition, string> {
+export class DateField extends Field<DateFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
@@ -24,7 +23,7 @@ export class DateField extends VaadinField<DateFieldDefinition, string> {
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-date-picker style="display:flex" label="${ifDefined(this.definition.label)}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" ?disabled="${this.definition.disabled}" ?autofocus="${this.definition.autofocus}" @change="${this.changed}" min="${ifDefined(this.definition.min)}"  max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" .value=${this.value} placeholder="${ifDefined(this.definition.placeholder)}"></vaadin-date-picker>`
+    return html`<vaadin-date-picker style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" ?disabled="${this.definition.disabled}" ?autofocus="${this.definition.autofocus}" @change="${this.changed}" min="${ifDefined(this.definition.min)}"  max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" .value=${this.value} placeholder="${ifDefined(this.definition.placeholder)}"></vaadin-date-picker>`
   }
 
   focusField(path: string) {

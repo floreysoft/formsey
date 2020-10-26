@@ -1,4 +1,5 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Field } from '@formsey/core/Field';
 import { FieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
@@ -8,9 +9,8 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 @customElement("formsey-string-vaadin")
-export class StringField extends VaadinField<StringFieldDefinition, string> {
+export class StringField extends Field<StringFieldDefinition, string> {
   protected get type() : "text" | "search" | "tel" | "url" | "email" | "password" | "time" | "datetime-local" | "week" | "month" | "color" {
     return "text"
   }
@@ -21,7 +21,7 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
   @query("vaadin-text-field")
   vaadinTextField: TextFieldElement
 
-  renderField() {
+  render() {
     let customValidity = this.definition.customValidity
     if ( this.error && this.error.validityMessage ) {
       customValidity = this.error.validityMessage
@@ -31,10 +31,6 @@ export class StringField extends VaadinField<StringFieldDefinition, string> {
 
   firstUpdated() {
     (this.vaadinTextField.focusElement as any).type = this.type
-  }
-
-  renderFooter() {
-    return undefined
   }
 
   focusField(path: string) {

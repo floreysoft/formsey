@@ -1,4 +1,5 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Field } from '@formsey/core/Field';
 import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -10,11 +11,10 @@ import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { VaadinField } from './VaadinField';
 
 
 @customElement("formsey-list-vaadin")
-export class ListField extends VaadinField<ListFieldDefinition, string> {
+export class ListField extends Field<ListFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
@@ -22,7 +22,7 @@ export class ListField extends VaadinField<ListFieldDefinition, string> {
   comboBox : ComboBoxElement
 
   renderField() {
-    return html`<vaadin-combo-box style="display:flex" @change="${event => this.inputted(event)}" label="${ifDefined(this.definition.label)}" ?disabled="${this.definition.disabled}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}"></vaadin-combo-box>`;
+    return html`<vaadin-combo-box style="display:flex" @change="${event => this.inputted(event)}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?disabled="${this.definition.disabled}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}"></vaadin-combo-box>`;
   }
 
   firstUpdated() {
