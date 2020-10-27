@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native-extended",
-  "version": "0.3.71",
+  "version": "0.3.73",
   "description": "Heavy-weight fields",
   "module": "/esm/formsey-fields-native-extended.min.js",
   "files": [
