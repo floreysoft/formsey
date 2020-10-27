@@ -13,7 +13,7 @@ export class ColorField extends StringField {
   @query("input[type='color']")
   color: HTMLInputElement
 
-  renderField() {
+  render() {
     let customValidity = this.definition.customValidity
     if ( this.error && this.error.validityMessage ) {
       customValidity = this.error.validityMessage

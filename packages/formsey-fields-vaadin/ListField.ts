@@ -21,7 +21,7 @@ export class ListField extends Field<ListFieldDefinition, string> {
   @query("vaadin-combo-box")
   comboBox : ComboBoxElement
 
-  renderField() {
+  render() {
     return html`<vaadin-combo-box style="display:flex" @change="${event => this.inputted(event)}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?disabled="${this.definition.disabled}" name="${this.definition.name}" .items="${this.definition.options}" .value="${this.value}"></vaadin-combo-box>`;
   }
 
