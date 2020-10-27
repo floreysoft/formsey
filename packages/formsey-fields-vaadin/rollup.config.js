@@ -17,9 +17,6 @@ export default {
         if (id.startsWith('@formsey/core')) {
           return { id: `https://unpkg.com/@formsey/core?module`, external: true };
         }
-        if (id.startsWith('@formsey/fields-native')) {
-          return { id: `https://unpkg.com/@formsey/fields-native?module`, external: true };
-        }
       }
     },
     resolve(),
