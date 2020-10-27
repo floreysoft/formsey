@@ -75,6 +75,90 @@ export const FORM_STYLES = css`
     height: 100%;
   }
 
+  /* Image field */
+  .if {
+    width: 100%;
+  }
+  .if>img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Images field */
+  .ifi {
+    column-gap: 0px;
+    line-height: 0;
+  }
+
+
+  formsey-image-checkbox {
+    display: inline-block;
+    position: relative;
+  }
+  formsey-image-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  formsey-image-checkbox img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    opacity: .9;
+    transition: opacity 0.2s ease-out, transform .2s;
+    transform-origin: 50% 50%;
+  }
+  formsey-image-checkbox img:hover {
+    opacity: .95;
+  }
+  formsey-image-checkbox :checked+label>img {
+    opacity: 1;
+  }
+  formsey-image-checkbox label {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .2s;
+    line-height: 1.15;
+    margin-bottom: .5em;
+  }
+  formsey-image-checkbox label::after {
+    content: ' ';
+    color: var(--formsey-text-color, var(--fs-accent-color-text, #ffffff));
+    background-color: var(--formsey-background-color, var(--fs-background-color, inherit));
+    border-radius: 50%;
+    position: absolute;
+    right: .25em;
+    top: .25em;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    line-height: 1em;
+    transform-origin: 50% 50%;
+    display:none;
+    box-shadow: var(--formsey-box-shadow, var(--fs-box-shadow));
+  }
+  formsey-image-checkbox :checked+label>img {
+    box-shadow: 0px 0px 3px 0 var(--fs-text-color);
+  }
+  formsey-image-checkbox :focus+label {
+    transform: scale(.95);
+  }
+  formsey-image-checkbox :checked+label {
+    transform: scale(.9);
+  }
+  formsey-image-checkbox :focus+label>img {
+    box-shadow: 0px 0px 3px 0 var(--fs-border-color-focus);
+    opacity: .9;
+  }
+  formsey-image-checkbox :checked+label::after {
+    display:block;
+  }
+
   /* Signature field */
   formsey-signature .input {
     position: relative;
@@ -156,7 +240,7 @@ export const FORM_STYLES = css`
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
-    position: relative;
+    position: absolute;
     z-index: -1;
   }
 
@@ -165,14 +249,17 @@ export const FORM_STYLES = css`
     flex-direction: column;
     cursor: pointer;
     height: auto;
-    padding: 0;
+    border: 1px dashed var(--lumo-contrast-20pct);
+    border-radius: var(--lumo-border-radius);
+    min-height: calc(var(--lumo-size-m) - 2px);
   }
 
   formsey-upload .files, formsey-upload .prompt {
+    font-size: var(--lumo-font-size-m);
     line-height: initial;
     cursor: default;
     display: grid;
-    grid-template-columns: 24px 1fr max-content 20px;
+    grid-template-columns: 2.5em 1fr max-content 20px;
     grid-gap: 5px;
     align-items: center;
   }
@@ -181,7 +268,7 @@ export const FORM_STYLES = css`
     flex-grow: 1;
     grid-template-columns: 1fr max-content;
     cursor: pointer;
-    min-height: calc( var(--formsey-input-height, 2em) - 2px);
+    line-height: calc(var(--lumo-size-m) - 2px);
   }
 
   formsey-upload .prompt span {
@@ -191,10 +278,11 @@ export const FORM_STYLES = css`
   formsey-upload .prompt svg {
     width: 1.2em;
     height: 1.2em;
+    fill: currentColor;
   }
 
   formsey-upload .files {
-    font-size: var(--fs-font-size, smaller);
+    font-size: var(--lumo-font-size-s);
   }
 
   formsey-upload .preview, formsey-upload .preview svg {
@@ -206,8 +294,8 @@ export const FORM_STYLES = css`
   }
 
   formsey-upload .over {
-    border: 1px dashed var(--formsey-primary-color, #999);
-    color: var(--formsey-primary-color, #999);
+    border: 1px dashed var(--lumo-contrast-60pct);
+    color: var(--lumo-primary-color);
   }
 
   formsey-upload .filename {
@@ -232,12 +320,12 @@ export const FORM_STYLES = css`
     position: relative;
     margin: 0.5em 0 0 0.8em;
     padding: 0 0 5px 15px;
-    border-left: 1px solid var(--lumo-contrast-10pct);
+    border-left: 2px solid var(--lumo-contrast-10pct);
     font-size: var(--lumo-font-size-m);
     transition: all 0.12s ease-out;
   }
   formsey-repeating-section .form:hover {
-    border-left: 1px solid var(--lumo-contrast-30pct);
+    border-left: 2px solid var(--lumo-contrast-30pct);
   }
   formsey-repeating-section .fs-remove-wrapper {
     position: absolute;
@@ -260,20 +348,72 @@ export const FORM_STYLES = css`
     border-radius: 50%;
     background-color: var(--lumo-base-color);
     transition: background-color 0.12s ease-out 0s;
-    border: 1px solid var(--lumo-contrast-30pct);
+    border: 2px solid var(--lumo-contrast-30pct);
     padding: 0.2em;
     color: var(--lumo-secondary-text-color);
   }
   formsey-repeating-section button:focus {
     outline: none;
-    border: 1px solid var(--lumo-contrast-90pct);
+    border: 2px solid var(--lumo-contrast-90pct);
   }
   formsey-repeating-section .form:hover .fs-remove, formsey-repeating-section .fs-add:hover {
-    border: 1px solid var(--lumo-contrast-50pct);
+    border: 2px solid var(--lumo-contrast-50pct);
   }
   formsey-repeating-section .fs-add {
     margin: 0.2em 0.1em 0.1em;
   }
 
+  /* Markdown field */
+  formsey-markdown .content {
+    line-height: 1.35;
+  }
+  formsey-markdown pre {
+    padding: var(--lumo-space-s);
+    display:block;
+    overflow-x:auto;
+    white-space: pre-wrap;
+    line-height: var(--lumo-line-height-m);
+    margin: 0;
+  }
+  formsey-markdown code {
+    background: none;
+  }
+  .hljs-subst{
+    color:#444
+  }
+  .hljs-comment{
+      color:#888
+  }
+  .hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta-keyword,.hljs-name,.hljs-selector-tag{
+      font-weight:bolder
+  }
+  .hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
+      color:#800
+  }
+  .hljs-section,.hljs-title{
+      color:#800;
+      font-weight:700
+  }
+  .hljs-link,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{
+      color:#bc6060
+  }
+  .hljs-literal{
+      color:#78a960
+  }
+  .hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{
+      color:#397300
+  }
+  .hljs-meta{
+      color:#1f7199
+  }
+  .hljs-meta-string{
+      color:#4d99bf
+  }
+  .hljs-emphasis{
+      font-style:italic
+  }
+  .hljs-strong{
+      font-weight:bold
+  }
 
 `

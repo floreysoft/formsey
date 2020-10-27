@@ -19,7 +19,7 @@ export class UploadField extends LabeledField<DateFieldDefinition, string> {
     }
 }
 
-getLibrary("vaadin").registerComponent("upload", {
+getLibrary("vaadin").registerComponent("uploads", {
     importPath: "@formsey/fields-vaadin/UploadField",
     factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
       return html`<formsey-upload-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-upload-vaadin>`

@@ -50,7 +50,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
   }
 
   renderField() {
-    return html`${unsafeHTML(this.markup)}`
+    return html`<div class="content">${unsafeHTML(this.markup)}</div>`
   }
 }
 
