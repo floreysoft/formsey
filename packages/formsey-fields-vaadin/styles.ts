@@ -25,6 +25,7 @@ export const FORM_STYLES = css`
   }
 
   .lfl {
+    display: block;
     align-self: flex-start;
     font-weight: 500;
     font-size: var(--lumo-font-size-s);
@@ -64,6 +65,7 @@ export const FORM_STYLES = css`
     position: relative;
     overflow: hidden;
     max-width: 100%;
+    border-radius: var(--lumo-border-radius);
   }
 
   formsey-youtube iframe {
@@ -255,6 +257,7 @@ export const FORM_STYLES = css`
   }
 
   formsey-upload .files, formsey-upload .prompt {
+    color: var(--lumo-body-text-color);
     font-size: var(--lumo-font-size-m);
     line-height: initial;
     cursor: default;
@@ -269,6 +272,7 @@ export const FORM_STYLES = css`
     grid-template-columns: 1fr max-content;
     cursor: pointer;
     line-height: calc(var(--lumo-size-m) - 2px);
+    font-weight: 400;
   }
 
   formsey-upload .prompt span {
@@ -378,36 +382,39 @@ export const FORM_STYLES = css`
   formsey-markdown code {
     background: none;
   }
+  formsey-markdown p, formsey-markdown ul {
+    margin: 0 0 var(--lumo-space-xs) 0;
+  }
   .hljs-subst{
-    color:#444
+    color: var(--lumo-body-text-color);
   }
   .hljs-comment{
-      color:#888
+    color: var(--lumo-secondary-text-color);
   }
   .hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta-keyword,.hljs-name,.hljs-selector-tag{
       font-weight:bolder
   }
   .hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
-      color:#800
+      color: var(--lumo-error-text-color);
   }
   .hljs-section,.hljs-title{
-      color:#800;
-      font-weight:700
+    color: var(--lumo-error-text-color);
+    font-weight:700
   }
   .hljs-link,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{
       color:#bc6060
   }
   .hljs-literal{
-      color:#78a960
+    color: var(--lumo-success-text-color);
   }
   .hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{
-      color:#397300
+    color: var(--lumo-success-text-color);
   }
   .hljs-meta{
-      color:#1f7199
+    color: var(--lumo-primary-color);
   }
   .hljs-meta-string{
-      color:#4d99bf
+      color: var(--lumo-primary-color);
   }
   .hljs-emphasis{
       font-style:italic

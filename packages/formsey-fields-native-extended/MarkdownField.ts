@@ -27,8 +27,14 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
 
   constructor() {
     super()
+    const renderer = new Renderer();
+    const linkRenderer = renderer.link;
+    renderer.link = (href, title, text) => {
+        const html = linkRenderer.call(renderer, href, title, text);
+        return html.replace(/^<a /, '<a target="_blank" rel="nofollow" ');
+    };
     Marked.setOptions({
-      renderer: new Renderer,
+      renderer,
       gfm: true,
       tables: true,
       breaks: false,

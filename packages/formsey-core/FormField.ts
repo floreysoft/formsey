@@ -95,7 +95,7 @@ export class FormField extends Field<FormDefinition, Object> {
         let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
-        } else if (this.gridLayout.indexOf('grid-template-areas') >= 0) {
+        } else if (this.gridLayout?.indexOf('grid-template-areas') >= 0) {
           if (this.gridLayout.indexOf(area(field, this.definition.fields)) >= 0) {
             const style = "grid-area:_" + area(field, this.definition.fields)
             templates.push(html`<div class='fff' style="${style}">${fieldTemplate}</div>`)

@@ -13,10 +13,7 @@ export interface Components {
   [index: string]: Component
 }
 
-export interface Settings {
-  customProperties: Object
-  options: Object
-}
+export type Settings = Object
 
 export class Library {
   components: Components = {}
@@ -56,6 +53,16 @@ export interface Category {
 }
 
 export type Categories = Category[]
+
+export function getUniqueElementId(): string {
+  let counter = window['__formseyElementId'] as number
+  if (typeof counter === "undefined") {
+    counter = 0;
+  }
+  counter++;
+  window['__formseyElementId'] = counter
+  return "__fel-"+counter
+}
 
 export function getLibraries(): Libraries {
   let libraries = window['__formseyLibraries'] as Libraries

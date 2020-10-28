@@ -1,9 +1,12 @@
 import { html, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
+import { getUniqueElementId } from './Components';
 import { Field } from './Field';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
+  protected elementId = getUniqueElementId()
+
   protected render(): void | TemplateResult {
     return html`<div class="${classMap({ lfw: true, lfi: !this.valid && this.report })}">${this.renderHeader()}${this.renderFooter()}</div>`
   }
@@ -15,7 +18,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     if (this.definition.hasOwnProperty('required')) {
       required = (<InputFieldDefinition>this.definition).required
     }
-    return this.definition.label ? html`<label><div class="lfl">${this.definition.label}${required ? html`<span class="lfr">&#10033;</span>` : undefined}</div>${this.renderField()}</label>` : this.renderField()
+    return this.definition.label ? html`<label class="lfl" id="${this.elementId}">${this.definition.label}${required ? html`<span class="lfr">&#10033;</span>` : undefined}</label>${this.renderField()}` : this.renderField()
   }
 
   protected renderFooter(): TemplateResult | void {

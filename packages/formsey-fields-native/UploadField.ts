@@ -43,7 +43,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
     if (!this.value) {
       this.value = []
     }
-    return html`<div class="input">${!this.definition.multiple && this.value.length > 0 ? undefined : html`<label @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input type="file" ?multiple="${this.definition.multiple}" capture="${ifDefined(this.definition.capture)}" accept="${this.definition.accept ? this.definition.accept.join(',') : ''}" @change="${(e: Event) => this.handleFiles(Array.from(this.input.files))}" @focus="${this.focused}" @blur="${this.blurred}" tabindex="0" id="file"><div class="prompt"><span>${this.messages.prompt}</span>${ICON_UPLOAD}</div></label>`}
+    return html`<div class="input">${!this.definition.multiple && this.value.length > 0 ? undefined : html`<label @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input aria-labelledby="${this.elementId}" type="file" ?multiple="${this.definition.multiple}" capture="${ifDefined(this.definition.capture)}" accept="${this.definition.accept ? this.definition.accept.join(',') : ''}" @change="${(e: Event) => this.handleFiles(Array.from(this.input.files))}" @focus="${this.focused}" @blur="${this.blurred}" tabindex="0" id="file"><div class="prompt"><span>${this.messages.prompt}</span>${ICON_UPLOAD}</div></label>`}
     ${this.value.length > 0 ? html`<div class="files">
     ${this.value.map((file: FileObject) => {
       const aMultiples = ["kb", "mb", "gb", "tb"];

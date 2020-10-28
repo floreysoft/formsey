@@ -130,7 +130,7 @@ export const FORM_STYLES = css`
     font-weight: var(--formsey-title-font-weight, inherit);
     line-height: var(--formsey-title-line-height, inherit);
     color: var(--formsey-title-color, inherit);
-    padding: var(--formsey-title-margin, 12px 0 4px 0);
+    margin: var(--formsey-title-margin, var(--fs-widget-padding, 4px 0 0 0));
   }
   .ffd {
     font-size: var(--formsey-description-font-size, inherit);
@@ -138,7 +138,7 @@ export const FORM_STYLES = css`
     font-weight: var(--formsey-description-font-weight, inherit);
     line-height: var(--formsey-description-line-height, inherit);
     color: var(--formsey-description-color, inherit);
-    margin: var(--formsey-description-margin, 12px 0 4px 0);
+    margin: var(--formsey-description-margin, var(--fs-widget-padding, 4px 0 0 0));
   }
   .ffg {
     display: inline-grid;
@@ -148,17 +148,6 @@ export const FORM_STYLES = css`
   }
   .fff {
     width: 100%;
-  }
-
-  /* Nested form field */
-  .nf .fft {
-    margin: var(--formsey-selectable-title-margin, var(--fs-widget-padding, 4px 0 0 0));
-    font-size: var(--formsey-selectable-title-font-size, larger);
-  }
-
-  .nf  .ffd {
-    font-size: var(--formsey-selectable-description-font-size, inherit);
-    margin: var(--formsey-selectable-description-margin, var(--fs-widget-padding, 4px 0 0 0));
   }
 
   /* .Color field */
@@ -564,18 +553,6 @@ export const FORM_STYLES = css`
     margin: var(--formsey-selectable-description-margin, var(--fs-widget-padding, 4px 0 0 0));
   }
 
-  /* Section field */
-  formsey-section header {
-    background-color: var(--lumo-primary-color);
-    padding: var(--lumo-space-xs) var(--lumo-space-m);
-    margin-top: var(--lumo-space-s);
-    clip-path: polygon(5px 0, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-  }
-
-  formsey-section footer {
-    padding: var(--lumo-space-s) 0 0 0;
-  }
-
   /* Markdown field */
   pre {
     background-color: var(--fs-panel-background-color);
@@ -585,6 +562,9 @@ export const FORM_STYLES = css`
     display:block;
     overflow-x:auto;
     white-space: pre-wrap;
+  }
+  formsey-markdown p, formsey-markdown ul {
+    margin: 0 0 .25em 0;
   }
   .hljs-subst{
     color:#444

@@ -49,62 +49,32 @@ if (nativeLibrary) {
     },
     "fields": [
       {
-        "type": "nestedForm",
-        "form": {
-          "type": "form",
-          "fields": [
-            {
-              "type": "list",
-              "label": "Theme",
-              "name": "theme",
-              "options": [
-                {
-                  "label": "Dark",
-                  "name": "dark",
-                  "value": "dark"
-                },
-                {
-                  "label": "Light",
-                  "name": "light",
-                  "value": "light"
-                }
-              ]
-            }
-          ],
-          "name": "options",
-          "label": "Options",
-          "layout": {
-            "style": "padding:0px;background-color:undefined;border-bottom:undefined;border-color:undefined"
+        "type": "list",
+        "label": "Theme",
+        "name": "theme",
+        "options": [
+          {
+            "label": "Dark",
+            "name": "dark",
+            "value": "dark"
           },
-          "helpText": ""
-        },
-        "name": "options"
+          {
+            "label": "Light",
+            "name": "light",
+            "value": "light"
+          }
+        ]
       },
       {
-        "type": "nestedForm",
-        "form": {
-          "type": "form",
-          "fields": [
-            {
-              "type": "color",
-              "label": "Primary color",
-              "name": "--formsey-primary-color"
-            },
-            {
-              "type": "color",
-              "label": "Focus border color",
-              "name": "--formsey-border-color-focus"
-            }
-          ],
-          "name": "customProperties",
-          "layout": {
-            "style": "padding:0px;background-color:undefined;border-bottom:undefined;border-color:undefined"
-          },
-          "label": "Styles",
-          "helpText": "Configure the style of the components in this library"
-        },
-        "name": "customProperties"
-      } as FieldDefinition
+        "type": "color",
+        "label": "Primary color",
+        "name": "--formsey-primary-color"
+      },
+      {
+        "type": "color",
+        "label": "Focus border color",
+        "name": "--formsey-border-color-focus"
+      }
     ]
   } as FormDefinition
 }

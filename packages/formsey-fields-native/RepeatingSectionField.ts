@@ -82,12 +82,9 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   protected removeForm(e: Event, index: number) {
     e.preventDefault()
     e.stopPropagation()
-    console.log("Clicked="+JSON.stringify(e))
-    /*
     this.value.splice(index, 1);
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
     this.requestUpdate();
-    */
   }
 
   protected drag(e, from: number) {
