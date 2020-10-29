@@ -73,8 +73,8 @@ if (vaadinLibrary) {
       },
       {
         "label": "Password fields",
-        "controlLabel": "Hide show password button",
-        "name": "password",
+        "controlLabel": "Hide reveal password button",
+        "name": "hideRevealPasswordButton",
         "type": "boolean"
       }
     ]
@@ -82,16 +82,13 @@ if (vaadinLibrary) {
     vaadinLibrary.onSettingsChanged = (settings: Settings): Settings => {
       const lumoStylesheet = settings['lumoTheme']
       if (lumoStylesheet) {
-        settings['lumoTheme'] = lumoStylesheet.replace("html {", "* {")
-        /*
         const themes = lumoStylesheet.match(/[^{\}]+(?=})/g)
         if (themes.length == 2) {
           settings['light'] = createCustomProperties(themes[0])
           settings['dark'] = createCustomProperties(themes[1])
         }
-        delete settings['lumoTheme']
-        */
       }
+      delete settings['lumoTheme']
       return settings
     }
 }

@@ -48,6 +48,15 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     }
   }
 
+  updated(changedProperties) {
+    if ( changedProperties.has("settings")) {
+      const penColor = window.getComputedStyle(this).getPropertyValue('--formsey-signature-pen-color')
+      if ( penColor ) {
+        this.signaturePad.penColor = penColor
+      }
+    }
+}
+
   focusField() {
     if (this.canvas) {
       this.canvas.focus()

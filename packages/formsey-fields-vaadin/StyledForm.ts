@@ -17,6 +17,7 @@ export class StyledForm extends Form {
   static get styles() {
     return [...super.styles, FORM_STYLES, css`
       .themed {
+        color: var(--lumo-body-text-color);
         background-color: var(--lumo-base-color);
       }
     `]
@@ -29,9 +30,8 @@ export class StyledForm extends Form {
     }
     const form = html`
     <custom-style>
-      <style include="lumo-typography"></style>
+      <style include="lumo-color lumo-typography"></style>
     </custom-style>
-    ${unsafeHTML(this.settings['lumoTheme'])}
     <slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
     return this.settings ? html`<div class="themed" theme="${ifDefined(this.settings['theme'])}">${form}</div>` : form
   }
@@ -40,8 +40,6 @@ export class StyledForm extends Form {
     if (this.settings) {
       const theme = this.settings['theme']
       document.querySelector('html').setAttribute('theme', theme)
-    }
-      /*
       const properties = this.settings[theme]
       if (properties) {
         this.themed.setAttribute("style", "")
@@ -50,7 +48,6 @@ export class StyledForm extends Form {
         })
       }
     }
-     */
   }
 
   protected changed(e: ValueChangedEvent<any>) {

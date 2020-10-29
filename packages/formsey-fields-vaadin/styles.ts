@@ -1,7 +1,11 @@
 import { css } from 'lit-element';
 
 export const FORM_STYLES = css`
-  .fft,.ffd {
+.input:focus-within {
+  box-shadow: 0 0 2px var(--lumo-primary-color-50pct);
+}
+
+.fft,.ffd {
     color: var(--lumo-secondary-text-color);
     font-weight: 500;
     font-size: var(--lumo-font-size-l);
@@ -51,8 +55,12 @@ export const FORM_STYLES = css`
     transition: color .2s;
   }
 
-  .lfw:hover .lfht,  .lfw:hover .lfl {
+  .lfw:hover .lfht, .lfw:hover .lfl {
     color: var(--lumo-body-text-color);
+  }
+
+  .lfw:focus-within .lfl {
+    color: var(--lumo-primary-text-color);
   }
 
   /* YouTube field */
@@ -162,14 +170,17 @@ export const FORM_STYLES = css`
   }
 
   /* Signature field */
+  formsey-signature {
+    --formsey-signature-pen-color: var(--lumo-body-text-color);
+  }
+
   formsey-signature .input {
     position: relative;
     height: 150px;
     max-width: 100%;
-  }
-
-  formsey-signature .input:focus-within {
-    border: 1px solid var(--formsey-primary-color,  #020b2f);
+    border: 1px solid transparent;
+    border-radius: var(--lumo-border-radius);
+    background: var(--lumo-shade-10pct);
   }
 
   formsey-signature canvas {
@@ -183,13 +194,13 @@ export const FORM_STYLES = css`
     width: 16px;
     right: 8px;
     top: 8px;
-    fill: var(--formsey-signature-clear-icon-color, #757c98);
     stroke-width: 0;
     transition: fill 0.12s ease-out;
+    fill: var(--lumo-secondary-text-color);
   }
 
   formsey-signature svg:hover {
-    fill: var(--formsey-primary-color,  #020b2f);
+    fill: var(--lumo-body-text-color);
   }
 
   /* .Color field */
@@ -237,12 +248,16 @@ export const FORM_STYLES = css`
   }
 
   /* Upload field */
+  formsey-upload label {
+    display: flex;
+  }
+
   formsey-upload input[type="file"] {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
-    position: absolute;
+    position: relative;
     z-index: -1;
   }
 
@@ -251,7 +266,7 @@ export const FORM_STYLES = css`
     flex-direction: column;
     cursor: pointer;
     height: auto;
-    border: 1px dashed var(--lumo-contrast-20pct);
+    border: 1px solid var(--lumo-contrast-30pct);
     border-radius: var(--lumo-border-radius);
     min-height: calc(var(--lumo-size-m) - 2px);
   }
@@ -382,7 +397,7 @@ export const FORM_STYLES = css`
   formsey-markdown code {
     background: none;
   }
-  formsey-markdown p, formsey-markdown ul {
+  formsey-markdown p, formsey-markdown ul, formsey-markdown h1, formsey-markdown h2, formsey-markdown h3, formsey-markdown h4 {
     margin: 0 0 var(--lumo-space-xs) 0;
   }
   .hljs-subst{
@@ -423,4 +438,14 @@ export const FORM_STYLES = css`
       font-weight:bold
   }
 
+  /* Sourcecode field */
+  formsey-sourcecode .lfw {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  formsey-sourcecode #editor {
+    height: 100%;
+  }
 `
