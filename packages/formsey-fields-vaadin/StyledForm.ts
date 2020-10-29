@@ -6,6 +6,7 @@ import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import { FORM_STYLES } from './styles';
 
 @customElement("formsey-styled-form-vaadin")
@@ -15,10 +16,10 @@ export class StyledForm extends Form {
 
   static get styles() {
     return [...super.styles, FORM_STYLES, css`
-    .themed {
-      background-color: var(--lumo-base-color);
-    }
-  `]
+      .themed {
+        background-color: var(--lumo-base-color);
+      }
+    `]
   }
 
   render() {
@@ -26,27 +27,30 @@ export class StyledForm extends Form {
     if (this.definition) {
       field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
-    const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
-    return this.settings ? html`<div class="themed">${form}</div>` : form
+    const form = html`
+    <custom-style>
+      <style include="lumo-typography"></style>
+    </custom-style>
+    ${unsafeHTML(this.settings['lumoTheme'])}
+    <slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
+    return this.settings ? html`<div class="themed" theme="${ifDefined(this.settings['theme'])}">${form}</div>` : form
   }
 
   updated() {
     if (this.settings) {
       const theme = this.settings['theme']
       document.querySelector('html').setAttribute('theme', theme)
-      const lumoStylesheet = this.settings['lumoTheme']
-      if (lumoStylesheet) {
+    }
+      /*
+      const properties = this.settings[theme]
+      if (properties) {
         this.themed.setAttribute("style", "")
-        const themes = lumoStylesheet.match(/[^{\}]+(?=})/g)
-        if (themes.length == 2) {
-          const properties = themes[theme == "dark" ? 1 : 0].split(';')
-          properties.forEach(property => {
-            const tokens = property.trim().split(':');
-            this.themed.style.setProperty(tokens[0], tokens[1]);
-          })
-        }
+        Object.entries(properties).forEach(([key, value]) => {
+          this.themed.style.setProperty(key, value as string);
+        })
       }
     }
+     */
   }
 
   protected changed(e: ValueChangedEvent<any>) {
