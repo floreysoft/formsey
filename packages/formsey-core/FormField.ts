@@ -75,10 +75,6 @@ export class FormField extends Field<FormDefinition, Object> {
   render() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
-    let style = "padding:10px"
-    if (this.definition.layout) {
-      style = this.definition.layout.style
-    }
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let fieldErrors = new InvalidErrors()
@@ -106,13 +102,7 @@ export class FormField extends Field<FormDefinition, Object> {
       }
     }
     let header: TemplateResult[] = []
-    if (this.definition.label) {
-      header.push(html`<div class="fft">${this.definition.label}</div>`)
-    }
-    if (this.definition.helpText) {
-      header.push(html`<div class="ffd">${this.definition.helpText}</div>`)
-    }
-    return html`<section style="${ifDefined(style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
+    return html`<section style="${ifDefined(this.definition?.layout?.style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
   }
 
   gridSizeChanged(e: CustomEvent) {
