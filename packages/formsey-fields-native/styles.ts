@@ -542,6 +542,25 @@ export const FORM_STYLES = css`
     margin: 0.2em 0.1em 0.1em;
   }
 
+  @media (pointer: coarse) {
+    formsey-repeating-section .form {
+      padding: 0 0 0 1.5em;
+      margin: .25em 0 .25em 1em;
+    }
+    formsey-repeating-section button {
+      width: 2em;
+      height: 2em;
+    }
+    formsey-repeating-section button svg {
+      width: 2em;
+    }
+    formsey-repeating-section .fs-remove-wrapper {
+      padding: 0.4em 0;
+      left: -1em;
+      top: calc(50% - 1.375em);
+    }
+  }
+
   /* Selectable section */
   formsey-selectable-section .fft {
     margin: var(--formsey-selectable-title-margin, var(--fs-widget-padding, 4px 0 0 0));

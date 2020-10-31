@@ -27,7 +27,7 @@ export class StyledForm extends Form {
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-     this.dispatchEvent(new ValueChangedEvent(e.type as  "change" | "input" | "inputChange", e.detail.name, e.detail.value));
+     this.dispatchEvent(new ValueChangedEvent(e.type as  "change" | "input" | "inputChange", e.detail?.name, e.detail?.value));
   }
 
   protected invalid(e: InvalidEvent) {
