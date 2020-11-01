@@ -84,7 +84,7 @@ export class Form extends Field<FieldDefinition, any> {
   @property()
   method: "GET" | "POST" | "dialog"
 
-  @query('#form')
+  @query(':first-child')
   form: FormField
 
   private _loaded: boolean = false
@@ -111,10 +111,6 @@ export class Form extends Field<FieldDefinition, any> {
   connectedCallback() {
     super.connectedCallback()
     this.addEventListener('click', this.clicked)
-  }
-
-  protected createRenderRoot(): Element | ShadowRoot {
-    return this.attachShadow({ mode: 'open' });
   }
 
   renderHeader() {
