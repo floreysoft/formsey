@@ -48,7 +48,15 @@ export class StringField extends Field<StringFieldDefinition, string> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinTextField.errorMessage, false, {  })
+    let validityState = {}
+    const validity = (this.vaadinTextField.focusElement as any).validity
+    for (let key in validity) {
+      if (validity[key]) {
+        validityState[key] = validity[key]
+      }
+    }
+    const validationMessage = this.vaadinTextField.errorMessage || (this.vaadinTextField.focusElement as any).validationMessage
+    this.errors.set(this.definition.name, this.error ? this.error : new InvalidError(validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
