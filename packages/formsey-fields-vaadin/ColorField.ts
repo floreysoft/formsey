@@ -37,7 +37,7 @@ export class ColorField extends StringField {
 
   protected changed(e: any) {
     super.changed(e)
-    this.vaadinTextField.value = this.value
+    this.vaadinField.value = this.value
   }
 }
 

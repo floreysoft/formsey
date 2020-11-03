@@ -25,6 +25,12 @@ export abstract class InputField extends Field<StringFieldDefinition, string> {
 
   abstract renderField(customValidity : string)
 
+  focusField(path: string) {
+    if ( path == this.definition.name ) {
+      this.vaadinField.focus()
+    }
+  }
+
   validate(report: boolean) {
     this.valid = report ? this.vaadinField.validate() : this.vaadinField.checkValidity() as boolean
     if (!this.valid) {
