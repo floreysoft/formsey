@@ -3,8 +3,6 @@ import { Field } from '@formsey/core/Field';
 import { BooleanFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import "@material/mwc-checkbox/mwc-checkbox.js";
-import "@material/mwc-formfield/mwc-formfield.js";
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";

@@ -1,19 +1,16 @@
 import { Field } from '@formsey/core/Field';
-import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InputFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
-import "@material/mwc-checkbox/mwc-checkbox.js";
-import "@material/mwc-formfield/mwc-formfield.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { property, query } from "lit-element";
 
-export abstract class InputField extends Field<StringFieldDefinition, string> {
+export abstract class InputField<D extends InputFieldDefinition,V> extends Field<D, V> {
   @property({ type: String })
-  value: string;
+  value: V;
 
   @query("vaadin-text-field")
-  vaadinField: TextFieldElement
+  vaadinField: any
 
   render() {
     let customValidity = this.definition.customValidity

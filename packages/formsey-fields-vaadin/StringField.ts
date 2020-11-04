@@ -1,15 +1,13 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import "@material/mwc-checkbox/mwc-checkbox.js";
-import "@material/mwc-formfield/mwc-formfield.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { InputField } from './InputField';
 @customElement("formsey-string-vaadin")
-export class StringField extends InputField {
+export class StringField extends InputField<StringFieldDefinition, string> {
   protected get type() : "text" | "search" | "tel" | "url" | "email" | "password" | "time" | "datetime-local" | "week" | "month" | "color" {
     return "text"
   }

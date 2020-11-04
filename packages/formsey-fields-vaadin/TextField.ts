@@ -2,8 +2,6 @@ import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { Field } from '@formsey/core/Field';
 import { FieldDefinition, TextFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import "@material/mwc-checkbox/mwc-checkbox.js";
-import "@material/mwc-formfield/mwc-formfield.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TextAreaElement } from '@vaadin/vaadin-text-field/vaadin-text-area';

@@ -1,17 +1,14 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import "@vaadin/vaadin-text-field/vaadin-password-field";
 import { PasswordFieldElement } from '@vaadin/vaadin-text-field/vaadin-password-field';
-import { customElement, html, property, query } from "lit-element";
+import { customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { InputField } from './InputField';
 
 @customElement("formsey-password-vaadin")
-export class PasswordField extends InputField {
-  @property({ type: String })
-  value: string;
-
+export class PasswordField extends InputField<StringFieldDefinition, string> {
   @query("vaadin-password-field")
   vaadinField: PasswordFieldElement
 
