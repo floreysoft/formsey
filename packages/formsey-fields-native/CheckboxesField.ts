@@ -37,7 +37,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<div class="options">${templates}</div>`;
+    return html`<div class=${this.definition.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
   }
 
   otherChanged(e: ValueChangedEvent<string>) {

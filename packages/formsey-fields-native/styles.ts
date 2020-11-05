@@ -105,16 +105,20 @@ export const FORM_STYLES = css`
   }
 
   /* Checkboxes Field / Multiple Choice Field*/
-  formsey-checkboxes .options, formsey-multiple-choice .options {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 4px;
+  formsey-checkboxes .options, formsey-multiple-choice .options, formsey-checkboxes .other, formsey-multiple-choice .other {
+    display: flex;
+    flex-direction: column;
+    line-height: 2em;
   }
-  formsey-checkboxes .other, formsey-multiple-choice .other {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-gap: 2em;
+  formsey-checkboxes .other label , formsey-multiple-choice .other label {
+    margin-right: .5em;
+  }
+  formsey-checkboxes .options.horizontal, formsey-multiple-choice .options.horizontal, formsey-checkboxes .other, formsey-multiple-choice .other {
+    flex-direction: row;
     align-items: center;
+  }
+  formsey-checkboxes .options.horizontal div, formsey-multiple-choice .options.horizontal div {
+    margin-right: .5em;
   }
 
   /* Form Field */

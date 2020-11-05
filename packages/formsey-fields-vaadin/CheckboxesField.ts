@@ -66,7 +66,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-checkbox-group @change="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group @change="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="${this.definition.layout == "horizontal" ? "horizontal" : "vertical"}" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
   }
 
   focusField(path: string) {

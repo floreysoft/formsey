@@ -1,6 +1,6 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { DateFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-date-picker';
@@ -17,7 +17,21 @@ export class DateField extends InputField<DateFieldDefinition, string> {
   vaadinField: DatePickerElement
 
   renderField(customValidity: string) {
-    return html`<vaadin-date-picker style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" ?disabled="${this.definition.disabled}" ?autofocus="${this.definition.autofocus}" @change="${this.changed}" min="${ifDefined(this.definition.min)}"  max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" .value=${this.value} placeholder="${ifDefined(this.definition.placeholder)}"></vaadin-date-picker>`
+    return html`<vaadin-date-picker style="display:flex" label="${ifDefined(this.definition.label as string)}" .helperText="${this.definition.helpText as string}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" ?disabled="${this.definition.disabled}" ?autofocus="${this.definition.autofocus}" @change="${this.changed}" min="${ifDefined(this.definition.min)}"  max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" .value=${this.value} placeholder="${ifDefined(this.definition.placeholder)}"></vaadin-date-picker>`
+  }
+
+
+  invalid() {
+    let validityState = {}
+    const validity = ((<any>this.vaadinField.focusElement).focusElement as any).validity
+    for (let key in validity) {
+      if (validity[key]) {
+        validityState[key] = validity[key]
+      }
+    }
+    const validationMessage = this.vaadinField.errorMessage || (((<any>this.vaadinField.focusElement).focusElement as any)).validationMessage
+    this.errors.set(this.definition.name, this.error ? this.error : new InvalidError(validationMessage, false, validityState))
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
 

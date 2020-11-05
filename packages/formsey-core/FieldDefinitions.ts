@@ -120,6 +120,7 @@ export interface ListFieldDefinition extends InputFieldDefinition {
 
 export interface CheckboxesFieldDefinition extends InputFieldDefinition {
   options: Option[]
+  layout: "horizontal" | "vertical"
   other?: boolean
 }
 

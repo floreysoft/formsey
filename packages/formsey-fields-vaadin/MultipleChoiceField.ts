@@ -66,7 +66,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
     if (this.error && this.error.validityMessage) {
       customValidity = this.error.validityMessage
     }
-    return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="vertical" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
+    return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="${this.definition.layout == "horizontal" ? "horizontal" : "vertical"}" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
   focusField(path: string) {
