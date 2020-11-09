@@ -68,7 +68,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   set errors(errors: InvalidErrors) {
     this.error = undefined
-    if (errors && this.definition.name) {
+    if (errors && this.definition?.name) {
       this.error = errors.get(this.definition.name)
     }
     this._errors = errors;
