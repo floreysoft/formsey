@@ -26,7 +26,7 @@ export class StyledForm extends Form {
     if (this.definition) {
       field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
-    const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.action)}" method="${ifDefined(this.definition?.method)}" target="${ifDefined(this.definition?.target)}">${field}<slot></slot></form>`
+    const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
     return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme'])}><div class="themed">${form}</div></fs-theme>` : form
   }
 
