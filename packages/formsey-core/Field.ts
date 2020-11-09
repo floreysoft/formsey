@@ -44,17 +44,17 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   parentPath: string
 
   @property({ type: String })
-  set theme(theme: string) {
-    let registeredTheme = getLibrary(theme)
-    if (registeredTheme) {
-      this.components = registeredTheme.components
+  set library(librarys: string) {
+    let registeredLibrary = getLibrary(librarys)
+    if (registeredLibrary.components ) {
+      this.components = registeredLibrary.components
     } else {
-      let defaultTheme = getDefaultLibrary()
-      if (defaultTheme) {
-        console.warn("Theme '" + theme + "' not availble, using '" + defaultTheme + "' instead")
-        this.components = getLibrary[defaultTheme].components
+      let defaultLibrary = getDefaultLibrary()
+      if (defaultLibrary) {
+        console.warn("Library '" + librarys + "' not availble, using '" + defaultLibrary + "' instead")
+        this.components = getLibrary(defaultLibrary).components
       } else {
-        console.error("Theme '" + theme + "' not availble, no theme installed!")
+        console.error("Librarys '" + librarys + "' not availble, no libraries installed!")
       }
     }
   }
@@ -147,9 +147,9 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
       }
     }
     if (!this.components) {
-      let defaultTheme = getDefaultLibrary()
-      if (typeof defaultTheme != "undefined") {
-        this.components = getLibrary(defaultTheme).components
+      let defaultLibrary = getDefaultLibrary()
+      if (typeof defaultLibrary != "undefined") {
+        this.components = getLibrary(defaultLibrary).components
       }
       return typeof this.components != "undefined"
     }

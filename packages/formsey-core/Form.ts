@@ -1,6 +1,6 @@
 import { customElement, property, query } from "lit-element";
 import { Field } from './Field';
-import { FieldDefinition } from './FieldDefinitions';
+import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { FormField } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
@@ -54,7 +54,7 @@ export function set(data: Object, path: string, value: any): any {
 }
 
 @customElement("formsey-form")
-export class Form extends Field<FieldDefinition, any> {
+export class Form extends Field<FormDefinition, any> {
   value: any
 
   async fetchDefinition(url: string) {
@@ -63,7 +63,7 @@ export class Form extends Field<FieldDefinition, any> {
       let data = await response.json();
       this.definition = data.definition
       this.value = data.value
-      this.theme = data.theme
+      this.library = data.theme
       this.requestUpdate();
     } catch (reason) {
       console.error(reason.message)
@@ -82,7 +82,7 @@ export class Form extends Field<FieldDefinition, any> {
   action: string
 
   @property()
-  method: "GET" | "POST" | "dialog"
+  method: "GET" | "POST"
 
   @query(':first-child')
   form: FormField
@@ -98,13 +98,18 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   render() {
-    return this.components?.["styledForm"]?.factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors,  (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))
+    if (this.definition) {
+      this.definition.action = this.action
+      this.definition.method = this.method
+      this.definition.target = this.target
+    }
+    return this.components?.["styledForm"]?.factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))
   }
 
   updated() {
     if (!this._loaded && this.definition) {
       this._loaded = true;
-      this.dispatchEvent(new CustomEvent('load', { detail: { definition: this.definition, value: this.value, theme: this.theme } }))
+      this.dispatchEvent(new CustomEvent('load', { detail: { definition: this.definition, value: this.value, theme: this.library } }))
     }
   }
 
@@ -135,7 +140,7 @@ export class Form extends Field<FieldDefinition, any> {
     this.requestUpdate()
   }
 
-  public focusField(path: string) : boolean {
+  public focusField(path: string): boolean {
     if (this.form && typeof this.form['focusField'] === "function") {
       return this.form.focusField(path)
     }

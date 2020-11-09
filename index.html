@@ -1,54 +1,62 @@
 <html>
-  <head>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
-      body {
-        /* Font styles will leak into formsey form */
-        font-family: 'Roboto', sans-serif;
-        font-size: 13px;
-      }
-      formsey-form {
-        /* Let's give our form a nice border */
-        display: block;
-        border-radius: 4px;
-        box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.35);
-        background-color: #fafafa;
 
-        /* Use formsey custom properties for basic theming */
-        --formsey-primary-color: orange;
-        --formsey-border-color-focus: orange;
-      }
-    </style>
-    <script type="module" src="https://unpkg.com/@formsey/fields-native@latest?module"></script>
-  </head>
-  <body>
-    <formsey-form-navigator></formsey-form-navigator>
-    <formsey-form src="https://cdn.formsey.com/mtRwR8dg4RgSZN1OJfro/bMYwQcO4kvNcd8Yr052g"></formsey-form>
-    <script type="text/javascript">
-var formseyFormNavigator = window.document.querySelector("formsey-form-navigator");
-var formseyForm = window.document.querySelector("formsey-form");
+<head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
 
-formseyFormNavigator.addEventListener("focusField", (e) => {
-  formseyForm.focusField(e.detail);
-});
+    body {
+      /* Font styles will leak into formsey form */
+      font-family: "Roboto", sans-serif;
+      font-size: 13px;
+    }
 
-formseyForm.addEventListener("load", (e) => {
-  formseyFormNavigator.components = formseyForm.components;
-  formseyFormNavigator.definition = formseyForm.definition;
-  formseyFormNavigator.value = formseyForm.value;
-});
+    formsey-form {
+      /* Let's give our form a nice border */
+      display: block;
+      border-radius: 4px;
+      box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.35);
+      background-color: #fafafa;
 
-formseyForm.addEventListener("change", (e) => {
-  formseyFormNavigator.value = e.detail.value;
-});
+      /* Use formsey custom properties for basic theming */
+      --formsey-primary-color: orange;
+      --formsey-border-color-focus: orange;
+    }
+  </style>
+  <script type="module" src="https://unpkg.com/@formsey/fields-native?module"></script>
+  <script type="module" src="https://unpkg.com/@formsey/fields-native-extended?module"></script>
+</head>
 
-formseyForm.addEventListener("invalid", (e) => {
-  formseyFormNavigator.errors = e.errors;
-});
+<body>
+  <formsey-form-navigator></formsey-form-navigator>
+  <formsey-form src="https://www.formsey.com/live/7XfojZadKxdybb6UWO37"></formsey-form>
+  <script type="text/javascript">
+    var formseyFormNavigator = window.document.querySelector(
+      "formsey-form-navigator"
+    );
+    var formseyForm = window.document.querySelector("formsey-form");
 
-formseyForm.addEventListener("focused", (e) => {
-  formseyFormNavigator.focusedPath = e.detail.name;
-});
-    </script>
-  </body>
+    formseyFormNavigator.addEventListener("focusField", (e) => {
+      formseyForm.focusField(e.detail);
+    });
+
+    formseyForm.addEventListener("load", (e) => {
+      formseyFormNavigator.components = formseyForm.components;
+      formseyFormNavigator.definition = formseyForm.definition;
+      formseyFormNavigator.value = formseyForm.value;
+    });
+
+    formseyForm.addEventListener("change", (e) => {
+      formseyFormNavigator.value = e.detail.value;
+    });
+
+    formseyForm.addEventListener("invalid", (e) => {
+      formseyFormNavigator.errors = e.errors;
+    });
+
+    formseyForm.addEventListener("focused", (e) => {
+      formseyFormNavigator.focusedPath = e.detail.name;
+    });
+  </script>
+</body>
+
 </html>

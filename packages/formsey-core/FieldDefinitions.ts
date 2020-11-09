@@ -126,7 +126,10 @@ export interface CheckboxesFieldDefinition extends InputFieldDefinition {
 
 export interface FormDefinition extends FieldDefinition {
   fields: FieldDefinition[]
-  layout?: Layout
+  layout?: Layout,
+  target?: "_blank" | "_parent" | "_self" | "_top"
+  action?: string
+  method?: "GET" | "POST"
 }
 
 export interface NestedFormDefinition extends FieldDefinition {
