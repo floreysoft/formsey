@@ -63,7 +63,7 @@ export class Form extends Field<FormDefinition, any> {
       let data = await response.json();
       this.definition = data.definition
       this.value = data.value
-      this.library = data.theme
+      this.library = data.library
       this.requestUpdate();
     } catch (reason) {
       console.error(reason.message)
