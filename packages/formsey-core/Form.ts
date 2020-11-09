@@ -54,7 +54,7 @@ export function set(data: Object, path: string, value: any): any {
 }
 
 @customElement("formsey-form")
-export class Form extends Field<FormDefinition, any> {
+export class Form extends Field<FieldDefinition, any> {
   value: any
 
   async fetchDefinition(url: string) {
@@ -99,9 +99,9 @@ export class Form extends Field<FormDefinition, any> {
 
   render() {
     if (this.definition) {
-      this.definition.action = this.action
-      this.definition.method = this.method
-      this.definition.target = this.target
+      this.definition['action'] = this.action
+      this.definition['method'] = this.method
+      this.definition['target'] = this.target
     }
     return this.components?.["styledForm"]?.factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))
   }
