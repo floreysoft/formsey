@@ -64,6 +64,7 @@ export class Form extends Field<FieldDefinition, any> {
       this.definition = data.definition
       this.value = data.value
       this.library = data.library
+      this.settings = data.settings
       this.requestUpdate();
     } catch (reason) {
       console.error(reason.message)
