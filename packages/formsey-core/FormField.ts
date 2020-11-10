@@ -89,15 +89,14 @@ export class FormField extends Field<FormDefinition, Object> {
           this.addFieldErrors(this.errors, fieldErrors, field.name)
         }
         let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
+        let style
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
-        } else if (this.gridLayout?.indexOf('grid-template-areas') >= 0) {
-          if (this.gridLayout.indexOf(area(field, this.definition.fields)) >= 0) {
-            const style = "grid-area:_" + area(field, this.definition.fields)
-            templates.push(html`<div class='fff' style="${style}">${fieldTemplate}</div>`)
-          }
         } else {
-          templates.push(html`<div class='fff'>${fieldTemplate}</div>`)
+          if (this.gridLayout?.indexOf('grid-template-areas') >= 0 && this.gridLayout.indexOf(area(field, this.definition.fields)) >= 0) {
+              style = "grid-area:_" + area(field, this.definition.fields)
+          }
+          templates.push(html`<div class='fff' style="${ifDefined(style)}">${fieldTemplate}</div>`)
         }
       }
     }
