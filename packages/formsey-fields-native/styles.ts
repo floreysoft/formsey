@@ -57,9 +57,8 @@ export const FORM_STYLES = css`
 
   input[type="checkbox"], input[type="radio"] {
     margin: var(--formsey-padding, 0 .5em 0 0);
-    font-family: var(--formsey-font-family, inherit);
-    font-size: var(--formsey-font-size, inherit);
-    color: var(--formsey-text-color, inherit);
+    font: inherit;
+    color: inherit;
   }
 
   input[type="color"] {
@@ -85,10 +84,8 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
     width: 100%;
     height: var(--formsey-input-height, 2em);
-    font-family: var(--formsey-font-family, inherit);
-    font-size: var(--formsey-font-size, inherit);
-    color: var(--formsey-text-color, inherit);
-    font-weight: var(--formsey-font-weight, inherit);
+    font: inherit;
+    color: inherit;
     border-radius: var(--formsey-border-radius, 3px);
     padding: var(--formsey-padding, .2em .3em);
     background: var(--formsey-shade, #99999920);

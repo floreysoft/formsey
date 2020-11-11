@@ -12,13 +12,24 @@ import { FORM_STYLES } from './styles';
 const themes = new Map([
   ["light", {
     style: html`<style>
-
+      * {
+        color: #000000;
+        --formsey-background-color: #ffffff;
+        --formsey-padding: .25em;
+      }
     </style>`
   }],
   ["dark", {
     style: html`<style>
-
+      * {
+        color: #ffffff;
+        --formsey-background-color: #000000;
+        --formsey-padding: .25em;
+      }
     </style>`
+  }],
+  ["none", {
+    style: undefined
   }]
 ])
 
@@ -27,7 +38,7 @@ export class StyledForm extends Form {
   static get styles() {
     return [...super.styles, FORM_STYLES, css`
     .themed {
-      background-color: var(--formsey-background-color, var(--fs-background-color, inherit));
+      background-color: var(--formsey-background-color, inherit);
     }
   `]
   }
