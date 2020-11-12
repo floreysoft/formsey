@@ -13,18 +13,27 @@ const themes = new Map([
   ["light", {
     style: html`<style>
       * {
-        color: #000000;
-        --formsey-background-color: #ffffff;
-        --formsey-padding: .25em;
+        --formsey-color: #000000;
+        --formsey-background: #ffffff;
+        --formsey-accent-color: #ff813f;
+        --formsey-accent-contrast: #ffffff;
+        --formsey-padding: .1em .25em;
+        --formsey-border-radius: 3px;
+        --formsey-widget-background: #E2DDDB;
+        --formsey-widget-background-hover: #CAC4C2;
       }
     </style>`
   }],
   ["dark", {
     style: html`<style>
       * {
-        color: #ffffff;
-        --formsey-background-color: #000000;
-        --formsey-padding: .25em;
+        --formsey-color: #ffffff;
+        --formsey-background: #000000;
+        --formsey-accent-color: #007fd4;
+        --formsey-accent-contrast: #ffffff;
+        --formsey-padding: .1em .25em;
+        --formsey-widget-background: #2d2d2d;
+        --formsey-widget-background-hover: #37373d;
       }
     </style>`
   }],
@@ -38,10 +47,14 @@ export class StyledForm extends Form {
   static get styles() {
     return [...super.styles, FORM_STYLES, css`
     .themed {
-      background-color: var(--formsey-background-color, inherit);
+      color: var(--formsey-color, inherit);
+      background: var(--formsey-background, inherit);
     }
   `]
   }
+
+  @query(".themed")
+  themed: HTMLElement
 
   @query('#form')
   form: FormField
@@ -53,6 +66,20 @@ export class StyledForm extends Form {
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
     return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme'])} .themes=${themes}><div class="themed">${form}</div></fs-theme>` : form
+  }
+
+  updated() {
+    if (this.settings) {
+      const theme = this.settings['theme']
+      document.querySelector('html').setAttribute('theme', theme)
+      const properties = this.settings[theme]
+      if (properties) {
+        this.themed.setAttribute("style", "")
+        Object.entries(properties).forEach(([key, value]) => {
+          this.themed.style.setProperty(key, value as string);
+        })
+      }
+    }
   }
 
   protected createRenderRoot(): Element | ShadowRoot {

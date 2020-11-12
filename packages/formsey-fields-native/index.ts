@@ -18,7 +18,7 @@ export { PasswordField } from './PasswordField';
 export { PhoneField } from './PhoneField';
 export { RepeatingSectionField as RepeatingField } from './RepeatingSectionField';
 export { SearchField } from './SearchField';
-export { SectionField } from './SectionField';
+export { TitleField as SectionField } from './TitleField';
 export { SelectableSectionField } from './SelectableSectionField';
 export { StringField } from './StringField';
 export { StyledForm } from './StyledForm';
@@ -42,36 +42,125 @@ if (nativeLibrary) {
   nativeLibrary.settingsEditor = {
     "type": "form",
     "layout": {
-      "style": "padding:0px;"
+      "grids": {
+        "xs": "grid-template-columns:minmax(0,1fr);grid-gap:5px 5px;padding:0px 0px",
+      }
     },
     "fields": [
       {
-        "type": "list",
         "label": "Theme",
-        "name": "theme",
+        "helpText": "Select the theme for your form",
         "options": [
           {
-            "label": "Dark",
-            "name": "dark",
-            "value": "dark"
+            "name": "light",
+            "label": "Light",
+            "value": "light"
           },
           {
-            "label": "Light",
-            "name": "light",
-            "value": "light"
+            "value": "dark",
+            "label": "Dark",
+            "name": "dark"
+          },
+          {
+            "name": "auto",
+            "value": "auto",
+            "label": "Auto"
+          },
+          {
+            "name": "none",
+            "label": "None",
+            "value": "none"
           }
-        ]
+        ],
+        "type": "list",
+        "name": "theme"
       },
       {
-        "type": "color",
-        "label": "Primary color",
-        "name": "--formsey-primary-color"
+        "form": {
+          "fields": [
+            {
+              "label": "",
+              "helpText": "Light theme",
+              "name": "",
+              "type": "title"
+            },
+            {
+              "name": "--formsey-background",
+              "type": "color",
+              "label": "Background color",
+              "helpText": "Background color of the form",
+              "autocomplete": "off"
+            },
+            {
+              "label": "Text color",
+              "helpText": "Foreground color used for text, icons and more",
+              "autocomplete": "off",
+              "name": "--formsey-color",
+              "type": "color"
+            },
+            {
+              "name": "--formsey-accent-color",
+              "helpText": "Color to highlight active field",
+              "type": "color",
+              "autocomplete": "off",
+              "label": "Accent color"
+            },
+            {
+              "name": "--formsey-accent-contrast",
+              "type": "color",
+              "label": "Contrast color",
+              "helpText": "Used for text and icons on top of accent color",
+              "autocomplete": "off"
+            },
+            {
+              "autocomplete": "off",
+              "name": "--formsey-widget-background",
+              "label": "Widget background",
+              "helpText": "Background color for buttons",
+              "type": "color"
+            },
+            {
+              "helpText": "Background color on hover",
+              "autocomplete": "off",
+              "type": "color",
+              "name": "--formsey-widget-background-hover",
+              "label": "Widget hover background"
+            },
+            {
+              "label": "Padding",
+              "placeholder": "0.1em 0.25em",
+              "autocomplete": "off",
+              "name": "--formsey-padding",
+              "type": "string",
+              "helpText": "Vertical and horizontal spacing"
+            },
+            {
+              "placeholder": "3px",
+              "autocomplete": "off",
+              "helpText": "Round borders for form fields",
+              "name": "--formsey-border-radius",
+              "type": "string",
+              "label": "Border radius"
+            }
+          ],
+          "name": "light",
+          "type": "form",
+          "layout": {
+            "grids": {
+              "m": "grid-template-columns:minmax(0,4fr) minmax(0,2fr) minmax(0,2fr) minmax(0,4fr);grid-template-areas: '_title0 _title0 _title0 _title0' '_--formsey-background _--formsey-color _--formsey-color _--formsey-accent-color' '_--formsey-accent-contrast _--formsey-widget-background _--formsey-widget-background _--formsey-widget-background-hover' '_--formsey-padding _--formsey-padding _--formsey-border-radius _--formsey-border-radius';grid-gap:5px 5px;padding:5px 0px",
+              "xs": "grid-template-columns:minmax(0,1fr);grid-gap:5px 0px;padding:0px 0px",
+            }
+          }
+        },
+        "name": "light",
+        "type": "nestedForm"
       },
       {
-        "type": "color",
-        "label": "Focus border color",
-        "name": "--formsey-border-color-focus"
+        "label": "",
+        "name": "",
+        "helpText": "Dark theme",
+        "type": "title"
       }
     ]
-  } as FormDefinition
+  } as any
 }

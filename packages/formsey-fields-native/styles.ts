@@ -35,24 +35,24 @@ export const FORM_STYLES = css`
   }
   button:hover:not([disabled]) {
     cursor: pointer;
-    background-color: var(--formsey-widget-background-color-hover);
+    background: var(--formsey-widget-background-hover);
   }
   button:focus:not([disabled]) {
-    border-color: var(--formsey-border-color-focus);
+    border: var(--formsey-border-focus);
   }
   button:active:not([disabled]) {
-    background-color: var(--formsey-widget-background-color-selected);
+    background: var(--formsey-widget-background-selected);
   }
   button:disabled {
     opacity: 0.5;
   }
   button.primary {
-    background-color: var(--formsey-accent-color);
-    color: var(--formsey-accent-color-text);
+    background: var(--formsey-accent-color);
+    color: var(--formsey-accent-contrast);
     text-transform: uppercase;
   }
   button.primary:hover {
-    background-color: var(--formsey-accent-color-hover);
+    background: var(--formsey-accent-background-hover);
   }
 
   input[type="checkbox"], input[type="radio"] {
@@ -88,13 +88,13 @@ export const FORM_STYLES = css`
     color: inherit;
     border-radius: var(--formsey-border-radius, 3px);
     padding: var(--formsey-padding, .2em .3em);
-    background: var(--formsey-shade, #99999920);
-    border: var(--formsey-input-border, 1px solid transparent);
+    background: var(--formsey-shade, #80808040);
+    border: var(--formsey-border, 1px solid transparent);
     transition: border 0.12s ease-out;
   }
 
   .input:focus-within {
-    border: 1px solid var(--formsey-border-color-focus, #020b2f);
+    border: var(--formsey-border-focus, 1px solid transparent);
   }
 
   /* Boolean Field */
@@ -158,7 +158,7 @@ export const FORM_STYLES = css`
   }
 
   .cf:focus-within .cfps {
-    border-color: var(--formsey-border-color-focus, #020b2f);
+    border: var(--formsey-border-focus, 1px solid #020b2f);
   }
 
   .cf svg {
@@ -182,25 +182,25 @@ export const FORM_STYLES = css`
     font-weight: var(--formsey-label-font-weight, inherit);
     color: var(--formsey-label-color, inherit);
     line-height: var(--formsey-label-line-height, inherit);
-    padding: var(--formsey-padding, 4px 0 0 0);
+    padding: var(--formsey-padding, .2em .3em);
     transition: all 0.12s ease-out;
     opacity: 0.8;
   }
 
-  .lfw:focus-within>label>.lfl {
+  .lfw:focus-within>.lfl {
     color: var(--formsey-accent-color, inherit);
     opacity: 1;
   }
 
   .lfi {
-    background-color: var(--formsey-error-background-color, #AA000044);
-    padding: var(--formsey-padding, 0 0 0 4px);
+    background: var(--formsey-error-background, #AA000044);
+    padding: var(--formsey-padding, .2em .3em);
     border-radius: var(--formsey-border-radius, 0.3em);
   }
 
   .lfr {
     color: var(--formsey-required-color, inherit);
-    margin: var(--formsey-padding, 0 0 0 4px);
+    margin: var(--formsey-padding, .2em .3em);
     font-family: var(--formey-required-font-family, inherit);
     font-size: var(--formey-required-font-size, smaller);
     line-height: var(--formsey-required-line-height, inherit);
@@ -245,6 +245,16 @@ export const FORM_STYLES = css`
 
   .lfw:focus-within .lfht {
     opacity: 1;
+  }
+
+  /* Title field */
+  formsey-title .lfl {
+    opacity: 1;
+    font-size: larger;
+  }
+  formsey-title .lfht {
+    opacity: 1;
+    font-size: medium;
   }
 
   /* Image field */
@@ -301,7 +311,7 @@ export const FORM_STYLES = css`
   formsey-image-checkbox label::after {
     content: ' ';
     color: var(--formsey-text-color, #ffffff);
-    background-color: var(--formsey-background-color, inherit);
+    background: var(--formsey-widget-background, inherit);
     border-radius: 50%;
     position: absolute;
     right: .25em;
@@ -332,7 +342,7 @@ export const FORM_STYLES = css`
 
   /* List field */
   formsey-list option {
-    background-color: var(--formsey-background-color);
+    background: var(--formsey-background-color);
   }
 
   /* Sourcecode field */
@@ -350,7 +360,7 @@ export const FORM_STYLES = css`
   }
 
   formsey-signature .input:focus-within {
-    border: 1px solid var(--formsey-border-color-focus, #020b2f);
+    border: var(--formsey-border-focus, 1px solid #020b2f);
   }
 
   formsey-signature canvas {
@@ -430,7 +440,7 @@ export const FORM_STYLES = css`
 
   formsey-upload .over {
     border: 1px dashed var(--formsey-accent-color, #999);
-    color: var(--formsey-accent-color-text, #999);
+    color: var(--formsey-accent-constrast, #999);
   }
 
   formsey-upload .filename {
@@ -481,12 +491,12 @@ export const FORM_STYLES = css`
     position: relative;
     margin: 0.5em 0 0 0.8em;
     padding: 0 0 5px 15px;
-    border-left: 2px solid var(--formsey-widget-background-color, #E2DDDB);
+    border-left: 2px solid var(--formsey-widget-background, #E2DDDB);
     font-size: var(--formsey-repeating-section-icon-size, inherit);
     transition: all 0.12s ease-out;
   }
   formsey-repeating-section .form:hover {
-    border-left: 2px solid var(--formsey-widget-background-color-hover, #CAC4C2);
+    border-left: 2px solid var(--formsey-widget-background-hover, #CAC4C2);
   }
   formsey-repeating-section .fs-remove-wrapper {
     position: absolute;
@@ -499,7 +509,7 @@ export const FORM_STYLES = css`
     width: 1em;
     height: auto;
     stroke-width: 0;
-    fill: var(--formsey-repeating-section-icon-fill-color, var(--formsey-text-color, currentColor));
+    fill: var(--formsey-repeating-section-icon-fill-color, currentColor);
   }
   formsey-repeating-section button {
     display: flex;
@@ -507,20 +517,20 @@ export const FORM_STYLES = css`
     height: 1.4em;
     font-size: var(--formsey-repeating-section-icon-size, inherit);
     border-radius: 50%;
-    background-color: var(--formsey-repeating-section-icon-background-color, var(--formsey-widget-background-color, #E2DDDB));
+    background-color: var(--formsey-repeating-section-icon-background-color, var(--formsey-widget-background, #E2DDDB));
     transition: background-color 0.12s ease-out;
     border: var(--formsey-input-border, 1px solid transparent);
     padding: 0.2em;
   }
   formsey-repeating-section button:focus {
     outline: none;
-    border: 1px solid var(--formsey-border-color-focus, #020b2f);
+    border: var(--formsey-border-focus, 1px solid #020b2f);
   }
   formsey-repeating-section .form:hover .fs-remove-wrapper {
     opacity: 1;
   }
   formsey-repeating-section .form:hover .fs-remove, formsey-repeating-section .fs-add:hover {
-    background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-widget-background-color-hover, #CAC4C2));
+    background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-widget-background-hover, #CAC4C2));
   }
   formsey-repeating-section .fs-add {
     margin: 0.2em 0.1em 0.1em;
@@ -547,15 +557,18 @@ export const FORM_STYLES = css`
 
   /* Markdown field */
   pre {
-    background-color: var(--formsey-widget-background-color);
+    background: var(--formsey-shade, #80808040);
     border-radius: var(--formsey-border-radius);
-    border: 1px solid var(--formsey-border-color);
+    border: var(--formsey-border);
     padding: .5em;
     display:block;
     overflow-x:auto;
     white-space: pre-wrap;
   }
-  formsey-markdown p, formsey-markdown ul {
+  formsey-markdown .content {
+    padding: var(--formsey-padding);
+  }
+  formsey-markdown p, formsey-markdown ul, formsey-markdown pre {
     margin: 0 0 .25em 0;
   }
   .hljs-subst{
@@ -595,24 +608,3 @@ export const FORM_STYLES = css`
   .hljs-strong{
       font-weight:bold
   }`
-
-export const INPUT_STYLE = css`
-.input {
-  user-select: auto;
-  outline: none;
-  box-sizing: border-box;
-  width: 100%;
-  height: var(--formsey-input-height, 2em);
-  font-family: var(--formsey-font-family, var(--fs-font-family, inherit));
-  font-size: var(--formsey-font-size, var(--fs-font-size, inherit));
-  color: var(--formsey-text-color, var(--fs-text-color, inherit));
-  font-weight: var(--formsey-font-weight, var(--fs-font-weight, inherit));
-  border-radius: var(--formsey-input-border-radius, var(--fs-border-radius, 3px));
-  padding: var(--formsey-input-padding, var(--fs-widget-padding, .2em .3em));
-  background: var(--formsey-input-background, var(--fs-widget-background-color-alpha, #99999920));
-  border: var(--formsey-input-border, 1px solid transparent);
-  transition: border 0.12s ease-out;
-}
-.input:focus-within {
-  border: 1px solid var(--formsey-border-color-focus, var(--fs-border-color-focus, #020b2f));
-}`

@@ -17,26 +17,32 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   @property({ converter: Object })
   value: SelectableSectionValue;
 
-  renderField() {
-    if (this.definition && this.definition.selections) {
-      let values = this.definition.selections.map(selection => (selection.value ? selection.value : selection.label));
-      let options = this.definition.selections.map(selection => { return { label: selection.label, value: selection.value } });
-      let index = 0
-      if (this.value && this.value.selection) {
-        index = values.indexOf(this.value.selection);
-      } else {
-        this.value = { selection: values[0], value: {} }
-      }
-      let selection = this.definition.selections[index];
-      if (selection) {
-        let value = selection.value ? selection.value : selection.label;
-        let errors = new InvalidErrors()
-        return html`${createField(this.components, this.settings, { type: "list", name: "selection", options } as ListFieldDefinition, value, this.path(), errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}
-      <div class="form">${createField(this.components, this.settings, selection.form, this.value?.value, this.path()+".value", errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
+  values : string[]
+  selectedValue : string
+  index : number
 
+  render() {
+    let form = undefined
+    if (this.definition && this.definition.selections) {
+      this.values = this.definition.selections.map(selection => (selection.value ? selection.value : selection.label));
+      this.index = 0
+      if (this.value && this.value.selection) {
+        this.index = this.values.indexOf(this.value.selection);
+      } else {
+        this.value = { selection: this.values[0], value: {} }
+      }
+      let selection = this.definition.selections[this.index];
+      this.selectedValue = selection.value ? selection.value : selection.label;
+      if (selection) {
+        form = html`${selection?.form ? html`<div class="form">${createField(this.components, this.settings, selection.form, this.value?.value, this.path()+".value", new InvalidErrors(), (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>` : undefined}`;
       }
     }
-    return undefined
+    return html`${super.render()}${form}`
+  }
+
+  renderField() {
+    let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
+    return html`${createField(this.components, this.settings, { type: "list", name: "selection", options } as ListFieldDefinition, this.selectedValue, this.path(), this.errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}`
   }
 
   public focusField(path : string) {

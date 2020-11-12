@@ -3,7 +3,6 @@ import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html } from "lit-element";
 import { property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { INPUT_STYLE } from './styles';
 
 export class InputField<T extends InputFieldDefinition> extends LabeledField<T, string> {
   @property({ converter: Object })
@@ -27,10 +26,6 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
   input: HTMLInputElement
 
   private _definition: T
-
-  static get styles() {
-    return [...super.styles, INPUT_STYLE]
-  }
 
   protected formResetCallback() {
     this.value = '';
