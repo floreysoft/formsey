@@ -147,7 +147,7 @@ if (nativeLibrary) {
           "type": "form",
           "layout": {
             "grids": {
-              "m": "grid-template-columns:minmax(0,4fr) minmax(0,2fr) minmax(0,2fr) minmax(0,4fr);grid-template-areas: '_title0 _title0 _title0 _title0' '_--formsey-background _--formsey-color _--formsey-color _--formsey-accent-color' '_--formsey-accent-contrast _--formsey-widget-background _--formsey-widget-background _--formsey-widget-background-hover' '_--formsey-padding _--formsey-padding _--formsey-border-radius _--formsey-border-radius';grid-gap:5px 5px;padding:5px 0px",
+              "m": "grid-template-columns:minmax(0,4fr) minmax(0,2fr) minmax(0,2fr) minmax(0,4fr);grid-template-areas: '_title0 _title0 _title0 _title0' '_--formsey-background _--formsey-color _--formsey-color _--formsey-accent-color' '_--formsey-accent-contrast _--formsey-widget-background _--formsey-widget-background _--formsey-widget-background-hover' '_--formsey-padding _--formsey-padding _--formsey-border-radius _--formsey-border-radius';grid-gap:5px 5px;padding:5px 5px;background-color:var(--fs-panel-background-color);border:1px solid var(--fs-border-color);border-radius: var(--fs-border-radius)",
               "xs": "grid-template-columns:minmax(0,1fr);grid-gap:5px 0px;padding:0px 0px",
             }
           }
@@ -156,10 +156,84 @@ if (nativeLibrary) {
         "type": "nestedForm"
       },
       {
-        "label": "",
-        "name": "",
-        "helpText": "Dark theme",
-        "type": "title"
+        "form": {
+          "fields": [
+            {
+              "label": "",
+              "helpText": "Dark theme",
+              "name": "",
+              "type": "title"
+            },
+            {
+              "name": "--formsey-background",
+              "type": "color",
+              "label": "Background color",
+              "helpText": "Background color of the form",
+              "autocomplete": "off"
+            },
+            {
+              "label": "Text color",
+              "helpText": "Foreground color used for text, icons and more",
+              "autocomplete": "off",
+              "name": "--formsey-color",
+              "type": "color"
+            },
+            {
+              "name": "--formsey-accent-color",
+              "helpText": "Color to highlight active field",
+              "type": "color",
+              "autocomplete": "off",
+              "label": "Accent color"
+            },
+            {
+              "name": "--formsey-accent-contrast",
+              "type": "color",
+              "label": "Contrast color",
+              "helpText": "Used for text and icons on top of accent color",
+              "autocomplete": "off"
+            },
+            {
+              "autocomplete": "off",
+              "name": "--formsey-widget-background",
+              "label": "Widget background",
+              "helpText": "Background color for buttons",
+              "type": "color"
+            },
+            {
+              "helpText": "Background color on hover",
+              "autocomplete": "off",
+              "type": "color",
+              "name": "--formsey-widget-background-hover",
+              "label": "Widget hover background"
+            },
+            {
+              "label": "Padding",
+              "placeholder": "0.1em 0.25em",
+              "autocomplete": "off",
+              "name": "--formsey-padding",
+              "type": "string",
+              "helpText": "Vertical and horizontal spacing"
+            },
+            {
+              "placeholder": "3px",
+              "autocomplete": "off",
+              "helpText": "Round borders for form fields",
+              "name": "--formsey-border-radius",
+              "type": "string",
+              "label": "Border radius"
+            }
+          ],
+          "name": "dark",
+          "type": "form",
+          "layout": {
+            "grids": {
+              "m": "grid-template-columns:minmax(0,4fr) minmax(0,2fr) minmax(0,2fr) minmax(0,4fr);grid-template-areas: '_title0 _title0 _title0 _title0' '_--formsey-background _--formsey-color _--formsey-color _--formsey-accent-color' '_--formsey-accent-contrast _--formsey-widget-background _--formsey-widget-background _--formsey-widget-background-hover' '_--formsey-padding _--formsey-padding _--formsey-border-radius _--formsey-border-radius';grid-gap:5px 5px;padding:5px 5px;background-color:var(--fs-panel-background-color);border:1px solid var(--fs-border-color);border-radius: var(--fs-border-radius)",
+              "xs": "grid-template-columns:minmax(0,1fr);grid-gap:5px 0px;padding:0px 0px",
+            }
+          }
+        },
+        "name": "dark",
+        "type": "nestedForm"
       }
     ]
   } as any

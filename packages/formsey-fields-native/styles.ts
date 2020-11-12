@@ -26,37 +26,8 @@ export const FORM_STYLES = css`
       }
   }
 
-  button {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    white-space: nowrap;
-    justify-content: center;
-  }
-  button:hover:not([disabled]) {
-    cursor: pointer;
-    background: var(--formsey-widget-background-hover);
-  }
-  button:focus:not([disabled]) {
-    border: var(--formsey-border-focus);
-  }
-  button:active:not([disabled]) {
-    background: var(--formsey-widget-background-selected);
-  }
-  button:disabled {
-    opacity: 0.5;
-  }
-  button.primary {
-    background: var(--formsey-accent-color);
-    color: var(--formsey-accent-contrast);
-    text-transform: uppercase;
-  }
-  button.primary:hover {
-    background: var(--formsey-accent-background-hover);
-  }
-
   input[type="checkbox"], input[type="radio"] {
-    margin: var(--formsey-padding, 0 .5em 0 0);
+    margin: var(--formsey-padding, .2em .3em);
     font: inherit;
     color: inherit;
   }
@@ -95,6 +66,36 @@ export const FORM_STYLES = css`
 
   .input:focus-within {
     border: var(--formsey-border-focus, 1px solid transparent);
+  }
+
+  button.input {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    justify-content: center;
+    background: var(--formsey-widget-background);
+  }
+  button:hover:not([disabled]) {
+    cursor: pointer;
+    background: var(--formsey-widget-background-hover);
+  }
+  button:focus:not([disabled]) {
+    border: var(--formsey-border-focus);
+  }
+  button:active:not([disabled]) {
+    background: var(--formsey-widget-background-selected);
+  }
+  button:disabled {
+    opacity: 0.5;
+  }
+  button.primary {
+    background: var(--formsey-accent-color);
+    color: var(--formsey-accent-contrast);
+    text-transform: uppercase;
+  }
+  button.primary:hover {
+    background: var(--formsey-accent-background-hover);
   }
 
   /* Boolean Field */
@@ -194,8 +195,7 @@ export const FORM_STYLES = css`
   }
 
   .lfi {
-    background: var(--formsey-error-background, #AA000044);
-    padding: var(--formsey-padding, .2em .3em);
+    background: var(--formsey-error-background, #FF000022);
     border-radius: var(--formsey-border-radius, 0.3em);
   }
 
@@ -212,34 +212,16 @@ export const FORM_STYLES = css`
     font-family: var(--formey-help-text-font-family, var(--formsey-font-family, inherit));
     font-size: var(--formey-help-text-font-size, smaller);
     line-height: var(--formsey-help-text-line-height, inherit);
-    margin: var(--formsey-help-text-margin, 1px 0 0 0);
+    padding: var(--formsey-padding, .2em .3em);
   }
 
   .lfet {
     color: var(--formsey-error-text-color, #FC0000);
   }
 
-  .lfhtb {
-    position: absolute;
-    left: var(--formsey-padding);
-    bottom: 1.8em;
-    z-index: 1;
-    color: var(--formsey-help-text-color, inherit);
-    border: 1px solid var(--formsey-border-color);
-    border-radius: var(--fs-border-radius);
-    background: var(--fs-widget-background-color);
-    padding: var(--formsey-padding);
-    opacity: 0;
-    transition: all 0.12s ease-out;
-  }
-
-  .lfw:focus-within .lfhtb {
-    opacity: 1;
-  }
-
   .lfht {
     color: var(--formsey-help-text-color, inherit);
-    padding: var(--formsey-help-text-padding, var(--formsey-padding, 4px 0 0 0));
+    padding: var(--formsey-help-text-padding, var(--formsey-padding, .2em .3em));
     opacity: 0.8;
     transition: opacity 0.12s ease-out;
   }
@@ -390,7 +372,7 @@ export const FORM_STYLES = css`
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
-    position: relative;
+    position: absolute;
     z-index: -1;
   }
 
@@ -568,7 +550,7 @@ export const FORM_STYLES = css`
     white-space: pre-wrap;
   }
   formsey-markdown .content {
-    padding: var(--formsey-padding);
+    padding: var(--formsey-padding, .2em .3em);
   }
   formsey-markdown p, formsey-markdown ul, formsey-markdown pre {
     margin: 0 0 .25em 0;
