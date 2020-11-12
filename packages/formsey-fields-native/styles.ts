@@ -164,6 +164,7 @@ export const FORM_STYLES = css`
   .cf svg {
     width: 1.2em;
     height: 1.2em;
+    fill: currentColor;
    }
 
   /* Labeled field */
@@ -424,6 +425,7 @@ export const FORM_STYLES = css`
   formsey-upload .prompt svg {
     width: 1.2em;
     height: 1.2em;
+    fill: currentColor;
   }
 
   formsey-upload .files {
