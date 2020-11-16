@@ -22,15 +22,8 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
   }
 
   protected renderFooter(): TemplateResult | void {
-    let validityMessage = undefined
-    const error = this.errors.get(this.path())
-    if (error) {
-      if ((<InputFieldDefinition>this.definition).customValidity) {
-        validityMessage = (<InputFieldDefinition>this.definition).customValidity
-      } else {
-        validityMessage = error.validityMessage
-      }
-    }
+    const error = this.errors?.get(this.path())
+    const validityMessage = error?.validityMessage || (<InputFieldDefinition>this.definition).customValidity
     let help = this.definition.helpText
     let helpText = help ? html`<div class="lfht">${help}</div>` : undefined
     return !this.valid && this.report && validityMessage ? html`<div class="lfet">${validityMessage}</div>` : helpText
