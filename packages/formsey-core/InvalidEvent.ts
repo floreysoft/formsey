@@ -20,19 +20,12 @@ export class InvalidErrors extends Map<string, InvalidError> {
     }
 }
 
-export class InvalidEvent extends Event {
-    errors: InvalidErrors;
-
+export class InvalidEvent extends CustomEvent<InvalidErrors> {
     constructor(errors: InvalidErrors) {
-        super("invalid");
-        if (errors) {
-            this.errors = errors
-        } else {
-            this.errors = new InvalidErrors()
-        }
+        super("invalid", { bubbles : false, detail: errors });
     }
 
     public addError(path: string, error: InvalidError) {
-        this.errors[path] = error
+        this.detail[path] = error
     }
 }

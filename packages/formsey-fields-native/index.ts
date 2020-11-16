@@ -43,197 +43,189 @@ if (nativeLibrary) {
     "type": "form",
     "layout": {
       "grids": {
-        "xs": "grid-template-columns:minmax(0,1fr);grid-gap:5px 5px;padding:0px 0px",
+        "m": "",
+        "l": "grid-template-columns:minmax(0,1fr);grid-gap:0px 10px;padding:10px 10px",
+        "xs": "grid-template-columns:minmax(0,1fr);grid-gap:10px 10px;padding:10px 10px"
       }
     },
     "fields": [
       {
-        "label": "Theme",
         "helpText": "Select the theme for your form",
-        "options": [
+        "type": "selectableSection",
+        "name": "theme",
+        "label": "Theme",
+        "selections": [
           {
-            "name": "light",
             "label": "Light",
-            "value": "light"
+            "name": "light",
+            "value": "light",
+            "form": {
+              "type": "form",
+              "fields": [
+                {
+                  "type": "markdown",
+                  "default": "Make sure to load the Roboto fonts when using this theme by adding the following snippet in the head of your page:\n```\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap\">\n\n```"
+                }
+              ]
+            }
           },
           {
             "value": "dark",
+            "name": "dark",
             "label": "Dark",
-            "name": "dark"
+            "form": {
+              "type": "form",
+              "fields": [
+                {
+                  "type": "markdown",
+                  "default": "Make sure to load the Roboto fonts when using this theme by adding the following snippet in the head of your page:\n```\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap\">\n\n```"
+                }
+              ]
+            }
           },
           {
-            "name": "auto",
-            "value": "auto",
-            "label": "Auto"
+            "form": {
+              "fields": [
+                {
+                  "type": "string",
+                  "label": "Font",
+                  "name": "--formsey-font",
+                  "helpText": "Enter font family and size",
+                  "placeholder": "13px Arial, sans-serif",
+                  "autocomplete": "off"
+                },
+                {
+                  "type": "string",
+                  "label": "Font on mobile",
+                  "name": "--formsey-font-coarse",
+                  "helpText": "Font used on pointer devices",
+                  "placeholder": "15px Arial, sans-serif",
+                  "autocomplete": "off"
+                },
+                {
+                  "helpText": "Background color of the form",
+                  "autocomplete": "off",
+                  "type": "color",
+                  "name": "--formsey-background",
+                  "label": "Background color"
+                },
+                {
+                  "name": "--formsey-color",
+                  "label": "Text color",
+                  "helpText": "Foreground color used for text, icons and more",
+                  "type": "color",
+                  "autocomplete": "off"
+                },
+                {
+                  "label": "Fields shade",
+                  "name": "--formsey-shade",
+                  "helpText": "Background color for input fields",
+                  "autocomplete": "off",
+                  "type": "color",
+                  "placeholder": "#80808030"
+                },
+                {
+                  "label": "Accent color",
+                  "autocomplete": "off",
+                  "name": "--formsey-accent-color",
+                  "type": "color",
+                  "helpText": "Color to highlight active field"
+                },
+                {
+                  "label": "Accent hover color",
+                  "autocomplete": "off",
+                  "name": "--formsey-accent-hover",
+                  "type": "color",
+                  "helpText": "Hover color for accented items"
+                },
+                {
+                  "autocomplete": "off",
+                  "type": "color",
+                  "name": "--formsey-accent-contrast",
+                  "label": "Accent contrast",
+                  "helpText": "Used for text and icons on top of accent color"
+                },
+                {
+                  "name": "--formsey-error-backkground",
+                  "label": "Error color",
+                  "helpText": "Background color for invalid fields",
+                  "type": "color",
+                  "autocomplete": "off",
+                  "placeholder": "#FF000020",
+                  "default": "#FF000020"
+                },
+                {
+                  "name": "--formsey-error-text",
+                  "label": "Error text color",
+                  "helpText": "Text color for error message",
+                  "type": "color",
+                  "autocomplete": "off"
+                },
+                {
+                  "type": "color",
+                  "helpText": "Background color for buttons",
+                  "label": "Buttons",
+                  "autocomplete": "off",
+                  "name": "--formsey-widget-background"
+                },
+                {
+                  "label": "Buttons hover",
+                  "name": "--formsey-widget-background-hover",
+                  "helpText": "Background color on hover",
+                  "autocomplete": "off",
+                  "type": "color"
+                },
+                {
+                  "label": "Border color",
+                  "name": "--formsey-border",
+                  "helpText": "Input field borders",
+                  "autocomplete": "off",
+                  "type": "color",
+                  "placeholder": ""
+                },
+                {
+                  "label": "Focus color",
+                  "name": "--formsey-border-focus",
+                  "helpText": "Focused border color",
+                  "autocomplete": "off",
+                  "type": "color",
+                  "placeholder": ""
+                },
+                {
+                  "placeholder": "3px",
+                  "label": "Border radius",
+                  "name": "--formsey-border-radius",
+                  "helpText": "Round borders for form fields",
+                  "autocomplete": "off",
+                  "type": "string"
+                },
+                {
+                  "label": "Padding",
+                  "autocomplete": "off",
+                  "placeholder": "0.1em 0.25em",
+                  "type": "string",
+                  "helpText": "Vertical and horizontal spacing",
+                  "name": "--formsey-padding"
+                }
+              ],
+              "type": "form",
+              "layout": {
+                "grids": {
+                  "xs": "grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:5px 5px;padding:0px 0px",
+                  "m": "grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);grid-gap:5px 5px;padding:0px 0px"
+                }
+              }
+            },
+            "value": "custom",
+            "label": "Custom",
+            "name": "custom"
           },
           {
-            "name": "none",
             "label": "None",
+            "name": "none",
             "value": "none"
           }
-        ],
-        "type": "list",
-        "name": "theme"
-      },
-      {
-        "form": {
-          "fields": [
-            {
-              "label": "",
-              "helpText": "Light theme",
-              "name": "",
-              "type": "title"
-            },
-            {
-              "name": "--formsey-background",
-              "type": "color",
-              "label": "Background color",
-              "helpText": "Background color of the form",
-              "autocomplete": "off"
-            },
-            {
-              "label": "Text color",
-              "helpText": "Foreground color used for text, icons and more",
-              "autocomplete": "off",
-              "name": "--formsey-color",
-              "type": "color"
-            },
-            {
-              "name": "--formsey-accent-color",
-              "helpText": "Color to highlight active field",
-              "type": "color",
-              "autocomplete": "off",
-              "label": "Accent color"
-            },
-            {
-              "name": "--formsey-accent-contrast",
-              "type": "color",
-              "label": "Contrast color",
-              "helpText": "Used for text and icons on top of accent color",
-              "autocomplete": "off"
-            },
-            {
-              "autocomplete": "off",
-              "name": "--formsey-widget-background",
-              "label": "Widget background",
-              "helpText": "Background color for buttons",
-              "type": "color"
-            },
-            {
-              "helpText": "Background color on hover",
-              "autocomplete": "off",
-              "type": "color",
-              "name": "--formsey-widget-background-hover",
-              "label": "Widget hover background"
-            },
-            {
-              "label": "Padding",
-              "placeholder": "0.1em 0.25em",
-              "autocomplete": "off",
-              "name": "--formsey-padding",
-              "type": "string",
-              "helpText": "Vertical and horizontal spacing"
-            },
-            {
-              "placeholder": "3px",
-              "autocomplete": "off",
-              "helpText": "Round borders for form fields",
-              "name": "--formsey-border-radius",
-              "type": "string",
-              "label": "Border radius"
-            }
-          ],
-          "name": "light",
-          "type": "form",
-          "layout": {
-            "grids": {
-              "m": "grid-template-columns:minmax(0,4fr) minmax(0,2fr) minmax(0,2fr) minmax(0,4fr);grid-template-areas: '_title0 _title0 _title0 _title0' '_--formsey-background _--formsey-color _--formsey-color _--formsey-accent-color' '_--formsey-accent-contrast _--formsey-widget-background _--formsey-widget-background _--formsey-widget-background-hover' '_--formsey-padding _--formsey-padding _--formsey-border-radius _--formsey-border-radius';grid-gap:5px 5px;padding:5px 5px;background-color:var(--fs-panel-background-color);border:1px solid var(--fs-border-color);border-radius: var(--fs-border-radius)",
-              "xs": "grid-template-columns:minmax(0,1fr);grid-gap:5px 0px;padding:0px 0px",
-            }
-          }
-        },
-        "name": "light",
-        "type": "nestedForm"
-      },
-      {
-        "form": {
-          "fields": [
-            {
-              "label": "",
-              "helpText": "Dark theme",
-              "name": "",
-              "type": "title"
-            },
-            {
-              "name": "--formsey-background",
-              "type": "color",
-              "label": "Background color",
-              "helpText": "Background color of the form",
-              "autocomplete": "off"
-            },
-            {
-              "label": "Text color",
-              "helpText": "Foreground color used for text, icons and more",
-              "autocomplete": "off",
-              "name": "--formsey-color",
-              "type": "color"
-            },
-            {
-              "name": "--formsey-accent-color",
-              "helpText": "Color to highlight active field",
-              "type": "color",
-              "autocomplete": "off",
-              "label": "Accent color"
-            },
-            {
-              "name": "--formsey-accent-contrast",
-              "type": "color",
-              "label": "Contrast color",
-              "helpText": "Used for text and icons on top of accent color",
-              "autocomplete": "off"
-            },
-            {
-              "autocomplete": "off",
-              "name": "--formsey-widget-background",
-              "label": "Widget background",
-              "helpText": "Background color for buttons",
-              "type": "color"
-            },
-            {
-              "helpText": "Background color on hover",
-              "autocomplete": "off",
-              "type": "color",
-              "name": "--formsey-widget-background-hover",
-              "label": "Widget hover background"
-            },
-            {
-              "label": "Padding",
-              "placeholder": "0.1em 0.25em",
-              "autocomplete": "off",
-              "name": "--formsey-padding",
-              "type": "string",
-              "helpText": "Vertical and horizontal spacing"
-            },
-            {
-              "placeholder": "3px",
-              "autocomplete": "off",
-              "helpText": "Round borders for form fields",
-              "name": "--formsey-border-radius",
-              "type": "string",
-              "label": "Border radius"
-            }
-          ],
-          "name": "dark",
-          "type": "form",
-          "layout": {
-            "grids": {
-              "m": "grid-template-columns:minmax(0,4fr) minmax(0,2fr) minmax(0,2fr) minmax(0,4fr);grid-template-areas: '_title0 _title0 _title0 _title0' '_--formsey-background _--formsey-color _--formsey-color _--formsey-accent-color' '_--formsey-accent-contrast _--formsey-widget-background _--formsey-widget-background _--formsey-widget-background-hover' '_--formsey-padding _--formsey-padding _--formsey-border-radius _--formsey-border-radius';grid-gap:5px 5px;padding:5px 5px;background-color:var(--fs-panel-background-color);border:1px solid var(--fs-border-color);border-radius: var(--fs-border-radius)",
-              "xs": "grid-template-columns:minmax(0,1fr);grid-gap:5px 0px;padding:0px 0px",
-            }
-          }
-        },
-        "name": "dark",
-        "type": "nestedForm"
+        ]
       }
     ]
   } as any

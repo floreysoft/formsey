@@ -45,8 +45,7 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   }
 
   protected invalid(e: InvalidEvent) {
-    e.stopPropagation()
-    this.dispatchEvent(new InvalidEvent(e.errors))
+    this.dispatchEvent(new InvalidEvent(e.detail))
   }
 
   protected changed(e: ValueChangedEvent<any>) {

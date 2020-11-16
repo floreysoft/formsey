@@ -13,25 +13,38 @@ const themes = new Map([
   ["light", {
     style: html`<style>
       * {
+        --formsey-font: 13px Roboto;
+        --formsey-font-coarse: 14px Roboto;
         --formsey-color: #000000;
         --formsey-background: #ffffff;
         --formsey-accent-color: #ff813f;
         --formsey-accent-contrast: #ffffff;
         --formsey-padding: .1em .25em;
         --formsey-border-radius: 3px;
+        --formsey-border: transparent;
+        --formsey-border-focus: #ff813f;
         --formsey-widget-background: #E2DDDB;
         --formsey-widget-background-hover: #CAC4C2;
+        --formsey-shade: #80808030;
       }
     </style>`
   }],
   ["dark", {
     style: html`<style>
       * {
+        --formsey-font: 13px Roboto;
+        --formsey-font-coarse: 14px Roboto;
         --formsey-color: #ffffff;
         --formsey-background: #000000;
         --formsey-accent-color: #007fd4;
         --formsey-accent-contrast: #ffffff;
-        --formsey-padding: .1em .25em;
+        --formsey-padding: .2em .25em;
+        --formsey-border-radius: 3px;
+        --formsey-border: transparent;
+        --formsey-border-focus: #007fd4;
+        --formsey-widget-background: #E2DDDB;
+        --formsey-widget-background-hover: #CAC4C2;
+        --formsey-shade: #80808040;
         --formsey-widget-background: #2d2d2d;
         --formsey-widget-background-hover: #37373d;
       }
@@ -65,19 +78,20 @@ export class StyledForm extends Form {
       field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
-    return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme'])} .themes=${themes}><div class="themed">${form}</div></fs-theme>` : form
+    return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme']?.['selection'])} .themes=${themes}><div class="themed">${form}</div></fs-theme>` : form
   }
 
   updated() {
     if (this.settings) {
-      const theme = this.settings['theme']
-      document.querySelector('html').setAttribute('theme', theme)
-      const properties = this.settings[theme]
-      if (properties) {
-        this.themed.setAttribute("style", "")
-        Object.entries(properties).forEach(([key, value]) => {
-          this.themed.style.setProperty(key, value as string);
-        })
+      const theme = this.settings?.['theme']?.['selection']
+      this.themed.setAttribute("style", "")
+      if (theme == "custom") {
+        const properties = this.settings?.['theme']?.['value']
+        if (properties) {
+          Object.entries(properties).forEach(([key, value]) => {
+            this.themed.style.setProperty(key, value as string);
+          })
+        }
       }
     }
   }
@@ -87,12 +101,11 @@ export class StyledForm extends Form {
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-     this.dispatchEvent(new ValueChangedEvent(e.type as  "change" | "input" | "inputChange", e.detail?.name, e.detail?.value));
+    this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail?.name, e.detail?.value));
   }
 
   protected invalid(e: InvalidEvent) {
-    e.stopPropagation()
-    this.dispatchEvent(new InvalidEvent(e.errors));
+    this.dispatchEvent(new InvalidEvent(e.detail));
   }
 }
 

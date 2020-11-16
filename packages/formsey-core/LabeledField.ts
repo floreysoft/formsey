@@ -18,7 +18,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     if (this.definition.hasOwnProperty('required')) {
       required = (<InputFieldDefinition>this.definition).required
     }
-    return this.definition.label ? html`<label class="lfl" id="${this.elementId}">${this.definition.label}${required ? html`<span class="lfr">&#10033;</span>` : undefined}</label>${this.renderField()}` : this.renderField()
+    return this.definition.label ? html`<label class="lfl" id="${this.elementId}">${this.definition.label}${required ? html`<span class="lfr">&#9679;</span>` : undefined}</label>${this.renderField()}` : this.renderField()
   }
 
   protected renderFooter(): TemplateResult | void {

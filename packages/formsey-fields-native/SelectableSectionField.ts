@@ -2,7 +2,7 @@ import { createField, Field, LabeledField, ListFieldDefinition, SelectableSectio
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -32,9 +32,11 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         this.value = { selection: this.values[0], value: {} }
       }
       let selection = this.definition.selections[this.index];
-      this.selectedValue = selection.value ? selection.value : selection.label;
+      if ( selection ) {
+        this.selectedValue = selection.value ? selection.value : selection.label;
+      }
       if (selection) {
-        form = html`${selection?.form ? html`<div class="form">${createField(this.components, this.settings, selection.form, this.value?.value, this.path()+".value", new InvalidErrors(), (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>` : undefined}`;
+        form = html`${selection?.form ? html`<div class="form">${createField(this.components, this.settings, selection.form, this.value?.value, this.path()+".value", new InvalidErrors(), (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`;
       }
     }
     return html`${super.render()}${form}`
@@ -42,7 +44,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
-    return html`${createField(this.components, this.settings, { type: "list", name: "selection", options } as ListFieldDefinition, this.selectedValue, this.path(), this.errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), null)}`
+    return html`${createField(this.components, this.settings, { type: "list", name: "selection", options } as ListFieldDefinition, this.selectedValue, this.path(), this.errors, (event: ValueChangedEvent<string>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}`
   }
 
   public focusField(path : string) {
@@ -78,6 +80,13 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       }
       this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail.name, this.value));
     }
+  }
+
+  protected invalid(e: InvalidEvent) {
+    e.detail.forEach((error, path) => {
+      this.errors.set(this.definition.name ? this.definition.name + ".value." + path : "value."+path, error)
+    })
+    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
 

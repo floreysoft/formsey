@@ -38,8 +38,7 @@ export class StyledForm extends Form {
   }
 
   protected invalid(e: InvalidEvent) {
-    e.stopPropagation()
-    this.dispatchEvent(new InvalidEvent(e.errors));
+    this.dispatchEvent(new InvalidEvent(e.detail));
   }
 }
 

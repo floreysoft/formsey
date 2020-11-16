@@ -294,8 +294,7 @@ export class FormField extends Field<FormDefinition, Object> {
   }
 
   protected invalid(e: InvalidEvent) {
-    e.stopPropagation()
-    e.errors.forEach((error, path) => {
+    e.detail.forEach((error, path) => {
       this.errors.set(this.definition.name ? this.definition.name + "." + path : path, error)
     })
     this.dispatchEvent(new InvalidEvent(this.errors))

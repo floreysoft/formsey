@@ -201,13 +201,11 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   protected invalid(e: InvalidEvent) {
-    e.stopPropagation()
-    this.errors = e.errors
-    this.dispatchEvent(new InvalidEvent(e.errors));
+    this.errors = e.detail
+    this.dispatchEvent(new InvalidEvent(this.errors));
   }
 
   protected focusError(path: string, error: InvalidError) {
     console.log(JSON.stringify(error))
   }
-
 }

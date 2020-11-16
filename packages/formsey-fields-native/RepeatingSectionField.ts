@@ -125,9 +125,9 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()
-    for (let error in e.errors) {
+    for (let error in e.detail) {
       let index = error.indexOf('.')
-      this.errors[this.definition.name + "[" + error.substring(0, index) + "]." + error.substring(index + 1)] = e.errors[error]
+      this.errors[this.definition.name + "[" + error.substring(0, index) + "]." + error.substring(index + 1)] = e.detail[error]
     }
     this.dispatchEvent(new InvalidEvent(this.errors))
   }

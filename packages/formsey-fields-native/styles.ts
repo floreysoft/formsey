@@ -12,6 +12,16 @@ export const FORM_STYLES = css`
     -webkit-font-smoothing: antialiased;
   }
 
+  * {
+    font: var(--formsey-font, inherit);
+  }
+
+  @media (pointer: coarse) {
+    * {
+      font: var(--formsey-font-coarse, inherit);
+    }
+  }
+
   @keyframes autofill {
     100% {
         background: transparent;
@@ -60,12 +70,12 @@ export const FORM_STYLES = css`
     border-radius: var(--formsey-border-radius, 3px);
     padding: var(--formsey-padding, .2em .3em);
     background: var(--formsey-shade, #80808040);
-    border: var(--formsey-border, 1px solid transparent);
+    border: 1px solid var(--formsey-border, transparent);
     transition: border 0.12s ease-out;
   }
 
   .input:focus-within {
-    border: var(--formsey-border-focus, 1px solid transparent);
+    border: 1px solid var(--formsey-border-focus, transparent);
   }
 
   button.input {
@@ -81,10 +91,10 @@ export const FORM_STYLES = css`
     background: var(--formsey-widget-background-hover);
   }
   button:focus:not([disabled]) {
-    border: var(--formsey-border-focus);
+    border: 1px solid var(--formsey-border-focus, transparent);
   }
   button:active:not([disabled]) {
-    background: var(--formsey-widget-background-selected);
+    background: var(--formsey-widget-background-hover);
   }
   button:disabled {
     opacity: 0.5;
@@ -95,7 +105,7 @@ export const FORM_STYLES = css`
     text-transform: uppercase;
   }
   button.primary:hover {
-    background: var(--formsey-accent-background-hover);
+    background: var(--formsey-accent-hover);
   }
 
   /* Boolean Field */
@@ -159,7 +169,7 @@ export const FORM_STYLES = css`
   }
 
   .cf:focus-within .cfps {
-    border: var(--formsey-border-focus, 1px solid #020b2f);
+    border: 1px solid var(--formsey-border-focus, #020b2f);
   }
 
   .cf svg {
@@ -179,11 +189,8 @@ export const FORM_STYLES = css`
   .lfl {
     display: block;
     position: relative;
-    font-family: var(--formsey-label-font-family, inherit);
-    font-size: var(--formsey-label-font-size, inherit);
-    font-weight: var(--formsey-label-font-weight, inherit);
+    font: var(--formsey-label-font, inherit);
     color: var(--formsey-label-color, inherit);
-    line-height: var(--formsey-label-line-height, inherit);
     padding: var(--formsey-padding, .2em .3em);
     transition: all 0.12s ease-out;
     opacity: 0.8;
@@ -197,25 +204,29 @@ export const FORM_STYLES = css`
   .lfi {
     background: var(--formsey-error-background, #FF000022);
     border-radius: var(--formsey-border-radius, 0.3em);
+    padding: var(--formsey-padding, 0 .3em);
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .lfr {
     color: var(--formsey-required-color, inherit);
     margin: var(--formsey-padding, .2em .3em);
-    font-family: var(--formey-required-font-family, inherit);
-    font-size: var(--formey-required-font-size, smaller);
-    line-height: var(--formsey-required-line-height, inherit);
+    font: var(--formsey-required-font, inherit);
     vertical-align: top;
   }
 
   .lfet, .lfht {
-    font-family: var(--formey-help-text-font-family, var(--formsey-font-family, inherit));
-    font-size: var(--formey-help-text-font-size, smaller);
-    line-height: var(--formsey-help-text-line-height, inherit);
+    font: var(--formsey-help-font, inherit);
+    font-size: smaller;
     padding: var(--formsey-padding, .2em .3em);
   }
 
   .lfet {
+    color: var(--formsey-error-text-color, #FC0000);
+  }
+
+  .lfi .lfr {
     color: var(--formsey-error-text-color, #FC0000);
   }
 
@@ -308,7 +319,7 @@ export const FORM_STYLES = css`
     box-shadow: var(--formsey-box-shadow);
   }
   formsey-image-checkbox :checked+label>img {
-    box-shadow: 0px 0px 3px 0 var(--fs-text-color);
+    box-shadow: 0px 0px 3px 0 var(--formsey-text-color);
   }
   formsey-image-checkbox :focus+label {
     transform: scale(.95);
@@ -343,7 +354,7 @@ export const FORM_STYLES = css`
   }
 
   formsey-signature .input:focus-within {
-    border: var(--formsey-border-focus, 1px solid #020b2f);
+    border: 1px solid var(--formsey-border-focus, #020b2f);
   }
 
   formsey-signature canvas {
@@ -508,7 +519,7 @@ export const FORM_STYLES = css`
   }
   formsey-repeating-section button:focus {
     outline: none;
-    border: var(--formsey-border-focus, 1px solid #020b2f);
+    border: 1px solid var(--formsey-border-focus, #020b2f);
   }
   formsey-repeating-section .form:hover .fs-remove-wrapper {
     opacity: 1;
@@ -543,7 +554,7 @@ export const FORM_STYLES = css`
   pre {
     background: var(--formsey-shade, #80808040);
     border-radius: var(--formsey-border-radius);
-    border: var(--formsey-border);
+    border: 1px solid var(--formsey-border, transparent);
     padding: .5em;
     display:block;
     overflow-x:auto;
