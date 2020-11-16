@@ -23,10 +23,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
   }
 
   render() {
-    let customValidity = this.definition.customValidity
-    if (this.error) {
-      customValidity = this.error.validityMessage
-    }
+    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
     return html`<mwc-textfield label="${this.definition.label}" helper="${ifDefined(this.definition.helpText)}" type="${this.type}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${this.definition.autocomplete}" validationmessage="${ifDefined(customValidity)}" @input="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" maxlength="${ifDefined(this.definition.maxlength)}" pattern="${ifDefined(this.definition.pattern)}" ?disabled="${this.definition.disabled}" .value="${this.value && this.value.length > 0 ? this.value : ''}" ?charCounter="${!!this.definition.maxlength}"></mwc-textfield>`;
   }
 
@@ -38,11 +35,12 @@ export class StringField extends Field<StringFieldDefinition, string> {
 
   firstUpdated() {
     this.materialTextField.validityTransform = (newValue, nativeValidity) => {
-      if (this.error) {
+      const error = this.errors.get(this.path())
+      if (error) {
         return {
           valid: false,
-          validationMessage: this.error.validityMessage,
-          ...this.error.validityState
+          validationMessage: error.validityMessage,
+          ...error.validityState
         }
       }
       return nativeValidity;
@@ -69,7 +67,7 @@ export class StringField extends Field<StringFieldDefinition, string> {
       validationMessage = validityState['validationMessage']
       delete validityState['validationMessage']
     }
-    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(validationMessage, false, validityState)
+    this.errors.set(this.path(), new InvalidError(validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 

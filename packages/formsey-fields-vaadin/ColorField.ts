@@ -14,10 +14,7 @@ export class ColorField extends StringField {
   color: HTMLInputElement
 
   render() {
-    let customValidity = this.definition.customValidity
-    if ( this.error && this.error.validityMessage ) {
-      customValidity = this.error.validityMessage
-    }
+    let customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
     const style = this.value ? "background-color:"+this.value : undefined
     return html`<div class="cf" @keydown="${this.keyDown}">
     <vaadin-text-field style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?readonly="${this.definition.readonly}" ?autoselect="${this.definition.autoselect}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.inputted}" @changed="${this.changed}"  name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="7" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}">

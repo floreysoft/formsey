@@ -13,10 +13,7 @@ export abstract class InputField<D extends InputFieldDefinition,V> extends Field
   vaadinField: any
 
   render() {
-    let customValidity = this.definition.customValidity
-    if ( this.error && this.error.validityMessage ) {
-      customValidity = this.error.validityMessage
-    }
+    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
     return this.renderField(customValidity)
   }
 
@@ -45,7 +42,7 @@ export abstract class InputField<D extends InputFieldDefinition,V> extends Field
       }
     }
     const validationMessage = this.vaadinField.errorMessage || (this.vaadinField.focusElement as any).validationMessage
-    this.errors.set(this.definition.name, this.error ? this.error : new InvalidError(validationMessage, false, validityState))
+    this.errors.set(this.path(), new InvalidError(validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

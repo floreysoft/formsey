@@ -90,6 +90,9 @@ export class Form extends Field<FieldDefinition, any> {
 
   private _loaded: boolean = false
 
+  // Batch invalid events
+  private _invalidTimer = null
+
   protected shouldUpdate(): boolean {
     let update = super.shouldUpdate()
     if (!update) {
@@ -103,6 +106,9 @@ export class Form extends Field<FieldDefinition, any> {
       this.definition['action'] = this.action
       this.definition['method'] = this.method
       this.definition['target'] = this.target
+    }
+    if ( !this.errors ) {
+      this.errors = new InvalidErrors()
     }
     return this.components?.["styledForm"]?.factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))
   }
@@ -148,10 +154,6 @@ export class Form extends Field<FieldDefinition, any> {
     return false
   }
 
-  public setValidityMessage(path: string, validityMessage: string) {
-    set(this.errors, path, validityMessage)
-  }
-
   public clearCustomValidity() {
     super.clearCustomValidity()
     this.form.clearCustomValidity()
@@ -162,6 +164,7 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   public validate(report: boolean, path?: string) {
+    this.errors.clear()
     if (report) {
       return this.form.reportValidity(path);
     } else {
@@ -201,8 +204,14 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   protected invalid(e: InvalidEvent) {
-    this.errors = e.detail
-    this.dispatchEvent(new InvalidEvent(this.errors));
+    e.stopPropagation()
+    if ( this._invalidTimer ) {
+      clearTimeout(this._invalidTimer)
+    }
+    this._invalidTimer = setTimeout(() => {
+      this.errors = new InvalidErrors(e.detail)
+      this.dispatchEvent(new InvalidEvent(e.detail))
+    }, 1)
   }
 
   protected focusError(path: string, error: InvalidError) {

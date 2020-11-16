@@ -20,7 +20,6 @@ export class DateField extends InputField<DateFieldDefinition, string> {
     return html`<vaadin-date-picker style="display:flex" label="${ifDefined(this.definition.label as string)}" .helperText="${this.definition.helpText as string}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" ?disabled="${this.definition.disabled}" ?autofocus="${this.definition.autofocus}" @change="${this.changed}" min="${ifDefined(this.definition.min)}"  max="${ifDefined(this.definition.max)}" step="${ifDefined(this.definition.step)}" .value=${this.value} placeholder="${ifDefined(this.definition.placeholder)}"></vaadin-date-picker>`
   }
 
-
   invalid() {
     let validityState = {}
     const validity = ((<any>this.vaadinField.focusElement).focusElement as any).validity
@@ -30,7 +29,7 @@ export class DateField extends InputField<DateFieldDefinition, string> {
       }
     }
     const validationMessage = this.vaadinField.errorMessage || (((<any>this.vaadinField.focusElement).focusElement as any)).validationMessage
-    this.errors.set(this.definition.name, this.error ? this.error : new InvalidError(validationMessage, false, validityState))
+    this.errors.set(this.path(),new InvalidError(validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

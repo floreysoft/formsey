@@ -33,10 +33,6 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
       let checked = other.length > 0
       templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}" @input="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField(this.components, this.settings, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", this.path(), null, (e) => this.changed(e), null)}</div>`);
     }
-    let customValidity = this.definition.customValidity
-    if (this.error && this.error.validityMessage) {
-      customValidity = this.error.validityMessage
-    }
     return html`<div class=${this.definition.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
   }
 

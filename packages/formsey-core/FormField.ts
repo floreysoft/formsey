@@ -77,18 +77,15 @@ export class FormField extends Field<FormDefinition, Object> {
     let hidden: TemplateResult[] = []
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
-        let fieldErrors = new InvalidErrors()
         let value: any
         if (field.hasOwnProperty('form') && !field.name) {
           // Anonymous nested form, so let's copy all form fields
           value = {}
           this.applyNestedFields(value, <NestedFormDefinition>field)
-          this.applyNestedErrors(this.errors, fieldErrors, <NestedFormDefinition>field)
         } else {
           value = this.value && field.name ? this.value[field.name] : undefined
-          this.addFieldErrors(this.errors, fieldErrors, field.name)
         }
-        let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
+        let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
         let style
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
@@ -147,14 +144,7 @@ export class FormField extends Field<FormDefinition, Object> {
     for (let field of this._fields) {
       let child = field.firstElementChild as Field<any, any>
       child.clearCustomValidity()
-      let fieldDefinition = child.definition
-      let fieldErrors = new InvalidErrors()
-      if (fieldDefinition.hasOwnProperty('form') && !fieldDefinition.name) {
-        this.applyNestedErrors(customErrors, fieldErrors, <NestedFormDefinition>fieldDefinition)
-      } else {
-        this.addFieldErrors(customErrors, fieldErrors, fieldDefinition.name)
-      }
-      child.setCustomValidity(fieldErrors)
+      child.setCustomValidity(customErrors)
     }
   }
 
@@ -279,38 +269,6 @@ export class FormField extends Field<FormDefinition, Object> {
           this.applyNestedFields(value, <NestedFormDefinition>nestedField)
         }
       }
-    }
-  }
-
-  protected applyNestedErrors(errors: InvalidErrors, fieldErrors: InvalidErrors, field: NestedFormDefinition) {
-    for (let nestedField of field.form.fields) {
-      if (nestedField) {
-        this.addFieldErrors(errors, fieldErrors, nestedField.name)
-        if (nestedField.hasOwnProperty('form') && !nestedField.name) {
-          this.applyNestedErrors(errors, fieldErrors, <NestedFormDefinition>nestedField)
-        }
-      }
-    }
-  }
-
-  protected invalid(e: InvalidEvent) {
-    e.detail.forEach((error, path) => {
-      this.errors.set(this.definition.name ? this.definition.name + "." + path : path, error)
-    })
-    this.dispatchEvent(new InvalidEvent(this.errors))
-  }
-
-  private addFieldErrors(errors: InvalidErrors, fieldErrors: InvalidErrors, field: string) {
-    if (errors) {
-      errors.forEach((error, path) => {
-        if (this.definition.name && (path == this.definition.name + "." + field || path.startsWith(this.definition.name + "." + field + ".") || path.startsWith(this.definition.name + "." + field + "["))) {
-          fieldErrors.set(path.substring((this.definition.name + ".").length), error)
-        } else if (path.startsWith(field + "[")) {
-          fieldErrors.set(path, error)
-        } else if (path == field || path.startsWith(field + ".")) {
-          fieldErrors.set(path, error)
-        }
-      })
     }
   }
 

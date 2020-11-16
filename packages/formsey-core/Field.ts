@@ -5,7 +5,7 @@ import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
-import { InvalidError, InvalidErrors } from './InvalidEvent';
+import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const createField = (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
@@ -66,58 +66,41 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   report: boolean = false
 
   @property({ type: Object })
-  set errors(errors: InvalidErrors) {
-    this.error = undefined
-    if (errors) {
-      this.error = errors.get(this.path())
-    }
-    this._errors = errors;
-    this.requestUpdate();
-  }
+  errors : InvalidErrors
 
-  get errors() {
-    return this._errors
-  }
-
-  _errors: InvalidErrors = new InvalidErrors()
-  error: InvalidError | undefined
+  @property({ type: Object })
+  customErrors : InvalidErrors
 
   public path(): string {
-    return this.definition.name ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath
+    return this.definition.name ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
   }
 
   public clearCustomValidity() {
-    this.clearErrors(true)
+    this.customErrors = null
   }
 
   public setCustomValidity(customErrors: InvalidErrors) {
-    if (customErrors) {
-      customErrors.forEach((error, path) => {
-        error.custom = true
-        this.errors.set(path, error)
-        if (path = this.definition.name) {
-          this.error = error
-        }
-      })
-    }
+    this.customErrors = customErrors
   }
 
   public reportValidity(path?: string): boolean {
-    this.clearErrors()
     this.report = true
-    this.valid = this.validate(true, path)
-    if (this.valid && this.error) {
+    if (this.errors.get(this.path())) {
+      this.dispatchEvent(new InvalidEvent(this.errors))
       this.valid = false
+    } else {
+      this.valid = this.validate(true, path)
     }
     return this.valid
   }
 
   public checkValidity(path?: string): boolean {
-    this.clearErrors()
     this.report = false
-    this.valid = this.validate(false, path)
-    if (this.valid && this.error) {
+    if (this.errors.get(this.path())) {
+      this.dispatchEvent(new InvalidEvent(this.errors))
       this.valid = false
+    } else {
+      this.valid = this.validate(false, path)
     }
     return this.valid
   }
@@ -125,6 +108,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   public validate(report: boolean, path?: string): boolean {
     return true
   }
+
 
   static get styles() {
     return [css`
@@ -183,28 +167,16 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     this.dispatchEvent(new FieldBlurEvent(this.path()));
   }
 
+  protected invalid(e: InvalidEvent) {
+    this.dispatchEvent(new InvalidEvent(this.errors))
+  }
+
   protected firstPathElement(path: string) {
     return path.split('.')[0]
   }
 
   protected prependPath(path: string) {
     return (this.definition.name ? this.definition.name : "") + "." + path
-  }
-
-  protected clearErrors(removeCustomErrors?: boolean) {
-    // Keep custom errors
-    if (this.errors) {
-      this.errors.forEach((error, path) => {
-        if (error.custom == removeCustomErrors) {
-          this.errors.delete(path)
-        }
-      })
-    } else {
-      this.errors = new InvalidErrors()
-    }
-    if (this.error && this.error.custom == removeCustomErrors) {
-      this.error = undefined
-    }
   }
 }
 

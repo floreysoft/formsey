@@ -50,10 +50,6 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
       let checked = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label)).length == 0
       templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-radio .checked="${checked}" value="__other" @change="${this.changed}"></mwc-radio></mwc-formfield><mwc-textfield @input="${this.otherChanged}" ?disabled="${this.definition.disabled || !checked}"></mwc-textfield></div>`);
     }
-    let customValidity = this.definition.customValidity
-    if (this.error && this.error.validityMessage) {
-      customValidity = this.error.validityMessage
-    }
     return html`${templates}`;
   }
 

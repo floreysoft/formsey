@@ -47,10 +47,6 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
 
   validate(report: boolean) {
     this.input.setCustomValidity("")
-    if (this.error?.custom) {
-      this.dispatchEvent(new InvalidEvent(this.errors))
-      return false;
-    }
     return this.input.checkValidity() as boolean
   }
 
@@ -65,7 +61,7 @@ export class InputField<T extends InputFieldDefinition> extends LabeledField<T, 
     if (this.definition.customValidity && !this.input.validity.valid) {
       this.input.setCustomValidity(this.definition.customValidity)
     }
-    this.errors.set(this.definition.name, this.error ? this.error : new InvalidError(this.input.validationMessage, false, validityState))
+    this.errors.set(this.path(), new InvalidError(this.input.validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 

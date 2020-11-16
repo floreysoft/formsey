@@ -42,7 +42,7 @@ export class TextField extends LabeledField<TextFieldDefinition, string> {
     if (this.definition.customValidity && !this.textArea.validity.valid) {
       this.textArea.setCustomValidity(this.definition.customValidity)
     }
-    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(this.textArea.validationMessage, false, validityState)
+    this.errors.set(this.path(), new InvalidError(this.textArea.validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 

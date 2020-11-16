@@ -24,10 +24,7 @@ export class ListField extends Field<ListFieldDefinition, string> {
   }
 
   renderField() {
-    let customValidity = this.definition.customValidity
-    if ( this.error ) {
-      customValidity = this.error.validityMessage
-    }
+    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
     return html`<mwc-select label="${ifDefined(this.definition.label)}" helper="${ifDefined(this.definition.helpText)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" validationmessage="${ifDefined(customValidity)}" @selected="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}">
     ${this.definition.options.map(item => html`<mwc-list-item ?selected="${item.value ? item.value == this.value : item.label == this.value}" value="${item.value ? item.value : item.label}">${item.label ? item.label : item.value}</mwc-list-item>`)}
     </mwc-select>`;
@@ -35,11 +32,12 @@ export class ListField extends Field<ListFieldDefinition, string> {
 
   firstUpdated() {
     this.materialListField.validityTransform = (newValue, nativeValidity) => {
-      if ( this.error ) {
+      const error = this.errors.get(this.path())
+      if (error) {
         return {
           valid: false,
-          validationMessage: this.error.validityMessage,
-          ...this.error.validityState
+          validationMessage: error.validityMessage,
+          ...error.validityState
         }
       }
       return nativeValidity;
@@ -66,7 +64,7 @@ export class ListField extends Field<ListFieldDefinition, string> {
       validationMessage = validityState['validationMessage']
       delete validityState['validationMessage']
     }
-    this.errors[this.definition.name] = this.error ? this.error : new InvalidError(validationMessage, false, validityState )
+    this.errors.set(this.path(), new InvalidError(validationMessage, false, validityState ))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

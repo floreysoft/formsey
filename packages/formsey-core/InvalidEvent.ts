@@ -22,7 +22,7 @@ export class InvalidErrors extends Map<string, InvalidError> {
 
 export class InvalidEvent extends CustomEvent<InvalidErrors> {
     constructor(errors: InvalidErrors) {
-        super("invalid", { bubbles : false, detail: errors });
+        super("invalid", { bubbles : true, detail: errors });
     }
 
     public addError(path: string, error: InvalidError) {

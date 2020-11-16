@@ -62,10 +62,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
       let checked = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0).length > 0
       templates.push(html`<vaadin-checkbox .checked="${checked}" class="other" value="__other">Other</vaadin-checkbox><vaadin-text-field @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}"></vaadin-text-field>`);
     }
-    let customValidity = this.definition.customValidity
-    if (this.error && this.error.validityMessage) {
-      customValidity = this.error.validityMessage
-    }
+    let customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
     return html`<vaadin-checkbox-group @change="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="${this.definition.layout == "horizontal" ? "horizontal" : "vertical"}" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-checkbox-group>`;
   }
 

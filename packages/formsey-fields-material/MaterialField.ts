@@ -1,4 +1,4 @@
-import { FieldDefinition, LabeledField } from '@formsey/core';
+import { FieldDefinition, InputFieldDefinition, LabeledField } from '@formsey/core';
 import { css, html, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
@@ -31,8 +31,9 @@ export abstract class MaterialField<T extends FieldDefinition, V> extends Labele
   }
 
   render() {
-    return html`<mwc-formfield label="${this.definition.label}"></mwc-formfield>${this.renderField()}${this.definition.helpText ? html`<footer>${ifDefined(this.definition.helpText)}</footer>` : undefined}`
+    const customValidity = this.errors.get(this.path())?.validityMessage || (<InputFieldDefinition>this.definition).customValidity
+    return html`<mwc-formfield label="${this.definition.label}"></mwc-formfield>${this.renderField(customValidity)}${this.definition.helpText ? html`<footer>${ifDefined(this.definition.helpText)}</footer>` : undefined}`
   }
 
-  abstract renderField() : TemplateResult | undefined
+  abstract renderField(customValidity?: string) : TemplateResult | undefined
 }

@@ -26,10 +26,11 @@ export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
 
   render() {
     let customValidity = this.definition.customValidity
-    if (this.error && this.error.validityMessage) {
-      customValidity = this.error.validityMessage
+    const error = this.errors.get(this.path())
+    if (error?.validityMessage) {
+      customValidity = error?.validityMessage
     }
-    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText as string}" theme="vertical"><vaadin-checkbox @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label}</vaadin-checkbox></vaadin-checkbox-group>`;
+    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label as string)}" .helperText="${this.definition.helpText as string}" theme="vertical"><vaadin-checkbox @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.label}</vaadin-checkbox></vaadin-checkbox-group>`;
   }
 
   protected changed(e: any) {

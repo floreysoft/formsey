@@ -17,10 +17,7 @@ export class TextField extends Field<TextFieldDefinition, string> {
   vaadinTextArea: TextAreaElement
 
   render() {
-    let customValidity = this.definition.customValidity
-    if ( this.error && this.error.validityMessage ) {
-      customValidity = this.error.validityMessage
-    }
+    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
     return html`<vaadin-text-area style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.inputted}" @change="${this.changed}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${this.definition.disabled}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}"></vaadin-text-area>`;
   }
 

@@ -62,10 +62,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
       templates.push(html`<vaadin-radio-button class="other" value="__other" .checked="${checked}">Other</vaadin-radio-button>
       <vaadin-text-field @input="${this.changed}" ?disabled=${this.definition.disabled || !checked} .value="${checked ? this.value : ''}"></vaadin-text-field>`);
     }
-    let customValidity = this.definition.customValidity
-    if (this.error && this.error.validityMessage) {
-      customValidity = this.error.validityMessage
-    }
+    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
     return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="${this.definition.layout == "horizontal" ? "horizontal" : "vertical"}" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
@@ -106,7 +103,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinRadioGroup.errorMessage, false, { })
+    this.errors.set(this.path(), new InvalidError(this.vaadinRadioGroup.errorMessage, false, { }))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

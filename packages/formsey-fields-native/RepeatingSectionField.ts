@@ -30,18 +30,9 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     if (this.value) {
       for (let i: number = 0; i < this.value.length; i++) {
         const value = this.value[i];
-        let fieldErrors = new InvalidErrors()
-        if (this.errors) {
-          for (let error in this.errors) {
-            let path = this.definition.name + "[" + i + "]."
-            if (this.definition.name && (error.startsWith(path))) {
-              fieldErrors[error.substring(path.length)] = this.errors[error]
-            }
-          }
-        }
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${ICON_MINUS}</button></div>` : undefined}
-        ${createField(this.components,this.settings,  { ...this.definition.form }, value, this.path() + "[" + i + "]", fieldErrors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+        ${createField(this.components,this.settings,  { ...this.definition.form }, value, this.path() + "[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
         itemTemplates.push(template);
       }
     }
@@ -121,15 +112,6 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
       this.value[+index][name] = e.detail.value;
       this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
     }
-  }
-
-  protected invalid(e: InvalidEvent) {
-    e.stopPropagation()
-    for (let error in e.detail) {
-      let index = error.indexOf('.')
-      this.errors[this.definition.name + "[" + error.substring(0, index) + "]." + error.substring(index + 1)] = e.detail[error]
-    }
-    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
 

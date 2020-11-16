@@ -122,10 +122,6 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
         templates.push(html`<formsey-image-checkbox @keydown="${this.keyDown}" path="${this.path()}" id="${value}" ?checked="${checked}" @focus="${this.focused}" @blur="${this.blurred}" @change="${this.changed}" src="${image.src}" alt="${image.alt}" label="${image.label}" .tabIndex="${i == 0 ? 0 : -1}"></formsey-image-checkbox>`);
       }
     }
-    let customValidity = this.definition.customValidity
-    if (this.error && this.error.validityMessage) {
-      customValidity = this.error.validityMessage
-    }
     return html`<div class="ifi" style="columns:${this.columns} auto">${templates}</div>`;
   }
 

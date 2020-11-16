@@ -36,7 +36,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         this.selectedValue = selection.value ? selection.value : selection.label;
       }
       if (selection) {
-        form = html`${selection?.form ? html`<div class="form">${createField(this.components, this.settings, selection.form, this.value?.value, this.path()+".value", new InvalidErrors(), (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`;
+        form = html`${selection?.form ? html`<div class="form">${createField(this.components, this.settings, selection.form, this.value?.value, this.path()+".value", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`;
       }
     }
     return html`${super.render()}${form}`
@@ -80,13 +80,6 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       }
       this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail.name, this.value));
     }
-  }
-
-  protected invalid(e: InvalidEvent) {
-    e.detail.forEach((error, path) => {
-      this.errors.set(this.definition.name ? this.definition.name + ".value." + path : "value."+path, error)
-    })
-    this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
 
