@@ -7,8 +7,8 @@ import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 
-@customElement("formsey-boolean")
-export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> {
+@customElement("formsey-checkbox")
+export class CheckboxField extends LabeledField<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
@@ -34,9 +34,9 @@ export class BooleanField extends LabeledField<BooleanFieldDefinition, boolean> 
   }
 }
 
-getLibrary("native").registerComponent("boolean", {
-  importPath: "@formsey/fields-native/BooleanField",
+getLibrary("native").registerComponent("checkbox", {
+  importPath: "@formsey/fields-native/CheckboxField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: boolean, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
-    return html`<formsey-boolean id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-boolean>`
+    return html`<formsey-checkbox id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkbox>`
   }
 })

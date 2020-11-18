@@ -1,6 +1,6 @@
-export { BooleanField } from './BooleanField'
 export { ButtonField } from './ButtonField'
 export { CheckboxesField } from './CheckboxesField'
+export { CheckboxField } from './CheckboxField'
 export { ColorField } from './ColorField'
 export { DateField } from './DateField'
 export { DateTimeField } from './DateTimeField'

@@ -8,8 +8,9 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { css, customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-@customElement("formsey-boolean-vaadin")
-export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
+
+@customElement("formsey-checkbox-vaadin")
+export class CheckboxField extends Field<BooleanFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
@@ -57,9 +58,9 @@ export class BooleanField extends Field<BooleanFieldDefinition, boolean> {
   }
 }
 
-getLibrary("vaadin").registerComponent("boolean", {
-  importPath: "@formsey/fields-vaadin/BooleanField",
+getLibrary("vaadin").registerComponent("checkbox", {
+  importPath: "@formsey/fields-vaadin/CheckboxField",
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: boolean, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
-    return html`<formsey-boolean-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-boolean-vaadin>`
+    return html`<formsey-checkbox-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkbox-vaadin>`
   }
 })

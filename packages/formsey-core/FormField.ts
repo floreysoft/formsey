@@ -17,7 +17,7 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xl": 1366
 }
 
-const DEFAULT_LAYOUT = "grid-template-columns:1fr;grid-gap:5px 5px"
+const DEFAULT_LAYOUT = "grid-template-columns:minmax(0,1fr);grid-gap:10px 10px;"
 
 @customElement("formsey-form-field")
 export class FormField extends Field<FormDefinition, Object> {
