@@ -108,16 +108,23 @@ export const FORM_STYLES = css`
     background: var(--formsey-accent-hover);
   }
 
-  /* Boolean Field */
-  .bfl {
+  /* Checkbox Field */
+  .cfl {
     height: var(--formsey-input-height, 2em);
+    display: flex;
+    align-items: center;
   }
 
   /* Checkboxes Field / Multiple Choice Field*/
   formsey-checkboxes .options, formsey-multiple-choice .options, formsey-checkboxes .other, formsey-multiple-choice .other {
     display: flex;
     flex-direction: column;
-    line-height: 2em;
+  }
+  formsey-checkboxes .options>div, formsey-multiple-choice .options>div, formsey-checkboxes .other>div, formsey-multiple-choice .other>div {
+    line-height: var(--formsey-input-height, 2em);
+  }
+  formsey-checkboxes label, formsey-multiple-choice label {
+    line-height: inherit;
   }
   formsey-checkboxes .other label , formsey-multiple-choice .other label {
     margin-right: .5em;
@@ -391,8 +398,9 @@ export const FORM_STYLES = css`
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    height: auto;
     padding: 0;
+    height: auto;
+    min-height: var(--formsey-input-height, 2em);
   }
 
   formsey-upload .files, formsey-upload .prompt {
@@ -410,7 +418,9 @@ export const FORM_STYLES = css`
     cursor: pointer;
     min-height: calc( var(--formsey-input-height, 2em) - 2px);
   }
-
+  formsey-upload svg {
+    fill: currentColor;
+  }
   formsey-upload .prompt span {
     padding-left: 4px;
   }
@@ -418,7 +428,6 @@ export const FORM_STYLES = css`
   formsey-upload .prompt svg {
     width: 1.2em;
     height: 1.2em;
-    fill: currentColor;
   }
 
   formsey-upload .files {
@@ -426,11 +435,11 @@ export const FORM_STYLES = css`
   }
 
   formsey-upload .preview, formsey-upload .preview svg {
-    max-width:2em;
-    max-height:2em;
+    max-width: 1.6em;
+    max-height: 1.6em;
     width: auto;
     height: auto;
-    padding: 0.1em 0.3em;
+    padding: 0.1em;
   }
 
   formsey-upload .over {
@@ -449,9 +458,9 @@ export const FORM_STYLES = css`
   }
 
   formsey-upload .remove svg {
-    margin-top: 3px;
-    width: 1.2em;
-    fill: currentColor;
+    top: 2px;
+    position: relative;
+    fill: currentcolor;
     cursor: pointer;
   }
 
