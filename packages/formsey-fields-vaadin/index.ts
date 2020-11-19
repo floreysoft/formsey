@@ -73,7 +73,7 @@ if (vaadinLibrary) {
         "label": "Password fields",
         "controlLabel": "Hide reveal password button",
         "name": "hideRevealPasswordButton",
-        "type": "boolean"
+        "type": "checkbox"
       }
     ]
   } as FormDefinition,

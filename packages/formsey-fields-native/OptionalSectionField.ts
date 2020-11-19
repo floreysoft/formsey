@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, createField, Field, OptionalSectionFieldDefinition } from '@formsey/core';
+import { CheckboxFieldDefinition, createField, Field, OptionalSectionFieldDefinition } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
@@ -35,7 +35,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
       checked = true
     }
     let form = checked ? html`<div id="form">${createField(this.components,this.settings,  this.definition.form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined;
-    return html`${createField(this.components, this.settings, { type: "boolean", name: "", label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as BooleanFieldDefinition, checked, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    return html`${createField(this.components, this.settings, { type: "checkbox", name: "", label: this.definition.label, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, checked, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
       ${form}`;
   }
 

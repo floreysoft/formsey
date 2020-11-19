@@ -57,10 +57,13 @@ export interface ImageFieldDefinition extends FieldDefinition {
   align: string
 }
 
-export interface BooleanFieldDefinition extends InputFieldDefinition {
+export interface SwitchFieldDefinition extends InputFieldDefinition {
   controlLabel?: string
-  indeterminate?: boolean
   default?: boolean
+}
+
+export interface CheckboxFieldDefinition extends SwitchFieldDefinition {
+  indeterminate?: boolean
 }
 
 export interface NumberFieldDefinition extends InputFieldDefinition {

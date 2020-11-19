@@ -21,20 +21,6 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
   @queryAll("mwc-radio")
   protected radios: Radio[]
 
-  static get styles() {
-    return [...super.styles, css`
-    :host {
-      display: flex;
-      flex-direction: column;
-    }
-    .other {
-      display: grid;
-      grid-template-columns: max-content minmax(10em,20em);
-      grid-gap: 2em;
-      align-items: center;
-    }`]
-  }
-
   renderField() {
     let templates: TemplateResult[] = [];
     if (this.definition.options) {

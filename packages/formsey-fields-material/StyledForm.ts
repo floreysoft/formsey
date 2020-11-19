@@ -7,14 +7,18 @@ import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { FORM_STYLES } from './styles';
+
 @customElement("formsey-styled-form-material")
 export class StyledForm extends Form {
+
   static get styles() {
-    return [...super.styles, css`
-    .themed {
-      background-color: var(--formsey-background-color, var(--fs-background-color, inherit));
-    }
-  `]
+    return [...super.styles, FORM_STYLES, css`
+      .themed {
+        color: var(--lumo-body-text-color);
+        background-color: var(--lumo-base-color);
+      }
+    `]
   }
 
   @query('#form')
@@ -26,7 +30,7 @@ export class StyledForm extends Form {
       field = createField(this.components, this.settings, this.definition, this.value, this.definition?.name, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
-    return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme'])}><div class="themed">${form}</div></fs-theme>` : form
+    return this.settings ? html`<div class="themed">${form}</div>` : form
   }
 
   protected createRenderRoot(): Element | ShadowRoot {

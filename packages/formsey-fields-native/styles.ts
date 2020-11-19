@@ -516,6 +516,7 @@ export const FORM_STYLES = css`
     fill: var(--formsey-repeating-section-icon-fill-color, currentColor);
   }
   formsey-repeating-section button {
+    color: inherit;
     display: flex;
     width: 1.4em;
     height: 1.4em;

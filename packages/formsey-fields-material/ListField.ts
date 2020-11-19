@@ -1,71 +1,29 @@
-import { Field, ListFieldDefinition } from '@formsey/core';
+import { ListFieldDefinition } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import "@material/mwc-list/mwc-list-item";
 import { Select } from "@material/mwc-select";
 import "@material/mwc-select/mwc-select";
-import { css, customElement, html, property, query } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { InputField } from './InputField';
 @customElement("formsey-list-material")
-export class ListField extends Field<ListFieldDefinition, string> {
+export class ListField extends InputField<ListFieldDefinition, string> {
   @property({ type: String })
   value: string;
 
   @query("mwc-select")
-  materialListField: Select
+  mwcSelect: Select
 
-  static get styles() {
-    return [...super.styles, css`
-    mwc-select {
-      width: 100%;
-    }
-  `]
-  }
-
-  renderField() {
-    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
+  renderField(customValidity) {
     return html`<mwc-select label="${ifDefined(this.definition.label)}" helper="${ifDefined(this.definition.helpText)}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" validationmessage="${ifDefined(customValidity)}" @selected="${this.changed}" @invalid="${this.invalid}" name="${this.definition.name}" ?disabled="${this.definition.disabled}" .value="${this.value ? this.value : ''}">
     ${this.definition.options.map(item => html`<mwc-list-item ?selected="${item.value ? item.value == this.value : item.label == this.value}" value="${item.value ? item.value : item.label}">${item.label ? item.label : item.value}</mwc-list-item>`)}
     </mwc-select>`;
   }
 
-  firstUpdated() {
-    this.materialListField.validityTransform = (newValue, nativeValidity) => {
-      const error = this.errors.get(this.path())
-      if (error) {
-        return {
-          valid: false,
-          validationMessage: error.validityMessage,
-          ...error.validityState
-        }
-      }
-      return nativeValidity;
-    }
-  }
-
-  validate(report : boolean) {
-    if ( report ) {
-      return this.materialListField.reportValidity() as boolean
-    } else {
-      return this.materialListField.checkValidity() as boolean
-    }
-  }
-
-  invalid() {
-    let validityState: ValidityState = this.materialListField.validity
-    for (let key in validityState) {
-      if (!validityState[key]) {
-        delete validityState[key]
-      }
-    }
-    let validationMessage = this.materialListField.validationMessage
-    if ( validityState['validationMessage'] ) {
-      validationMessage = validityState['validationMessage']
-      delete validityState['validationMessage']
-    }
-    this.errors.set(this.path(), new InvalidError(validationMessage, false, validityState ))
-    this.dispatchEvent(new InvalidEvent(this.errors))
+  inputField() {
+    return this.mwcSelect
   }
 }
 

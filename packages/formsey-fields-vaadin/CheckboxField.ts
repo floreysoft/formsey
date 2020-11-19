@@ -1,6 +1,6 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { Field } from '@formsey/core/Field';
-import { BooleanFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { CheckboxFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
@@ -10,7 +10,7 @@ import { css, customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 @customElement("formsey-checkbox-vaadin")
-export class CheckboxField extends Field<BooleanFieldDefinition, boolean> {
+export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 

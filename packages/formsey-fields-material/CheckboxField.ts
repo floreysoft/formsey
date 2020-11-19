@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { CheckboxFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -10,7 +10,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import { MaterialField } from './MaterialField';
 
 @customElement("formsey-checkbox-material")
-export class CheckboxField extends MaterialField<BooleanFieldDefinition, boolean> {
+export class CheckboxField extends MaterialField<CheckboxFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
@@ -18,7 +18,7 @@ export class CheckboxField extends MaterialField<BooleanFieldDefinition, boolean
   materialCheckbox: Checkbox
 
   renderField() {
-    return html`<mwc-formfield label="${this.definition.label}"><mwc-checkbox @change="${(event) => this.changed(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox></mwc-formfield>`;
+    return html`<mwc-formfield label="${this.definition.controlLabel}"><mwc-checkbox @change="${(event) => this.changed(event)}" .indeterminate="${this.definition.indeterminate}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-checkbox></mwc-formfield>`;
   }
 
   focusField(path: string) {

@@ -1,4 +1,4 @@
-import { BooleanFieldDefinition, LabeledField } from '@formsey/core';
+import { CheckboxFieldDefinition, LabeledField } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -8,7 +8,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 
 
 @customElement("formsey-checkbox")
-export class CheckboxField extends LabeledField<BooleanFieldDefinition, boolean> {
+export class CheckboxField extends LabeledField<CheckboxFieldDefinition, boolean> {
   @property({ type: Boolean })
   value: boolean;
 
