@@ -2,8 +2,8 @@ import { ValueChangedEvent } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition, SwitchFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import "@material/mwc-switch/mwc-switch";
 import "@material/mwc-formfield/mwc-formfield";
+import "@material/mwc-switch/mwc-switch";
 import { Switch } from "@material/mwc-switch/mwc-switch";
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -18,7 +18,7 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
   materialSwitch: Switch
 
   renderField() {
-    return html`<mwc-formfield label="${this.definition.controlLabel}"><mwc-switch @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-switch></mwc-formfield>`;
+    return html`<mwc-formfield label="${this.definition.controlLabel}"><mwc-switch @input="${(event) => this.changed(event)}" @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-switch></mwc-formfield>`;
   }
 
   focusField(path: string) {
@@ -40,7 +40,8 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
     return valid
   }
 
-  protected changed(e: any) {
+  protected changed(e: Event) {
+    e.stopPropagation()
     this.value = this.materialSwitch.checked
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
   }

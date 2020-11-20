@@ -141,6 +141,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected changed(e: any) {
+    e.stopPropagation()
     this.value = e.currentTarget.value;
     this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
   }

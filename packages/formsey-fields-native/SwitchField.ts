@@ -16,12 +16,7 @@ export class SwitchField extends LabeledField<CheckboxFieldDefinition, boolean> 
   checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label class="swl"><div class="sw"><input type="checkbox" ?disabled="${this.definition.disabled}" ?checked="${this.value}" @input="${e => { e.stopPropagation() }} " @change="${this.clicked}"><span class="sl"></span></div>${this.definition.controlLabel}</label>`
-  }
-
-  clicked(e) {
-    this.value = this.checkbox.checked
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+    return html`<label class="swl"><div class="sw"><input type="checkbox" ?disabled="${this.definition.disabled}" ?checked="${this.value}" @input=${this.inputted} @change="${this.changed}"><span class="sl"></span></div>${this.definition.controlLabel}</label>`
   }
 
   firstUpdated() {
