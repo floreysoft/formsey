@@ -5,7 +5,6 @@ import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import ResizeObserver from 'resize-observer-polyfill';
 import SignaturePad from 'signature_pad';
 @customElement("formsey-signature")
 export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {

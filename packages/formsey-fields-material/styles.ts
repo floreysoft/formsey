@@ -5,15 +5,6 @@ export const FORM_STYLES = css`
     box-shadow: 0 0 2px var(--lumo-primary-color-50pct);
   }
 
-  .fft,.ffd {
-    color: var(--lumo-secondary-text-color);
-    font-weight: 500;
-    font-size: var(--lumo-font-size-l);
-    margin-left: calc(var(--lumo-border-radius-m) / 4);
-  }
-  .ffd {
-    font-size: var(--lumo-font-size-m);
-  }
   .ffg {
     display: inline-grid;
     grid-gap: 5px 5px;
@@ -22,27 +13,6 @@ export const FORM_STYLES = css`
   }
   .fff {
     width: 100%;
-  }
-
-  .lfw {
-  }
-
-  .lfl {
-    display: block;
-    align-self: flex-start;
-    font-weight: 500;
-    font-size: var(--lumo-font-size-s);
-    margin-left: calc(var(--lumo-border-radius-m) / 4);
-    transition: color 0.2s;
-    line-height: 1;
-    padding-top: var(--lumo-space-m);
-    padding-bottom: 0.5em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    position: relative;
-    max-width: 100%;
-    box-sizing: border-box;
   }
 
   .lfht {
@@ -61,11 +31,8 @@ export const FORM_STYLES = css`
     transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
   }
 
-  .lfw:hover .lfht, .lfw:hover .lfl {
+  .lfw:focus-within .lfht {
     opacity: 1;
-  }
-
-  .lfw:focus-within .lfl {
   }
 
   mwc-formfield {

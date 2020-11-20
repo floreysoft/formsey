@@ -1,19 +1,10 @@
 import { css } from 'lit-element';
 
 export const FORM_STYLES = css`
-.input:focus-within {
-  box-shadow: 0 0 2px var(--lumo-primary-color-50pct);
-}
+  .input:focus-within {
+    box-shadow: 0 0 2px var(--lumo-primary-color-50pct);
+  }
 
-.fft,.ffd {
-    color: var(--lumo-secondary-text-color);
-    font-weight: 500;
-    font-size: var(--lumo-font-size-l);
-    margin-left: calc(var(--lumo-border-radius-m) / 4);
-  }
-  .ffd {
-    font-size: var(--lumo-font-size-m);
-  }
   .ffg {
     display: inline-grid;
     grid-gap: 5px 5px;

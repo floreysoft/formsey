@@ -5,7 +5,6 @@ import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, LitElement, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import ResizeObserver from 'resize-observer-polyfill';
 
 @customElement("formsey-image-checkbox")
 export class ImageCheckbox extends LitElement {

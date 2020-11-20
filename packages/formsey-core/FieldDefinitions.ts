@@ -156,6 +156,8 @@ export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
 }
 
 export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
+  control: "checkbox" | "switch"
+  controlLabel?: string
   form: FormDefinition
 }
 

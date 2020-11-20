@@ -17,6 +17,7 @@ export { PasswordField } from './PasswordField';
 export { PhoneField } from './PhoneField';
 export { RepeatingSectionField as RepeatingField } from './RepeatingSectionField';
 export { SearchField } from './SearchField';
+export { SwitchField } from './SwitchField';
 export { SelectableSectionField } from './SelectableSectionField';
 export { StringField } from './StringField';
 export { StyledForm } from './StyledForm';

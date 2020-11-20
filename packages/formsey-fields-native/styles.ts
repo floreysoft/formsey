@@ -115,6 +115,74 @@ export const FORM_STYLES = css`
     align-items: center;
   }
 
+  /* Switch field */
+  formsey-switch {
+    --formsey-switch-size: 2em;
+    user-select: none;
+  }
+
+  formsey-switch  .swl {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    height: var(--formsey-input-height, 2em);
+  }
+
+  formsey-switch .sw {
+    position: relative;
+    display: inline-block;
+    width: var(--formsey-switch-size);
+    height: calc(var(--formsey-switch-size) / 2);
+    margin-right: 4px;
+  }
+
+  formsey-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  formsey-switch .sl {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid var(--formsey-border, inherit);
+    background-color: var(--formsey-widget-background-hover, inherit);
+    transition: .12s ease-out;
+    border-radius:  calc(var(--formsey-switch-size) / 2);
+  }
+
+  formsey-switch .sl:before {
+    position: absolute;
+    content: "";
+    height: calc(var(--formsey-switch-size) / 2 - 2px);
+    width: calc(var(--formsey-switch-size) / 2 - 2px);
+    left: 0px;
+    bottom: 0px;
+    background-color: white;
+    transition: .12s ease-out;
+    border-radius: 50%;
+  }
+
+  formsey-switch input:checked + .sl {
+      background-color: var(--formsey-accent-color,inherit);
+  }
+
+  formsey-switch input:disabled + .sl {
+    background-color: var(--formsey-background-disabled, inherit);
+  }
+
+  formsey-switch input:focus + .sl {
+      border: 1px solid var(--formsey-border-focus, inherit);
+  }
+
+  formsey-switch input:checked + .sl:before {
+    transform: translateX(calc(var(--formsey-switch-size, 60px) / 2));
+  }
+
   /* Checkboxes Field / Multiple Choice Field*/
   formsey-checkboxes .options, formsey-multiple-choice .options, formsey-checkboxes .other, formsey-multiple-choice .other {
     display: flex;
