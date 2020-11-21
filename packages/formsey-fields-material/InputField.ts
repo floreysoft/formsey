@@ -55,7 +55,7 @@ export abstract class InputField<T extends InputFieldDefinition, V> extends Fiel
         delete validityState[key]
       }
     }
-    let validationMessage = (<any>inputField).formElement.validationMessage
+    let validationMessage = this.definition.customValidity || (<any>inputField).formElement.validationMessage
     if (validityState['validationMessage']) {
       validationMessage = validityState['validationMessage']
       delete validityState['validationMessage']

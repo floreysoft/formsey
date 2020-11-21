@@ -30,4 +30,101 @@ let materialLibrary = getLibrary('material')
 if (materialLibrary) {
     materialLibrary.icon = ICON_MATERIAL
     materialLibrary.displayName = "Material Design"
+    materialLibrary.settingsEditor = {
+        "type": "form",
+        "layout": {
+          "grids": {
+            "m": "",
+            "l": "grid-template-columns:minmax(0,1fr);grid-gap:0px 10px;padding:10px 10px",
+            "xs": "grid-template-columns:minmax(0,1fr);grid-gap:10px 10px;padding:10px 10px"
+          }
+        },
+        "fields": [
+          {
+            "helpText": "Select the theme for your form",
+            "type": "selectableSection",
+            "name": "theme",
+            "label": "Theme",
+            "selections": [
+              {
+                "label": "Light",
+                "name": "light",
+                "value": "light",
+                "form": {
+                  "type": "form",
+                  "fields": [
+                    {
+                      "type": "markdown",
+                      "default": "Make sure to load the Roboto fonts when using this theme by adding the following snippet in the head of your page:\n```\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap\">\n\n```"
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "dark",
+                "name": "dark",
+                "label": "Dark",
+                "form": {
+                  "type": "form",
+                  "fields": [
+                    {
+                      "type": "markdown",
+                      "default": "Make sure to load the Roboto fonts when using this theme by adding the following snippet in the head of your page:\n```\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap\">\n\n```"
+                    }
+                  ]
+                }
+              },
+              {
+                "form": {
+                  "fields": [
+                    {
+                      "label": "Primary color",
+                      "autocomplete": "off",
+                      "name": "--mdc-theme-primary",
+                      "type": "color",
+                      "helpText": "The theme primary color"
+                    },
+                    {
+                        "label": "Secondary color",
+                        "autocomplete": "off",
+                        "name": "--mdc-theme-secondary",
+                        "type": "color",
+                        "helpText": "The theme secondary color"
+                      },
+                      {
+                        "label": "Surface color",
+                        "autocomplete": "off",
+                        "name": "--mdc-theme-surface",
+                        "type": "color",
+                        "helpText": "The theme surface color"
+                      },
+                      {
+                        "label": "Background color",
+                        "autocomplete": "off",
+                        "name": "--mdc-theme-background",
+                        "type": "color",
+                        "helpText": "The theme background color"
+                      }
+                    ],
+                  "type": "form",
+                  "layout": {
+                    "grids": {
+                      "xs": "grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-gap:5px 5px;padding:0px 0px",
+                      "m": "grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);grid-gap:5px 5px;padding:0px 0px"
+                    }
+                  }
+                },
+                "value": "custom",
+                "label": "Custom",
+                "name": "custom"
+              },
+              {
+                "label": "None",
+                "name": "none",
+                "value": "none"
+              }
+            ]
+          }
+        ]
+      } as any
 }

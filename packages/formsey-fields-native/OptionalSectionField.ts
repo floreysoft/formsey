@@ -30,8 +30,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   render() {
-    return html`${createField(this.components, this.settings, { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, this.value, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
-    ${this.value ? html`<div id="form">${createField(this.components,this.settings,  this.definition.form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`
+    return html`${createField(this.components, this.settings, { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, this.value || this.definition.default, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    ${this.value || this.definition.default ? html`<div id="form">${createField(this.components,this.settings,  this.definition.form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`
   }
 
   public focusField(path: string) {

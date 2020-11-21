@@ -5,27 +5,11 @@ import { property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class InputField<T extends InputFieldDefinition> extends LabeledField<T, string> {
-  @property({ converter: Object })
-  // @ts-ignore
-  set definition(definition: T) {
-    this.autofocus = definition.autofocus
-    this._definition = definition
-  }
-
-  get definition() {
-    return this._definition
-  }
-
   @property({ type: String })
   value: string;
 
-  @property({ type: Boolean, reflect: true })
-  autofocus: boolean;
-
   @query("#input")
   input: HTMLInputElement
-
-  private _definition: T
 
   protected formResetCallback() {
     this.value = '';
