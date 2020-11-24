@@ -16,16 +16,20 @@ export class SwitchField extends LabeledField<CheckboxFieldDefinition, boolean> 
   checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label class="swl"><div class="sw"><input type="checkbox" ?disabled="${this.definition.disabled}" ?checked="${this.value}" @input=${this.inputted} @change="${this.changed}"><span class="sl"></span></div>${this.definition.controlLabel}</label>`
-  }
 
-  firstUpdated() {
-    this.checkbox.indeterminate = this.definition.indeterminate
+    console.log(`Switch ${this.path()} is ${JSON.stringify(this.value)}`)
+    return html`<label class="swl"><div class="sw"><input type="checkbox" ?disabled="${this.definition.disabled}" @input=${this.changed} @change="${this.changed}" .checked=${this.value} ?checked=${this.value}><span class="sl"></span></div>${this.definition.controlLabel} is ${typeof this.value !== "undefined"}</label>`
   }
 
   focusField(path: string) : boolean {
      this.checkbox.focus()
      return true
+  }
+
+  protected changed(e: any) {
+    e.stopPropagation()
+    this.value = this.checkbox.checked;
+    this.dispatchEvent(new ValueChangedEvent(e.type, this.path(), this.value));
   }
 }
 

@@ -18,7 +18,7 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
   materialSwitch: Switch
 
   renderField() {
-    return html`<mwc-formfield label="${this.definition.controlLabel}"><mwc-switch @input="${(event) => this.changed(event)}" @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-switch></mwc-formfield>`;
+    return html`<mwc-formfield label="${this.definition.controlLabel || ''}"><mwc-switch @input="${(event) => this.changed(event)}" @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-switch></mwc-formfield>`;
   }
 
   focusField(path: string) {

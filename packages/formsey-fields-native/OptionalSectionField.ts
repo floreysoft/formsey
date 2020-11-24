@@ -30,7 +30,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   render() {
-    return html`${createField(this.components, this.settings, { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, this.value || this.definition.default, this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    return html`${createField(this.components, this.settings, { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, typeof this.value !== "undefined", this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
     ${this.value || this.definition.default ? html`<div id="form">${createField(this.components,this.settings,  this.definition.form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`
   }
 
@@ -75,8 +75,10 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     this.value = e.detail.value ? {} : undefined
     this.untouched = false
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
-    this.focused(e)
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
+    if ( e.type == "input" ) {
+      this.focused(e)
+    }
   }
 
   protected changed(e: ValueChangedEvent<any>) {
@@ -86,7 +88,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     }
     this.value[name] = e.detail.value;
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
   }
 }
 
