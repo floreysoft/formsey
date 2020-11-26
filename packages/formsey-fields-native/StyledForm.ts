@@ -26,6 +26,25 @@ const themes = new Map([
         --formsey-widget-background: #E2DDDB;
         --formsey-widget-background-hover: #CAC4C2;
         --formsey-shade: #80808030;
+
+        --formsey-token-invisible: #bfbfbf;
+        --formsey-token-keyword: #0000FF;
+        --formsey-token-constant: #06960e;
+        --formsey-token-language: #0000FF;
+        --formsey-token-library: #06960e;
+        --formsey-token-invalid: #CD3131;
+        --formsey-token-operator: #000000;
+        --formsey-token-function: #3c4c72;
+        --formsey-token-type: #0000FF;
+        --formsey-token-string: #A31515;
+        --formsey-token-comment: #008000;
+        --formsey-token-tag: #800000;
+        --formsey-token-numeric: #098658;
+        --formsey-token-variable: #000000;
+        --formsey-marker-step: #fcff00;
+        --formsey-marker-stack: #a4e565;
+        --formsey-marker-selection: #3a3d4111;
+        --formsey-marker-selected-word: #3a3d4144;
       }
     </style>`
   }],
@@ -47,6 +66,25 @@ const themes = new Map([
         --formsey-shade: #80808040;
         --formsey-widget-background: #2d2d2d;
         --formsey-widget-background-hover: #37373d;
+
+        --formsey-token-invisible: #bfbfbf;
+        --formsey-token-keyword: #569CD6;
+        --formsey-token-constant: #06960e;
+        --formsey-token-language: #569CD6;
+        --formsey-token-library: #06960e;
+        --formsey-token-invalid: #F44747;
+        --formsey-token-operator: #D4D4D4;
+        --formsey-token-function: #3c4c72;
+        --formsey-token-type: #6d79de;
+        --formsey-token-string: #ce9178;
+        --formsey-token-comment: #6A9955;
+        --formsey-token-tag: #569CD6;
+        --formsey-token-numeric: #B5CEA8;
+        --formsey-token-variable: #9cdcfe;
+        --formsey-marker-step: #fcff00;
+        --formsey-marker-stack: #a4e565;
+        --formsey-marker-selection: #3a3d4166;
+        --formsey-marker-selected-word: #3a3d41;
       }
     </style>`
   }],

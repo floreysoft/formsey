@@ -50,8 +50,13 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
 
   protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
-    this.value = e.detail.value;
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
+    if (!this.definition.name) {
+      // If this is an unnamed form, just pass event to parent
+      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+    } else {
+      this.value = e.detail.value;
+      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
+    }
   }
 }
 getLibrary("native").registerComponent("nestedForm", {

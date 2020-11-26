@@ -167,6 +167,13 @@ export const FORM_STYLES = css`
     display:block;
   }
 
+  /* Sourcecode field */
+  formsey-sourcecode .input {
+    height: 150px;
+    padding: 0;
+    overflow: hidden;
+  }
+
   /* Signature field */
   formsey-signature {
     --formsey-signature-pen-color: var(--lumo-body-text-color);
