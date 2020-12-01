@@ -179,7 +179,7 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   protected clicked(e) {
-    if (!e.details) {
+    if (!e.detail?.name) {
       e.stopPropagation()
     }
   }
