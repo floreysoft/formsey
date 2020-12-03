@@ -1,6 +1,6 @@
 import { TemplateResult } from "lit-element"
 
-export type Stats = "text" | "number" | "option" | "options"
+export type Stats = "text" | "number" | "boolean" | "option" | "options" | "date" | "time" | "datetime" | "month" | "week"
 export interface Breakpoints {
   xxs?: number
   xs?: number
