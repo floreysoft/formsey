@@ -13,16 +13,17 @@ const themes = new Map([
   ["light", {
     style: html`<style>
       * {
-        --formsey-font: 13px Roboto;
-        --formsey-font-coarse: 14px Roboto;
+        --formsey-font: 14px Roboto;
+        --formsey-font-coarse: 15px Roboto;
         --formsey-color: #000000;
+        --formsey-error-text-color: #ff3333;
         --formsey-background: #ffffff;
-        --formsey-accent-color: #ff813f;
+        --formsey-accent-color: #007dd2;
         --formsey-accent-contrast: #ffffff;
-        --formsey-padding: .1em .25em;
+        --formsey-padding: .2em .3em;
         --formsey-border-radius: 3px;
         --formsey-border: transparent;
-        --formsey-border-focus: #ff813f;
+        --formsey-border-focus: #007fd4;
         --formsey-widget-background: #E2DDDB;
         --formsey-widget-background-hover: #CAC4C2;
         --formsey-shade: #80808030;
@@ -51,13 +52,14 @@ const themes = new Map([
   ["dark", {
     style: html`<style>
       * {
-        --formsey-font: 13px Roboto;
-        --formsey-font-coarse: 14px Roboto;
-        --formsey-color: #ffffff;
+        --formsey-font: 14px Roboto;
+        --formsey-font-coarse: 15px Roboto;
+        --formsey-color: #f5f5f5;
+        --formsey-error-text-color: #ff9f9f;
         --formsey-background: #000000;
         --formsey-accent-color: #007fd4;
         --formsey-accent-contrast: #ffffff;
-        --formsey-padding: .2em .25em;
+        --formsey-padding: .2em .3em;
         --formsey-border-radius: 3px;
         --formsey-border: transparent;
         --formsey-border-focus: #007fd4;

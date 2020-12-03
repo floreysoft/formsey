@@ -1,5 +1,6 @@
 import { TemplateResult } from "lit-element"
 
+export type Stats = "text" | "number" | "option" | "options"
 export interface Breakpoints {
   xxs?: number
   xs?: number
@@ -31,7 +32,8 @@ export interface FieldDefinition {
   type?: string
   label?: string | TemplateResult
   helpText?: string | TemplateResult
-  default?: any
+  default?: any,
+  stats?: Stats
 }
 
 export interface InteractiveFieldDefinition extends FieldDefinition {

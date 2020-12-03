@@ -35,10 +35,7 @@ export interface Editor extends FormDefinition {
   title: string
   fields: any
   icon: TemplateResult
-  quickAccess?: boolean
   interaction?: string
-  cell?: boolean
-  requiresFullWidth?: boolean
 }
 
 export interface Editors {
