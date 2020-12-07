@@ -641,8 +641,21 @@ export const FORM_STYLES = css`
   formsey-markdown .content {
     padding: var(--formsey-padding, .2em .3em);
   }
-  formsey-markdown p, formsey-markdown ul, formsey-markdown pre {
-    margin: 0 0 .25em 0;
+  formsey-markdown pre {
+    margin: .5em 0;
+  }
+  formsey-markdown p, formsey-markdown ul {
+    margin: .25em 0;
+  }
+  formsey-markdown h1, formsey-markdown h2, formsey-markdown h3, formsey-markdown h4 {
+    margin: .5em 0 .25em 0;
+    font-weight: bolder;
+  }
+  formsey-markdown h3 {
+    font-size: large;
+  }
+  formsey-markdown h4 {
+    font-size: larger;
   }
   .hljs-subst{
     color:var(--formsey-token-variable, #444)
