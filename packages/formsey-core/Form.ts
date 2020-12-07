@@ -55,7 +55,7 @@ export function set(data: Object, path: string, value: any): any {
 
 @customElement("formsey-form")
 export class Form extends Field<FieldDefinition, any> {
-  value: any
+  value : any
 
   async fetchDefinition(url: string) {
     try {
@@ -87,6 +87,9 @@ export class Form extends Field<FieldDefinition, any> {
 
   @query(':first-child')
   form: FormField
+
+  @query('form')
+  nativeForm: HTMLFormElement
 
   private _loaded: boolean = false
 

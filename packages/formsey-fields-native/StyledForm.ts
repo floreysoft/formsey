@@ -5,7 +5,7 @@ import { Form } from '@formsey/core/Form';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { css, customElement, html, query } from "lit-element";
+import { css, customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { FORM_STYLES } from './styles';
 

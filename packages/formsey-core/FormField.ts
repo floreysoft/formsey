@@ -268,7 +268,7 @@ export class FormField extends Field<FormDefinition, Object> {
           this.applyNestedFields(value, <NestedFormDefinition>nestedField)
         }
       }
-    }
+    }.
   }
 
   private domPath() {
