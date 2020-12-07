@@ -54,6 +54,11 @@ export const FORM_STYLES = css`
     color: var(--lumo-primary-text-color);
   }
 
+  /* Stretch buttons */
+  .lfw vaadin-button {
+    width: 100%;
+  }
+
   /* YouTube field */
   formsey-youtube {
     display: table;
