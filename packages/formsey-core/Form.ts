@@ -199,10 +199,10 @@ export class Form extends Field<FieldDefinition, any> {
     }
     const key = e.detail.name ? e.detail.name : this.definition.name
     if (e.type == "inputChange" || e.type == "input") {
-      this.dispatchEvent(new ValueChangedEvent("input", key, this.value));
+      this.dispatchEvent(new ValueChangedEvent("input", key, this.value, true));
     }
     if (e.type == "inputChange" || e.type == "change") {
-      this.dispatchEvent(new ValueChangedEvent("change", key, this.value));
+      this.dispatchEvent(new ValueChangedEvent("change", key, this.value, true));
     }
   }
 

@@ -16,6 +16,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
   set definition(definition: FieldDefinition) {
     this._definition = definition
     this.markup = Marked.parse(definition?.default ? definition.default : "")
+    this.requestUpdate()
   }
 
   get definition() {

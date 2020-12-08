@@ -423,6 +423,9 @@ export const FORM_STYLES = css`
   formsey-markdown pre, formsey-markdown p, formsey-markdown ul, formsey-markdown h1, formsey-markdown h2, formsey-markdown h3, formsey-markdown h4 {
     margin: 0 0 var(--lumo-space-xs) 0;
   }
+  formsey-markdown h1, formsey-markdown h2, formsey-markdown h3, formsey-markdown h4 {
+    color: var(--lumo-primary-color);
+  }
   .hljs-subst{
     color: var(--lumo-body-text-color);
   }
