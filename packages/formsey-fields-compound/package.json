@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-compound",
-  "version": "0.3.102",
+  "version": "0.3.103",
   "description": "Compound fields",
   "files": [
     "/*.js.map",
@@ -10,8 +10,8 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.3.99",
-    "@formsey/fields-native": "^0.3.102",
+    "@formsey/core": "^0.3.103",
+    "@formsey/fields-native": "^0.3.103",
     "lit-element": "^2.3.0"
   },
   "scripts": {
