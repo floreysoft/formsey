@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.3.105",
+  "version": "0.3.106",
   "description": "Native fields",
   "module": "/esm/formsey-fields-native.min.js",
   "files": [
