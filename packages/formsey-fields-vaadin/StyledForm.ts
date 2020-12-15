@@ -15,7 +15,7 @@ export class StyledForm extends Form {
   themed: HTMLElement
 
   static get styles() {
-    return [...super.styles, FORM_STYLES, css`
+    return [FORM_STYLES, css`
       .themed {
         color: var(--lumo-body-text-color);
         background-color: var(--lumo-base-color);

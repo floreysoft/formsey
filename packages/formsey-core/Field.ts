@@ -109,14 +109,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return true
   }
 
-
-  static get styles() {
-    return [css`
-    .hidden {
-      display: none;
-    }`]
-  }
-
   protected createRenderRoot(): Element | ShadowRoot {
     return this;
   }

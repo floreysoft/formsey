@@ -24,7 +24,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
   otherTextField: TextFieldElement
 
   static get styles() {
-    return [...super.styles, css`
+    return [css`
     :host {
       display: flex;
       flex-direction: column;

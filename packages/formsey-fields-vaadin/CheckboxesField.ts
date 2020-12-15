@@ -23,7 +23,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
   otherTextField: TextFieldElement
 
   static get styles() {
-    return [...super.styles, css`
+    return [css`
     :host {
       display: flex;
       flex-direction: column;

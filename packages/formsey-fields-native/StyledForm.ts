@@ -98,7 +98,7 @@ const themes = new Map([
 @customElement("formsey-styled-form")
 export class StyledForm extends Form {
   static get styles() {
-    return [...super.styles, FORM_STYLES, css`
+    return [FORM_STYLES, css`
     .themed {
       color: var(--formsey-color, inherit);
       background: var(--formsey-background, inherit);

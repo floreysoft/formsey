@@ -18,7 +18,7 @@ export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
   private vaadinCheckbox: CheckboxElement;
 
   static get styles() {
-    return [...super.styles, css`
+    return [css`
     vaadin-checkbox {
       font-family: var(--lumo-font-family);
       font-size: var(--lumo-font-size-m);

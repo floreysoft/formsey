@@ -47,7 +47,7 @@ const themes = new Map([
 @customElement("formsey-styled-form-material")
 export class StyledForm extends Form {
   static get styles() {
-    return [...super.styles, FORM_STYLES, css`
+    return [FORM_STYLES, css`
     .themed {
       color: var(--mdc-theme-text-primary-on-background, inherit);
       background: var(--mdc-theme-background, inherit);

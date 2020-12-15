@@ -23,7 +23,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
   protected checkboxes: Checkbox[]
 
   static get styles() {
-    return [...super.styles, css`
+    return [css`
     :host {
       display: flex;
       flex-direction: column;
