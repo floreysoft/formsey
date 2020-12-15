@@ -23,7 +23,7 @@ export class Library {
   onSettingsChanged?: (settings: Settings) => Settings
 
   registerComponent(type: string, component: Component) {
-      this.components[type] = { focusable: true, ...component }
+    this.components[type] = { focusable: true, ...component }
   }
 }
 
@@ -36,6 +36,7 @@ export interface Editor extends FormDefinition {
   fields: any
   icon: TemplateResult
   interaction?: string
+  summary?: (definition: FieldDefinition) => TemplateResult
 }
 
 export interface Editors {
