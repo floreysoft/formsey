@@ -1,6 +1,6 @@
 {
   "name": "@formsey/core",
-  "version": "0.3.110",
+  "version": "0.3.111",
   "module": "/esm/formsey-core.min.js",
   "files": [
     "/esm/*",
