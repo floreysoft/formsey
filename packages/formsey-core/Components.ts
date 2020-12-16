@@ -36,6 +36,7 @@ export interface Editor extends FormDefinition {
   fields: any
   icon: TemplateResult
   interaction?: string
+  cell? : boolean
   summary?: (definition: FieldDefinition) => TemplateResult
 }
 

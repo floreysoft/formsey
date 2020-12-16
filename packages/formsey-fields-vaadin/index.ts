@@ -40,7 +40,7 @@ if (vaadinLibrary) {
   vaadinLibrary.settingsEditor = {
     "type": "form",
     "layout": {
-      "style": "padding:0px;"
+      "style": "grid-gap:10px;padding:10px"
     },
     "fields": [
       {

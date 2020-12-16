@@ -14,20 +14,28 @@ export class NestedFormField extends Field<NestedFormDefinition, Object> {
   @query('div')
   div: HTMLElement
 
-  render() {
-    if (!this.value) {
-      this.value = {}
-    }
-    if (!this.definition.form) {
-      this.definition.form = {
-        fields: []
+  shouldUpdate() {
+    if (super.shouldUpdate()) {
+      if (!this.value) {
+        this.value = {}
       }
+      if (!this.definition.form) {
+        this.definition.form = {
+          fields: []
+        }
+      }
+      this.definition.form.name = this.definition.name
+      return true
+    } else {
+      return false
     }
-    this.definition.form.name = this.definition.name
+  }
+
+  render() {
     return html`<div class="nf">${createField(this.components, this.settings, this.definition.form, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
   }
 
-  public focusField(path: string) : boolean {
+  public focusField(path: string): boolean {
     let child = this.div.firstElementChild as Field<any, any>
     if (child && path.startsWith(child.definition?.name) && typeof child['focusField'] == "function") {
       return (<any>child).focusField(path)

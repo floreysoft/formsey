@@ -222,6 +222,17 @@ export const FORM_STYLES = css`
     width: 100%;
   }
 
+  /* Toolbar */
+  .tb .ffg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .tb .fff {
+    width: initial;
+  }
+
   /* .Color field */
   .cf {
     position: relative;
@@ -317,13 +328,14 @@ export const FORM_STYLES = css`
   }
 
   /* Title field */
-  formsey-title .lfl {
+  formsey-title .lfl, formsey-title .lfht {
     opacity: 1;
-    font-size: larger;
+    font-size: 1.25em;
+    line-height: 1.25em;
+    padding: 0;
   }
   formsey-title .lfht {
-    opacity: 1;
-    font-size: medium;
+    font-size: 1.1em;
   }
 
   /* Image field */

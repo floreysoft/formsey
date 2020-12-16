@@ -32,8 +32,6 @@ if (materialLibrary) {
         "type": "form",
         "layout": {
           "grids": {
-            "m": "",
-            "l": "grid-template-columns:minmax(0,1fr);grid-gap:0px 10px;padding:10px 10px",
             "xs": "grid-template-columns:minmax(0,1fr);grid-gap:10px 10px;padding:10px 10px"
           }
         },
