@@ -48,6 +48,7 @@ export interface InputFieldDefinition extends InteractiveFieldDefinition {
 
 export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
   text: string | TemplateResult
+  icon: string
   buttonType: "button" | "submit" | "reset" | "menu" | undefined
 }
 
@@ -137,11 +138,6 @@ export interface FormDefinition extends FieldDefinition {
 
 export interface NestedFormDefinition extends FieldDefinition {
   form: FormDefinition
-}
-
-export interface ToolbarDefinition extends NestedFormDefinition {
-  alignment: "left" | "center" | "right"
-  padding: string
 }
 
 export interface RepeatingFieldDefinition extends NestedFormDefinition {

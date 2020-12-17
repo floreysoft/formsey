@@ -81,10 +81,14 @@ export const FORM_STYLES = css`
   button.input {
     display: flex;
     align-items: center;
+    width: min-content;
     overflow: hidden;
     white-space: nowrap;
     justify-content: center;
     background: var(--formsey-widget-background);
+  }
+  button fs-icon + span {
+    margin-left: .25em;
   }
   button:hover:not([disabled]) {
     cursor: pointer;

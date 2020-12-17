@@ -1,7 +1,7 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition, ToolbarDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldDefinition, NestedFormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { customElement, html, query } from "lit-element";
+import { customElement, html } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { createField } from './Field';
 import { InvalidEvent } from './InvalidEvent';
@@ -9,9 +9,11 @@ import { NestedFormField } from "./NestedFormField";
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 @customElement("formsey-toolbar")
-export class Toolbar extends NestedFormField<ToolbarDefinition> {
+export class Toolbar extends NestedFormField<NestedFormDefinition> {
   render() {
-    return html`<style>.tb{padding: ${this.definition.padding || "0"}}.ffg{ justify-content: ${ this.definition.alignment }}</style><div class="tb">${createField(this.components, this.settings, this.definition.form, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+    return html`${this.definition.label ? html`<label class="lfl">${this.definition.label}</label>` : undefined}
+    <div class="tb">${createField(this.components, this.settings, this.definition.form, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>
+    ${this.definition.helpText ? html`<label class="lfht">${this.definition.helpText}</label>` : undefined}`;
   }
 }
 getLibrary("native").registerComponent("toolbar", {
