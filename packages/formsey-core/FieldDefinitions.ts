@@ -139,6 +139,11 @@ export interface NestedFormDefinition extends FieldDefinition {
   form: FormDefinition
 }
 
+export interface ToolbarDefinition extends NestedFormDefinition {
+  alignment: "left" | "center" | "right"
+  padding: string
+}
+
 export interface RepeatingFieldDefinition extends NestedFormDefinition {
   min: number
   max: number

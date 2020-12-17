@@ -51,6 +51,10 @@ export interface Category {
   icon?: TemplateResult
 }
 
+export interface Icons {
+  [index: string]: TemplateResult
+}
+
 export type Categories = Category[]
 
 export function getUniqueElementId(): string {
@@ -135,6 +139,24 @@ export function getCategory(name: string): Category {
 
 export function addCategory(category: Category) {
   getCategories().push(category)
+}
+
+export function getIcons(): Icons {
+  let icons = window['__formseyIcons'] as Icons
+  if (typeof icons === "undefined") {
+    console.log("Create icon registry")
+    icons = {}
+    window['__formseyIcons'] = icons
+  }
+  return icons
+}
+
+export function getIcon(name: string): TemplateResult | undefined {
+  return getIcons()?.[name]
+}
+
+export function registerIcon(name: string, template: TemplateResult) {
+  getIcons()[name] = template
 }
 
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {

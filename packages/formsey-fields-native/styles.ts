@@ -226,7 +226,6 @@ export const FORM_STYLES = css`
   .tb .ffg {
     display: inline-flex;
     align-items: center;
-    justify-content: flex-end;
   }
 
   .tb .fff {

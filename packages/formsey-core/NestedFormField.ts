@@ -8,7 +8,7 @@ import { NestedFormDefinition } from './FieldDefinitions';
 import { InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 @customElement("formsey-nested-form")
-export class NestedFormField extends Field<NestedFormDefinition, Object> {
+export class NestedFormField<T extends NestedFormDefinition> extends Field<T, Object> {
   value: Object = {}
 
   @query('div')
