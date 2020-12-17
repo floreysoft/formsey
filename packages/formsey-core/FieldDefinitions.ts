@@ -47,8 +47,8 @@ export interface InputFieldDefinition extends InteractiveFieldDefinition {
 }
 
 export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
-  text: string | TemplateResult
-  icon: string
+  text?: string | TemplateResult
+  icon?: string
   buttonType: "button" | "submit" | "reset" | "menu" | undefined
 }
 
