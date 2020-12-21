@@ -1,4 +1,4 @@
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getIcon, getLibrary, Settings } from '@formsey/core/Components';
 import { ButtonFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { LabeledField } from '@formsey/core/LabeledField';
@@ -14,7 +14,7 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   button: HTMLButtonElement
 
   renderField() {
-  return html`<vaadin-button type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}">${this.definition.text}</vaadin-button>`;
+  return html`<vaadin-button type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}"><div slot="prefix">${getIcon(this.definition.icon)}</div>${this.definition.text}</vaadin-button>`;
   }
 
   focusField() : boolean {

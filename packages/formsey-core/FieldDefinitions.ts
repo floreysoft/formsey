@@ -155,6 +155,15 @@ export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
   multipleChoice?: boolean
 }
+export interface TabsFieldDefinition extends InputFieldDefinition {
+  selections: Selection[]
+  location: "top" | "bottom"
+}
+
+export interface TableFieldDefinition extends NestedFormDefinition {
+  sortable?: boolean
+  selectable?: boolean
+}
 
 export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
   control: "checkbox" | "switch"

@@ -206,7 +206,21 @@ export const FORM_STYLES = css`
     fill: var(--lumo-body-text-color);
   }
 
-  /* .Color field */
+  /* Toolbar */
+  .tb .ffg {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .tb .fff {
+    width: initial;
+  }
+
+  .tb vaadin-button {
+    min-width: 1em;
+  }
+
+  /* Color field */
   input[type="color"] {
     opacity: 0;
     position: absolute;
@@ -335,6 +349,16 @@ export const FORM_STYLES = css`
     width: 1.2em;
     fill: currentColor;
     cursor: pointer;
+  }
+
+  /* Table */
+  formsey-table .tblh {
+    display: grid;
+  }
+  formsey-table .tblr {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 
   /* Repeating section */

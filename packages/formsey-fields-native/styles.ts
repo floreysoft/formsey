@@ -573,6 +573,16 @@ export const FORM_STYLES = css`
     height: auto;
   }
 
+  /* Table */
+  formsey-table .tblh {
+    display: grid;
+  }
+  formsey-table .tblr {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
   /* Repeating section */
   formsey-repeating-section .form {
     position: relative;

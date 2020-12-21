@@ -31,17 +31,19 @@ export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
     if (error?.validityMessage) {
       customValidity = error?.validityMessage
     }
-    return html`<vaadin-checkbox-group label="${ifDefined(this.definition.label as string)}" .helperText="${this.definition.helpText as string}" theme="vertical"><vaadin-checkbox @change=${this.changed} ?disabled="${this.definition.disabled}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.controlLabel || ""}</vaadin-checkbox></vaadin-checkbox-group>`;
+
+    return this.definition.label || this.definition.helpText ? html`<vaadin-checkbox-group label="${ifDefined(this.definition.label as string)}" .helperText="${this.definition.helpText as string}" theme="vertical"><vaadin-checkbox @change=${this.changed} ?disabled="${this.definition.disabled}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.controlLabel || ""}</vaadin-checkbox></vaadin-checkbox-group>` :
+      html`<vaadin-checkbox @change=${this.changed} ?disabled="${this.definition.disabled}" ?required="${this.definition.required}" error-message="${ifDefined(customValidity)}" .indeterminate="${this.definition.indeterminate}" .checked=${this.value} value="${this.definition.name}">${this.definition.controlLabel || ""}</vaadin-checkbox>`;
   }
 
   protected changed(e: Event) {
     e.stopPropagation()
     this.value = this.vaadinCheckbox.checked;
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
   }
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
+    if (path == this.definition.name) {
       this.vaadinCheckbox.focus()
     }
   }
@@ -54,7 +56,7 @@ export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError("Please check", false, { })
+    this.errors[this.definition.name] = new InvalidError("Please check", false, {})
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }

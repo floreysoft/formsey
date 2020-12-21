@@ -159,6 +159,24 @@ export function registerIcon(name: string, template: TemplateResult) {
   getIcons()[name] = template
 }
 
+export function getMessages(): Object {
+  let messages = window['__formseyMessages'] as Icons
+  if (typeof messages === "undefined") {
+    console.log("Create message registry")
+    messages = {}
+    window['__formseyMessages'] = messages
+  }
+  return messages
+}
+
+export function translate(key: string, data: any): TemplateResult | undefined {
+  return getIcons()?.[key]
+}
+
+export function registerMessages(locale: string, messages: Object) {
+  getMessages()[locale] = {}
+}
+
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {
   let area = field.name
   if (!area) {
