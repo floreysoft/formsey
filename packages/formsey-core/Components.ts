@@ -38,6 +38,7 @@ export interface Editor extends FormDefinition {
   interaction?: string
   cell? : boolean
   summary?: (definition: FieldDefinition) => TemplateResult
+  update?: (definition: FormDefinition) => void
 }
 
 export interface Editors {
