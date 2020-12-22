@@ -175,3 +175,16 @@ export interface SignatureFieldDefinition extends InputFieldDefinition {
   width: string
   height: string
 }
+
+export class Records {
+  sortedBy?: string
+  sortDirection?: "ascending" | "descending"
+  hasMore?: boolean
+  pagePrevious?: any
+  pageNext?: any
+  pageStart?: number
+  pageLength?: number
+  selections?: number[]
+  selectAll?: boolean
+  data: Object[]
+}

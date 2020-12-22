@@ -1,28 +1,15 @@
-import { Components, getIcon, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
-import { CheckboxFieldDefinition, FieldDefinition, NestedFormDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { CheckboxFieldDefinition, FieldDefinition, Records, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LabeledField } from '@formsey/core/LabeledField';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { RepeatingSectionField } from './RepeatingSectionField';
 
-export class TableValue {
-  sortedBy?: string
-  sortDirection?: "ascending" | "descending"
-  hasMore?: boolean
-  pagePrevious?: any
-  pageNext?: any
-  pageStart?: number
-  pageLength?: number
-  selections?: number[]
-  selectAll?: boolean
-  data: Object[]
-}
 
 @customElement("formsey-table")
-export class TableField extends LabeledField<TableFieldDefinition, TableValue> {
+export class TableField extends LabeledField<TableFieldDefinition, Records> {
 
   renderField() {
     const headerTemplates: TemplateResult[] = [];
