@@ -31,10 +31,9 @@ export interface Libraries {
   [index: string]: Library
 }
 
-export interface Editor extends FormDefinition {
+export interface Editor extends FieldDefinition {
   title: string
   icon: TemplateResult
-  fields: any
   interaction?: string
   cell? : boolean
   summary?: (definition: FieldDefinition) => TemplateResult
