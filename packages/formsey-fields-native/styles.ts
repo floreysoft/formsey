@@ -602,11 +602,9 @@ export const FORM_STYLES = css`
     top: calc(50% - 1em);
     left: -0.8em;
   }
-  formsey-repeating-section button svg {
+  formsey-repeating-section button fs-icon {
     width: 1em;
-    height: auto;
-    stroke-width: 0;
-    fill: var(--formsey-repeating-section-icon-fill-color, currentColor);
+    height: 1em;
   }
   formsey-repeating-section button {
     color: inherit;
@@ -618,7 +616,7 @@ export const FORM_STYLES = css`
     background-color: var(--formsey-repeating-section-icon-background-color, var(--formsey-widget-background, #E2DDDB));
     transition: background-color 0.12s ease-out;
     border: var(--formsey-input-border, 1px solid transparent);
-    padding: 0.2em;
+    padding: 0.15em;
   }
   formsey-repeating-section button:focus {
     outline: none;
@@ -643,8 +641,9 @@ export const FORM_STYLES = css`
       width: 2em;
       height: 2em;
     }
-    formsey-repeating-section button svg {
+    formsey-repeating-section button fs-icon {
       width: 2em;
+      height: 2em;
     }
     formsey-repeating-section .fs-remove-wrapper {
       padding: 0.4em 0;
