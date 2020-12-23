@@ -98,12 +98,12 @@ export interface DateFieldDefinition extends InputFieldDefinition {
   placeholder?: string
 }
 
-export class Option {
+export interface Option {
   label: string
   value: string
 }
 
-export class Image {
+export interface Image {
   value: string
   label?: string
   src?: string
@@ -145,7 +145,7 @@ export interface RepeatingFieldDefinition extends NestedFormDefinition {
   max: number
 }
 
-export class Selection {
+export interface Selection {
   label: string
   value: string
   form: FormDefinition
@@ -176,7 +176,7 @@ export interface SignatureFieldDefinition extends InputFieldDefinition {
   height: string
 }
 
-export class Records {
+export interface Records {
   sortedBy?: string
   sortDirection?: "ascending" | "descending"
   hasMore?: boolean
