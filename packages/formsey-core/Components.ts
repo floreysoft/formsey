@@ -31,7 +31,7 @@ export interface Libraries {
   [index: string]: Library
 }
 
-export interface Editor extends FieldDefinition {
+export interface Editor extends FormDefinition {
   title: string
   icon: TemplateResult
   interaction?: string
