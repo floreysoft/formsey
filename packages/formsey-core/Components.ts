@@ -2,6 +2,18 @@ import { TemplateResult } from 'lit-element'
 import { FieldDefinition, FormDefinition } from './FieldDefinitions'
 import { InvalidErrors } from './InvalidEvent'
 
+let customElementRegistry = window.customElements;
+// @ts-ignore
+customElementRegistry.oldDefine = customElementRegistry.define
+customElementRegistry.define = function (tag, cstr) {
+  try {
+    // @ts-ignore
+    return customElementRegistry.oldDefine(tag, cstr)
+  } catch (exception) {
+    console.error("Error while registering component!", exception)
+  }
+};
+
 export interface Component {
   importPath: string | string[],
   factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => TemplateResult
@@ -30,7 +42,6 @@ export class Library {
 export interface Libraries {
   [index: string]: Library
 }
-
 export interface Editor extends FieldDefinition {
   title: string
   icon: TemplateResult
@@ -38,6 +49,9 @@ export interface Editor extends FieldDefinition {
   cell? : boolean
   summary?: (definition: FieldDefinition) => TemplateResult
   update?: (editor: Editor, definition: FormDefinition) => void
+}
+export interface LayoutEditor extends Editor {
+  isMatching(layout: string) : boolean
 }
 
 export interface Editors {
