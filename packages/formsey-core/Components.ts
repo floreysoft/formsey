@@ -52,6 +52,7 @@ export interface Editor extends FieldDefinition {
 }
 export interface LayoutEditor extends Editor {
   isMatching(layout: string) : boolean
+  fields?: FieldDefinition[]
 }
 
 export interface Editors {
