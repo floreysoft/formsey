@@ -7,10 +7,8 @@ import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
-
 @customElement("formsey-table")
 export class TableField extends LabeledField<TableFieldDefinition, Records> {
-
   renderField() {
     const headerTemplates: TemplateResult[] = [];
     let rowDefinition = { type: "form", fields: [] }
@@ -20,7 +18,7 @@ export class TableField extends LabeledField<TableFieldDefinition, Records> {
       rowDefinition.fields.push({ type: "checkbox", name: "__s" })
       columns += "1.5em"
     }
-    for (const field of this.definition.form.fields) {
+    for (const field of this.definition.fields) {
       headerTemplates.push(html`<div class="th" title=${field.helpText}>${field.label}</div>`)
       rowDefinition.fields.push({ ...field, label: undefined, helpText: undefined })
       columns += columns ? " " : ""

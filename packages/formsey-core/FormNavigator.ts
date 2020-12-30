@@ -1,7 +1,7 @@
 import { css, customElement, html, LitElement, property, query, TemplateResult } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
 import { Components } from "./Components";
-import { FieldDefinition, FormDefinition, InputFieldDefinition, NestedFormDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
+import { FieldDefinition, FormDefinition, InputFieldDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
 import { get } from "./Form";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";
 
@@ -167,11 +167,11 @@ export class FormNavigator extends LitElement {
     path = path ? path + (fieldDefinition.name ? "." + fieldDefinition.name : '') : fieldDefinition.name
     let nestedDots: TemplateResult[] = []
     if (fieldDefinition.type == "repeatingSection") {
-      fieldDefinition = (<NestedFormDefinition>fieldDefinition).form
+      fieldDefinition = (<FormDefinition>fieldDefinition)
       const sections = get(this.value, path)
       if (sections) {
         for (let i = 0; i < sections.length; i++) {
-          this.addFields(fields, dots, fieldDefinition, path + "[" + i + "]")
+           this.addFields(fields, dots, fieldDefinition, path + "[" + i + "]")
         }
       }
     } else if (fieldDefinition.type == "optionalSection") {
@@ -197,9 +197,6 @@ export class FormNavigator extends LitElement {
       }
       dots.push(html`<div class="fieldset">${nestedDots}</div>`)
     } else {
-      if (fieldDefinition.hasOwnProperty('form')) {
-        fieldDefinition = (<NestedFormDefinition>fieldDefinition).form
-      }
       if (fieldDefinition.hasOwnProperty('fields')) {
         for (let field of (<FormDefinition>fieldDefinition).fields) {
           this.addFields(fields, nestedDots, field, path)

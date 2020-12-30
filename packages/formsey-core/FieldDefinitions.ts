@@ -10,20 +10,18 @@ export interface Breakpoints {
   xxl?: number
 }
 
-export interface Grids {
-  xxs?: string
-  xs?: string
-  s?: string
-  m?: string
-  l?: string
-  xl?: string
-  xxl?: string
-}
-
 export interface Layout {
   style?: string
   breakpoints?: Breakpoints
-  grids?: Grids
+  grids?: {
+    xxs?: any
+    xs?: any
+    s?: any
+    m?: any
+    l?: any
+    xl?: any
+    xxl?: any
+  }
 }
 
 export interface FieldDefinition {
@@ -136,11 +134,7 @@ export interface FormDefinition extends FieldDefinition {
   method?: "GET" | "POST"
 }
 
-export interface NestedFormDefinition extends FieldDefinition {
-  form: FormDefinition
-}
-
-export interface RepeatingFieldDefinition extends NestedFormDefinition {
+export interface RepeatingFieldDefinition extends FormDefinition {
   min: number
   max: number
 }
@@ -160,7 +154,7 @@ export interface TabsFieldDefinition extends InputFieldDefinition {
   location: "top" | "bottom"
 }
 
-export interface TableFieldDefinition extends NestedFormDefinition {
+export interface TableFieldDefinition extends FormDefinition {
   sortable?: boolean
   selectable?: boolean
 }

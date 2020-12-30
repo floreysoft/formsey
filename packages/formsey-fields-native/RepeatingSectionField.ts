@@ -29,7 +29,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         const value = this.value[i];
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${getIcon('Minus')}</button></div>` : undefined}
-        ${createField(this.components,this.settings,  { ...this.definition.form }, value, this.path() + "[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+        ${createField(this.components,this.settings,  { ...this.definition, type: "form" }, value, this.path() + "[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
         itemTemplates.push(template);
       }
     }

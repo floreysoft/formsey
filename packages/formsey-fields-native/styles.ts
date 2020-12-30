@@ -652,6 +652,20 @@ export const FORM_STYLES = css`
     }
   }
 
+  /* Layouts */
+  formsey-layout {
+    display: flex;
+    justify-content: center;
+    gap: .5em;
+  }
+
+  formsey-layout fs-toggles {
+    --fs-widget-background-color: initial;
+    font-size: larger;
+    margin: .25em;
+    padding:0;
+  }
+
   /* Markdown field */
   pre {
     background: var(--formsey-shade, #80808040);

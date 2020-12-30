@@ -2,7 +2,7 @@ import { customElement, html, property, query, queryAll, TemplateResult } from "
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { area, Components, getLibrary, Settings } from './Components';
 import { createField, Field } from './Field';
-import { Breakpoints, FormDefinition, NestedFormDefinition } from './FieldDefinitions';
+import { Breakpoints, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -77,10 +77,10 @@ export class FormField extends Field<FormDefinition, Object> {
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let value: any
-        if (field.hasOwnProperty('form') && !field.name) {
+        if (field.hasOwnProperty('fields') && !field.name) {
           // Anonymous nested form, so let's copy all form fields
           value = {}
-          this.applyNestedFields(value, <NestedFormDefinition>field)
+          this.applyNestedFields(value, <FormDefinition>field)
         } else {
           value = this.value && field.name ? this.value[field.name] : undefined
         }
@@ -221,8 +221,8 @@ export class FormField extends Field<FormDefinition, Object> {
         if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
           newValue[field.name] = this.value[field.name]
         }
-        if (field.hasOwnProperty('form') && !field.name) {
-          this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
+        if (field.hasOwnProperty('fields') && !field.name) {
+          this.addUnnamedNestedFormFields(newValue, field as FormDefinition)
         }
       }
       this.addMemberValueIfPresent("type", newValue)
@@ -231,13 +231,13 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected addUnnamedNestedFormFields(newValue: Object, nestedFormField: NestedFormDefinition) {
-    for (let field of nestedFormField.form.fields) {
+  protected addUnnamedNestedFormFields(newValue: Object, formField: FormDefinition) {
+    for (let field of formField.fields) {
       if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
         newValue[field.name] = this.value[field.name]
       }
-      if (field.hasOwnProperty('form') && !field.name) {
-        this.addUnnamedNestedFormFields(newValue, field as NestedFormDefinition)
+      if (field.hasOwnProperty('fields') && !field.name) {
+        this.addUnnamedNestedFormFields(newValue, field as FormDefinition)
       }
     }
   }
@@ -260,12 +260,12 @@ export class FormField extends Field<FormDefinition, Object> {
     }
   }
 
-  protected applyNestedFields(value: Object, field: NestedFormDefinition) {
-    for (let nestedField of field.form.fields) {
+  protected applyNestedFields(value: Object, field: FormDefinition) {
+    for (let nestedField of field.fields) {
       if (nestedField) {
         value[nestedField.name] = this.value[nestedField.name]
-        if (nestedField.hasOwnProperty('form') && !nestedField.name) {
-          this.applyNestedFields(value, <NestedFormDefinition>nestedField)
+        if (nestedField.hasOwnProperty('fields') && !nestedField.name) {
+          this.applyNestedFields(value, <FormDefinition>nestedField)
         }
       }
     }
@@ -295,12 +295,6 @@ export class FormField extends Field<FormDefinition, Object> {
 }
 
 getLibrary("native").registerComponent("form", {
-  importPath: "@formsey/fields-native/FormField",
-  factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
-    return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
-  }
-})
-getLibrary("native").registerComponent("cells", {
   importPath: "@formsey/fields-native/FormField",
   factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
