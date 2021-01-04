@@ -10,35 +10,30 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 @customElement("formsey-table")
 export class TableField extends LabeledField<TableFieldDefinition, Records> {
   renderField() {
-    const headerTemplates: TemplateResult[] = [];
-    let rowDefinition = { type: "form", fields: [] }
+    const templates: TemplateResult[] = [];
     let columns = ""
     if (this.definition.selectable) {
-      headerTemplates.push(html`<div class="th">${createField(this.components, this.settings, { type: "checkbox", name: "selectAll", indeterminate: typeof this.value.selectAll == "undefined" } as CheckboxFieldDefinition , this.value.selectAll, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
-      rowDefinition.fields.push({ type: "checkbox", name: "__s" })
+      templates.push(html`<div class="th">${createField(this.components, this.settings, { type: "checkbox", name: "selectAll", indeterminate: typeof this.value.selectAll == "undefined" } as CheckboxFieldDefinition, this.value.selectAll, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
       columns += "1.5em"
     }
     for (const field of this.definition.fields) {
-      headerTemplates.push(html`<div class="th" title=${field.helpText}>${field.label}</div>`)
-      rowDefinition.fields.push({ ...field, label: undefined, helpText: undefined })
+      templates.push(html`<div class="th" title=${field.helpText}>${field.label}</div>`)
       columns += columns ? " " : ""
-      columns += "30%"
+      columns += "1fr"
     }
-    const layout = `grid-template-columns: ${columns};gap: 5px;align-items: center;`
-    rowDefinition['layout'] = { grids: { xs: layout } }
-    const rowsTemplates: TemplateResult[] = [];
+    const layout = `grid-template-columns: ${columns};gap: 0px 5px;align-items: center;`
     if (this.value?.data) {
       for (let i: number = 0; i < this.value.data.length; i++) {
         const value = { ...this.value.data[i] }
-        if (this.definition.selectable && (this.value.selectAll || this.value.selections?.includes(i + (this.value.pageStart || 0)))) {
-          value['__s'] = true
-        } else {
-          value['__s'] = false
+        if (this.definition.selectable) {
+          templates.push(createField(this.components, this.settings, { type: "checkbox", name: "__s" }, this.definition.selectable && (this.value.selectAll || this.value.selections?.includes(i + (this.value.pageStart || 0))), this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event)));
         }
-        rowsTemplates.push(createField(this.components, this.settings, rowDefinition, value, this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event)));
+        for (const field of this.definition.fields) {
+          templates.push(createField(this.components, this.settings, { ...field, label: undefined, helpText: undefined }, value[field.name], this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event)));
+        }
       }
     }
-    return html`<div class="tblh" style="${layout}">${headerTemplates}</div><div class='tblr'>${rowsTemplates}</div>`;
+    return html`<div class="tblh" style="${layout}">${templates}</div>`;
   }
 
   protected changed(e: ValueChangedEvent<any>) {

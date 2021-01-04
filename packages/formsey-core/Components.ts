@@ -1,6 +1,7 @@
-import { TemplateResult } from 'lit-element'
-import { FieldDefinition, FormDefinition } from './FieldDefinitions'
-import { InvalidErrors } from './InvalidEvent'
+import { TemplateResult } from 'lit-element';
+import { FieldDefinition, FormDefinition } from './FieldDefinitions';
+import { InvalidErrors } from './InvalidEvent';
+import { Layout } from './ResponsiveLayout';
 
 let customElementRegistry = window.customElements;
 // @ts-ignore
@@ -48,10 +49,10 @@ export interface Editor extends FieldDefinition {
   interaction?: string
   cell? : boolean
   summary?: (definition: FieldDefinition) => TemplateResult
-  update?: (editor: Editor, definition: FormDefinition) => void
+  update?: (editor: Editor, field: FieldDefinition) => void
 }
+
 export interface LayoutEditor extends Editor {
-  isMatching(layout: string) : boolean
   fields?: FieldDefinition[]
 }
 
@@ -65,12 +66,18 @@ export interface Category {
   types: string[];
   icon?: TemplateResult
 }
+export type Categories = Category[]
 
 export interface Icons {
   [index: string]: TemplateResult
 }
 
-export type Categories = Category[]
+export interface Formatter {
+  containerStyle(layout: Layout) : string
+  fieldStyle(layout: Layout, field: FieldDefinition) : string
+}
+
+export type Formatters = { [index: string]: Formatter }
 
 export function getUniqueElementId(): string {
   let counter = window['__formseyElementId'] as number
@@ -172,6 +179,24 @@ export function getIcon(name: string): TemplateResult | undefined {
 
 export function registerIcon(name: string, template: TemplateResult) {
   getIcons()[name] = template
+}
+
+export function getFormatters(): Formatters {
+  let formatters = window['__formseyFormatters'] as Formatters
+  if (typeof formatters === "undefined") {
+    console.log("Create formatter registry")
+    formatters = {}
+    window['__formseyFormatters'] = formatters
+  }
+  return formatters
+}
+
+export function getFormatter(name: string): Formatter | undefined {
+  return getFormatters()?.[name]
+}
+
+export function registerFormatter(name: string, formatter: Formatter) {
+  getFormatters()[name] = formatter
 }
 
 export function getMessages(): Object {

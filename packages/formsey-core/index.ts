@@ -1,5 +1,7 @@
 import { html } from 'lit-element'
-import { registerIcon } from './Components'
+import { registerFormatter, registerIcon } from './Components'
+import { FieldDefinition } from './FieldDefinitions'
+import { GridAreasLayout, GridColumnsLayout } from './ResponsiveLayout'
 
 export * from './Components'
 export * from './Field'
@@ -21,6 +23,22 @@ registerIcon("Cut", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M9.309 0l-.5
 registerIcon("Copy", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M25.531 3.969h-3.51v-1.938c0-1.1-.9-2-2-2h-8c-1.1 0-2 .9-2 2v1.938h-3.552c-1.378 0-2.5 1.122-2.5 2.5v23.063c0 1.378 1.122 2.5 2.5 2.5l13.479-.011 8.063-8v-1.113l.021-.001v-16.437c0-1.378-1.122-2.5-2.5-2.5zM12.021 2.035c.001-.001.002-.002.004-.004h7.993c.001.001 .003.002 .004.004v1.934h-8v-1.934zM26.031 20.031v1.989h-8.021v8.011h-11.542c-.274 0-.5-.228-.5-.5v-23.063c0-.272.226-.5.5-.5 0 0 .054 0 1.5 0v2.063h16v-2.063c1.457 0 1.563 0 1.563 0 .272 0 .5.228 .5.5v13.563z"></path></svg></fs-icon>`)
 registerIcon("Paste", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27.5 9.969h-3.521v-3.531c0-1.378-1.122-2.5-2.5-2.5h-3.458v-1.969c0-1.1-.9-2-2-2h-5.99c-1.1 0-2 .9-2 2v1.969h-3.552c-1.378 0-2.5 1.122-2.5 2.5v19.063c0 1.378 1.122 2.5 2.5 2.5h3.49v1.531c0 1.378 1.122 2.5 2.5 2.5l11.448-.011 8.063-8v-1.113l.021-.001v-10.437c0-1.378-1.122-2.5-2.5-2.5zM10.031 1.972c.001-.001.002-.002.004-.004h5.982c.001.001 .003.002 .004.004v1.965h-5.99l0-1.965zM4.479 26c-.274 0-.5-.228-.5-.5v-19.062c0-.272.226-.5.5-.5h1.542l.01 2.031h13.948l-.01-2.031h1.51c.272 0 .5.228 .5.5v3.531h-11.51c-1.378 0-2.5 1.122-2.5 2.5v13.531h-3.49zM28 20.031v1.989h-8.083v8.011h-9.448c-.274 0-.5-.228-.5-.5v-17.063c0-.272.226-.5.5-.5 0 0 3.745 0 6.531 0 0 0 .836 0 2 0 2.786 0 8.5 0 8.5 0 .272 0 .5.228 .5.5v7.563z"></path></svg></fs-icon>`)
 
-
 registerIcon("Minus", html`<fs-icon><svg viewBox="0 0 24 24"><title>Remove section</title><path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg></fs-icon>`)
 registerIcon("Plus", html`<fs-icon><svg viewBox="0 0 24 24"><title>Add section</title><path d="M5 13h6v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6h6c0.552 0 1-0.448 1-1s-0.448-1-1-1h-6v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1v6h-6c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg></fs-icon>`)
+
+registerFormatter("gridColumns", {
+  containerStyle(layout: GridColumnsLayout): string {
+    return `display:grid;grid-template-columns:${layout.columnTemplates};padding:${layout.top || 0}px ${layout.right || 0}px ${layout.bottom || 0}px ${layout.left || 0}px;column-gap:${layout.columnGap || 0}px;row-gap:${layout.rowGap || 0}px;`
+  },
+  fieldStyle(layout: GridColumnsLayout, field: FieldDefinition): string {
+    return undefined
+  }
+})
+registerFormatter("gridAreas", {
+  containerStyle(layout: GridAreasLayout): string {
+    return `display:grid;grid-template-columns:${layout.columnTemplates};grid-template-areas:${layout.gridTemplateAreas.map((row: string[]) => `'${row.map(column => `_${column}`)}'`)};padding:${layout.top || 0}px ${layout.right || 0}px ${layout.bottom || 0}px ${layout.left || 0}px;column-gap:${layout.columnGap || 0}px;row-gap:${layout.rowGap || 0}px;`
+  },
+  fieldStyle(layout: GridColumnsLayout, field: FieldDefinition): string {
+    return `grid-area:_${field.name}`
+  }
+})

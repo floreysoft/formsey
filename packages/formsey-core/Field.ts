@@ -113,7 +113,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return this;
   }
 
-  protected shouldUpdate(): boolean {
+  protected shouldUpdate(changedProperties?): boolean {
     if (typeof this.definition === "undefined") {
       return false
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {

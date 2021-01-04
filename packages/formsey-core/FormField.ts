@@ -1,9 +1,10 @@
 import { customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { area, Components, getLibrary, Settings } from './Components';
+import { Components, getFormatter, getLibrary, Settings } from './Components';
 import { createField, Field } from './Field';
-import { Breakpoints, FormDefinition } from './FieldDefinitions';
+import { FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
+import { Breakpoints, Layout } from "./ResponsiveLayout";
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
@@ -15,9 +16,6 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "l": 1024,
   "xl": 1366
 }
-
-const DEFAULT_LAYOUT = "grid-template-columns:minmax(0,1fr);grid-gap:10px 10px;"
-
 @customElement("formsey-form-field")
 export class FormField extends Field<FormDefinition, Object> {
   @property({ converter: Object })
@@ -39,7 +37,7 @@ export class FormField extends Field<FormDefinition, Object> {
     this._definition = definition;
     this.applyHiddenFields();
     this.removeDeletedFields()
-    this.updateGridLayout()
+    this.updateLayout()
     this.requestUpdate();
   }
 
@@ -47,17 +45,17 @@ export class FormField extends Field<FormDefinition, Object> {
     return this._definition
   }
 
-  @property()
-  private gridLayout: string = DEFAULT_LAYOUT
-
   protected _value: Object = {}
   protected _definition: FormDefinition
 
   @queryAll(".fff")
   protected _fields: HTMLElement[]
 
+  @property()
+  private layout: Layout
+
   private resizeObserver: ResizeObserver
-  private gridSize: string
+  private size: string
 
   @query(".ffg")
   private grid: HTMLElement
@@ -66,7 +64,7 @@ export class FormField extends Field<FormDefinition, Object> {
     super()
     this.resizeObserver = new ResizeObserver((entries, observer) => {
       for (const entry of entries) {
-        this.layout(entry.contentRect.width)
+        this.resize(entry.contentRect.width)
       }
     });
   }
@@ -74,6 +72,7 @@ export class FormField extends Field<FormDefinition, Object> {
   render() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
+    const formatter = getFormatter(this.layout?.type)
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let value: any
@@ -85,19 +84,21 @@ export class FormField extends Field<FormDefinition, Object> {
           value = this.value && field.name ? this.value[field.name] : undefined
         }
         let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
-        let style
+        let style = formatter?.fieldStyle(this.layout, field)
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
-          if (this.gridLayout?.indexOf('grid-template-areas') >= 0 && this.gridLayout.indexOf(area(field, this.definition.fields)) >= 0) {
-              style = "grid-area:_" + area(field, this.definition.fields)
+          /*
+          if (this.layout?.indexOf('grid-template-areas') >= 0 && this.layout.indexOf(area(field, this.definition.fields)) >= 0) {
+            style = "grid-area:_" + area(field, this.definition.fields)
           }
-          templates.push(html`<div class='fff' style="${ifDefined(style)}">${fieldTemplate}</div>`)
+          */
+        templates.push(html`<div class='fff' style="${ifDefined(style)}">${fieldTemplate}</div>`)
         }
       }
     }
     let header: TemplateResult[] = []
-    return html`<section style="${ifDefined(this.definition?.layout?.style)}">${header}<div class="ffg" style="${this.gridLayout}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
+    return html`<section style="${ifDefined(this.definition?.layout?.style)}">${header}<div class="ffg" style="${ifDefined(formatter?.containerStyle(this.layout))}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
   }
 
   gridSizeChanged(e: CustomEvent) {
@@ -164,7 +165,7 @@ export class FormField extends Field<FormDefinition, Object> {
     return validity;
   }
 
-  protected layout(availableWidth: number) {
+  protected resize(availableWidth: number) {
     // If available with larger than larges breakpoint, default to the largest
     let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
     for (let size of SUPPORTED_BREAKPOINTS) {
@@ -177,20 +178,20 @@ export class FormField extends Field<FormDefinition, Object> {
         break
       }
     }
-    if (this.gridSize != detectedSize) {
+    if (this.size != detectedSize) {
       // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
-      this.gridSize = detectedSize
-      this.updateGridLayout()
+      this.size = detectedSize
+      this.updateLayout()
       this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), size: detectedSize } }))
     }
   }
 
-  protected updateGridLayout() {
-    let gridLayout = DEFAULT_LAYOUT
+  protected updateLayout() {
+    let layout
     for (let size of SUPPORTED_BREAKPOINTS) {
-      gridLayout = this.definition?.layout?.grids?.[size] ? this.definition.layout.grids[size] : gridLayout
-      if (this.gridSize == size) {
-        this.gridLayout = gridLayout ? gridLayout : this.gridLayout
+      layout = this.definition?.layout?.sizes?.[size] || layout
+      if (this.size == size) {
+        this.layout = layout || this.layout
         break;
       }
     }

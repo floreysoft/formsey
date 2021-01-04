@@ -1,28 +1,5 @@
-import { TemplateResult } from "lit-element"
-
-export interface Breakpoints {
-  xxs?: number
-  xs?: number
-  s?: number
-  m?: number
-  l?: number
-  xl?: number
-  xxl?: number
-}
-
-export interface Layout {
-  style?: string
-  breakpoints?: Breakpoints
-  grids?: {
-    xxs?: any
-    xs?: any
-    s?: any
-    m?: any
-    l?: any
-    xl?: any
-    xxl?: any
-  }
-}
+import { TemplateResult } from "lit-element";
+import { ResponsiveLayout } from "./ResponsiveLayout";
 
 export interface FieldDefinition {
   name?: string
@@ -128,7 +105,7 @@ export interface CheckboxesFieldDefinition extends InputFieldDefinition {
 
 export interface FormDefinition extends FieldDefinition {
   fields: FieldDefinition[]
-  layout?: Layout,
+  layout?: ResponsiveLayout,
   target?: "_blank" | "_parent" | "_self" | "_top"
   action?: string
   method?: "GET" | "POST"
