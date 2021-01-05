@@ -54,6 +54,7 @@ export interface Editor extends FieldDefinition {
 
 export interface LayoutEditor extends Editor {
   fields?: FieldDefinition[]
+  isMatching(layout: Layout) : boolean
 }
 
 export interface Editors {

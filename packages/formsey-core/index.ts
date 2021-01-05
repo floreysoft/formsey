@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import { registerFormatter, registerIcon } from './Components'
 import { FieldDefinition } from './FieldDefinitions'
-import { GridAreasLayout, GridColumnsLayout } from './ResponsiveLayout'
+import { AreasLayout, ColumnsLayout, ToolbarLayout } from './ResponsiveLayout'
 
 export * from './Components'
 export * from './Field'
@@ -26,19 +26,27 @@ registerIcon("Paste", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27.5 9.96
 registerIcon("Minus", html`<fs-icon><svg viewBox="0 0 24 24"><title>Remove section</title><path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg></fs-icon>`)
 registerIcon("Plus", html`<fs-icon><svg viewBox="0 0 24 24"><title>Add section</title><path d="M5 13h6v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6h6c0.552 0 1-0.448 1-1s-0.448-1-1-1h-6v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1v6h-6c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg></fs-icon>`)
 
-registerFormatter("gridColumns", {
-  containerStyle(layout: GridColumnsLayout): string {
-    return `display:grid;grid-template-columns:${layout.columnTemplates};padding:${layout.top || 0}px ${layout.right || 0}px ${layout.bottom || 0}px ${layout.left || 0}px;column-gap:${layout.columnGap || 0}px;row-gap:${layout.rowGap || 0}px;`
+registerFormatter("columns", {
+  containerStyle(layout: ColumnsLayout): string {
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};padding:${layout.padY || 0}px ${layout.padX || 0}px;column-gap:${layout.colGap || 5}px;row-gap:${layout.rowGap || 5}px;`
   },
-  fieldStyle(layout: GridColumnsLayout, field: FieldDefinition): string {
+  fieldStyle(layout: ColumnsLayout, field: FieldDefinition): string {
     return undefined
   }
 })
-registerFormatter("gridAreas", {
-  containerStyle(layout: GridAreasLayout): string {
-    return `display:grid;grid-template-columns:${layout.columnTemplates};grid-template-areas:${layout.gridTemplateAreas.map((row: string[]) => `'${row.map(column => `_${column}`)}'`)};padding:${layout.top || 0}px ${layout.right || 0}px ${layout.bottom || 0}px ${layout.left || 0}px;column-gap:${layout.columnGap || 0}px;row-gap:${layout.rowGap || 0}px;`
+registerFormatter("areas", {
+  containerStyle(layout: AreasLayout): string {
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string[]) => `'${row.map(column => `_${column}`).join(" ")}'`).join(" ")};padding:${layout.padY || 0}px ${layout.padX || 0}px;column-gap:${layout.colGap || 5}px;row-gap:${layout.rowGap || 5}px;`
   },
-  fieldStyle(layout: GridColumnsLayout, field: FieldDefinition): string {
+  fieldStyle(layout: AreasLayout, field: FieldDefinition): string {
     return `grid-area:_${field.name}`
+  }
+})
+registerFormatter("toolbar", {
+  containerStyle(layout: ToolbarLayout): string {
+    return `display:flex;justify-content:${layout.alignment == "left" ? "flex-start" : layout.alignment == "right" ? "flex-end" : layout.alignment};padding:${layout.padY || 0}px ${layout.padX || 0}px;column-gap:${layout.colGap}px`
+  },
+  fieldStyle(layout: ToolbarLayout, field: FieldDefinition): string {
+    return `flex-grow: ${layout.grow?.[field.name] || 0}`
   }
 })

@@ -72,7 +72,7 @@ export class FormField extends Field<FormDefinition, Object> {
   render() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
-    const formatter = getFormatter(this.layout?.type)
+    const formatter = getFormatter(this.layout?.formatter)
     if (this.definition.fields) {
       for (let field of this.definition.fields) {
         let value: any
@@ -84,16 +84,10 @@ export class FormField extends Field<FormDefinition, Object> {
           value = this.value && field.name ? this.value[field.name] : undefined
         }
         let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
-        let style = formatter?.fieldStyle(this.layout, field)
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
-          /*
-          if (this.layout?.indexOf('grid-template-areas') >= 0 && this.layout.indexOf(area(field, this.definition.fields)) >= 0) {
-            style = "grid-area:_" + area(field, this.definition.fields)
-          }
-          */
-        templates.push(html`<div class='fff' style="${ifDefined(style)}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff' style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${fieldTemplate}</div>`)
         }
       }
     }

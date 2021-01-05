@@ -6,7 +6,6 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import { createField, Field } from './Field';
 import { InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
-
 @customElement("formsey-toolbar")
 export class Toolbar extends Field<FormDefinition, Object> {
   render() {

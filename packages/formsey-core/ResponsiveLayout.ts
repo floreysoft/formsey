@@ -23,31 +23,34 @@ export interface Breakpoints {
 }
 
 export interface Layout {
-  type: string
-  left?: number
-  right?: number
-  top?: number
-  bottom?: number
+  formatter: string
+  padX?: number
+  padY?: number
 }
 
-export interface AlignmentLayout extends Layout {
-  type: "alignment"
+type Grow = {
+  [index: string]: number
+}
+
+export interface ToolbarLayout extends Layout {
+  formatter: "toolbar"
   alignment: "left" | "center" | "right"
-  columnGap?: number
-  grow?: [ { name: string, factor: number } ]
+  colGap?: number
+  grow?: Grow
 }
 
-export interface GridColumnsLayout extends Layout {
-  type: "gridColumns" | "gridAreas"
-  columnTemplates: string[]
-  columnGap?: number
+export interface ColumnsLayout extends Layout {
+  formatter: "columns" | "area"
+  columns: number[]
+  colGap?: number
   rowGap?: number
 }
 
-export interface GridAreasLayout extends GridColumnsLayout {
-  type: "gridAreas"
-  gridTemplateAreas: string[][]
+export interface AreasLayout extends ColumnsLayout {
+  formatter: "area"
+  areas: string[][]
 }
 
 export interface TableLayout extends Layout {
+  formatter: "table"
 }
