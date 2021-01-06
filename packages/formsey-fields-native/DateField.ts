@@ -6,7 +6,7 @@ import { customElement, html } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { InputField } from './InputField';
 @customElement("formsey-date")
-export class DateField extends InputField<DateFieldDefinition> {
+export class DateField extends InputField<DateFieldDefinition, string> {
   protected get type() : "datetime" | "date" | "month" | "week" | "time" | "datetime-local" {
     return "date"
   }

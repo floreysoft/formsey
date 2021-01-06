@@ -59,7 +59,7 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
   }
 
-  .input {
+  .input, .l {
     user-select: auto;
     outline: none;
     box-sizing: border-box;
@@ -74,6 +74,16 @@ export const FORM_STYLES = css`
     transition: border 0.12s ease-out;
   }
 
+  .l {
+    width: initial;
+    background: none;
+  }
+
+  .input.range {
+    padding: 0;
+    margin: 0;
+  }
+
   .input:focus-within {
     border: 1px solid var(--formsey-border-focus, transparent);
   }
@@ -81,7 +91,6 @@ export const FORM_STYLES = css`
   button.input {
     display: flex;
     align-items: center;
-    width: min-content;
     overflow: hidden;
     white-space: nowrap;
     justify-content: center;
@@ -664,6 +673,10 @@ export const FORM_STYLES = css`
     font-size: larger;
     margin: .25em;
     padding:0;
+  }
+
+  formsey-toggle fs-toggles {
+    height: var(--formsey-input-height, 2em);
   }
 
   /* Markdown field */

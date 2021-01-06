@@ -24,7 +24,7 @@ export interface InputFieldDefinition extends InteractiveFieldDefinition {
 export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
   text?: string | TemplateResult
   icon?: string
-  buttonType: "button" | "submit" | "reset" | "menu" | undefined
+  buttonType?: "button" | "submit" | "reset" | "menu"
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {
@@ -129,6 +129,10 @@ export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
 export interface TabsFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
   location: "top" | "bottom"
+}
+
+export interface ToggleFieldDefinition extends InputFieldDefinition {
+  buttons: ButtonFieldDefinition[]
 }
 
 export interface TableFieldDefinition extends FormDefinition {

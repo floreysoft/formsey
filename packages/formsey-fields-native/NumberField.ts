@@ -1,4 +1,4 @@
-import { NumberFieldDefinition } from '@formsey/core';
+import { NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -7,8 +7,21 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import { InputField } from './InputField';
 
 @customElement("formsey-number")
-export class NumberField extends InputField<NumberFieldDefinition> {
-  protected get type() : "number" {
+export class NumberField extends InputField<NumberFieldDefinition, number> {
+
+  protected changed(e: any) {
+    e.stopPropagation()
+    this.value = +e.currentTarget.value;
+    this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
+  }
+
+  protected inputted(e: any) {
+    e.stopPropagation()
+    this.value = +e.currentTarget.value;
+    this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+  }
+
+  protected get type() : "number" | "range" {
     return "number"
   }
 }

@@ -6,7 +6,7 @@ import { customElement, html } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { InputField } from './InputField';
 @customElement("formsey-string")
-export class StringField extends InputField<StringFieldDefinition> {
+export class StringField extends InputField<StringFieldDefinition, string> {
   protected get type() : "text" | "search" | "tel" | "url" | "email" | "password" {
     return "text"
   }

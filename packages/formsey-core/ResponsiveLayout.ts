@@ -34,20 +34,21 @@ type Grow = {
 
 export interface ToolbarLayout extends Layout {
   formatter: "toolbar"
-  alignment: "left" | "center" | "right"
+  alignment?: "left" | "center" | "right"
+  verticalAlignment?: "top" | "middle" | "bottom"
   colGap?: number
   grow?: Grow
 }
 
 export interface ColumnsLayout extends Layout {
-  formatter: "columns" | "area"
+  formatter: "columns" | "areas"
   columns: number[]
   colGap?: number
   rowGap?: number
 }
 
 export interface AreasLayout extends ColumnsLayout {
-  formatter: "area"
+  formatter: "areas"
   areas: string[][]
 }
 
