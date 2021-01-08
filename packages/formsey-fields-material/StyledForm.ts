@@ -2,7 +2,6 @@ import { Components, getLibrary, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
-import { FormField } from '@formsey/core/FormField';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
@@ -57,9 +56,6 @@ export class StyledForm extends Form {
 
   @query(".themed")
   themed: HTMLElement
-
-  @query('#form')
-  form: FormField
 
   render() {
     let field = undefined

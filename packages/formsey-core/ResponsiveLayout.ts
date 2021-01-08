@@ -28,16 +28,13 @@ export interface Layout {
   padY?: number
 }
 
-type Grow = {
-  [index: string]: number
-}
-
 export interface ToolbarLayout extends Layout {
   formatter: "toolbar"
-  alignment?: "left" | "center" | "right"
-  verticalAlignment?: "top" | "middle" | "bottom"
-  colGap?: number
-  grow?: Grow
+  horizontal?: "left" | "center" | "right",
+  vertical?: "top" | "middle" | "bottom"
+  grow?: {
+    [index: string]: number
+  }
 }
 
 export interface ColumnsLayout extends Layout {

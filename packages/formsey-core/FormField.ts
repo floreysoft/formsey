@@ -4,6 +4,7 @@ import { Components, getFormatter, getLibrary, Settings } from './Components';
 import { createField, Field } from './Field';
 import { FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
+import { LabeledField } from "./LabeledField";
 import { Breakpoints, Layout } from "./ResponsiveLayout";
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -17,7 +18,7 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xl": 1366
 }
 @customElement("formsey-form-field")
-export class FormField extends Field<FormDefinition, Object> {
+export class FormField extends LabeledField<FormDefinition, Object> {
   @property({ converter: Object })
   // @ts-ignore()
   set value(value: Object) {
@@ -69,7 +70,7 @@ export class FormField extends Field<FormDefinition, Object> {
     });
   }
 
-  render() {
+  renderField() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
     const formatter = getFormatter(this.layout?.formatter)
@@ -288,7 +289,6 @@ export class FormField extends Field<FormDefinition, Object> {
     return __closestFrom(base);
   }
 }
-
 getLibrary("native").registerComponent("form", {
   importPath: "@formsey/fields-native/FormField",
   factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {

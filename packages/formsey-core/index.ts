@@ -31,7 +31,7 @@ registerFormatter("columns", {
     return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};padding:${layout.padY || 0}px ${layout.padX || 0}px;column-gap:${layout.colGap || 5}px;row-gap:${layout.rowGap || 5}px;`
   },
   fieldStyle(layout: ColumnsLayout, field: FieldDefinition): string {
-    return undefined
+    return `width:100%`
   }
 })
 registerFormatter("areas", {
@@ -44,7 +44,7 @@ registerFormatter("areas", {
 })
 registerFormatter("toolbar", {
   containerStyle(layout: ToolbarLayout): string {
-    return `display:flex;align-items:${layout.verticalAlignment == "top" ? "flex-start" : layout.verticalAlignment == "bottom" ? "flex-end" : "center"};justify-content:${layout.alignment == "left" ? "flex-start" : layout.alignment == "right" ? "flex-end" : layout.alignment};padding:${layout.padY || 0}px ${layout.padX || 0}px;column-gap:${layout.colGap}px`
+    return `display:flex;flex-flow: row wrap;align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"};justify-content:${layout.horizontal == "left" ? "flex-start" : layout.horizontal == "right" ? "flex-end" : "center"}`
   },
   fieldStyle(layout: ToolbarLayout, field: FieldDefinition): string {
     return `flex-grow: ${layout.grow?.[field.name] || 0}`

@@ -6,8 +6,8 @@ export const FORM_STYLES = css`
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
     input:-webkit-autofill:active {
-        -webkit-animation: autofill 0s forwards;
-        animation: autofill 0s forwards;
+      -webkit-animation: autofill 0s forwards;
+      animation: autofill 0s forwards;
     }
     -webkit-font-smoothing: antialiased;
   }
@@ -43,11 +43,11 @@ export const FORM_STYLES = css`
   }
 
   input[type="color"] {
+    display: block;
     opacity: 0;
     position: absolute;
     top: 0;
     right: 0;
-    display: block;
     width: 1.8em;
     height: 1.8em;
     border: none;
@@ -226,23 +226,9 @@ export const FORM_STYLES = css`
     min-width: 0;
   }
   .ffg {
-    display: inline-grid;
-    grid-gap: 5px 5px;
     width: 100%;
     box-sizing: border-box;
-  }
-  .fff {
-    width: 100%;
-  }
-
-  /* Toolbar */
-  .tb .ffg {
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .tb .fff {
-    width: initial;
+    gap: var(--formsey-padding);
   }
 
   /* .Color field */
@@ -677,6 +663,10 @@ export const FORM_STYLES = css`
 
   formsey-toggle fs-toggles {
     height: var(--formsey-input-height, 2em);
+  }
+
+  formsey-toggle fs-toggle {
+    width: 2em;
   }
 
   /* Markdown field */
