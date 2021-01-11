@@ -86,7 +86,7 @@ export class Form extends Field<FieldDefinition, any> {
   method: "GET" | "POST"
 
   @query(':first-child')
-  form: FormField
+  form: FormField<FormDefinition,Object>
 
   @query('form')
   nativeForm: HTMLFormElement

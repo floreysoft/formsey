@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import { registerFormatter, registerIcon } from './Components'
-import { FieldDefinition } from './FieldDefinitions'
-import { AreasLayout, ColumnsLayout, ToolbarLayout } from './ResponsiveLayout'
+import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions'
+import { AreasLayout, ColumnsLayout, ToolbarLayout, TableLayout } from './ResponsiveLayout'
 
 export * from './Components'
 export * from './Field'
@@ -26,17 +26,37 @@ registerIcon("Paste", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27.5 9.96
 registerIcon("Minus", html`<fs-icon><svg viewBox="0 0 24 24"><title>Remove section</title><path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg></fs-icon>`)
 registerIcon("Plus", html`<fs-icon><svg viewBox="0 0 24 24"><title>Add section</title><path d="M5 13h6v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6h6c0.552 0 1-0.448 1-1s-0.448-1-1-1h-6v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1v6h-6c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path></svg></fs-icon>`)
 
+registerIcon("Sort ascending", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27.414 12.586l-10-10c-0.781-0.781-2.047-0.781-2.828 0l-10 10c-0.781 0.781-0.781 2.047 0 2.828s2.047 0.781 2.828 0l6.586-6.586v19.172c0 1.105 0.895 2 2 2s2-0.895 2-2v-19.172l6.586 6.586c0.39 0.39 0.902 0.586 1.414 0.586s1.024-0.195 1.414-0.586c0.781-0.781 0.781-2.047 0-2.828z"></path></svg></fs-icon>`)
+registerIcon("Sort descending", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></svg></fs-icon>`)
+
+registerIcon("Start", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M8 28v-24h4v11l10-10v22l-10-10v11z"></path></svg></fs-icon>`)
+registerIcon("Previous", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M18 5v10l10-10v22l-10-10v10l-11-11z"></path></svg></fs-icon>`)
+registerIcon("Next", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M16 27v-10l-10 10v-22l10 10v-10l11 11z"></path></svg></fs-icon>`)
+
+registerIcon("Row short", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5zm0 5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1 0-1zm0 3h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1zm0 3h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1z"></path></svg></fs-icon>`)
+registerIcon("Row medium", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" fill="currentColor" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v5.02a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5V2.5a.5.5 0 0 1 .5-.5zm0 8h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1zm0 3h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1z"></path></svg></fs-icon>`)
+registerIcon("Row large", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" fill="currentColor" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v7.979a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5V2.5a.5.5 0 0 1 .5-.5zm0 11h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1z"></path></svg></fs-icon>`)
+registerIcon("Row extra large", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" fill="currentColor" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v11.023a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5V2.5a.5.5 0 0 1 .5-.5z"></path></svg></fs-icon>`)
+
 registerFormatter("columns", {
   containerStyle(layout: ColumnsLayout): string {
-    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};padding:${layout.padY || 0}px ${layout.padX || 0}px;column-gap:${layout.colGap || 5}px;row-gap:${layout.rowGap || 5}px;`
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")}`
   },
   fieldStyle(layout: ColumnsLayout, field: FieldDefinition): string {
     return `width:100%`
   }
 })
+registerFormatter("table", {
+  containerStyle(layout: TableLayout, definition: TableFieldDefinition ): string {
+    return `display:grid;gap:0;grid-template-rows:2em;grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2em"});grid-template-columns:${definition.selectable ? "min-content " : ""}${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")}`
+  },
+  fieldStyle(layout: TableLayout, field?: FieldDefinition): string {
+    return `align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"}`
+  }
+})
 registerFormatter("areas", {
   containerStyle(layout: AreasLayout): string {
-    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string[]) => `'${row.map(column => `_${column}`).join(" ")}'`).join(" ")};padding:${layout.padY || 0}px ${layout.padX || 0}px;column-gap:${layout.colGap || 5}px;row-gap:${layout.rowGap || 5}px;`
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_"+column)).join(" ")}'`).join(" ")}`
   },
   fieldStyle(layout: AreasLayout, field: FieldDefinition): string {
     return `grid-area:_${field.name}`
@@ -44,7 +64,7 @@ registerFormatter("areas", {
 })
 registerFormatter("toolbar", {
   containerStyle(layout: ToolbarLayout): string {
-    return `display:flex;flex-flow: row wrap;align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"};justify-content:${layout.horizontal == "left" ? "flex-start" : layout.horizontal == "right" ? "flex-end" : "center"}`
+    return `display:flex;flex-flow: row ${layout.wrap || "nowrap"};align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"};justify-content:${layout.horizontal == "left" ? "flex-start" : layout.horizontal == "right" ? "flex-end" : "center"}`
   },
   fieldStyle(layout: ToolbarLayout, field: FieldDefinition): string {
     return `flex-grow: ${layout.grow?.[field.name] || 0}`

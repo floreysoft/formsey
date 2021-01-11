@@ -59,7 +59,7 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
   }
 
-  .input, .l {
+  .input {
     user-select: auto;
     outline: none;
     box-sizing: border-box;
@@ -75,8 +75,14 @@ export const FORM_STYLES = css`
   }
 
   .l {
+    box-sizing: border-box;
     width: initial;
-    background: none;
+    min-height: var(--formsey-input-height, 2em);
+    padding: var(--formsey-padding, .2em .3em);
+    font: inherit;
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .input.range {
@@ -126,6 +132,17 @@ export const FORM_STYLES = css`
     height: var(--formsey-input-height, 2em);
     display: flex;
     align-items: center;
+  }
+
+  /* Label */
+  formsey-label {
+    display: flex;
+    max-height: 100%;
+    overflow: hidden
+  }
+
+  formsey-label .lfw {
+    overflow: hidden;
   }
 
   /* Switch field */
@@ -569,13 +586,37 @@ export const FORM_STYLES = css`
   }
 
   /* Table */
-  formsey-table .tblh {
-    display: grid;
+  formsey-table .ffg {
+    border: 1px solid var(--formsey-shade);
+    border-radius: var(--formsey-border-radius);
   }
-  formsey-table .tblr {
+  formsey-table .tr {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  formsey-table .th {
+    cursor: pointer;
+    max-height: 2em;
+    padding: var(--formsey-padding);
+  }
+  formsey-table .th fs-icon {
+    font-size: smaller;
+  }
+  formsey-table .tnav {
+    padding: var(--formsey-padding);
+    padding-top: .5em;
+  }
+  formsey-table .cell {
+    display: flex;
+    border-top: 1px solid var(--formsey-shade);
+    border-left: 1px solid var(--formsey-shade);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  formsey-table .cell.first {
+    border-left: none;
   }
 
   /* Repeating section */

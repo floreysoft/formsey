@@ -18,10 +18,10 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xl": 1366
 }
 @customElement("formsey-form-field")
-export class FormField extends LabeledField<FormDefinition, Object> {
+export class FormField<D extends FormDefinition, V extends any> extends LabeledField<D, V> {
   @property({ converter: Object })
   // @ts-ignore()
-  set value(value: Object) {
+  set value(value: V) {
     this._value = value
     this.applyHiddenFields()
     this.removeDeletedFields()
@@ -29,12 +29,12 @@ export class FormField extends LabeledField<FormDefinition, Object> {
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   @property({ converter: Object })
   // @ts-ignore()
-  set definition(definition: FormDefinition) {
+  set definition(definition: D) {
     this._definition = definition;
     this.applyHiddenFields();
     this.removeDeletedFields()
@@ -46,17 +46,17 @@ export class FormField extends LabeledField<FormDefinition, Object> {
     return this._definition
   }
 
-  protected _value: Object = {}
-  protected _definition: FormDefinition
+  protected _value: V
+  protected _definition: D
 
   @queryAll(".fff")
   protected _fields: HTMLElement[]
 
   @property()
-  private layout: Layout
+  protected layout: Layout
 
+  protected size: string
   private resizeObserver: ResizeObserver
-  private size: string
 
   @query(".ffg")
   private grid: HTMLElement
@@ -92,8 +92,7 @@ export class FormField extends LabeledField<FormDefinition, Object> {
         }
       }
     }
-    let header: TemplateResult[] = []
-    return html`<section style="${ifDefined(this.definition?.layout?.style)}">${header}<div class="ffg" style="${ifDefined(formatter?.containerStyle(this.layout))}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
+    return html`<section style="${ifDefined(this.definition?.layout?.style)}"><div class="ffg" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition))}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
   }
 
   gridSizeChanged(e: CustomEvent) {
@@ -201,7 +200,7 @@ export class FormField extends LabeledField<FormDefinition, Object> {
       } else {
         let name = e.detail.name.substring(this.path().length + 1).split('.')[0]
         if (!this.value) {
-          this.value = {}
+          this.value = {} as V
         }
         this.value[name] = e.detail.value;
         this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
@@ -223,7 +222,7 @@ export class FormField extends LabeledField<FormDefinition, Object> {
       }
       this.addMemberValueIfPresent("type", newValue)
       this.addMemberValueIfPresent("layout", newValue)
-      this._value = newValue
+      this._value = newValue as V
     }
   }
 

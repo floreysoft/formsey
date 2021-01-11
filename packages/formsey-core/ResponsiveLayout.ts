@@ -24,31 +24,34 @@ export interface Breakpoints {
 
 export interface Layout {
   formatter: string
-  padX?: number
-  padY?: number
 }
 
 export interface ToolbarLayout extends Layout {
   formatter: "toolbar"
   horizontal?: "left" | "center" | "right",
   vertical?: "top" | "middle" | "bottom"
+  wrap?: "wrap" | "nowrap"
   grow?: {
     [index: string]: number
   }
 }
 
 export interface ColumnsLayout extends Layout {
-  formatter: "columns" | "areas"
+  formatter: "columns" | "areas" | "table"
   columns: number[]
-  colGap?: number
-  rowGap?: number
 }
 
 export interface AreasLayout extends ColumnsLayout {
   formatter: "areas"
-  areas: string[][]
+  areas: string[]
 }
 
 export interface TableLayout extends Layout {
   formatter: "table"
+  vertical?: "top" | "middle" | "bottom"
+  rowHeight?: "s" | "m" | "l" | "xl"
+  columns: {
+    width: number
+    field?: string
+  }[]
 }

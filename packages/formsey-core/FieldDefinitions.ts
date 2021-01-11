@@ -138,6 +138,9 @@ export interface ToggleFieldDefinition extends InputFieldDefinition {
 export interface TableFieldDefinition extends FormDefinition {
   sortable?: boolean
   selectable?: boolean
+  pageLength?: number
+  key?: string
+  remoteData?: boolean
 }
 
 export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
@@ -158,8 +161,7 @@ export interface Records {
   pagePrevious?: any
   pageNext?: any
   pageStart?: number
-  pageLength?: number
+  count?: number
   selections?: number[]
-  selectAll?: boolean
   data: Object[]
 }

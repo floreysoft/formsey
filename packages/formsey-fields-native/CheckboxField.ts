@@ -16,7 +16,7 @@ export class CheckboxField extends LabeledField<CheckboxFieldDefinition, boolean
   checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label class="cfl"><input id="checkbox" type="checkbox" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?checked="${this.value}" @change="${ e => e.stopPropagation()}" @input="${ e => e.stopPropagation()}" ?required="${this.definition.required}">${this.definition.controlLabel ? this.definition.controlLabel : ''}</label>`;
+    return html`<label class="cfl"><input id="checkbox" type="checkbox" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" .checked="${this.value}" @change="${ e => e.stopPropagation()}" @input="${ e => e.stopPropagation()}" ?required="${this.definition.required}">${this.definition.controlLabel ? this.definition.controlLabel : ''}</label>`;
   }
 
   clicked(e) {
