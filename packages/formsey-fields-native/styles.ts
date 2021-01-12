@@ -12,6 +12,20 @@ export const FORM_STYLES = css`
     -webkit-font-smoothing: antialiased;
   }
 
+  ::-webkit-scrollbar {
+    width: .75em;
+    height: .75em;
+  }
+  ::-webkit-scrollbar-track {
+      background-color: var(--formsey-background);
+  }
+  ::-webkit-scrollbar-thumb {
+      background-color: var(--formsey-widget-background);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+      background-color: var(--formsey-widget-background-hover);
+  }
+
   * {
     font: var(--formsey-font, inherit);
   }
@@ -74,17 +88,6 @@ export const FORM_STYLES = css`
     transition: border 0.12s ease-out;
   }
 
-  .l {
-    box-sizing: border-box;
-    width: initial;
-    min-height: var(--formsey-input-height, 2em);
-    padding: var(--formsey-padding, .2em .3em);
-    font: inherit;
-    color: inherit;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
   .input.range {
     padding: 0;
     margin: 0;
@@ -138,11 +141,33 @@ export const FORM_STYLES = css`
   formsey-label {
     display: flex;
     max-height: 100%;
-    overflow: hidden
+    overflow: hidden;
   }
 
   formsey-label .lfw {
     overflow: hidden;
+  }
+
+  formsey-label .l {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: var(--formsey-input-height, 2em);
+    box-sizing: border-box;
+    width: initial;
+  }
+
+  formsey-label .l span {
+    font: inherit;
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-height: 100%;
+  }
+
+  formsey-label .l.w span {
+    white-space: normal;
   }
 
   /* Switch field */
@@ -580,6 +605,28 @@ export const FORM_STYLES = css`
     height: 100%;
   }
 
+  /* Popup section field */
+  formsey-popup-section>.lfw {
+    position: relative;
+  }
+  formsey-popup-section>.lfw>#glass {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--formsey-shade);
+  }
+  formsey-popup-section>.lfw>#form {
+    position: absolute;
+    z-index: 1;
+    background-color: var(--formsey-background);
+    padding: var(--formsey-padding);
+    border-radius: var(--formsey-border-radius);
+    width: 20em;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+
   /* Text field */
   formsey-text .input {
     height: auto;
@@ -587,36 +634,57 @@ export const FORM_STYLES = css`
 
   /* Table */
   formsey-table .ffg {
+    display: flex;
+    margin: var(--formsey-padding);
+    width: inherit;
+  }
+  formsey-table .tw {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+  }
+  formsey-table .b {
+    display: flex;
     border: 1px solid var(--formsey-shade);
     border-radius: var(--formsey-border-radius);
   }
-  formsey-table .tr {
+  formsey-table .t {
     display: flex;
     flex-direction: row;
+  }
+  formsey-table .scroll {
+    overflow-x: auto;
+  }
+  formsey-table .fixed {
+    width: initial;
+    border-right: 1px dashed var(--formsey-shade);
+  }
+  formsey-table .td {
+    display: flex;
+    flex-direction: row;
+    column-gap: .25em;
     align-items: center;
+    padding: var(--formsey-padding);
+    border-bottom: 1px solid var(--formsey-shade);
+    border-left: 1px solid var(--formsey-shade);
+  }
+  formsey-table .td.first {
+    border-left: none;
   }
 
   formsey-table .th {
     cursor: pointer;
     max-height: 2em;
-    padding: var(--formsey-padding);
   }
   formsey-table .th fs-icon {
     font-size: smaller;
   }
   formsey-table .tnav {
-    padding: var(--formsey-padding);
     padding-top: .5em;
   }
   formsey-table .cell {
-    display: flex;
-    border-top: 1px solid var(--formsey-shade);
-    border-left: 1px solid var(--formsey-shade);
     box-sizing: border-box;
     overflow: hidden;
-  }
-  formsey-table .cell.first {
-    border-left: none;
   }
 
   /* Repeating section */

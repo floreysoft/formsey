@@ -36,7 +36,7 @@
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-typescript": "^5.0.2",
     "@types/mocha": "^7.0.2",
-    "@types/resize-observer-browser" : "^0.1.4",
+    "@types/resize-observer-browser": "^0.1.4",
     "copyfiles": "^2.1.0",
     "cross-env": "^7.0.2",
     "del-cli": "^3.0.0",

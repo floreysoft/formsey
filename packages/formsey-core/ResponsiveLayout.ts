@@ -50,6 +50,7 @@ export interface TableLayout extends Layout {
   formatter: "table"
   vertical?: "top" | "middle" | "bottom"
   rowHeight?: "s" | "m" | "l" | "xl"
+  fixedColumns?: number
   columns: {
     width: number
     field?: string

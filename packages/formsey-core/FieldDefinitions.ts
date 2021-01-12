@@ -57,6 +57,13 @@ export interface StringFieldDefinition extends InputFieldDefinition {
   autoselect?: boolean
 }
 
+export interface LabelFieldDefinition extends FieldDefinition {
+  wrap?: boolean
+  locale?: string
+  format?: string
+  skeleton?: string
+}
+
 export interface UploadFieldDefinition extends InputFieldDefinition {
   multiple: boolean
   accept?: string[]
@@ -149,6 +156,10 @@ export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
   form: FormDefinition
 }
 
+export interface PopupSectionFieldDefinition extends FormDefinition, InteractiveFieldDefinition {
+  icon?: string
+  text?: string
+}
 export interface SignatureFieldDefinition extends InputFieldDefinition {
   width: string
   height: string

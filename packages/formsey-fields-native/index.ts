@@ -16,6 +16,7 @@ export { NumberField } from './NumberField';
 export { OptionalSectionField } from './OptionalSectionField';
 export { PasswordField } from './PasswordField';
 export { PhoneField } from './PhoneField';
+export { PopupSectionField } from './PopupSectionField';
 export { RangeField } from './RangeField';
 export { RepeatingSectionField } from './RepeatingSectionField';
 export { SearchField } from './SearchField';

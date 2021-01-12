@@ -13,26 +13,36 @@ import { DUMMY_DATA } from './testdata';
 @customElement("formsey-table")
 export class TableField extends FormField<TableFieldDefinition, Records> {
   renderField() {
-    const templates: TemplateResult[] = [];
+    const fixed: TemplateResult[] = [];
+    const scrollable: TemplateResult[] = [];
     const formatter = getFormatter(this.layout?.formatter)
+    const fixedColumns = (<TableLayout>this.layout)?.fixedColumns || 0
     if (this.definition.selectable) {
-      templates.push(html`<div class="tr">${createField(this.components, this.settings, { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, undefined, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
+      const templates = fixedColumns > 0 ? fixed : scrollable
+      templates.push(html`<div class="td">${createField(this.components, this.settings, { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, undefined, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
     }
     if (this.layout) {
-      for (const column of (<TableLayout>this.layout).columns) {
+      (<TableLayout>this.layout).columns.forEach((column, index) => {
         const field = this.definition.fields.filter(field => field.name == column.field)[0]
-        templates.push(html`<div class="tr th" title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value.sortedBy === field.name ? this.value.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
-      }
+        if ( field ) {
+          const templates = index < fixedColumns ? fixed : scrollable
+          templates.push(html`<div class="td th" title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value.sortedBy === field.name ? this.value.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
+        }
+      })
       if (this.value?.data) {
-        for (let i: number = 0; (i + this.value.pageStart) < this.value.data.length && i < this.definition.pageLength; i++) {
+        for (let i: number = 0; (i + (this.value.pageStart||0)) < this.value.data.length && i < this.definition.pageLength; i++) {
           const value = { ...this.value.data[i + (this.value.pageStart || 0)] }
           const key = this.definition.key ? value[this.definition.key] : i
           if (this.definition.selectable) {
-            templates.push(html`<div class="cell first" style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField(this.components, this.settings, { type: "checkbox", name: "__s" }, this.definition.selectable && this.value.selections?.includes(key), this.path() + ".data[" + key + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
+            const templates = fixedColumns > 0 ? fixed : scrollable
+            templates.push(html`<div class="td cell first" style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField(this.components, this.settings, { type: "checkbox", name: "__s" }, this.definition.selectable && this.value.selections?.includes(key), this.path() + ".data[" + key + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
           }
           (<TableLayout>this.layout).columns.forEach((column, index) => {
+            const templates = index < fixedColumns ? fixed : scrollable
             const field = this.definition.fields.filter(field => field.name == column.field)[0]
-            templates.push(html`<div class="cell ${!this.definition.selectable && index == 0 ? "first" : ""}" style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField(this.components, this.settings, { ...field, label: undefined, helpText: undefined }, value[field.name], this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
+            if ( field ) {
+              templates.push(html`<div class="td cell ${!this.definition.selectable && index == 0 ? "first" : ""}" style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField(this.components, this.settings, { ...field, label: undefined, helpText: undefined }, value[field.name], this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
+            }
           })
         }
       }
@@ -67,9 +77,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           sizes: {
             xs: {
               formatter: "toolbar",
-              grow: {
-                "page": 1
-              }
+              horizontal: "right"
             } as ToolbarLayout
           }
         }
@@ -85,7 +93,17 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       }
       pager = html`<formsey-form .components=${this.components} .settings=${this.settings} .definition=${pagerDefinition} @click=${e => this.page(e.detail.name)}></formsey-form>`
     }
-    return html`<section style="${ifDefined(this.definition?.layout?.style)}"><div class="ffg" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition))}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div><div class="tnav">${pager}</div></section>`
+    return html`<section style="${ifDefined(this.definition?.layout?.style)}">
+      <div class="ffg">
+        <div class="tw">
+          <div class="b">
+            ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
+            <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>
+          </div>
+          <div class="tnav">${pager}</div>
+        </div>
+      </div>
+    </section>`
   }
 
   protected removeDeletedFields() {
@@ -161,6 +179,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
 getLibrary("native").registerComponent("table", {
   importPath: "@formsey/fields-native/TableField",
   factory: (components: Components, settings: Settings, definition: TableFieldDefinition, value: Records, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
-    return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${{ ...value, "data": DUMMY_DATA }} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
+    // value = { ...value, "data": DUMMY_DATA }
+    return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
   }
 })

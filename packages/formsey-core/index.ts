@@ -47,8 +47,8 @@ registerFormatter("columns", {
   }
 })
 registerFormatter("table", {
-  containerStyle(layout: TableLayout, definition: TableFieldDefinition ): string {
-    return `display:grid;gap:0;grid-template-rows:2em;grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2em"});grid-template-columns:${definition.selectable ? "min-content " : ""}${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")}`
+  containerStyle(layout: TableLayout, definition: TableFieldDefinition, fixed: boolean, selectable: boolean): string {
+    return `display:grid;gap:0;grid-template-rows:2em;grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2.5em"});grid-template-columns:${selectable ? "min-content " : ""}${layout.columns.filter((column, index) => !layout.fixedColumns || index < layout.fixedColumns && fixed || index >= layout.fixedColumns && !fixed).map(column => `${column.width}px`).join(" ")}`
   },
   fieldStyle(layout: TableLayout, field?: FieldDefinition): string {
     return `align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"}`

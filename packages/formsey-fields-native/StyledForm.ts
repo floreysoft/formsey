@@ -7,6 +7,7 @@ import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { FORM_STYLES } from './styles';
+import { SCROLLBAR_STYLE } from '@floreysoft/dialog';
 
 const themes = new Map([
   ["light", {
@@ -62,8 +63,6 @@ const themes = new Map([
         --formsey-border-radius: 3px;
         --formsey-border: transparent;
         --formsey-border-focus: #007fd4;
-        --formsey-widget-background: #E2DDDB;
-        --formsey-widget-background-hover: #CAC4C2;
         --formsey-shade: #80808040;
         --formsey-widget-background: #2d2d2d;
         --formsey-widget-background-hover: #37373d;

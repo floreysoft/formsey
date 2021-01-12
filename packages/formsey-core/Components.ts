@@ -74,8 +74,8 @@ export interface Icons {
 }
 
 export interface Formatter {
-  containerStyle(layout: Layout, form?: FormDefinition) : string
-  fieldStyle(layout: Layout, field?: FieldDefinition) : string
+  containerStyle(layout: Layout, ...context: any) : string
+  fieldStyle(layout: Layout, ...context: any) : string
 }
 
 export type Formatters = { [index: string]: Formatter }

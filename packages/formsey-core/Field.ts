@@ -24,7 +24,7 @@ export const createField = (components: Components, settings: Settings, definiti
     }
     console.error(`Your form is using a field of type=${definition.type} but no matching component has been registered in any library!`);
   }
-  return html``;
+  return undefined
 }
 
 export class Field<T extends FieldDefinition, V> extends LitElement {

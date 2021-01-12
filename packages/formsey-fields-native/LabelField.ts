@@ -1,14 +1,15 @@
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldDefinition, LabelFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { LabeledField } from "@formsey/core/LabeledField";
 import { customElement, html } from "lit-element";
+import { classMap } from 'lit-html/directives/class-map';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 @customElement("formsey-label")
-export class LabelField extends LabeledField<FieldDefinition, any> {
+export class LabelField extends LabeledField<LabelFieldDefinition, any> {
   protected renderField() {
-    return html`<div class="l">${this.value}</div>`
+    return html`<div class="${classMap({l: true, "w": this.definition.wrap})}"><span>${this.value}</span></div>`
   }
 }
 getLibrary("native").registerComponent("label", {

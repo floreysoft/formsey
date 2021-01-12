@@ -15,9 +15,10 @@
   "dependencies": {
     "@floreysoft/ace": ">0.3.0",
     "@floreysoft/theme": "^0.3.0",
-    "@floreysoft/utils": "^0.3.0",
     "@floreysoft/toggle": "^0.3.0",
+    "@floreysoft/utils": "^0.3.0",
     "@formsey/core": "^0.3.121",
+    "@popperjs/core": "^2.6.0",
     "lit-element": "^2.3.0"
   },
   "scripts": {
