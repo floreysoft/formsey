@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "@floreysoft/ace": "^0.4.0",
+    "@floreysoft/tabs": "^0.4.0",
     "@floreysoft/theme": "^0.4.0",
     "@floreysoft/toggle": "^0.4.0",
     "@floreysoft/utils": "^0.4.0",

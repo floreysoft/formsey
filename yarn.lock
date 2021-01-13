@@ -272,6 +272,21 @@
     ace-builds "^1.4.11"
     lit-element "^2.3.0"
 
+"@floreysoft/editable-label@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@floreysoft/editable-label/-/editable-label-0.4.0.tgz#771ada536b55c2200506215e2e2d9d1e7238fe38"
+  integrity sha512-zlQjPBv4q3TLahsD4ck1uW1fO1j74xXxboA5t5xNvGgyS5tPVNYGLAAWW/eKMBofBh2YLRsYcH8SWF0MKkzuyg==
+  dependencies:
+    lit-element "^2.3.0"
+
+"@floreysoft/tabs@^0.4.0":
+  version "0.4.43"
+  resolved "https://registry.yarnpkg.com/@floreysoft/tabs/-/tabs-0.4.43.tgz#9538d7c7a346ee0c791fdd9b8f6df7ef8beff4a3"
+  integrity sha512-x/cUBiNsFCKiJUIKV8ShQ1WTEtcbHa5ziO86txhf76wLKhhWonjny9HxWRSAX++VOyi1vJc+ng+OrQmZMFbzng==
+  dependencies:
+    "@floreysoft/editable-label" "^0.4.0"
+    lit-element "^2.3.0"
+
 "@floreysoft/theme@^0.4.0":
   version "0.4.46"
   resolved "https://registry.yarnpkg.com/@floreysoft/theme/-/theme-0.4.46.tgz#10efa73c206d99a7f927c3d85bb2afacea1cfea6"
