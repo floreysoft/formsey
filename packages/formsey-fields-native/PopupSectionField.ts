@@ -93,13 +93,20 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
-    if (!this.value) {
-      this.value = {}
+    e.stopPropagation()
+    if (e.detail?.name) {
+      if (!this.definition.name) {
+        // If this is an unnamed form, just pass event to parent
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+      } else {
+        let name = e.detail.name.substring(this.path().length + 1).split('.')[0]
+        if (!this.value) {
+          this.value = {}
+        }
+        this.value[name] = e.detail.value;
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
+      }
     }
-    this.value[name] = e.detail.value;
-    this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
   }
 }
 
