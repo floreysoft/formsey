@@ -269,10 +269,10 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@floreysoft/ace@>0.3.0", "@floreysoft/ace@>0.3.77":
-  version "0.4.41"
-  resolved "https://registry.yarnpkg.com/@floreysoft/ace/-/ace-0.4.41.tgz#d1bd44652828cd95ac48a0ff54583cc6f20df166"
-  integrity sha512-8xi6yIZk+BH/xNG4VTP9ZZqie5bAsyrkvWst7nkNBa8mno1jQ2J/yrXtgfhLIj88/zQ9+uVXEEnEpeTmsopQAQ==
+"@floreysoft/ace@>0.3.0", "@floreysoft/ace@>0.3.77", "@floreysoft/ace@^0.4.0":
+  version "0.4.48"
+  resolved "https://registry.yarnpkg.com/@floreysoft/ace/-/ace-0.4.48.tgz#3b6f51b0e702c54e8326429c1ef009f08b6d4e45"
+  integrity sha512-Se/GXnep08tkuJzu4d6DTJihvlZu6AJV0pHlWiC+u8G9IFmhE2QEoDhZ5tuLsizW1PTQGtVWzm0Vc9NXfUMxFw==
   dependencies:
     ace-builds "^1.4.11"
     lit-element "^2.3.0"
@@ -292,13 +292,6 @@
   dependencies:
     lit-element "^3.0.0-pre.1"
 
-"@floreysoft/menu@^0.3.0":
-  version "0.3.221"
-  resolved "https://registry.yarnpkg.com/@floreysoft/menu/-/menu-0.3.221.tgz#35ec8cc72e66c2ebc8539fcecf9c906d16ad7080"
-  integrity sha512-Ny4No4Ss2ywMvAHPn6Z0WHa2ntXFHbVcrbBZycEhfbwOyX0t8H8KCzhd4Jew1TCPVo3i665h6EItDBojvkYOZg==
-  dependencies:
-    lit-element "^3.0.0-pre.1"
-
 "@floreysoft/splitter@^0.3.172":
   version "0.3.221"
   resolved "https://registry.yarnpkg.com/@floreysoft/splitter/-/splitter-0.3.221.tgz#f55bf44583c7444f89b1168b6217adad84f3dc4a"
@@ -315,29 +308,36 @@
     "@floreysoft/editable-label" "^0.3.221"
     lit-element "^3.0.0-pre.1"
 
-"@floreysoft/theme@^0.3.0", "@floreysoft/theme@^0.3.184":
+"@floreysoft/theme@^0.3.184":
   version "0.3.221"
   resolved "https://registry.yarnpkg.com/@floreysoft/theme/-/theme-0.3.221.tgz#214666c84bf1ceadbbbd2fbd985b3c47e0278239"
   integrity sha512-72Z/Q5LjIqStdsWI/YNgOMfC/UGe48U4difvtZUnCD0K4WQMCGX8BAnOGSlQSyBQZrOkZcRzziqafJpnusbItA==
   dependencies:
     lit-element "^3.0.0-pre.1"
 
-"@floreysoft/toggle@^0.3.0":
-  version "0.4.47"
-  resolved "https://registry.yarnpkg.com/@floreysoft/toggle/-/toggle-0.4.47.tgz#fd6c2a022771f987f3c1318bb278b9bfb9df88c7"
-  integrity sha512-eW2qxAY6Cr+MHr14pAq6ufgETKko6J/OH2wrgv+eUusEqrn7UltVzmcc2301ShNCoM3YsPbCgE2qtQbyUAb02g==
+"@floreysoft/theme@^0.4.0":
+  version "0.4.46"
+  resolved "https://registry.yarnpkg.com/@floreysoft/theme/-/theme-0.4.46.tgz#10efa73c206d99a7f927c3d85bb2afacea1cfea6"
+  integrity sha512-mQ7gpYHSEtw+Kob/sY/jwcdwkplsFUxi0PDL2sSBRlP7C//0lrr48x9DtOB2SrN+FQviiNfV9uGnveJShr/UNQ==
+  dependencies:
+    lit-element "^2.3.0"
+
+"@floreysoft/toggle@^0.4.0":
+  version "0.4.48"
+  resolved "https://registry.yarnpkg.com/@floreysoft/toggle/-/toggle-0.4.48.tgz#3707936b9fc9cab9cc837e136f27a47b0abe0385"
+  integrity sha512-U7dFo8pp4k8zzvro/Cggpc8zjAUkZ8EcOl2p9sQb6LaSU79fim8teCRjTuBvNpVw+UzWUZN+xhYOSzdqFhf3EQ==
   dependencies:
     "@floreysoft/utils" "^0.4.19"
     lit-element "^2.3.0"
 
-"@floreysoft/utils@^0.3.0", "@floreysoft/utils@^0.3.179":
+"@floreysoft/utils@^0.3.179":
   version "0.3.221"
   resolved "https://registry.yarnpkg.com/@floreysoft/utils/-/utils-0.3.221.tgz#12abcfcac6b75c14e5707d9c384fff522b6d03b0"
   integrity sha512-gINyq7C1Wyayy4D2qkJLB8aMocciMT9s9OP5QUNT8dGePCWBeXZ+0GPogRlCO8u9Eoy+q8DMzzJvI1hDknhkgQ==
   dependencies:
     lit-element "^3.0.0-pre.1"
 
-"@floreysoft/utils@^0.4.19":
+"@floreysoft/utils@^0.4.0", "@floreysoft/utils@^0.4.19":
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/@floreysoft/utils/-/utils-0.4.19.tgz#03e585f4b70d5055fa6b84fb54d5cd60ff4a4ada"
   integrity sha512-0d2XZnZX5W3YgSgWv+5rUTlfg/p4Lsqq5Rjux9wp8CDxR264A+JAeAznB7pNAentBUprwLPW9Dn8VYWAGvwB1Q==
@@ -2940,9 +2940,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001173:
-  version "1.0.30001174"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001174.tgz#0f2aca2153fd88ceb07a2bb982fc2acb787623c4"
-  integrity sha512-tqClL/4ThQq6cfFXH3oJL4rifFBeM6gTkphjao5kgwMaW9yn0tKgQLAEfKzDwj6HQWCB/aWo8kTFlSvIN8geEA==
+  version "1.0.30001176"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001176.tgz#e44bac506d4656bae4944a1417f41597bd307335"
+  integrity sha512-VWdkYmqdkDLRe0lvfJlZQ43rnjKqIGKHWhWWRbkqMsJIUaYDNf/K/sdZZcVO6YKQklubokdkJY+ujArsuJ5cag==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -3974,9 +3974,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.634:
-  version "1.3.636"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.636.tgz#6980bd90813a9fb744e43f5e848f16cea4930058"
-  integrity sha512-Adcvng33sd3gTjNIDNXGD1G4H6qCImIy2euUJAQHtLNplEKU5WEz5KRJxupRNIIT8sD5oFZLTKBWAf12Bsz24A==
+  version "1.3.637"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.637.tgz#be46f77acc217cdecf633bbd25292f6a36cc689b"
+  integrity sha512-924WXYMYquYybc+7pNApGlhY2RWg3MY3he4BrZ5BUmM2n1MGBsrS+PZxrlo6UAsWuNl4NE66fqFdwsWkBUGgkA==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -4527,17 +4527,6 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-gaxios@^3.0.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/gaxios/-/gaxios-3.2.0.tgz#11b6f0e8fb08d94a10d4d58b044ad3bec6dd486a"
-  integrity sha512-+6WPeVzPvOshftpxJwRi2Ozez80tn/hdtOUag7+gajDHRJvAblKxTFSSMPtr2hmnLy7p0mvYz0rMXLBl8pSO7Q==
-  dependencies:
-    abort-controller "^3.0.0"
-    extend "^3.0.2"
-    https-proxy-agent "^5.0.0"
-    is-stream "^2.0.0"
-    node-fetch "^2.3.0"
-
 gaxios@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/gaxios/-/gaxios-4.1.0.tgz#e8ad466db5a4383c70b9d63bfd14dfaa87eb0099"
@@ -4558,14 +4547,14 @@ gcp-metadata@^4.2.0:
     json-bigint "^1.0.0"
 
 gcs-resumable-upload@^3.1.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/gcs-resumable-upload/-/gcs-resumable-upload-3.1.1.tgz#67c766a0555d6a352f9651b7603337207167d0de"
-  integrity sha512-RS1osvAicj9+MjCc6jAcVL1Pt3tg7NK2C2gXM5nqD1Gs0klF2kj5nnAFSBy97JrtslMIQzpb7iSuxaG8rFWd2A==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/gcs-resumable-upload/-/gcs-resumable-upload-3.1.2.tgz#74ba51d791da397da6c856eabda7d059af724998"
+  integrity sha512-VKWP3Xju1JmNX3N4ossnGp3DfIRZjOsMj8sDGPBGnvn8YSruCOVGQBvELfStfIFPybScv/e5sEdWx/qzfnS3+w==
   dependencies:
     abort-controller "^3.0.0"
     configstore "^5.0.0"
     extend "^3.0.2"
-    gaxios "^3.0.0"
+    gaxios "^4.0.0"
     google-auth-library "^6.0.0"
     pumpify "^2.0.0"
     stream-events "^1.0.4"

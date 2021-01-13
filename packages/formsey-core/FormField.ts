@@ -289,7 +289,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   }
 }
 getLibrary("native").registerComponent("form", {
-  importPath: "@formsey/fields-native/FormField",
+  importPath: "@formsey/fields-core/FormField",
   factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   }
