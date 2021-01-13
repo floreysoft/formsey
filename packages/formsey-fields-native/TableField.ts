@@ -46,7 +46,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       }
     }
     let pager: TemplateResult
-    if (this.definition.pageLength < this.value.data.length) {
+    if (this.definition.pageLength < this.value?.data.length) {
       let pagerDefinition = {
         type: "form",
         fields: [
