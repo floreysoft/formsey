@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.3.121",
+  "version": "0.3.122",
   "description": "Native fields",
   "module": "/esm/formsey-fields-native.min.js",
   "files": [
@@ -17,7 +17,7 @@
     "@floreysoft/theme": "^0.3.0",
     "@floreysoft/toggle": "^0.3.0",
     "@floreysoft/utils": "^0.3.0",
-    "@formsey/core": "^0.3.121",
+    "@formsey/core": "^0.3.122",
     "@popperjs/core": "^2.6.0",
     "lit-element": "^2.3.0"
   },
