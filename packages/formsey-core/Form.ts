@@ -61,10 +61,10 @@ export class Form extends Field<FieldDefinition, any> {
     try {
       let response = await fetch(url);
       let data = await response.json();
-      this.definition = data.definition
-      this.value = data.value
-      this.library = data.library
-      this.settings = data.settings
+      this.definition = this.definition || data.definition
+      this.value = this.value || data.value
+      this.library = this.library || data.library
+      this.settings = this.settings || data.settings
       this.requestUpdate();
     } catch (reason) {
       console.error(reason.message)

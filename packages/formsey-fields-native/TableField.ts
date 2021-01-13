@@ -1,14 +1,12 @@
 import { Components, getFormatter, getIcon, getLibrary, Settings } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
-import { ButtonFieldDefinition, CheckboxFieldDefinition, FieldDefinition, NumberFieldDefinition, Records, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { ButtonFieldDefinition, CheckboxFieldDefinition, Records, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { LabeledField } from '@formsey/core/LabeledField';
 import { TableLayout, ToolbarLayout } from '@formsey/core/ResponsiveLayout';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property, TemplateResult } from "lit-element";
+import { customElement, html, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { DUMMY_DATA } from './testdata';
 
 @customElement("formsey-table")
 export class TableField extends FormField<TableFieldDefinition, Records> {
@@ -30,7 +28,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         }
       })
       if (this.value?.data) {
-        for (let i: number = 0; (i + (this.value.pageStart||0)) < this.value.data.length && i < this.definition.pageLength; i++) {
+        for (let i: number = 0; (i + (this.value.pageStart||0)) < this.value.data.length && i < (this.definition.pageLength || this.value.data.length); i++) {
           const value = { ...this.value.data[i + (this.value.pageStart || 0)] }
           const key = this.definition.key ? value[this.definition.key] : i
           if (this.definition.selectable) {
