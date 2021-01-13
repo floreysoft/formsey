@@ -7,7 +7,6 @@ import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { FORM_STYLES } from './styles';
-import { SCROLLBAR_STYLE } from '@floreysoft/dialog';
 
 const themes = new Map([
   ["light", {
