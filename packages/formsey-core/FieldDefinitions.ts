@@ -145,9 +145,10 @@ export interface ToggleFieldDefinition extends InputFieldDefinition {
 export interface TableFieldDefinition extends FormDefinition {
   sortable?: boolean
   selectable?: boolean
+  searchable?: boolean
   pageLength?: number
   key?: string
-  remoteData?: boolean
+  dataSource?: boolean
 }
 
 export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
@@ -168,11 +169,13 @@ export interface SignatureFieldDefinition extends InputFieldDefinition {
 export interface Records {
   sortedBy?: string
   sortDirection?: "ascending" | "descending"
-  hasMore?: boolean
-  pagePrevious?: any
-  pageNext?: any
+  dataSource?: {
+    canNext? : boolean
+    canPrevious? : boolean
+    canFirst? : boolean
+    canLast? : boolean
+  }
   pageStart?: number
-  count?: number
   selections?: number[]
   data: Object[]
 }

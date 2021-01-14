@@ -16,13 +16,8 @@
     "forcePub": "lerna run tsc && yarn umd && lerna publish --force-publish",
     "link": "lerna run link",
     "unlink": "lerna run unlink",
-    "build": "webpack --config webpack.prod.js",
-    "start": "webpack-dev-server --watch --open  --config webpack.dev.js",
     "test": "karma start",
     "test:watch": "karma start --auto-watch=true --single-run=false",
-    "umd": "webpack --config webpack.umd.js",
-    "es": "webpack --config webpack.es.js",
-    "publishLib": "webpack --config webpack.umd.js && node publishLibs.js",
     "stats": "webpack --config webpack.libs.js  --profile --json > lib-stats.json",
     "docs": "npx @appnest/readme generate",
     "rollup": "tsc && lerna run rollup"

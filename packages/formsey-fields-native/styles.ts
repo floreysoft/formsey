@@ -635,7 +635,6 @@ export const FORM_STYLES = css`
   /* Table */
   formsey-table .ffg {
     display: flex;
-    margin: var(--formsey-padding);
     width: inherit;
   }
   formsey-table .tw {
@@ -671,13 +670,18 @@ export const FORM_STYLES = css`
   formsey-table .td.first {
     border-left: none;
   }
-
+  formsey-table .td.last {
+    border-bottom: none;
+  }
   formsey-table .th {
     cursor: pointer;
     max-height: 2em;
   }
   formsey-table .th fs-icon {
     font-size: smaller;
+  }
+  formsey-table .ts>* {
+    flex-grow: 1;
   }
   formsey-table .tnav {
     padding-top: .5em;
