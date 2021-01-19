@@ -7,6 +7,7 @@ export interface FieldDefinition {
   label?: string | TemplateResult
   helpText?: string | TemplateResult
   default?: any
+  requiresParentFields?: boolean
 }
 
 export interface InteractiveFieldDefinition extends FieldDefinition {
@@ -23,7 +24,7 @@ export interface InputFieldDefinition extends InteractiveFieldDefinition {
 
 export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
   text?: string | TemplateResult
-  icon?: string
+  icon?: string | TemplateResult
   buttonType?: "button" | "submit" | "reset" | "menu"
 }
 
@@ -123,10 +124,9 @@ export interface RepeatingFieldDefinition extends FormDefinition {
   max: number
 }
 
-export interface Selection {
+export interface Selection extends FormDefinition {
   label: string
   value: string
-  form: FormDefinition
 }
 
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {

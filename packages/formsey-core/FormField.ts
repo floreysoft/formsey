@@ -46,6 +46,9 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     return this._definition
   }
 
+  @property({ reflect: true})
+  id: string
+
   protected _value: V
   protected _definition: D
 
@@ -101,6 +104,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   }
 
   firstUpdated() {
+    this.id = this.path()
     this.resizeObserver.observe(this.grid)
   }
 
@@ -194,16 +198,16 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
     if (e.detail?.name) {
-      if (!this.definition.name) {
+      if (typeof this.definition.name === "undefined") {
         // If this is an unnamed form, just pass event to parent
         this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
       } else {
-        let name = e.detail.name.substring(this.path().length + 1).split('.')[0]
+        let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
         if (!this.value) {
           this.value = {} as V
         }
         this.value[name] = e.detail.value;
-        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
       }
     }
   }
@@ -289,7 +293,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   }
 }
 getLibrary("native").registerComponent("form", {
-  importPath: "@formsey/fields-core/FormField",
+  importPath: "@formsey/core/FormField",
   factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
     return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   }

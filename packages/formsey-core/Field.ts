@@ -72,7 +72,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   customErrors : InvalidErrors
 
   public path(): string {
-    return this.definition.name ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
+    return typeof this.definition.name !== "undefined" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
   }
 
   public clearCustomValidity() {

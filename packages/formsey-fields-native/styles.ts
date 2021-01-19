@@ -261,6 +261,9 @@ export const FORM_STYLES = css`
   }
 
   /* Form Field */
+  formsey-form-field {
+    flex-grow: 1;
+  }
   formsey-form-field fieldset {
     padding: 5px;
     border: 0;
@@ -463,7 +466,7 @@ export const FORM_STYLES = css`
 
   /* List field */
   formsey-list option {
-    background: var(--formsey-background-color);
+    background: var(--formsey-background);
   }
 
   /* Sourcecode field */
@@ -618,13 +621,12 @@ export const FORM_STYLES = css`
     background-color: var(--formsey-shade);
   }
   formsey-popup-section>.lfw>#form {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     background-color: var(--formsey-background);
     padding: var(--formsey-padding);
+    border: 1px solid var(--fs-border-color);
     border-radius: var(--formsey-border-radius);
-    width: 20em;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   }
 
   /* Text field */
@@ -763,8 +765,10 @@ export const FORM_STYLES = css`
   /* Layouts */
   formsey-layout {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: .5em;
+    column-gap: .5em;
+    row-gap: .25em;
   }
 
   formsey-layout fs-toggles {

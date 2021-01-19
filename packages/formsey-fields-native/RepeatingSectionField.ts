@@ -102,7 +102,8 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     if (e.detail.name.startsWith(this.path())) {
       let path = e.detail.name.substring(this.path().length + 1)
       let index = path.substring(0, path.indexOf("]"))
-      let name = path.substring(path.indexOf("]") + 2).split('.')[0]
+      const tokens = path.split(".")
+      let name = tokens[1]
       if (!this.value[+index]) {
         this.value[+index] = {}
       }

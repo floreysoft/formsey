@@ -1,5 +1,5 @@
 import { ButtonFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Settings, getIcon } from '@formsey/core/Components';
+import { Components, getIcon, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { customElement, html, property, query } from "lit-element";
@@ -14,7 +14,8 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   button: HTMLButtonElement
 
   renderField() {
-    return html`<button class="input" type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}">${getIcon(this.definition.icon)}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
+    const icon = typeof this.definition.icon == "string" ? getIcon(this.definition.icon) : this.definition.icon
+    return html`<button class="input" type="${this.definition.buttonType || "button"}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}">${icon}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
   }
 
   focusField() : boolean {

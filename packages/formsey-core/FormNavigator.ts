@@ -191,7 +191,7 @@ export class FormNavigator extends LitElement {
       let index = values.indexOf(get(this.value, path + ".selection"));
       const selection = (<SelectableSectionFieldDefinition>fieldDefinition).selections[index]
       if (selection) {
-        for (let field of selection.form.fields) {
+        for (let field of selection.fields) {
           this.addFields(fields, nestedDots, field, path + ".value")
         }
       }

@@ -55,7 +55,7 @@ export function set(data: Object, path: string, value: any): any {
 
 @customElement("formsey-form")
 export class Form extends Field<FieldDefinition, any> {
-  value : any
+  value: any
 
   async fetchDefinition(url: string) {
     try {
@@ -85,8 +85,11 @@ export class Form extends Field<FieldDefinition, any> {
   @property()
   method: "GET" | "POST"
 
+  @property({ type: Boolean })
+  anonymous: boolean
+
   @query(':first-child')
-  form: FormField<FormDefinition,Object>
+  form: FormField<FormDefinition, Object>
 
   @query('form')
   nativeForm: HTMLFormElement
@@ -110,7 +113,7 @@ export class Form extends Field<FieldDefinition, any> {
       this.definition['method'] = this.method
       this.definition['target'] = this.target
     }
-    if ( !this.errors ) {
+    if (!this.errors) {
       this.errors = new InvalidErrors()
     }
     return this.components?.["styledForm"]?.factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))
@@ -188,27 +191,23 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    if (this.definition.type == "form") {
-      let name = e.detail.name.split('.')[0].split('[')[0]
-      if (!this.value) {
-        this.value = {};
-      }
-      this.value[name] = e.detail.value
+    if (!this.anonymous && e.detail.name) {
+      const name = e.detail.name.split(".")[0].split("[")[0]
+      this.value[name] = e.detail.value;
     } else {
       this.value = e.detail.value
     }
-    const key = e.detail.name ? e.detail.name : this.definition.name
     if (e.type == "inputChange" || e.type == "input") {
-      this.dispatchEvent(new ValueChangedEvent("input", key, this.value, true));
+      this.dispatchEvent(new ValueChangedEvent("input", e.detail.name, this.value, true));
     }
     if (e.type == "inputChange" || e.type == "change") {
-      this.dispatchEvent(new ValueChangedEvent("change", key, this.value, true));
+      this.dispatchEvent(new ValueChangedEvent("change", e.detail.name, this.value, true));
     }
   }
 
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()
-    if ( this._invalidTimer ) {
+    if (this._invalidTimer) {
       clearTimeout(this._invalidTimer)
     }
     this._invalidTimer = setTimeout(() => {

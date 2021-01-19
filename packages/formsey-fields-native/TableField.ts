@@ -19,23 +19,34 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     const searchScrollable: TemplateResult[] = [];
     const formatter = getFormatter(this.layout?.formatter)
     const fixedColumns = (<TableLayout>this.layout)?.fixedColumns || 0
-    if (this.definition.selectable) {
-      const templates = fixedColumns > 0 ? fixed : scrollable
-      templates.push(html`<div class="td">${createField(this.components, this.settings, { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, undefined, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
-      if (this.definition.searchable) {
-        const search = fixedColumns > 0 ? searchFixed : searchScrollable
-        search.push(html`<div class="td ts"></div>`)
-      }
-    }
     if (this.layout) {
-      (<TableLayout>this.layout).columns.forEach((column, index) => {
-        const field = this.definition.fields.filter(field => field.name == column.field)[0]
-        if (field) {
-          const templates = index < fixedColumns ? fixed : scrollable
-          templates.push(html`<div class="td th" title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value.sortedBy === field.name ? this.value.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
-          if (this.definition.searchable) {
-            const search = index < fixedColumns ? searchFixed : searchScrollable
-            search.push(html`<div class="td ts">${createField(this.components, this.settings, { type: "string", name: field.name } as StringFieldDefinition, undefined, this.path() + ".search", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
+      const hasSearchableColumns = (<TableLayout>this.layout).columns?.filter(column => column.searchable).length > 0
+      if (this.definition.selectable) {
+        const templates = fixedColumns > 0 ? fixed : scrollable
+        templates.push(html`<div class="td">${createField(this.components, this.settings, { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, undefined, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
+        if (hasSearchableColumns) {
+          const search = fixedColumns > 0 ? searchFixed : searchScrollable
+          search.push(html`<div class="td ts"></div>`)
+        }
+      }
+      (<TableLayout>this.layout).columns?.forEach((column, index) => {
+        if (column.visible) {
+          const field = this.definition.fields.filter(field => field.name == column.field)[0]
+          if (field) {
+            const templates = index < fixedColumns ? fixed : scrollable
+            if (column.sortable) {
+              templates.push(html`<div class="td th" title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value.sortedBy === field.name ? this.value.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
+            } else {
+              templates.push(html`<div class="td th" title=${field.helpText}>${field.label}</div>`)
+            }
+            if (hasSearchableColumns) {
+              const search = index < fixedColumns ? searchFixed : searchScrollable
+              if (column.searchable) {
+                search.push(html`<div class="td ts">${createField(this.components, this.settings, { type: "string", name: field.name } as StringFieldDefinition, undefined, this.path() + ".search", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
+              } else {
+                search.push(html`<div class="td ts"></div>`)
+              }
+            }
           }
         }
       })
@@ -56,16 +67,18 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
             templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField(this.components, this.settings, { type: "checkbox", name: "__s" }, this.definition.selectable && this.value.selections?.includes(key), this.path() + ".data[" + key + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
           }
           (<TableLayout>this.layout).columns.forEach((column, index) => {
-            const templates = index < fixedColumns ? fixed : scrollable
-            const field = this.definition.fields.filter(field => field.name == column.field)[0]
-            if (field) {
-              const classes = {
-                td: true,
-                cell: true,
-                first: !this.definition.selectable && index == 0,
-                last: i == (this.definition.pageLength || this.value.data.length) - 1
+            if (column.visible) {
+              const templates = index < fixedColumns ? fixed : scrollable
+              const field = this.definition.fields.filter(field => field.name == column.field)[0]
+              if (field) {
+                const classes = {
+                  td: true,
+                  cell: true,
+                  first: !this.definition.selectable && index == 0,
+                  last: i == (this.definition.pageLength || this.value.data.length) - 1
+                }
+                templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField(this.components, this.settings, { ...field, label: undefined, helpText: undefined }, value[field.name], this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
               }
-              templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField(this.components, this.settings, { ...field, label: undefined, helpText: undefined }, value[field.name], this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
             }
           })
         }
@@ -204,7 +217,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       this.requestUpdate()
     } else if (e.detail.name.startsWith(this.path() + ".search")) {
       const tokens = e.detail.name.split(".")
-      const field = tokens[tokens.length-1]
+      const field = tokens[tokens.length - 1]
       this.value['search'] = { ...this.value['search'] }
       this.value['search'][field] = e.detail.value
     }

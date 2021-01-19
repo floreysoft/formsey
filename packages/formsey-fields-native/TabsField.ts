@@ -1,7 +1,7 @@
 import '@floreysoft/tabs';
 import { createField, Field, LabeledField } from '@formsey/core';
 import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldDefinition, FormDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -24,7 +24,7 @@ export class TabsField extends LabeledField<TabsFieldDefinition, TabsValue> {
   renderField() {
     const tabs = []
     for (let i = 0; i < this.definition.selections.length; i++) {
-      tabs.push(html`<fs-tab id=${this.definition.selections[i].value} label=${this.definition.selections[i].label}>${createField(this.components, this.settings, this.definition.selections[i].form, this.value?.[i], this.path(), this.errors, (event: ValueChangedEvent<string>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</fs-tab>`)
+      tabs.push(html`<fs-tab id=${this.definition.selections[i].value} label=${this.definition.selections[i].label}>${createField(this.components, this.settings, { type: "form", fields: this.definition.selections[i].fields } as FormDefinition, this.value?.[i], this.path(), this.errors, (event: ValueChangedEvent<string>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</fs-tab>`)
     }
     return html`<fs-tabs>${tabs}</fs-tabs>`
   }

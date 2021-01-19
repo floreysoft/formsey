@@ -14,10 +14,11 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   button: HTMLButtonElement
 
   renderField() {
-  return html`<vaadin-button type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}"><div slot="prefix">${getIcon(this.definition.icon)}</div>${this.definition.text}</vaadin-button>`;
+    const icon = typeof this.definition.icon == "string" ? getIcon(this.definition.icon) : this.definition.icon
+    return html`<vaadin-button type="${ifDefined(this.definition.buttonType)}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}"><div slot="prefix">${icon}</div>${this.definition.text}</vaadin-button>`;
   }
 
-  focusField() : boolean {
+  focusField(): boolean {
     this.button.focus()
     return true
   }

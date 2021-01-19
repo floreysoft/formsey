@@ -49,7 +49,6 @@ export interface Editor extends FieldDefinition {
   interaction?: string
   cell? : boolean
   summary?: (definition: FieldDefinition) => TemplateResult
-  update?: (editor: Editor, field: FieldDefinition) => void
 }
 
 export interface LayoutEditor extends Editor {

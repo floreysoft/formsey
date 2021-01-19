@@ -109,7 +109,7 @@ export class StyledForm extends Form {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField(this.components, this.settings, this.definition, this.value, undefined, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
+      field = createField(this.components, this.settings, this.definition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
     return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme']?.['selection'])} .themes=${themes}><div class="themed">${form}</div></fs-theme>` : form
@@ -128,6 +128,10 @@ export class StyledForm extends Form {
         }
       }
     }
+  }
+
+  public path(): string {
+    return this.parentPath
   }
 
   protected createRenderRoot(): Element | ShadowRoot {

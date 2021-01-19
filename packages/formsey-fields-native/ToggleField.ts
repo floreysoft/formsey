@@ -15,7 +15,8 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
   renderField() {
     const buttons = []
     for (let i = 0; i < this.definition.buttons?.length; i++) {
-      buttons.push(html`<fs-toggle id=${this.definition.buttons[i].name} ?selected=${this.definition.buttons[i].name == this.value}>${getIcon(this.definition.buttons[i].icon)}</fs-toggle>`)
+      const icon = typeof this.definition.buttons[i].icon == "string" ? getIcon(this.definition.buttons[i].icon as string) : this.definition.buttons[i].icon
+      buttons.push(html`<fs-toggle id=${this.definition.buttons[i].name} ?selected=${this.definition.buttons[i].name == this.value}>${icon}</fs-toggle>`)
     }
     return html`<fs-toggles @select=${this.select}>${buttons}</fs-toggles>`
   }

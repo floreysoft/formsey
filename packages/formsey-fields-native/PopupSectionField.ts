@@ -6,6 +6,7 @@ import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { styleMap } from 'lit-html/directives/style-map';
 
 @customElement("formsey-popup-section")
 export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition, Object> {
@@ -22,8 +23,10 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   glass: HTMLElement
 
   private untouched: boolean = true
-  private right: number
-  private top: number
+  private left: string | undefined
+  private right: string | undefined
+  private top: string | undefined
+  private bottom: string | undefined
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -38,10 +41,15 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   }
 
   renderField() {
-    const position = `right:${this.right}px;top:${this.top}px`
+    const position = {
+      left: this.left,
+      right: this.right,
+      top: this.top,
+      bottom: this.bottom
+    }
     return html`${createField(this.components, this.settings, { type: "button", buttonType: "button", icon: this.definition.icon, buttonTextz: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, undefined, this.path(), this.errors, undefined, (event: InvalidEvent) => this.invalid(event), this.elementId)}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
-    <div id="form" style=${position}>${createField(this.components, this.settings, { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`
+    <div id="form" style=${styleMap(position)}>${createField(this.components, this.settings, { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`
   }
 
   firstUpdated() {
@@ -51,13 +59,34 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
       if (e.detail['name'] == this.path()) {
         this.visible = true
         // Do some clever stuff
-        this.top = trigger.offsetHeight
-        this.right = 0
+        const cx = window.innerWidth / 2
+        const cy = window.innerHeight / 2
+        const rect = trigger.getBoundingClientRect()
+        if ((rect.left + rect.width / 2 <= cx)) {
+          // Show on the right
+          this.left = rect.left + "px"
+          this.right = undefined
+        } else {
+          // Show on the left
+          this.left = undefined
+          this.right = window.innerWidth - rect.right + "px"
+        }
+        if ((rect.top + rect.height / 2 <= cy)) {
+          // Show below
+          this.top = rect.top + rect.height+ "px"
+          this.bottom = undefined
+        } else {
+          // Show above
+          this.top = undefined
+          this.bottom = window.innerHeight - rect.top + "px"
+        }
       }
     })
   }
 
   close(e: Event) {
+    e.preventDefault()
+    e.stopPropagation()
     this.visible = false;
   }
 

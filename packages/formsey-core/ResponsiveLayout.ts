@@ -52,7 +52,11 @@ export interface TableLayout extends Layout {
   rowHeight?: "s" | "m" | "l" | "xl"
   fixedColumns?: number
   columns: {
-    width: number
-    field?: string
+    field: string
+    visible?: boolean
+    searchable?: boolean
+    sortable?: boolean
+    minWidth?: number
+    maxWidth?: number
   }[]
 }
