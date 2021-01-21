@@ -37,26 +37,43 @@ export interface ToolbarLayout extends Layout {
 }
 
 export interface ColumnsLayout extends Layout {
-  formatter: "columns" | "areas" | "table"
-  columns: number[]
+  formatter: "columns"
+  columns: {
+    width: number
+    horizontal?: string
+  }[]
 }
 
-export interface AreasLayout extends ColumnsLayout {
+export interface AreasLayout extends Layout {
   formatter: "areas"
+  columns: number[]
   areas: string[]
+  alignments: {
+    area: string,
+    horizontal: string,
+    vertical: string
+  }[]
 }
 
 export interface TableLayout extends Layout {
   formatter: "table"
   vertical?: "top" | "middle" | "bottom"
   rowHeight?: "s" | "m" | "l" | "xl"
+  fill?: "grow" | "shrink"
   fixedColumns?: number
   columns: {
     field: string
     visible?: boolean
     searchable?: boolean
     sortable?: boolean
-    minWidth?: number
-    maxWidth?: number
+    width?: {
+      selection: "auto" | "minmax"
+      value?: {
+        minWidth?: number
+        minWidthUnit?: "em" | "px"
+        maxWidth?: number
+        maxWidthUnit?: "em" | "px"
+      }
+    }
   }[]
 }

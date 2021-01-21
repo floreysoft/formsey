@@ -619,10 +619,11 @@ export const FORM_STYLES = css`
     left: 0;
     right: 0;
     background-color: var(--formsey-shade);
+    z-index: 2;
   }
   formsey-popup-section>.lfw>#form {
     position: fixed;
-    z-index: 1;
+    z-index: 3;
     background-color: var(--formsey-background);
     padding: var(--formsey-padding);
     border: 1px solid var(--fs-border-color);
@@ -630,8 +631,12 @@ export const FORM_STYLES = css`
   }
 
   /* Text field */
+  formsey-text .lfw {
+    height: 100%;
+  }
   formsey-text .input {
-    height: auto;
+    min-height: 3em;
+    flex-grow: 1;
   }
 
   /* Table */
@@ -783,7 +788,8 @@ export const FORM_STYLES = css`
   }
 
   formsey-toggle fs-toggle {
-    width: 2em;
+    width: 100%;
+    min-width: 2em;
   }
 
   /* Markdown field */

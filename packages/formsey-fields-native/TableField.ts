@@ -131,7 +131,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     }
     return html`<section style="${ifDefined(this.definition?.layout?.style)}">
       <div class="ffg">
-        <div class="tw">
+        <div class="tw" style="${ifDefined((<TableLayout>this.layout)?.fill == "grow" ? "flex-grow:1" : undefined)}">
           <div class="b">
             ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
             <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>

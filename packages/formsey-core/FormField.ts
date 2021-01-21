@@ -78,7 +78,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     let hidden: TemplateResult[] = []
     const formatter = getFormatter(this.layout?.formatter)
     if (this.definition.fields) {
-      for (let field of this.definition.fields) {
+      for (const [index, field] of this.definition.fields.entries()) {
         let value: any
         if (field.hasOwnProperty('fields') && !field.name) {
           // Anonymous nested form, so let's copy all form fields
@@ -91,7 +91,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
-          templates.push(html`<div class='fff' style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff' style="${ifDefined(formatter?.fieldStyle(this.layout, field, index))}">${fieldTemplate}</div>`)
         }
       }
     }

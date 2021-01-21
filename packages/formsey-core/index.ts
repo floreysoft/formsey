@@ -31,22 +31,18 @@ registerIcon("Start", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M8 28v-24h
 registerIcon("Previous", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M18 5v10l10-10v22l-10-10v10l-11-11z"></path></svg></fs-icon>`)
 registerIcon("Next", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M16 27v-10l-10 10v-22l10 10v-10l11 11z"></path></svg></fs-icon>`)
 
-registerIcon("Row short", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5zm0 5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1 0-1zm0 3h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1zm0 3h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1z"></path></svg></fs-icon>`)
-registerIcon("Row medium", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" fill="currentColor" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v5.02a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5V2.5a.5.5 0 0 1 .5-.5zm0 8h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1zm0 3h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1z"></path></svg></fs-icon>`)
-registerIcon("Row large", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" fill="currentColor" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v7.979a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5V2.5a.5.5 0 0 1 .5-.5zm0 11h8a.5.5 0 1 1 0 1h-8a.5.5 0 1 1 0-1z"></path></svg></fs-icon>`)
-registerIcon("Row extra large", html`<fs-icon><svg viewBox="0 0 16 16"><path fill-rule="evenodd" fill="currentColor" d="M12.002 11.511v-7h-.626c-.3 0-.479-.37-.312-.645l1.422-1.645a.7.7 0 0 1 1.059 0l1.422 1.645c.166.276-.013.646-.312.646H14v7h.655c.3 0 .478.37.312.645l-1.417 1.677a.7.7 0 0 1-1.07 0l-1.416-1.677c-.167-.276.012-.646.312-.646h.626zM1.5 2h8a.5.5 0 0 1 .5.5v11.023a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5V2.5a.5.5 0 0 1 .5-.5z"></path></svg></fs-icon>`)
-
 registerFormatter("columns", {
   containerStyle(layout: ColumnsLayout): string {
-    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")}`
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")}`
   },
-  fieldStyle(layout: ColumnsLayout, field: FieldDefinition): string {
-    return `width:100%`
+  fieldStyle(layout: ColumnsLayout, field: FieldDefinition, index: number): string {
+    const horizontal = layout.columns[index % layout.columns.length]?.horizontal
+    return `display:flex;flex-direction:column;align-items:${horizontal == "left" ? "flex-start" : horizontal == "right" ? "flex-end" : horizontal == "center" ? "center" : "stretch"}`
   }
 })
 registerFormatter("table", {
   containerStyle(layout: TableLayout, definition: TableFieldDefinition, fixed: boolean, selectable: boolean): string {
-    return `display:grid;gap:0;grid-template-rows:2em;grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2.5em"});grid-template-columns:${selectable ? "min-content " : ""}${layout.columns.filter((column, index) => column.visible && (!layout.fixedColumns || index < layout.fixedColumns && fixed || index >= layout.fixedColumns && !fixed)).map(column => column.minWidth ? `${column.minWidth}px` : "auto").join(" ")}`
+    return `display:grid;${!fixed && layout.fill == "grow" ? "flex-grow:1;" : ""}gap:0;grid-template-rows:2em;grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2.5em"});grid-template-columns:${selectable ? "min-content " : ""}${layout.columns.filter((column, index) => column.visible && (!layout.fixedColumns || index < layout.fixedColumns && fixed || index >= layout.fixedColumns && !fixed)).map(column => column.width?.selection == "minmax" ? `minmax(${column.width?.value?.minWidth && column.width?.value?.minWidthUnit ? column.width.value.minWidth + column.width.value.minWidthUnit : "auto"},${column.width?.value?.maxWidth && column.width?.value?.maxWidthUnit ? column.width.value.maxWidth + column.width.value.maxWidthUnit : "auto"})` : "auto").join(" ")}`
   },
   fieldStyle(layout: TableLayout, field?: FieldDefinition): string {
     return `align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"}`
@@ -57,7 +53,10 @@ registerFormatter("areas", {
     return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_"+column)).join(" ")}'`).join(" ")}`
   },
   fieldStyle(layout: AreasLayout, field: FieldDefinition): string {
-    return `grid-area:_${field.name}`
+    const alignment = layout.alignments?.filter(alignment => alignment.area == field.name)?.[0]
+    const horizontal = alignment?.horizontal
+    const vertical = alignment?.vertical
+    return `grid-area:_${field.name};align-self:${vertical == "top" ? "start" : vertical == "bottom" ? "end" : vertical == "middle" ? "center" : "stretch"};justify-self:${horizontal == "left" ? "start" : horizontal == "right" ? "end" : horizontal == "center" ? "center" : "stretch"}`
   }
 })
 registerFormatter("toolbar", {
