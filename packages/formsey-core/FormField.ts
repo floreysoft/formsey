@@ -91,7 +91,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
-          templates.push(html`<div class='fff' style="${ifDefined(formatter?.fieldStyle(this.layout, field, index))}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff' style="${ifDefined(formatter?.fieldStyle(this.layout, field, this.definition.fields, index))}">${fieldTemplate}</div>`)
         }
       }
     }

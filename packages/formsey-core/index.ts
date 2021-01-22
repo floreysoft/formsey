@@ -1,5 +1,5 @@
 import { html } from 'lit-element'
-import { registerFormatter, registerIcon } from './Components'
+import { area, registerFormatter, registerIcon } from './Components'
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions'
 import { AreasLayout, ColumnsLayout, TableLayout, ToolbarLayout } from './ResponsiveLayout'
 
@@ -35,7 +35,7 @@ registerFormatter("columns", {
   containerStyle(layout: ColumnsLayout): string {
     return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")}`
   },
-  fieldStyle(layout: ColumnsLayout, field: FieldDefinition, index: number): string {
+  fieldStyle(layout: ColumnsLayout, field: FieldDefinition, fields: FieldDefinition[], index: number): string {
     const horizontal = layout.columns[index % layout.columns.length]?.horizontal
     return `display:flex;flex-direction:column;align-items:${horizontal == "left" ? "flex-start" : horizontal == "right" ? "flex-end" : horizontal == "center" ? "center" : "stretch"}`
   }
@@ -52,11 +52,12 @@ registerFormatter("areas", {
   containerStyle(layout: AreasLayout): string {
     return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_"+column)).join(" ")}'`).join(" ")}`
   },
-  fieldStyle(layout: AreasLayout, field: FieldDefinition): string {
-    const alignment = layout.alignments?.filter(alignment => alignment.area == field.name)?.[0]
+  fieldStyle(layout: AreasLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
+    const name = area(field, fields)
+    const alignment = layout.alignments?.filter(alignment => alignment.area == name)?.[0]
     const horizontal = alignment?.horizontal
     const vertical = alignment?.vertical
-    return `grid-area:_${field.name};align-self:${vertical == "top" ? "start" : vertical == "bottom" ? "end" : vertical == "middle" ? "center" : "stretch"};justify-self:${horizontal == "left" ? "start" : horizontal == "right" ? "end" : horizontal == "center" ? "center" : "stretch"}`
+    return `grid-area:_${name};align-self:${vertical == "top" ? "start" : vertical == "bottom" ? "end" : vertical == "middle" ? "center" : "stretch"};justify-self:${horizontal == "left" ? "start" : horizontal == "right" ? "end" : horizontal == "center" ? "center" : "stretch"}`
   }
 })
 registerFormatter("toolbar", {
