@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import { area, registerFormatter, registerIcon } from './Components'
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions'
-import { AreasLayout, ColumnsLayout, TableLayout, ToolbarLayout } from './ResponsiveLayout'
+import { AreasLayout, BoxLayout, ColumnsLayout, TableLayout, ToolbarLayout } from './Layouts'
 
 export * from './Components'
 export * from './Field'
@@ -30,6 +30,17 @@ registerIcon("Sort descending", html`<fs-icon><svg viewBox="0 0 32 32"><path d="
 registerIcon("Start", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M8 28v-24h4v11l10-10v22l-10-10v11z"></path></svg></fs-icon>`)
 registerIcon("Previous", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M18 5v10l10-10v22l-10-10v10l-11-11z"></path></svg></fs-icon>`)
 registerIcon("Next", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M16 27v-10l-10 10v-22l10 10v-10l11 11z"></path></svg></fs-icon>`)
+
+registerFormatter("box", {
+  containerStyle(layout: BoxLayout): string {
+    const spacing = layout.spacing == "narrow" ? "var(--formsey-space-narrow)" : layout.spacing == "wide" ? "var(--formsey-space-wide)" : "0"
+    const shadow = layout.elevation == 1 ? "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)" : layout.elevation == 2 ? "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)" : layout.elevation == 3 ? "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)" : "none"
+    return `margin:${spacing};padding:${spacing};box-shadow:${shadow};background-color:${layout.background};border:${layout.border == "soft" || layout.border == "sharp" ? "1px solid var(--formsey-border)" : "none"};border-radius:${layout.border == "soft" ? "var(--formsey-border-radius)" : "0"}`
+  },
+  fieldStyle(layout: BoxLayout): string {
+    return undefined
+  }
+})
 
 registerFormatter("columns", {
   containerStyle(layout: ColumnsLayout): string {

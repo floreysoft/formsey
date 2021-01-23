@@ -5,7 +5,7 @@ import { createField, Field } from './Field';
 import { FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
-import { Breakpoints, Layout } from "./ResponsiveLayout";
+import { Breakpoints, Layout } from "./Layouts";
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
@@ -76,7 +76,8 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   renderField() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
-    const formatter = getFormatter(this.layout?.formatter)
+    const fixedFormatter = getFormatter(this.definition.layout?.static?.formatter)
+    const responsiveFormatter = getFormatter(this.layout?.formatter)
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         let value: any
@@ -91,11 +92,11 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
-          templates.push(html`<div class='fff' style="${ifDefined(formatter?.fieldStyle(this.layout, field, this.definition.fields, index))}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff' style="${ifDefined(responsiveFormatter?.fieldStyle(this.layout, field, this.definition.fields, index))}">${fieldTemplate}</div>`)
         }
       }
     }
-    return html`<section style="${ifDefined(this.definition?.layout?.style)}"><div class="ffg" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition))}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
+    return html`<section style="${ifDefined(fixedFormatter?.containerStyle(this.definition.layout?.static))}"><div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}</section>`
   }
 
   gridSizeChanged(e: CustomEvent) {
@@ -187,7 +188,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   protected updateLayout() {
     let layout
     for (let size of SUPPORTED_BREAKPOINTS) {
-      layout = this.definition?.layout?.sizes?.[size] || layout
+      layout = this.definition?.layout?.responsive?.[size] || layout
       if (this.size == size) {
         this.layout = layout || this.layout
         break;
@@ -261,7 +262,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 
   protected applyNestedFields(value: Object, field: FormDefinition) {
     for (let nestedField of field.fields) {
-      if (nestedField) {
+      if (nestedField && this.value) {
         value[nestedField.name] = this.value[nestedField.name]
         if (nestedField.hasOwnProperty('fields') && !nestedField.name) {
           this.applyNestedFields(value, <FormDefinition>nestedField)

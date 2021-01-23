@@ -51,7 +51,7 @@ export const FORM_STYLES = css`
   }
 
   input[type="checkbox"], input[type="radio"] {
-    margin: var(--formsey-padding, .2em .3em);
+    margin: var(--formsey-space-narrow);
     font: inherit;
     color: inherit;
   }
@@ -82,7 +82,7 @@ export const FORM_STYLES = css`
     font: inherit;
     color: inherit;
     border-radius: var(--formsey-border-radius, 3px);
-    padding: var(--formsey-padding, .2em .3em);
+    padding: var(--formsey-space-narrow);
     background: var(--formsey-shade, #80808040);
     border: 1px solid var(--formsey-border, transparent);
     transition: border 0.12s ease-out;
@@ -273,7 +273,7 @@ export const FORM_STYLES = css`
   .ffg {
     width: 100%;
     box-sizing: border-box;
-    gap: var(--formsey-padding);
+    gap: var(--formsey-space-narrow);
   }
 
   /* .Color field */
@@ -320,7 +320,7 @@ export const FORM_STYLES = css`
     position: relative;
     font: var(--formsey-label-font, inherit);
     color: var(--formsey-label-color, inherit);
-    padding: var(--formsey-padding, .2em .3em);
+    padding: var(--formsey-space-narrow);
     transition: all 0.12s ease-out;
     opacity: 0.8;
   }
@@ -333,14 +333,14 @@ export const FORM_STYLES = css`
   .lfi {
     background: var(--formsey-error-background, #FF000022);
     border-radius: var(--formsey-border-radius, 0.3em);
-    padding: var(--formsey-padding, 0 .3em);
+    padding: var(--formsey-space-narrow);
     padding-top: 0;
     padding-bottom: 0;
   }
 
   .lfr {
     color: var(--formsey-required-color, inherit);
-    margin: var(--formsey-padding, .2em .3em);
+    margin: var(--formsey-space-narrow);
     font: var(--formsey-required-font, inherit);
     vertical-align: top;
   }
@@ -348,7 +348,7 @@ export const FORM_STYLES = css`
   .lfet, .lfht {
     font: var(--formsey-help-font, inherit);
     font-size: smaller;
-    padding: var(--formsey-padding, .2em .3em);
+    padding: var(--formsey-space-narrow);
   }
 
   .lfet {
@@ -361,7 +361,7 @@ export const FORM_STYLES = css`
 
   .lfht {
     color: var(--formsey-help-text-color, inherit);
-    padding: var(--formsey-help-text-padding, var(--formsey-padding, .2em .3em));
+    padding: var(--formsey-help-text-padding, var(--formsey-space-narrow));
     opacity: 0.8;
     transition: opacity 0.12s ease-out;
   }
@@ -375,7 +375,6 @@ export const FORM_STYLES = css`
     opacity: 1;
     font-size: 1.25em;
     line-height: 1.25em;
-    padding: 0;
   }
   formsey-title .lfht {
     font-size: 1.1em;
@@ -625,7 +624,7 @@ export const FORM_STYLES = css`
     position: fixed;
     z-index: 3;
     background-color: var(--formsey-background);
-    padding: var(--formsey-padding);
+    padding: var(--formsey-space-narrow);
     border: 1px solid var(--fs-border-color);
     border-radius: var(--formsey-border-radius);
   }
@@ -670,7 +669,7 @@ export const FORM_STYLES = css`
     flex-direction: row;
     column-gap: .25em;
     align-items: center;
-    padding: var(--formsey-padding);
+    padding: var(--formsey-space-narrow);
     border-bottom: 1px solid var(--formsey-shade);
     border-left: 1px solid var(--formsey-shade);
   }
@@ -772,14 +771,13 @@ export const FORM_STYLES = css`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    column-gap: .5em;
-    row-gap: .25em;
+    column-gap: var(--formsey-space-wide);
+    row-gap: var(--formsey-space-narrow);
   }
 
-  formsey-layout fs-toggles {
+  formsey-layout fs-toggles, formsey-layout formsey-form {
     --fs-widget-background-color: initial;
-    font-size: larger;
-    margin: .25em;
+    margin: var(--formsey-space-narrow);
     padding:0;
   }
 
@@ -797,22 +795,22 @@ export const FORM_STYLES = css`
     background: var(--formsey-shade, #80808040);
     border-radius: var(--formsey-border-radius);
     border: 1px solid var(--formsey-border, transparent);
-    padding: .5em;
+    padding: var(--formsey-space-wide);
     display:block;
     overflow-x:auto;
     white-space: pre-wrap;
   }
   formsey-markdown .content {
-    padding: var(--formsey-padding, .2em .3em);
+    padding: var(--formsey-space-narrow);
   }
   formsey-markdown pre {
-    margin: .5em 0;
+    margin: var(--formsey-space-wide) 0;
   }
   formsey-markdown p, formsey-markdown ul {
-    margin: .25em 0;
+    margin: var(--formsey-space-narrow) 0;
   }
   formsey-markdown h1, formsey-markdown h2, formsey-markdown h3, formsey-markdown h4 {
-    margin: .5em 0 .25em 0;
+    margin: var(--formsey-space-wide) 0 var(--formsey-space-narrow) 0;
     font-weight: bolder;
   }
   formsey-markdown h3 {

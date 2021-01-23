@@ -4,7 +4,7 @@ import { FieldClickEvent } from '@formsey/core/FieldClickEvent';
 import { ButtonFieldDefinition, CheckboxFieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { TableLayout, ToolbarLayout } from '@formsey/core/ResponsiveLayout';
+import { TableLayout, ToolbarLayout } from '@formsey/core/Layouts';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, TemplateResult } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
@@ -129,7 +129,8 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       }
       pager = html`<formsey-form .components=${this.components} .settings=${this.settings} .definition=${pagerDefinition} @click=${this.page}></formsey-form>`
     }
-    return html`<section style="${ifDefined(this.definition?.layout?.style)}">
+    const fixedFormatter = getFormatter(this.definition.layout?.static?.formatter)
+    return html`<section style="${ifDefined(fixedFormatter?.containerStyle(this.definition.layout?.static))}">
       <div class="ffg">
         <div class="tw" style="${ifDefined((<TableLayout>this.layout)?.fill == "grow" ? "flex-grow:1" : undefined)}">
           <div class="b">

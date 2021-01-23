@@ -1,7 +1,7 @@
 export interface ResponsiveLayout {
-  style?: string
+  static?: Layout
   breakpoints?: Breakpoints
-  sizes?: {
+  responsive?: {
     xxs?: Layout
     xs?: Layout
     s?: Layout
@@ -24,6 +24,14 @@ export interface Breakpoints {
 
 export interface Layout {
   formatter: string
+}
+
+export interface BoxLayout extends Layout {
+  formatter: "box"
+  spacing: "none" | "narrow" | "wide"
+  background: string,
+  elevation: number
+  border: "sharp" | "soft"
 }
 
 export interface ToolbarLayout extends Layout {

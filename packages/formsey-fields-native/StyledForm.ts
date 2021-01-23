@@ -19,7 +19,8 @@ const themes = new Map([
         --formsey-background: #ffffff;
         --formsey-accent-color: #007dd2;
         --formsey-accent-contrast: #ffffff;
-        --formsey-padding: .2em .3em;
+        --formsey-space-narrow: .25em;
+        --formsey-space-wide: .5em;
         --formsey-border-radius: 3px;
         --formsey-border: transparent;
         --formsey-border-focus: #007fd4;
@@ -58,7 +59,8 @@ const themes = new Map([
         --formsey-background: #000000;
         --formsey-accent-color: #007fd4;
         --formsey-accent-contrast: #ffffff;
-        --formsey-padding: .2em .3em;
+        --formsey-space-narrow: .25em;
+        --formsey-space-wide: .5em;
         --formsey-border-radius: 3px;
         --formsey-border: transparent;
         --formsey-border-focus: #007fd4;

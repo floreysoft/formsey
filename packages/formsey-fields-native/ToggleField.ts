@@ -23,7 +23,7 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
 
   private select(e: CustomEvent) {
     this.value = e.detail
-    this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
   }
 }
 

@@ -178,10 +178,10 @@ export class FormNavigator extends LitElement {
       const checked = get(this.value, path)
       if (checked) {
         this.addField(fields, nestedDots, fieldDefinition, path)
-        for (let field of ((<OptionalSectionFieldDefinition>fieldDefinition).form).fields) {
+        for (let field of (<OptionalSectionFieldDefinition>fieldDefinition).fields) {
           this.addFields(fields, nestedDots, field, path)
         }
-        dots.push(html`<div class="fieldset">${nestedDots}</div>`)
+      dots.push(html`<div class="fieldset">${nestedDots}</div>`)
       } else {
         this.addField(fields, dots, fieldDefinition, path)
       }

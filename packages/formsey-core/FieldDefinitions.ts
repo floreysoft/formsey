@@ -1,5 +1,5 @@
 import { TemplateResult } from "lit-element";
-import { ResponsiveLayout } from "./ResponsiveLayout";
+import { ResponsiveLayout } from "./Layouts";
 
 export interface FieldDefinition {
   name?: string
@@ -154,11 +154,11 @@ export interface TableFieldDefinition extends FormDefinition {
 export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
   control: "checkbox" | "switch"
   controlLabel?: string
-  form: FormDefinition
+  fields: FieldDefinition[]
 }
 
 export interface PopupSectionFieldDefinition extends FormDefinition, InteractiveFieldDefinition {
-  icon?: string
+  icon?: string | TemplateResult
   text?: string
 }
 export interface SignatureFieldDefinition extends InputFieldDefinition {
