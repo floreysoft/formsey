@@ -46,6 +46,15 @@ const themes = new Map([
         --formsey-marker-stack: #a4e565;
         --formsey-marker-selection: #3a3d4111;
         --formsey-marker-selected-word: #3a3d4144;
+
+        --formsey-elevation-1-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        --formsey-elevation-2-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        --formsey-elevation-3-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+        --formsey-elevation-0-opacity: 0%;
+        --formsey-elevation-1-opacity: 5%;
+        --formsey-elevation-2-opacity: 5%;
+        --formsey-elevation-3-opacity: 5%;
       }
     </style>`
   }],
@@ -86,6 +95,11 @@ const themes = new Map([
         --formsey-marker-stack: #a4e565;
         --formsey-marker-selection: #3a3d4166;
         --formsey-marker-selected-word: #3a3d41;
+
+        --formsey-elevation-0-opacity: 0;
+        --formsey-elevation-1-opacity: 10%;
+        --formsey-elevation-2-opacity: 14%;
+        --formsey-elevation-3-opacity: 18%;
       }
     </style>`
   }],

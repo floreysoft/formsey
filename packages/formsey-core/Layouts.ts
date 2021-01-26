@@ -29,9 +29,9 @@ export interface Layout {
 export interface BoxLayout extends Layout {
   formatter: "box"
   spacing: "none" | "narrow" | "wide"
-  background: string,
   elevation: number
   border: "sharp" | "soft"
+  color: string
 }
 
 export interface ToolbarLayout extends Layout {

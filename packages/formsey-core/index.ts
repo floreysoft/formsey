@@ -34,11 +34,13 @@ registerIcon("Next", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M16 27v-10l
 registerFormatter("box", {
   containerStyle(layout: BoxLayout): string {
     const spacing = layout.spacing == "narrow" ? "var(--formsey-space-narrow)" : layout.spacing == "wide" ? "var(--formsey-space-wide)" : "0"
-    const shadow = layout.elevation == 1 ? "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)" : layout.elevation == 2 ? "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)" : layout.elevation == 3 ? "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)" : "none"
-    return `margin:${spacing};padding:${spacing};box-shadow:${shadow};background-color:${layout.background};border:${layout.border == "soft" || layout.border == "sharp" ? "1px solid var(--formsey-border)" : "none"};border-radius:${layout.border == "soft" ? "var(--formsey-border-radius)" : "0"}`
+    const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
+    return `margin:${spacing};${layout.elevation > 0 ? `padding:${spacing}` : ""};box-shadow:${shadow};border-radius:var(--formsey-border-radius)`
   },
   fieldStyle(layout: BoxLayout): string {
-    return undefined
+    const background = layout.color || "var(--formsey-color)"
+    const opacity = layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)"
+    return `background:${background};opacity:${opacity}`
   }
 })
 
@@ -61,7 +63,7 @@ registerFormatter("table", {
 })
 registerFormatter("areas", {
   containerStyle(layout: AreasLayout): string {
-    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_"+column)).join(" ")}'`).join(" ")}`
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_" + column)).join(" ")}'`).join(" ")}`
   },
   fieldStyle(layout: AreasLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
     const name = area(field, fields)

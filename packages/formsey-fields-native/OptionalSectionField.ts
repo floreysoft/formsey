@@ -1,5 +1,5 @@
 import { CheckboxFieldDefinition, createField, Field, OptionalSectionFieldDefinition } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getFormatter, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -30,9 +30,9 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   render() {
-    return html`${createField(this.components, this.settings, { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, typeof this.value !== "undefined", this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
-    ${this.value || this.definition.default ? html`<div id="form">${createField(this.components,this.settings, { type: "form", fields: this.definition.fields } as FormDefinition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`
-  }
+    const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
+    return html`<section style="${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}">${createField(this.components, this.settings, { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, typeof this.value !== "undefined", this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
+    ${this.value || this.definition.default ? html`<div id="form">${createField(this.components,this.settings, { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout, static: undefined }} as FormDefinition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`  }
 
   public focusField(path: string) {
     if (path == this.path()) {

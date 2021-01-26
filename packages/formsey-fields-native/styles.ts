@@ -26,6 +26,7 @@ export const FORM_STYLES = css`
       background-color: var(--formsey-widget-background-hover);
   }
 
+
   * {
     font: var(--formsey-font, inherit);
   }
@@ -86,6 +87,14 @@ export const FORM_STYLES = css`
     background: var(--formsey-shade, #80808040);
     border: 1px solid var(--formsey-border, transparent);
     transition: border 0.12s ease-out;
+  }
+
+  .input:-webkit-autofill,
+  .input:-webkit-autofill:hover,
+  .input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--formsey-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--formsey-shade, #80808040) inset;
+    transition: background-color 5000s ease-in-out 0s;
   }
 
   .input.range {
@@ -271,9 +280,20 @@ export const FORM_STYLES = css`
     min-width: 0;
   }
   .ffg {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     box-sizing: border-box;
     gap: var(--formsey-space-narrow);
+  }
+  formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+    position:relative;
+  }
+  .fbg {
+    position: absolute;
+    inset: 0px;
+    border-radius: inherit;
+    pointer-events: none;
   }
 
   /* .Color field */
@@ -700,8 +720,8 @@ export const FORM_STYLES = css`
   /* Repeating section */
   formsey-repeating-section .form {
     position: relative;
-    margin: 0.5em 0 0 0.8em;
-    padding: 0 0 5px 15px;
+    margin: .25em 0 .25em 1em;
+    padding: 0.25em 0px 0.25em 1em;
     border-left: 2px solid var(--formsey-widget-background, #E2DDDB);
     font-size: var(--formsey-repeating-section-icon-size, inherit);
     transition: all 0.12s ease-out;
@@ -743,7 +763,7 @@ export const FORM_STYLES = css`
     background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-widget-background-hover, #CAC4C2));
   }
   formsey-repeating-section .fs-add {
-    margin: 0.2em 0.1em 0.1em;
+    margin: .25em 0.4em;
   }
 
   @media (pointer: coarse) {
@@ -766,28 +786,40 @@ export const FORM_STYLES = css`
     }
   }
 
-  /* Layouts */
+  /* Layouts, Toggled */
   formsey-layout {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     column-gap: var(--formsey-space-wide);
     row-gap: var(--formsey-space-narrow);
   }
 
-  formsey-layout fs-toggles, formsey-layout formsey-form {
+  formsey-layout fs-toggles {
     --fs-widget-background-color: initial;
-    margin: var(--formsey-space-narrow);
     padding:0;
   }
 
-  formsey-toggle fs-toggles {
+  formsey-layout fs-toggles, formsey-toggles fs-toggles {
     height: var(--formsey-input-height, 2em);
   }
 
-  formsey-toggle fs-toggle {
+  formsey-layout fs-toggle, formsey-toggle fs-toggle {
     width: 100%;
     min-width: 2em;
+    position: relative;
+  }
+
+  formsey-layout .ovl {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: .5em;
+    height: .5em;
+    border-radius: 50%;
+    background-color: var(--formsey-token-function);
+  }
+  formsey-layout .ovl.d {
+    background-color: var(--formsey-token-library);
   }
 
   /* Markdown field */

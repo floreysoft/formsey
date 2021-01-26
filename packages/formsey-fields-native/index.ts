@@ -246,7 +246,11 @@ if (nativeLibrary) {
       }
     ],
     "layout": {
-      "sizes": {
+      "static": {
+        "formatter": "box",
+        "spacing": "narrow"
+      },
+      "responsive": {
         "xs": {
           "formatter": "columns",
           "columns": [

@@ -1,5 +1,5 @@
 import { createField, Field, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getFormatter, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -39,7 +39,8 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         form = html`${selection?.fields ? html`<div class="form">${createField(this.components, this.settings, { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, this.value?.value, this.path()+".value", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`;
       }
     }
-    return html`${super.render()}${form}`
+    const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
+    return html`<section style=${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}>${super.render()}${form}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
   }
 
   renderField() {

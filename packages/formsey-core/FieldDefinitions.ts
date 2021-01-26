@@ -132,6 +132,7 @@ export interface Selection extends FormDefinition {
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
   multipleChoice?: boolean
+  layout?: ResponsiveLayout
 }
 export interface TabsFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
@@ -155,6 +156,7 @@ export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
   control: "checkbox" | "switch"
   controlLabel?: string
   fields: FieldDefinition[]
+  layout?: ResponsiveLayout
 }
 
 export interface PopupSectionFieldDefinition extends FormDefinition, InteractiveFieldDefinition {

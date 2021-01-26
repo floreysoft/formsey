@@ -1,5 +1,5 @@
 import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
-import { Components, getIcon, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getFormatter, getIcon, getLibrary, Settings } from '@formsey/core/Components';
 import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -13,6 +13,11 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
   @queryAll(".form")
   protected _fields: HTMLElement[]
+
+  protected render(): void | TemplateResult {
+    const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
+    return html`<section style=${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}>${super.render()}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
+  }
 
   renderField() {
     if (!this.value) {
@@ -29,7 +34,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         const value = this.value[i];
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${getIcon('Minus')}</button></div>` : undefined}
-        ${createField(this.components,this.settings, { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value, this.path() + "[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
+        ${createField(this.components,this.settings, { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout, static: undefined } } as FormDefinition, value, this.path() + "[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`;
         itemTemplates.push(template);
       }
     }
