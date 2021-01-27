@@ -144,9 +144,7 @@ export interface ToggleFieldDefinition extends InputFieldDefinition {
 }
 
 export interface TableFieldDefinition extends FormDefinition {
-  sortable?: boolean
   selectable?: boolean
-  searchable?: boolean
   pageLength?: number
   key?: string
   dataSource?: boolean

@@ -43,6 +43,7 @@ export class Library {
 export interface Libraries {
   [index: string]: Library
 }
+
 export interface Editor extends FieldDefinition {
   title: string
   icon: TemplateResult
@@ -50,6 +51,8 @@ export interface Editor extends FieldDefinition {
   cell? : boolean
   summary?: (definition: FieldDefinition) => TemplateResult
 }
+
+export interface FormEditor extends Editor, FormDefinition { }
 
 export interface LayoutEditor extends Editor {
   fields?: FieldDefinition[]
