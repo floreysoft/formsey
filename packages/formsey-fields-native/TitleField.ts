@@ -1,5 +1,5 @@
 import { Field } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { customElement, html, property } from "lit-element";
@@ -17,7 +17,7 @@ export class TitleField extends Field<FieldDefinition, void> {
 
 getLibrary("native").registerComponent("title", {
   importPath: "@formsey/fields-native/TitleField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FieldDefinition, void> ) => {
     return html`<formsey-title id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-title>`
   }
 })

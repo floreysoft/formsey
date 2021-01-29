@@ -1,7 +1,5 @@
 import { ListFieldDefinition } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import "@material/mwc-list/mwc-list-item";
 import { Select } from "@material/mwc-select";
 import "@material/mwc-select/mwc-select";
@@ -29,7 +27,7 @@ export class ListField extends InputField<ListFieldDefinition, string> {
 
 getLibrary("material").registerComponent("list", {
   importPath: "@formsey/fields-material/ListField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
     return html`<formsey-list-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list-material>`
   }
 })

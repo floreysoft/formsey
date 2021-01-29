@@ -1,25 +1,24 @@
 import { CompoundField } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export interface AddressFieldDefinition extends FieldDefinition {
-  includeAddressLine1 : boolean
-  includeAddressLine2 : boolean
-  includeCity : boolean
-  includeState : boolean
-  includePostalCode : boolean
-  includeCountry : boolean
-  labelAddressLine1 : string
-  labelAddressLine2 : string
-  labelCity : string
-  labelState : string
-  labelPostalCode : string
-  labelCountry : string
+  includeAddressLine1: boolean
+  includeAddressLine2: boolean
+  includeCity: boolean
+  includeState: boolean
+  includePostalCode: boolean
+  includeCountry: boolean
+  labelAddressLine1: string
+  labelAddressLine2: string
+  labelCity: string
+  labelState: string
+  labelPostalCode: string
+  labelCountry: string
 }
 @customElement("formsey-address")
 export class AddressField extends CompoundField<AddressFieldDefinition, Object> {
@@ -41,13 +40,13 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField(this.components, this.settings, form, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), null)}</div>`;
+    return html`<div class="fs-nested-form">${createField({ components: this.components, settings: this.settings, definition: form, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event) })}</div>`;
   }
 }
 
 getLibrary("native").registerComponent("address", {
   importPath: "@formsey/fields-compound/AddessField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<AddressFieldDefinition, Object>) => {
     return html`<formsey-address id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-address>`
   }
 })

@@ -1,9 +1,9 @@
-import { Components, getFormatter, getIcon, getLibrary, Settings } from '@formsey/core/Components';
+import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldClickEvent } from '@formsey/core/FieldClickEvent';
 import { ButtonFieldDefinition, CheckboxFieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
-import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { TableLayout, ToolbarLayout } from '@formsey/core/Layouts';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, TemplateResult } from "lit-element";
@@ -19,11 +19,12 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     const searchScrollable: TemplateResult[] = [];
     const formatter = getFormatter(this.layout?.formatter)
     const fixedColumns = (<TableLayout>this.layout)?.fixedColumns || 0
+    let hasSearchableColumns = false
     if (this.layout) {
-      const hasSearchableColumns = (<TableLayout>this.layout).columns?.filter(column => column.searchable).length > 0
+      hasSearchableColumns = (<TableLayout>this.layout).columns?.filter(column => column.searchable).length > 0
       if (this.definition.selectable) {
         const templates = fixedColumns > 0 ? fixed : scrollable
-        templates.push(html`<div class="td">${createField(this.components, this.settings, { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, undefined, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
+        templates.push(html`<div class="td">${createField({ components: this.components, settings: this.settings, definition: { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
         if (hasSearchableColumns) {
           const search = fixedColumns > 0 ? searchFixed : searchScrollable
           search.push(html`<div class="td ts"></div>`)
@@ -42,7 +43,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
             if (hasSearchableColumns) {
               const search = index < fixedColumns ? searchFixed : searchScrollable
               if (column.searchable) {
-                search.push(html`<div class="td ts">${createField(this.components, this.settings, { type: "string", name: field.name } as StringFieldDefinition, undefined, this.path() + ".search", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`)
+                search.push(html`<div class="td ts">${createField({ components: this.components, settings: this.settings, definition: { type: "string", name: field.name } as StringFieldDefinition, parentPath: this.path() + ".search", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
               } else {
                 search.push(html`<div class="td ts"></div>`)
               }
@@ -64,7 +65,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
               first: true,
               last: i == (this.definition.pageLength || this.value.data.length) - 1
             }
-            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField(this.components, this.settings, { type: "checkbox", name: "__s" }, this.definition.selectable && this.value.selections?.includes(key), this.path() + ".data[" + key + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
+            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField({ components: this.components, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: this.definition.selectable && this.value.selections?.includes(key), parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
           }
           (<TableLayout>this.layout).columns.forEach((column, index) => {
             if (column.visible) {
@@ -77,7 +78,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                   first: !this.definition.selectable && index == 0,
                   last: i == (this.definition.pageLength || this.value.data.length) - 1
                 }
-                templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField(this.components, this.settings, { ...field, label: undefined, helpText: undefined }, value[field.name], this.path() + ".data[" + i + "]", this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>`);
+                templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField({ components: this.components, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
               }
             }
           })
@@ -85,7 +86,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       }
     }
     let pager: TemplateResult
-    if (this.definition.pageLength < this.value?.data.length || this.definition?.dataSource) {
+    if (this.definition?.pageLength < this.value?.data?.length || this.definition?.dataSource) {
       let pagerDefinition = {
         type: "form",
         fields: [
@@ -119,7 +120,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           } as ButtonFieldDefinition
         ],
         layout: {
-          sizes: {
+          responsive: {
             xs: {
               formatter: "toolbar",
               horizontal: "right"
@@ -134,8 +135,8 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       <div class="ffg">
         <div class="tw" style="${ifDefined((<TableLayout>this.layout)?.fill == "grow" ? "flex-grow:1" : undefined)}">
           <div class="b">
-            ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
-            <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>
+            ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
+            <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>
           </div>
           <div class="tnav">${pager}</div>
         </div>
@@ -228,7 +229,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
 
 getLibrary("native").registerComponent("table", {
   importPath: "@formsey/fields-native/TableField",
-  factory: (components: Components, settings: Settings, definition: TableFieldDefinition, value: Records, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
     // value = { ...value, "data": DUMMY_DATA }
     return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
   }

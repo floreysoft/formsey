@@ -5,56 +5,60 @@ import { FormField } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
-export function get(data: Object, path: string): any {
+export function get(data: { [key: string]: any }, path: string): any {
   if (!data || !path) {
     return undefined
   }
   let tokens = path.split('.')
   let token = tokens.shift()
-  path = tokens.join('.')
-  let found: any
-  if (token.endsWith(']')) {
-    let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
-    token = token.substring(0, token.indexOf('['))
-    found = data[token][index]
-  } else {
-    found = data[token]
-  }
-  if (found && path) {
-    return get(found, path)
-  } else {
-    return found
+  if (token) {
+    path = tokens.join('.')
+    let found: any
+    if (token.endsWith(']')) {
+      let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
+      token = token.substring(0, token.indexOf('['))
+      found = data[token][index]
+    } else {
+      found = data[token]
+    }
+    if (found && path) {
+      return get(found, path)
+    } else {
+      return found
+    }
   }
 }
 
-export function set(data: Object, path: string, value: any): any {
+export function set(data: { [key: string]: any }, path: string, value: any): any {
   if (!data || !path) {
     return
   }
   let tokens = path.split('.')
   let token = tokens.shift()
-  path = tokens.join('.')
-  if (token.endsWith(']')) {
-    let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
-    token = token.substring(0, token.indexOf('['))
-    if (path) {
-      set(data[token][index], path, value)
+  if (token) {
+    path = tokens.join('.')
+    if (token.endsWith(']')) {
+      let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
+      token = token.substring(0, token.indexOf('['))
+      if (path) {
+        set(data[token][index], path, value)
+      } else {
+        data[token][index] = value
+        return
+      }
     } else {
-      data[token][index] = value
-      return
-    }
-  } else {
-    if (path) {
-      set(data[token], path, value)
-    } else {
-      data[token] = value
-      return
+      if (path) {
+        set(data[token], path, value)
+      } else {
+        data[token] = value
+        return
+      }
     }
   }
 }
 
 @customElement("formsey-form")
-export class Form extends Field<FieldDefinition, any> {
+export class Form extends Field<FormDefinition, any> {
   value: any
 
   async fetchDefinition(url: string) {
@@ -77,27 +81,27 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   @property()
-  target: "_blank" | "_parent" | "_self" | "_top"
+  target: "_blank" | "_parent" | "_self" | "_top" | undefined
 
   @property()
-  action: string
+  action: string | undefined
 
   @property()
-  method: "GET" | "POST"
+  method: "GET" | "POST" | undefined
 
   @property({ type: Boolean })
-  anonymous: boolean
+  anonymous: boolean | undefined
 
   @query(':first-child')
-  form: FormField<FormDefinition, Object>
+  form: FormField<FormDefinition, Object> | undefined
 
   @query('form')
-  nativeForm: HTMLFormElement
+  nativeForm: HTMLFormElement | undefined
 
   private _loaded: boolean = false
 
   // Batch invalid events
-  private _invalidTimer = null
+  private _invalidTimer = undefined
 
   protected shouldUpdate(): boolean {
     let update = super.shouldUpdate()
@@ -116,7 +120,7 @@ export class Form extends Field<FieldDefinition, any> {
     if (!this.errors) {
       this.errors = new InvalidErrors()
     }
-    return this.components?.["styledForm"]?.factory(this.components, this.settings, this.definition, this.value, this.parentPath, this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))
+    return this.components?.["styledForm"]?.factory({ components: this.components, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
   }
 
   updated() {
@@ -145,12 +149,16 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   public getField(path: string): any {
-    return get(this.definition, path);
+    if (this.definition) {
+      return get(this.definition, path);
+    }
   }
 
   public setField(path: string, value: any): any {
-    set(this.definition, path, value);
-    this.requestUpdate()
+    if (this.definition) {
+      set(this.definition, path, value);
+      this.requestUpdate()
+    }
   }
 
   public focusField(path: string): boolean {
@@ -162,19 +170,19 @@ export class Form extends Field<FieldDefinition, any> {
 
   public clearCustomValidity() {
     super.clearCustomValidity()
-    this.form.clearCustomValidity()
+    this.form?.clearCustomValidity()
   }
 
   public setCustomValidity(customErrors: InvalidErrors) {
-    this.form.setCustomValidity(customErrors)
+    this.form?.setCustomValidity(customErrors)
   }
 
   public validate(report: boolean, path?: string) {
-    this.errors.clear()
+    this.errors?.clear()
     if (report) {
-      return this.form.reportValidity(path);
+      return this.form?.reportValidity(path) || false
     } else {
-      return this.form.checkValidity(path);
+      return this.form?.checkValidity(path) || false
     }
   }
 
@@ -184,7 +192,7 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
-  protected clicked(e) {
+  protected clicked(e: CustomEvent) {
     if (!e.detail?.name) {
       e.stopPropagation()
     }
@@ -210,7 +218,7 @@ export class Form extends Field<FieldDefinition, any> {
     if (this._invalidTimer) {
       clearTimeout(this._invalidTimer)
     }
-    this._invalidTimer = setTimeout(() => {
+    this._invalidTimer = <any>setTimeout(() => {
       this.errors = new InvalidErrors(e.detail)
       this.dispatchEvent(new InvalidEvent(e.detail))
     }, 1)

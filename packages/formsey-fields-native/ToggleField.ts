@@ -1,8 +1,7 @@
 import '@floreysoft/toggle';
-import { createField, LabeledField } from '@formsey/core';
-import { Components, getIcon, getLibrary, Settings } from '@formsey/core/Components';
+import { LabeledField } from '@formsey/core';
+import { getIcon, getLibrary, Resources } from '@formsey/core/Components';
 import { ToggleFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -29,7 +28,7 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
 
 getLibrary("native").registerComponent("toggle", {
   importPath: "@formsey/fields-native/ToggleField",
-  factory: (components: Components, settings: Settings, definition: ToggleFieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ToggleFieldDefinition, string>) => {
     return html`<formsey-toggle id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-toggle>`
   }
 })

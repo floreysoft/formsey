@@ -1,5 +1,5 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { customElement, html, query, queryAll, TemplateResult } from "lit-element";
@@ -31,7 +31,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     if (this.definition.other) {
       let other = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
       let checked = other.length > 0
-      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}" @input="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField(this.components, this.settings, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? other[0] : "", this.path(), null, (e) => this.changed(e), null)}</div>`);
+      templates.push(html`<div class="other"><label><input type="checkbox" .checked="${checked}" name="${this.definition.name}" value="__other" @change="${this.changed}" @input="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField({ components: this.components, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? other[0] : "", parentPath: this.path(), changeHandler: (e) => this.changed(e)})}</div>`);
     }
     return html`<div class=${this.definition.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
   }
@@ -84,7 +84,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
 
 getLibrary("native").registerComponent("checkboxes", {
   importPath: "@formsey/fields-native/CheckboxesField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxesFieldDefinition, string[]>) => {
     return html`<formsey-checkboxes id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes>`
   }
 })

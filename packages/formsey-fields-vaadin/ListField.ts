@@ -1,7 +1,6 @@
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import { Field } from '@formsey/core/Field';
-import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
@@ -50,7 +49,7 @@ export class ListField extends Field<ListFieldDefinition, string> {
 
 getLibrary("vaadin").registerComponent("list", {
   importPath: "@formsey/fields-vaadin/ListField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ListFieldDefinition, string> ) => {
     return html`<formsey-list-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list-vaadin>`
   }
 })

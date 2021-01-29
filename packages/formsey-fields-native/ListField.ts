@@ -1,5 +1,5 @@
 import { LabeledField, ListFieldDefinition } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -34,7 +34,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
 
 getLibrary("native").registerComponent("list", {
   importPath: "@formsey/fields-native/ListField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
-    return html`<formsey-list id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ListFieldDefinition, string> ) => {
+    return html`<formsey-list id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${<string>value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
   }
 })

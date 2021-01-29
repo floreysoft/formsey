@@ -1,6 +1,6 @@
 import { customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { Components, getFormatter, getLibrary, Settings } from './Components';
+import { getFormatter, getLibrary, Resources } from './Components';
 import { createField, Field } from './Field';
 import { FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
@@ -47,22 +47,22 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   }
 
   @property({ reflect: true })
-  id: string
+  id: string | undefined
 
-  protected _value: V
-  protected _definition: D
+  protected _value: V | undefined
+  protected _definition: D | undefined
 
   @queryAll(".fff")
-  protected _fields: HTMLElement[]
+  protected _fields: HTMLElement[] | undefined
 
   @property()
-  protected layout: Layout
+  protected layout: Layout | undefined
 
-  protected size: string
+  protected size: string | undefined
   private resizeObserver: ResizeObserver
 
   @query(".ffg")
-  private grid: HTMLElement
+  private grid: HTMLElement | undefined
 
   constructor() {
     super()
@@ -76,8 +76,8 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   renderField() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
-    const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
-    const responsiveFormatter = getFormatter(this.layout?.formatter)
+    const staticFormatter = this.definition.layout?.static?.formatter ? getFormatter(this.definition.layout?.static?.formatter) : undefined
+    const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         let value: any
@@ -88,7 +88,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         } else {
           value = this.value && field.name ? this.value[field.name] : undefined
         }
-        let fieldTemplate = html`${createField(this.components, this.settings, field, value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}`
+        let fieldTemplate = html`${createField({ components: this.components, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event)})}`
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
@@ -296,7 +296,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 }
 getLibrary("native").registerComponent("form", {
   importPath: "@formsey/core/FormField",
-  factory: (components: Components, settings: Settings, definition: FormDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FormDefinition, any> ) => {
     return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   }
 })

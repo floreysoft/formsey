@@ -1,8 +1,8 @@
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
-import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -125,7 +125,7 @@ export class StyledForm extends Form {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField(this.components, this.settings, this.definition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event), 'form');
+      field = createField({ id: 'form', components: this.components, settings: this.settings,definition: this.definition,value: this.value,parentPath: this.path(),errors: this.errors,changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event)});
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
     return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme']?.['selection'])} .themes=${themes}><div class="themed" part="form">${form}</div></fs-theme>` : form
@@ -165,7 +165,7 @@ export class StyledForm extends Form {
 
 getLibrary("native").registerComponent("styledForm", {
   importPath: "@formsey/fields-native/StyledForm",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FormDefinition, any> ) => {
     return html`<formsey-styled-form id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form>`
   }
 })

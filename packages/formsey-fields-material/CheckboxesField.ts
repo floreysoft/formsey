@@ -1,7 +1,5 @@
 import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
 import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
@@ -58,7 +56,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
   }
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
+    if (path == this.definition.name) {
       this.checkboxes[0].focus()
     }
   }
@@ -89,10 +87,10 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     }
   }
 
-  private values() : string[] {
+  private values(): string[] {
     let values = []
     this.checkboxes.forEach(checkbox => {
-      if ( checkbox.checked ) {
+      if (checkbox.checked) {
         values.push(checkbox.value)
       }
     })
@@ -102,7 +100,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
 
 getLibrary("material").registerComponent("checkboxes", {
   importPath: "@formsey/fields-material/CheckboxesField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string[], parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
     return html`<formsey-checkboxes-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-material>`
   }
 })

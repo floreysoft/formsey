@@ -1,5 +1,5 @@
 import { CheckboxFieldDefinition, createField, Field, OptionalSectionFieldDefinition } from '@formsey/core';
-import { Components, getFormatter, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getFormatter, getLibrary, Resources, Settings } from '@formsey/core/Components';
 import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -31,8 +31,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
   render() {
     const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
-    return html`<section style="${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}">${createField(this.components, this.settings, { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, typeof this.value !== "undefined", this.path(), this.errors, (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), (event: InvalidEvent) => this.invalid(event))}
-    ${this.value || this.definition.default ? html`<div id="form">${createField(this.components,this.settings, { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout, static: undefined }} as FormDefinition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`  }
+    return html`<section style="${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}">${createField({ components: this.components, settings: this.settings, definition: { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, value: typeof this.value !== "undefined", parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event)})}
+    ${this.value || this.definition.default ? html`<div id="form">${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout, static: undefined }} as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event)})}</div>` : undefined}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`  }
 
   public focusField(path: string) {
     if (path == this.path()) {
@@ -94,7 +94,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
 getLibrary("native").registerComponent("optionalSection", {
   importPath: "@formsey/fields-native/OptionalSectionField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<OptionalSectionFieldDefinition, Object> ) => {
     return html`<formsey-optional-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-optional-section>`
   }
 })

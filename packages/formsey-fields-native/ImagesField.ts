@@ -1,6 +1,6 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ImagesFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, LitElement, property, query, queryAll, TemplateResult } from "lit-element";
@@ -214,7 +214,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
 
 getLibrary("native").registerComponent("images", {
   importPath: "@formsey/fields-native/ImagesField",
-  factory: (components: Components, settings: Settings, definition: ImagesFieldDefinition, value: string[], parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ImagesFieldDefinition, string[] | string> ) => {
     return html`<formsey-images id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-images>`
   }
 })

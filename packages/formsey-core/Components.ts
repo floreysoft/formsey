@@ -15,9 +15,21 @@ customElementRegistry.define = function (tag, cstr) {
   }
 };
 
+export interface Resources<D extends FieldDefinition, V> {
+    id?: string
+    components: Components
+    settings?: Settings
+    definition: D
+    value?: V
+    parentPath: string
+    errors?: InvalidErrors
+    changeHandler?: any
+    invalidHandler?: any
+}
+
 export interface Component {
   importPath: string | string[],
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => TemplateResult
+  factory: (resources: Resources<FieldDefinition, any>) => TemplateResult
   module?: string,
   focusable?: boolean,
 }
@@ -48,7 +60,7 @@ export interface Editor extends FieldDefinition {
   title: string
   icon: TemplateResult
   interaction?: string
-  cell? : boolean
+  cell?: boolean
   summary?: (definition: FieldDefinition) => TemplateResult
 }
 
@@ -56,7 +68,7 @@ export interface FormEditor extends Editor, FormDefinition { }
 
 export interface LayoutEditor extends Editor {
   fields?: FieldDefinition[]
-  isMatching(layout: Layout) : boolean
+  isMatching(layout: Layout): boolean
 }
 
 export interface Editors {
@@ -76,28 +88,28 @@ export interface Icons {
 }
 
 export interface Formatter {
-  containerStyle(layout: Layout, ...context: any) : string
-  fieldStyle(layout: Layout, ...context: any) : string
+  containerStyle(layout: Layout, ...context: any): string
+  fieldStyle(layout: Layout, ...context: any): string
 }
 
 export type Formatters = { [index: string]: Formatter }
 
 export function getUniqueElementId(): string {
-  let counter = window['__formseyElementId'] as number
+  let counter = (window as any)['__formseyElementId'] as number
   if (typeof counter === "undefined") {
     counter = 0;
   }
   counter++;
-  window['__formseyElementId'] = counter
-  return "__fel-"+counter
+  (window as any)['__formseyElementId'] = counter
+  return "__fel-" + counter
 }
 
 export function getLibraries(): Libraries {
-  let libraries = window['__formseyLibraries'] as Libraries
+  let libraries = (window as any)['__formseyLibraries'] as Libraries
   if (typeof libraries === "undefined") {
     console.log("Create library registry")
-    libraries = {}
-    window['__formseyLibraries'] = libraries
+    libraries = {};
+    (window as any)['__formseyLibraries'] = libraries
   }
   return libraries
 }
@@ -105,7 +117,7 @@ export function getLibraries(): Libraries {
 export function getLibrary(name: string): Library {
   const libraries = getLibraries()
   let library = libraries[name]
-  if ( typeof library === "undefined" ) {
+  if (typeof library === "undefined") {
     library = new Library()
     libraries[name] = library
   }
@@ -126,11 +138,11 @@ export function getDefaultLibrary(): string | undefined {
 }
 
 export function getEditors(): Editors {
-  let editors = window['__formseyEditors'] as Editors
+  let editors = (window as any)['__formseyEditors'] as Editors
   if (typeof editors === "undefined") {
     console.log("Create editor registry")
-    editors = {}
-    window['__formseyEditors'] = editors
+    editors = {};
+    (window as any)['__formseyEditors'] = editors
   }
   return editors
 }
@@ -144,16 +156,16 @@ export function registerEditor(name: string, editor: Editor) {
 }
 
 export function getCategories(): Categories {
-  let categories = window['__formseyCategories'] as Categories
+  let categories = (window as any)['__formseyCategories'] as Categories
   if (typeof categories === "undefined") {
     console.log("Create category registry")
-    categories = []
-    window['__formseyCategories'] = categories
+    categories = [];
+    (window as any)['__formseyCategories'] = categories
   }
   return categories
 }
 
-export function getCategory(name: string): Category {
+export function getCategory(name: string): Category | null {
   for (let category of getCategories()) {
     if (category.name == name) {
       return category
@@ -167,11 +179,11 @@ export function addCategory(category: Category) {
 }
 
 export function getIcons(): Icons {
-  let icons = window['__formseyIcons'] as Icons
+  let icons = (window as any)['__formseyIcons'] as Icons
   if (typeof icons === "undefined") {
     console.log("Create icon registry")
-    icons = {}
-    window['__formseyIcons'] = icons
+    icons = {};
+    (window as any)['__formseyIcons'] = icons
   }
   return icons
 }
@@ -185,11 +197,11 @@ export function registerIcon(name: string, template: TemplateResult) {
 }
 
 export function getFormatters(): Formatters {
-  let formatters = window['__formseyFormatters'] as Formatters
+  let formatters = (window as any)['__formseyFormatters'] as Formatters
   if (typeof formatters === "undefined") {
     console.log("Create formatter registry")
-    formatters = {}
-    window['__formseyFormatters'] = formatters
+    formatters = {};
+    (window as any)['__formseyFormatters'] = formatters
   }
   return formatters
 }
@@ -202,12 +214,12 @@ export function registerFormatter(name: string, formatter: Formatter) {
   getFormatters()[name] = formatter
 }
 
-export function getMessages(): Object {
-  let messages = window['__formseyMessages'] as Icons
+export function getMessages(): { [key: string]: any } {
+  let messages = (window as any)['__formseyMessages'] as Icons
   if (typeof messages === "undefined") {
     console.log("Create message registry")
-    messages = {}
-    window['__formseyMessages'] = messages
+    messages = {};
+    (window as any)['__formseyMessages'] = messages
   }
   return messages
 }
@@ -216,15 +228,15 @@ export function translate(key: string, data: any): TemplateResult | undefined {
   return getIcons()?.[key]
 }
 
-export function registerMessages(locale: string, messages: Object) {
+export function registerMessages(locale: string, messages: { [key: string]: any }) {
   getMessages()[locale] = {}
 }
 
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {
-  let area = field.name
-  if (!area) {
+  let area = field.name || ""
+  if (area == "") {
     let typeCounter = 0
-    area = field.type
+    area = field.type || ""
     fields.forEach(formField => {
       if (field === formField) {
         area += typeCounter

@@ -1,8 +1,6 @@
 import { Ace } from '@floreysoft/ace';
 import { InputFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -66,7 +64,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
 
 getLibrary("native").registerComponent("sourceCode", {
   importPath: "@formsey/fields-native-extended/SourceCodeField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<SourceCodeFieldDefinition, string> ) => {
     return html`<formsey-sourcecode id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-sourcecode>`
   }
 })

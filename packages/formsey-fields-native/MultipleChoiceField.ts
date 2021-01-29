@@ -1,5 +1,5 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -31,7 +31,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     }
     if (this.definition.other) {
       let checked = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label)).length == 0
-      templates.push(html`<div class="other"><label><input type="radio" .checked="${checked}" name="${this.path()}" value="__other" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField(this.components, this.settings, { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, checked ? this.value : "", this.path(), null, (e) => this.otherChanged(e), null)}</div>`);
+      templates.push(html`<div class="other"><label><input type="radio" .checked="${checked}" name="${this.path()}" value="__other" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}">Other</label>${createField({ components: this.components, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? this.value : "", parentPath: this.path(), changeHandler: (e) => this.otherChanged(e)})}</div>`);
     }
     return html`<div class=${this.definition.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
   }
@@ -78,7 +78,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
 
 getLibrary("native").registerComponent("multipleChoice", {
   importPath: "@formsey/fields-native/MultipleChoiceField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
-    return html`<formsey-multiple-choice id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice>`
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxesFieldDefinition, string> ) => {
+    return html`<formsey-multiple-choice id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${<string>value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice>`
   }
 })

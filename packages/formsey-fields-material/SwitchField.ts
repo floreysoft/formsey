@@ -1,6 +1,6 @@
 import { ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition, SwitchFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Components';
+import { SwitchFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-switch/mwc-switch";
@@ -49,7 +49,7 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
 
 getLibrary("material").registerComponent("switch", {
   importPath: "@formsey/fields-material/SwitchField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: boolean, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SwitchFieldDefinition, boolean>) => {
     return html`<formsey-switch-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-switch-material>`
   }
 })

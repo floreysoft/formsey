@@ -1,9 +1,9 @@
 import '@floreysoft/tabs';
 import { createField, Field, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition, FormDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Components';
+import { FormDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
-import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -24,7 +24,7 @@ export class TabsField extends LabeledField<TabsFieldDefinition, TabsValue> {
   renderField() {
     const tabs = []
     for (let i = 0; i < this.definition.selections.length; i++) {
-      tabs.push(html`<fs-tab id=${this.definition.selections[i].value} label=${this.definition.selections[i].label}>${createField(this.components, this.settings, { type: "form", fields: this.definition.selections[i].fields } as FormDefinition, this.value?.[i], this.path(), this.errors, (event: ValueChangedEvent<string>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</fs-tab>`)
+      tabs.push(html`<fs-tab id=${this.definition.selections[i].value} label=${this.definition.selections[i].label}>${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: this.definition.selections[i].fields } as FormDefinition, value: this.value?.[i], parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</fs-tab>`)
     }
     return html`<fs-tabs>${tabs}</fs-tabs>`
   }
@@ -45,7 +45,7 @@ export class TabsField extends LabeledField<TabsFieldDefinition, TabsValue> {
 
 getLibrary("native").registerComponent("tabs", {
   importPath: "@formsey/fields-native/TabsField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: TabsValue, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TabsFieldDefinition, TabsValue>) => {
     return html`<formsey-tabs id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-tabs>`
   }
 })

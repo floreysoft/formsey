@@ -1,47 +1,48 @@
-import { css, html, LitElement, TemplateResult } from "lit-element";
-import { property } from "lit-element";
-import { Components, getDefaultLibrary, getLibraries, getLibrary, Settings } from './Components';
+import { LitElement, property, TemplateResult } from "lit-element";
+import { Components, getDefaultLibrary, getLibraries, getLibrary, Resources, Settings } from './Components';
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
-import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
+import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
-export const createField = (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string): TemplateResult => {
-  const component = components[definition.type];
+export const createField = (resources: Resources<FieldDefinition, any>): TemplateResult | undefined => {
+  if ( !resources.definition.type ) {
+    throw Error("Cannot create field as type is undefined")
+  }
+  const component = resources.components[resources.definition.type];
   if (component) {
-    return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
+    return component.factory(resources)
   } else {
     const libraries = getLibraries()
     for ( let key of Object.keys(libraries) ) {
       const library = libraries[key]
-      const component = library.components[definition.type]
+      const component = library.components[resources.definition.type]
       if ( component ) {
-        // console.debug(`Field of type=${definition.type} not found in your components library, returning it from library=${key}}`);
-        return component.factory(components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id)
+        return component.factory(resources)
       }
     }
-    console.error(`Your form is using a field of type=${definition.type} but no matching component has been registered in any library!`);
+    console.error(`Your form is using a field of type=${resources.definition.type} but no matching component has been registered in any library!`);
   }
   return undefined
 }
 
 export class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ converter: Object })
-  components: Components
+  components: Components | undefined
 
   @property({ converter: Object })
-  settings: Settings
+  settings: Settings | undefined
 
   @property({ type: Object })
-  definition: T
+  definition: T | undefined
 
   @property({ type: Object })
-  value: V;
+  value: V | undefined
 
   @property()
-  parentPath: string
+  parentPath: string | undefined
 
   @property({ type: String })
   set library(librarys: string) {
@@ -66,13 +67,13 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   report: boolean = false
 
   @property({ type: Object })
-  errors : InvalidErrors
+  errors : InvalidErrors | null = null
 
   @property({ type: Object })
-  customErrors : InvalidErrors
+  customErrors : InvalidErrors | null = null
 
   public path(): string {
-    return typeof this.definition.name !== "undefined" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
+    return typeof this.definition?.name !== "undefined" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
   }
 
   public clearCustomValidity() {
@@ -85,7 +86,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   public reportValidity(path?: string): boolean {
     this.report = true
-    if (this.errors.get(this.path())) {
+    if (this.errors?.get(this.path())) {
       this.dispatchEvent(new InvalidEvent(this.errors))
       this.valid = false
     } else {
@@ -96,7 +97,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   public checkValidity(path?: string): boolean {
     this.report = false
-    if (this.errors.get(this.path())) {
+    if (this.errors?.get(this.path())) {
       this.dispatchEvent(new InvalidEvent(this.errors))
       this.valid = false
     } else {
@@ -113,7 +114,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return this;
   }
 
-  protected shouldUpdate(changedProperties?): boolean {
+  protected shouldUpdate(changedProperties?: Map<string | number | symbol, unknown>): boolean {
     if (typeof this.definition === "undefined") {
       return false
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
@@ -161,7 +162,9 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected invalid(e: InvalidEvent) {
-    this.dispatchEvent(new InvalidEvent(this.errors))
+    if ( this.errors ) {
+      this.dispatchEvent(new InvalidEvent(this.errors))
+    }
   }
 
   protected firstPathElement(path: string) {
@@ -169,7 +172,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected prependPath(path: string) {
-    return (this.definition.name ? this.definition.name : "") + "." + path
+    return (this.definition?.name ? this.definition.name : "") + "." + path
   }
 }
 

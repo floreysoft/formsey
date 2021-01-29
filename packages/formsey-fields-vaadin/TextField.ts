@@ -1,7 +1,7 @@
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import { Field } from '@formsey/core/Field';
-import { FieldDefinition, TextFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { TextFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TextAreaElement } from '@vaadin/vaadin-text-field/vaadin-text-area';
@@ -44,7 +44,7 @@ export class TextField extends Field<TextFieldDefinition, string> {
 
 getLibrary("vaadin").registerComponent("text", {
   importPath: "@formsey/fields-vaadin/TextField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: string, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<TextFieldDefinition, string> ) => {
     return html`<formsey-text-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text-vaadin>`
   }
 })

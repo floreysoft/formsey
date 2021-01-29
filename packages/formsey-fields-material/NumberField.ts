@@ -1,7 +1,5 @@
 import { NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
 import { customElement, html, property, query } from "lit-element";
@@ -35,7 +33,7 @@ export class NumberField extends InputField<NumberFieldDefinition, number> {
 
 getLibrary("material").registerComponent("number", {
   importPath: "@formsey/fields-material/NumberField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: number, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<NumberFieldDefinition, number> ) => {
     return html`<formsey-number-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-number-material>`
   }
 })

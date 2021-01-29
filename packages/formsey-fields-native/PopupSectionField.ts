@@ -1,8 +1,8 @@
 import { createField, Field, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Settings } from '@formsey/core/Components';
-import { ButtonFieldDefinition, FieldDefinition, FormDefinition, PopupSectionFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Components';
+import { ButtonFieldDefinition, FormDefinition, PopupSectionFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
-import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -47,9 +47,9 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
       top: this.top,
       bottom: this.bottom
     }
-    return html`${createField(this.components, this.settings, { type: "button", buttonType: "button", icon: this.definition.icon, buttonTextz: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, undefined, this.path(), this.errors, undefined, (event: InvalidEvent) => this.invalid(event), this.elementId)}
+    return html`${createField({ id: this.elementId, components: this.components, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, buttonTextz: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: InvalidEvent) => this.invalid(event) })}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
-    <div id="form" style=${styleMap(position)}>${createField(this.components, this.settings, { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, this.value, this.path(), this.errors, (event: ValueChangedEvent<any>) => this.changed(event), (event: InvalidEvent) => this.invalid(event))}</div>` : undefined}`
+    <div id="form" style=${styleMap(position)}>${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
   }
 
   firstUpdated() {
@@ -73,7 +73,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
         }
         if ((rect.top + rect.height / 2 <= cy)) {
           // Show below
-          this.top = rect.top + rect.height+ "px"
+          this.top = rect.top + rect.height + "px"
           this.bottom = undefined
         } else {
           // Show above
@@ -141,7 +141,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
 
 getLibrary("native").registerComponent("popupSection", {
   importPath: "@formsey/fields-native/PopupSectionField",
-  factory: (components: Components, settings: Settings, definition: FieldDefinition, value: Object, parentPath: string, errors: InvalidErrors, changeHandler: any, invalidHandler: any, id?: string) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PopupSectionFieldDefinition, Object>) => {
     return html`<formsey-popup-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
   }
 })
