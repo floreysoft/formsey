@@ -304,7 +304,12 @@ export const FORM_STYLES = css`
     pointer-events: none;
   }
 
-  /* .Color field */
+  /* Split Panel */
+  formsey-split-panel>fs-splitter>div {
+    flex-grow: 1;
+  }
+
+  /* Color field */
   .cf {
     position: relative;
     width: 100%;
