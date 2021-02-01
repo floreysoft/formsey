@@ -75,9 +75,14 @@ registerFormatter("areas", {
 })
 registerFormatter("toolbar", {
   containerStyle(layout: ToolbarLayout): string {
-    return `display:flex;flex-flow: row ${layout.wrap || "nowrap"};align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"};justify-content:${layout.horizontal == "left" ? "flex-start" : layout.horizontal == "right" ? "flex-end" : "center"}`
+    const horizontal = layout.horizontal == "left" ? "flex-start" : layout.horizontal == "right" ? "flex-end" : layout.horizontal == "expand" ? "space-between" : "center"
+    const vertical = layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"
+    const justifyContent = layout.direction == "vertical" ? vertical : horizontal
+    const alignItems = layout.direction == "vertical" ? horizontal : vertical
+    return `display:flex;flex-grow:1;flex-direction: ${layout.direction == "vertical" ? "column" : "row"};flex-wrap: ${layout.wrap == "wrap" ? "wrap" : "nowrap"};align-items:${alignItems};justify-content:${justifyContent}`
   },
   fieldStyle(layout: ToolbarLayout, field: FieldDefinition): string {
-    return `flex-grow: ${layout.grow?.[field.name] || 0}`
+
+    return `${layout.horizontal == "expand" && layout.direction == "vertical" ? "align-self:stretch;" : ""}flex-grow: ${layout.grow?.[field.name] || 0}`
   }
 })

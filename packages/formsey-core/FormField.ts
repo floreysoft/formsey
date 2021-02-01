@@ -88,7 +88,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         } else {
           value = this.value && field.name ? this.value[field.name] : undefined
         }
-        let fieldTemplate = html`${createField({ components: this.components, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event)})}`
+        let fieldTemplate = createField({ components: this.components, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event)})
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {

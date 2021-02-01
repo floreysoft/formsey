@@ -95,28 +95,28 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
             name: "start",
             icon: "Start",
             buttonType: "button",
-            disabled: !this.value.dataSource?.canFirst || false
+            disabled: !this.value?.dataSource?.canFirst || false
           } as ButtonFieldDefinition,
           {
             type: "button",
             name: "prev",
             icon: "Previous",
             buttonType: "button",
-            disabled: !this.value.dataSource?.canPrevious || this.value.pageStart == 0
+            disabled: !this.value?.dataSource?.canPrevious || this.value.pageStart == 0
           } as ButtonFieldDefinition,
           {
             type: "button",
             name: "next",
             icon: "Next",
             buttonType: "button",
-            disabled: !this.value.dataSource?.canNext || this.value.pageStart + this.definition.pageLength > this.value.data.length
+            disabled: !this.value?.dataSource?.canNext || this.value.pageStart + this.definition.pageLength > this.value.data.length
           } as ButtonFieldDefinition,
           {
             type: "button",
             name: "end",
             icon: "Start",
             buttonType: "button",
-            disabled: !this.value.dataSource?.canLast
+            disabled: !this.value?.dataSource?.canLast
           } as ButtonFieldDefinition
         ],
         layout: {
@@ -229,8 +229,8 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
 
 getLibrary("native").registerComponent("table", {
   importPath: "@formsey/fields-native/TableField",
-  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
     // value = { ...value, "data": DUMMY_DATA }
-    return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
+    return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
   }
 })

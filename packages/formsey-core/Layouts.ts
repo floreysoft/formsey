@@ -36,7 +36,8 @@ export interface BoxLayout extends Layout {
 
 export interface ToolbarLayout extends Layout {
   formatter: "toolbar"
-  horizontal?: "left" | "center" | "right",
+  direction: "horizontal" | "vertical"
+  horizontal?: "left" | "center" | "right" | "expand",
   vertical?: "top" | "middle" | "bottom"
   wrap?: "wrap" | "nowrap"
   grow?: {

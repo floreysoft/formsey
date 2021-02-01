@@ -58,7 +58,7 @@ export function set(data: { [key: string]: any }, path: string, value: any): any
 }
 
 @customElement("formsey-form")
-export class Form extends Field<FormDefinition, any> {
+export class Form extends Field<FieldDefinition, any> {
   value: any
 
   async fetchDefinition(url: string) {

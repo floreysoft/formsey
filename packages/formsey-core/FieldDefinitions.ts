@@ -7,7 +7,6 @@ export interface FieldDefinition {
   label?: string | TemplateResult
   helpText?: string | TemplateResult
   default?: any
-  requiresParentFields?: boolean
 }
 
 export interface InteractiveFieldDefinition extends FieldDefinition {
@@ -164,6 +163,12 @@ export interface PopupSectionFieldDefinition extends FormDefinition, Interactive
 export interface SignatureFieldDefinition extends InputFieldDefinition {
   width: string
   height: string
+}
+
+export interface SplitPanelDefinition extends FieldDefinition {
+  direction: "horizontal" | "vertical"
+  first: FormDefinition
+  second : FormDefinition
 }
 
 export interface Records {

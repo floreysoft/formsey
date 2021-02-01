@@ -112,6 +112,12 @@ const themes = new Map([
 export class StyledForm extends Form {
   static get styles() {
     return [FORM_STYLES, css`
+    :host, .themed, fs-theme, form {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+    }
+
     .themed {
       color: var(--formsey-color, inherit);
       background: var(--formsey-background, inherit);

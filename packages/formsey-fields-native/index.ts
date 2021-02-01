@@ -21,6 +21,7 @@ export { RangeField } from './RangeField';
 export { RepeatingSectionField } from './RepeatingSectionField';
 export { SearchField } from './SearchField';
 export { SelectableSectionField } from './SelectableSectionField';
+export { SplitPanel } from './SplitPanel';
 export { StringField } from './StringField';
 export { StyledForm } from './StyledForm';
 export { SwitchField } from './SwitchField';
@@ -29,13 +30,12 @@ export { TabsField } from './TabsField';
 export { TemplateField } from './TemplateField';
 export { TextField } from './TextField';
 export { TimeField } from './TimeField';
-export { TitleField as SectionField } from './TitleField';
+export { TitleField } from './TitleField';
 export { ToggleField } from './ToggleField';
 export { ICON_FILE, ICON_REMOVE, ICON_UPLOAD, UploadField } from './UploadField';
 export { URLField } from './URLField';
 export { WeekField } from './WeekField';
 export { YouTubeField } from './YouTubeField';
-
 import { getLibrary } from '@formsey/core/Components';
 import { html } from 'lit-html';
 
@@ -223,7 +223,7 @@ if (nativeLibrary) {
             "label": "Custom",
             "name": "custom",
             "layout": {
-              "sizes": {
+              "responsive": {
                 "s": {
                   "formatter": "columns",
                   "columns": [

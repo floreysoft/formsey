@@ -16,15 +16,16 @@ customElementRegistry.define = function (tag, cstr) {
 };
 
 export interface Resources<D extends FieldDefinition, V> {
-    id?: string
-    components: Components
-    settings?: Settings
-    definition: D
-    value?: V
-    parentPath: string
-    errors?: InvalidErrors
-    changeHandler?: any
-    invalidHandler?: any
+  id?: string
+  components: Components
+  settings?: Settings
+  definition: D
+  value?: V
+  parentPath: string
+  errors?: InvalidErrors
+  changeHandler?: any
+  clickHandler?: any
+  invalidHandler?: any
 }
 
 export interface Component {

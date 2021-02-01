@@ -271,6 +271,7 @@ export const FORM_STYLES = css`
 
   /* Form Field */
   formsey-form-field {
+    display: flex;
     flex-grow: 1;
   }
   formsey-form-field fieldset {
@@ -278,6 +279,10 @@ export const FORM_STYLES = css`
     border: 0;
     margin: 0;
     min-width: 0;
+  }
+  .fff {
+    display: flex;
+    flex-direction: column;
   }
   .ffg {
     display: flex;
@@ -287,7 +292,10 @@ export const FORM_STYLES = css`
     gap: var(--formsey-space-narrow);
   }
   formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+    display: flex;
     position:relative;
+    flex-direction: column;
+    flex-grow: 1;
   }
   .fbg {
     position: absolute;
@@ -333,6 +341,7 @@ export const FORM_STYLES = css`
     transition: all 0.2s ease-out;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
   }
 
   .lfl {
