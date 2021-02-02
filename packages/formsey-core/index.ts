@@ -81,8 +81,8 @@ registerFormatter("toolbar", {
     const alignItems = layout.direction == "vertical" ? horizontal : vertical
     return `display:flex;flex-grow:1;flex-direction: ${layout.direction == "vertical" ? "column" : "row"};flex-wrap: ${layout.wrap == "wrap" ? "wrap" : "nowrap"};align-items:${alignItems};justify-content:${justifyContent}`
   },
-  fieldStyle(layout: ToolbarLayout, field: FieldDefinition): string {
-
-    return `${layout.horizontal == "expand" && layout.direction == "vertical" ? "align-self:stretch;" : ""}flex-grow: ${layout.grow?.[field.name] || 0}`
+  fieldStyle(layout: ToolbarLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
+    const name = area(field, fields)
+    return `${layout.horizontal == "expand" && layout.direction == "vertical" ? "align-self:stretch;" : ""}flex-grow: ${layout.grow?.[name] || 0}`
   }
 })

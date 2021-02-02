@@ -118,6 +118,14 @@ export interface FormDefinition extends FieldDefinition {
   method?: "GET" | "POST"
 }
 
+export interface PanelFieldDefinition extends FormDefinition {
+  icon?: string | TemplateResult
+}
+
+export interface ResponsivePanelFieldDefinition extends FieldDefinition {
+  first: PanelFieldDefinition
+  second: PanelFieldDefinition
+}
 export interface RepeatingFieldDefinition extends FormDefinition {
   min: number
   max: number
@@ -126,6 +134,7 @@ export interface RepeatingFieldDefinition extends FormDefinition {
 export interface Selection extends FormDefinition {
   label: string
   value: string
+  icon?: string | TemplateResult
 }
 
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
@@ -136,8 +145,8 @@ export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
 export interface TabsFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
   location: "top" | "bottom"
+  expand: boolean
 }
-
 export interface ToggleFieldDefinition extends InputFieldDefinition {
   buttons: ButtonFieldDefinition[]
 }
@@ -168,17 +177,17 @@ export interface SignatureFieldDefinition extends InputFieldDefinition {
 export interface SplitPanelDefinition extends FieldDefinition {
   direction: "horizontal" | "vertical"
   first: FormDefinition
-  second : FormDefinition
+  second: FormDefinition
 }
 
 export interface Records {
   sortedBy?: string
   sortDirection?: "ascending" | "descending"
   dataSource?: {
-    canNext? : boolean
-    canPrevious? : boolean
-    canFirst? : boolean
-    canLast? : boolean
+    canNext?: boolean
+    canPrevious?: boolean
+    canFirst?: boolean
+    canLast?: boolean
   }
   pageStart?: number
   selections?: number[]

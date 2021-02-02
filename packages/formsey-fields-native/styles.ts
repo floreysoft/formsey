@@ -139,6 +139,23 @@ export const FORM_STYLES = css`
     background: var(--formsey-accent-hover);
   }
 
+  /* Panel */
+  formsey-panel {
+    overflow: hidden;
+  }
+  formsey-panel header {
+    display: flex;
+    flex-direction: row;
+    padding: var(--formsey-space-wide);
+    gap: var(--formsey-space-wide);
+    background: var(--formsey-widget-background);
+  }
+  formsey-panel .panel {
+    display: flex;
+    flex-grow: 1;
+    overflow: auto;
+  }
+
   /* Checkbox Field */
   .cfl {
     height: var(--formsey-input-height, 2em);
@@ -291,7 +308,7 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
     gap: var(--formsey-space-narrow);
   }
-  formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;
@@ -347,6 +364,7 @@ export const FORM_STYLES = css`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    max-width: 100%;
   }
 
   .lfl {
@@ -676,20 +694,29 @@ export const FORM_STYLES = css`
   formsey-table .ffg {
     display: flex;
     width: inherit;
+    flex-grow: 1;
   }
   formsey-table .tw {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     max-width: 100%;
   }
   formsey-table .b {
     display: flex;
+    flex-direction: row;
     border: 1px solid var(--formsey-shade);
     border-radius: var(--formsey-border-radius);
   }
   formsey-table .t {
     display: flex;
     flex-direction: row;
+  }
+  formsey-table .vscroll {
+    overflow-y: auto;
+    flex-direction: column;
+    display: flex;
+    flex-grow: 1;
   }
   formsey-table .scroll {
     overflow-x: auto;

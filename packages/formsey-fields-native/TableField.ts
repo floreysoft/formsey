@@ -134,9 +134,11 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     return html`<section style="${ifDefined(fixedFormatter?.containerStyle(this.definition.layout?.static))}">
       <div class="ffg">
         <div class="tw" style="${ifDefined((<TableLayout>this.layout)?.fill == "grow" ? "flex-grow:1" : undefined)}">
-          <div class="b">
-            ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
-            <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>
+           <div class="vscroll">
+            <div class="b">
+              ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
+              <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>
+            </div>
           </div>
           <div class="tnav">${pager}</div>
         </div>
