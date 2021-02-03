@@ -26,7 +26,6 @@ export const FORM_STYLES = css`
       background-color: var(--formsey-widget-background-hover);
   }
 
-
   * {
     font: var(--formsey-font, inherit);
   }
@@ -308,7 +307,7 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
     gap: var(--formsey-space-narrow);
   }
-  formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;
@@ -319,6 +318,16 @@ export const FORM_STYLES = css`
     inset: 0px;
     border-radius: inherit;
     pointer-events: none;
+  }
+
+  /* Stats View */
+  formsey-stats-view .statistics {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  formsey-stats-view .statistics formsey-stats {
+    flex-grow: 1;
   }
 
   /* Split Panel */

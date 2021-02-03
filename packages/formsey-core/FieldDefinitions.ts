@@ -122,6 +122,7 @@ export interface PanelFieldDefinition extends FormDefinition {
 }
 
 export interface ResponsivePanelFieldDefinition extends FieldDefinition {
+  reverse?: boolean
   first: PanelFieldDefinition
   second: PanelFieldDefinition
 }

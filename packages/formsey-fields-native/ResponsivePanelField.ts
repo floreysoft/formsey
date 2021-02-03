@@ -30,10 +30,9 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
         type: "tabs",
         location: "bottom",
         expand: true,
-        selections: [
-          this.definition.first,
-          this.definition.second
-        ]
+        selections: this.definition.reverse ?
+          [this.definition.second, this.definition.first] :
+          [this.definition.first, this.definition.second]
       }
     } else {
       definition = {
