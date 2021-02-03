@@ -5,15 +5,18 @@ import { Layout } from './Layouts';
 
 let customElementRegistry = window.customElements;
 // @ts-ignore
-customElementRegistry.oldDefine = customElementRegistry.define
-customElementRegistry.define = function (tag, cstr) {
-  try {
-    // @ts-ignore
-    return customElementRegistry.oldDefine(tag, cstr)
-  } catch (exception) {
-    console.error("Error while registering component!", exception)
+if (!customElementRegistry.oldDefine) {
+  // @ts-ignore
+  customElementRegistry.oldDefine = customElementRegistry.define
+  customElementRegistry.define = function (tag, cstr) {
+    try {
+      // @ts-ignore
+      return customElementRegistry.oldDefine(tag, cstr)
+    } catch (exception) {
+      console.error(`Error while registering web component: ${tag}`, exception)
+    }
   }
-};
+}
 
 export interface Resources<D extends FieldDefinition, V> {
   id?: string
