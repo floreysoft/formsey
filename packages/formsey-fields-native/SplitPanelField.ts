@@ -17,6 +17,10 @@ export class SplitPanelField extends Field<SplitPanelDefinition, any> {
     <div id="second">${createField({ components: this.components, settings: this.settings, definition: { ...this.definition.second, type: this.definition.second.type || "form" }, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
     </fs-splitter>`
   }
+
+  protected changed(e: ValueChangedEvent<any>) {
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+  }
 }
 
 getLibrary("native").registerComponent("horizontalSplitPanel", {

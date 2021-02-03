@@ -32,7 +32,7 @@ export interface Component {
   importPath: string | string[],
   factory: (resources: Resources<FieldDefinition, any>) => TemplateResult
   module?: string,
-  focusable?: boolean,
+  focusable?: boolean
 }
 
 export interface Components {

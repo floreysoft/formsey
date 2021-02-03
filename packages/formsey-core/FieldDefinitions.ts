@@ -8,6 +8,13 @@ export interface FieldDefinition {
   helpText?: string | TemplateResult
   default?: any
 }
+export interface FormDefinition extends FieldDefinition {
+  fields: FieldDefinition[]
+  layout?: ResponsiveLayout,
+  target?: "_blank" | "_parent" | "_self" | "_top"
+  action?: string
+  method?: "GET" | "POST"
+}
 
 export interface InteractiveFieldDefinition extends FieldDefinition {
   autofocus?: boolean
@@ -108,14 +115,6 @@ export interface CheckboxesFieldDefinition extends InputFieldDefinition {
   options: Option[]
   layout: "horizontal" | "vertical"
   other?: boolean
-}
-
-export interface FormDefinition extends FieldDefinition {
-  fields: FieldDefinition[]
-  layout?: ResponsiveLayout,
-  target?: "_blank" | "_parent" | "_self" | "_top"
-  action?: string
-  method?: "GET" | "POST"
 }
 
 export interface PanelFieldDefinition extends FormDefinition {

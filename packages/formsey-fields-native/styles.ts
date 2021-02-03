@@ -308,7 +308,7 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
     gap: var(--formsey-space-narrow);
   }
-  formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;

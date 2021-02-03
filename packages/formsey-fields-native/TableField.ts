@@ -32,7 +32,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       }
       (<TableLayout>this.layout).columns?.forEach((column, index) => {
         if (column.visible) {
-          const field = this.definition.fields.filter(field => field.name == column.field)[0]
+          const field = this.definition.fields?.filter(field => field.name == column.field)[0]
           if (field) {
             const templates = index < fixedColumns ? fixed : scrollable
             if (column.sortable) {

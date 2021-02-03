@@ -23,6 +23,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     return html`
     <style>
       fs-ace {
+        flex-grow: 1;
         --fs-token-invisible: var(--formsey-token-invisible, #bfbfbf);
         --fs-token-keyword: var(--formsey-token-keyword, #569CD6);
         --fs-token-constant: var(--formsey-token-constant, #06960e);

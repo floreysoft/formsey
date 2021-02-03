@@ -55,18 +55,15 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
     this.resizeObserver.observe(this as Element)
   }
 
+  protected changed(e: ValueChangedEvent<any>) {
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+  }
+
   private resize(width: number) {
     if (width < DEFAULT_BREAKPOINTS.s) {
       this.layout = "tabs"
     } else {
       this.layout = "split"
-    }
-  }
-
-  protected changed(e: ValueChangedEvent<any>) {
-    e.stopPropagation()
-    if (e.detail?.name) {
-      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
     }
   }
 }

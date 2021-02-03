@@ -18,10 +18,7 @@ export class PanelField extends Field<PanelFieldDefinition, Object> {
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    e.stopPropagation()
-    if (e.detail?.name) {
-      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
   }
 }
 

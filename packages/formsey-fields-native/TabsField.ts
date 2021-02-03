@@ -278,9 +278,9 @@ export class TabsField extends Field<TabsFieldDefinition, Object> {
 
   render() {
     const tabs = []
-    this.definition.selections.forEach(selection => {
+    this.definition.selections.forEach((selection, index) => {
       const icon: TemplateResult = typeof selection.icon == "string" ? getIcon(selection.icon as string) : selection.icon as TemplateResult
-      tabs.push(html`<formsey-tab id=${selection.label} label=${selection.label} .icon=${icon}>${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</formsey-tab>`)
+      tabs.push(html`<formsey-tab id=${selection.label} label=${selection.label} .icon=${icon} ?selected=${ index == 0}>${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</formsey-tab>`)
     })
     return html`<formsey-tabs ?bottom=${this.definition.location == "bottom"} ?expand=${this.definition.expand}>${tabs}</formsey-tabs>`
   }

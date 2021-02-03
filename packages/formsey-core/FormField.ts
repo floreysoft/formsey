@@ -2,7 +2,7 @@ import { customElement, html, property, query, queryAll, TemplateResult } from "
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { getFormatter, getLibrary, Resources } from './Components';
 import { createField, Field } from './Field';
-import { FormDefinition } from './FieldDefinitions';
+import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
 import { Breakpoints, Layout } from "./Layouts";
@@ -24,7 +24,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   set value(value: V) {
     this._value = value
     this.applyHiddenFields()
-    this.removeDeletedFields()
     this.requestUpdate()
   }
 
@@ -37,7 +36,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   set definition(definition: D) {
     this._definition = definition;
     this.applyHiddenFields();
-    this.removeDeletedFields()
     this.updateLayout()
     this.requestUpdate();
   }
@@ -80,15 +78,8 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
-        let value: any
-        if (field.hasOwnProperty('fields') && !field.name) {
-          // Anonymous nested form, so let's copy all form fields
-          value = {}
-          this.applyNestedFields(value, <FormDefinition>field)
-        } else {
-          value = this.value && field.name ? this.value[field.name] : undefined
-        }
-        let fieldTemplate = createField({ components: this.components, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event)})
+        const value = this.value && field.name ? this.value[field.name] : this.value
+        let fieldTemplate = createField({ components: this.components, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
@@ -214,35 +205,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     }
   }
 
-  protected removeDeletedFields() {
-    if (this._definition && this._definition.fields && this._value) {
-      // Remove values from fields that have been removed from the definition
-      let newValue = {}
-      for (let field of this._definition.fields) {
-        if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
-          newValue[field.name] = this.value[field.name]
-        }
-        if (field.hasOwnProperty('fields') && !field.name) {
-          this.addUnnamedNestedFormFields(newValue, field as FormDefinition)
-        }
-      }
-      this.addMemberValueIfPresent("type", newValue)
-      this.addMemberValueIfPresent("layout", newValue)
-      this._value = newValue as V
-    }
-  }
-
-  protected addUnnamedNestedFormFields(newValue: Object, formField: FormDefinition) {
-    for (let field of formField.fields) {
-      if (typeof field.name != "undefined" && typeof this.value[field.name] != "undefined") {
-        newValue[field.name] = this.value[field.name]
-      }
-      if (field.hasOwnProperty('fields') && !field.name) {
-        this.addUnnamedNestedFormFields(newValue, field as FormDefinition)
-      }
-    }
-  }
-
   protected addMemberValueIfPresent(name: string, newValue: Object) {
     if (typeof this.value[name] != "undefined") {
       newValue[name] = this.value[name]
@@ -256,17 +218,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
           if (field.name && field.default) {
             this._value[field.name] = field.default;
           }
-        }
-      }
-    }
-  }
-
-  protected applyNestedFields(value: Object, field: FormDefinition) {
-    for (let nestedField of field.fields) {
-      if (nestedField && this.value) {
-        value[nestedField.name] = this.value[nestedField.name]
-        if (nestedField.hasOwnProperty('fields') && !nestedField.name) {
-          this.applyNestedFields(value, <FormDefinition>nestedField)
         }
       }
     }
@@ -296,7 +247,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 }
 getLibrary("native").registerComponent("form", {
   importPath: "@formsey/core/FormField",
-  factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FormDefinition, any> ) => {
+  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
     return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   }
 })
