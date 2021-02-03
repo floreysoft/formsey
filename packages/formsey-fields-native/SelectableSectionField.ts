@@ -36,7 +36,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         this.selectedValue = selection.value ? selection.value : selection.label;
       }
       if (selection) {
-        form = html`${selection?.fields ? html`<div class="form">${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
+        form = html`${selection?.fields ? html`<div class="form">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
       }
     }
     const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
@@ -45,7 +45,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
-    return html`${createField({ components: this.components, settings: this.settings, definition: { type: "list", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+    return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "list", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
   }
 
   public focusField(path: string) {
@@ -86,7 +86,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
 getLibrary("native").registerComponent("selectableSection", {
   importPath: "@formsey/fields-native/SelectableSectionField",
-  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
-    return html`<formsey-selectable-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-selectable-section>`
+  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
+    return html`<formsey-selectable-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-selectable-section>`
   }
 })

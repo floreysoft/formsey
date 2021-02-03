@@ -24,7 +24,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       hasSearchableColumns = (<TableLayout>this.layout).columns?.filter(column => column.searchable).length > 0
       if (this.definition.selectable) {
         const templates = fixedColumns > 0 ? fixed : scrollable
-        templates.push(html`<div class="td">${createField({ components: this.components, settings: this.settings, definition: { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
+        templates.push(html`<div class="td">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
         if (hasSearchableColumns) {
           const search = fixedColumns > 0 ? searchFixed : searchScrollable
           search.push(html`<div class="td ts"></div>`)
@@ -43,7 +43,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
             if (hasSearchableColumns) {
               const search = index < fixedColumns ? searchFixed : searchScrollable
               if (column.searchable) {
-                search.push(html`<div class="td ts">${createField({ components: this.components, settings: this.settings, definition: { type: "string", name: field.name } as StringFieldDefinition, parentPath: this.path() + ".search", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
+                search.push(html`<div class="td ts">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "string", name: field.name } as StringFieldDefinition, parentPath: this.path() + ".search", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
               } else {
                 search.push(html`<div class="td ts"></div>`)
               }
@@ -65,7 +65,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
               first: true,
               last: i == (this.definition.pageLength || this.value.data.length) - 1
             }
-            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField({ components: this.components, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: this.definition.selectable && this.value.selections?.includes(key), parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
+            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: this.definition.selectable && this.value.selections?.includes(key), parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
           }
           (<TableLayout>this.layout).columns.forEach((column, index) => {
             if (column.visible) {
@@ -78,7 +78,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                   first: !this.definition.selectable && index == 0,
                   last: i == (this.definition.pageLength || this.value.data.length) - 1
                 }
-                templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField({ components: this.components, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
+                templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
               }
             }
           })
@@ -231,8 +231,8 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
 
 getLibrary("native").registerComponent("table", {
   importPath: "@formsey/fields-native/TableField",
-  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
+  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
     // value = { ...value, "data": DUMMY_DATA }
-    return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
+    return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
   }
 })

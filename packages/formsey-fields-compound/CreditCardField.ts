@@ -29,13 +29,13 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField({ components: this.components, settings: this.settings, definition: form, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event) })}</div>`;
+    return html`<div class="fs-nested-form">${createField({ components: this.components, context: this.context, settings: this.settings, definition: form, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event) })}</div>`;
   }
 }
 
 getLibrary("native").registerComponent("creditCard", {
   importPath: "@formsey/fields-compound/CreditCardField",
-    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CreditCardFieldDefinition, Object> ) => {
-    return html`<formsey-creditcard id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-creditcard>`
+    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CreditCardFieldDefinition, Object> ) => {
+    return html`<formsey-creditcard id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-creditcard>`
   }
 })

@@ -34,7 +34,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         const value = this.value[i];
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${getIcon('Minus')}</button></div>` : undefined}
-        ${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout, static: undefined } } as FormDefinition, value: value, parentPath: this.path() + "[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`;
+        ${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout, static: undefined } } as FormDefinition, value: value, parentPath: this.path() + "[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`;
         itemTemplates.push(template);
       }
     }
@@ -120,7 +120,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
 getLibrary("native").registerComponent("repeatingSection", {
   importPath: "@formsey/fields-native/RepeatingSectionField",
-  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<RepeatingFieldDefinition, Object[]>) => {
-    return html`<formsey-repeating-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-repeating-section>`
+  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<RepeatingFieldDefinition, Object[]>) => {
+    return html`<formsey-repeating-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-repeating-section>`
   }
 })

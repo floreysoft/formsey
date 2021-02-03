@@ -214,7 +214,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
 
 getLibrary("native").registerComponent("images", {
   importPath: "@formsey/fields-native/ImagesField",
-  factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ImagesFieldDefinition, string[] | string> ) => {
-    return html`<formsey-images id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-images>`
+  factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ImagesFieldDefinition, string[] | string> ) => {
+    return html`<formsey-images id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-images>`
   }
 })

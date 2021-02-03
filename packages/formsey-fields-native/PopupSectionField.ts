@@ -47,9 +47,9 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
       top: this.top,
       bottom: this.bottom
     }
-    return html`${createField({ id: this.elementId, components: this.components, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, buttonTextz: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: InvalidEvent) => this.invalid(event) })}
+    return html`${createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, buttonTextz: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: InvalidEvent) => this.invalid(event) })}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
-    <div id="form" style=${styleMap(position)}>${createField({ components: this.components, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
+    <div id="form" style=${styleMap(position)}>${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
   }
 
   firstUpdated() {
@@ -141,7 +141,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
 
 getLibrary("native").registerComponent("popupSection", {
   importPath: "@formsey/fields-native/PopupSectionField",
-  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PopupSectionFieldDefinition, Object>) => {
-    return html`<formsey-popup-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
+  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PopupSectionFieldDefinition, Object>) => {
+    return html`<formsey-popup-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
   }
 })

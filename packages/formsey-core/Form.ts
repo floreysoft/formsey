@@ -120,7 +120,7 @@ export class Form extends Field<FieldDefinition, any> {
     if (!this.errors) {
       this.errors = new InvalidErrors()
     }
-    return this.components?.["styledForm"]?.factory({ components: this.components, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+    return this.components?.["styledForm"]?.factory({ components: this.components, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
   }
 
   updated() {

@@ -86,7 +86,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
 
 getLibrary("native").registerComponent("signature", {
   importPath: "@formsey/fields-native-extended/SignatureField",
-    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<SignatureFieldDefinition, string> ) => {
-    return html`<formsey-signature id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-signature>`
+    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<SignatureFieldDefinition, string> ) => {
+    return html`<formsey-signature id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-signature>`
   }
 })

@@ -26,7 +26,7 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
 
 getLibrary("native").registerComponent("button", {
   importPath: "@formsey/fields-native/ButtonField",
-    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ButtonFieldDefinition, boolean> ) => {
-    return html`<formsey-button id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-button>`
+    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ButtonFieldDefinition, boolean> ) => {
+    return html`<formsey-button id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-button>`
   }
 })

@@ -18,8 +18,9 @@ customElementRegistry.define = function (tag, cstr) {
 export interface Resources<D extends FieldDefinition, V> {
   id?: string
   components: Components
-  settings?: Settings
   definition: D
+  context: any
+  settings?: Settings
   value?: V
   parentPath: string
   errors?: InvalidErrors

@@ -30,7 +30,7 @@ export class SwitchField extends LabeledField<CheckboxFieldDefinition, boolean> 
 
 getLibrary("native").registerComponent("switch", {
   importPath: "@formsey/fields-native/SwitchField",
-  factory: ({ components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxFieldDefinition, boolean>) => {
-    return html`<formsey-switch id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-switch>`
+  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxFieldDefinition, boolean>) => {
+    return html`<formsey-switch id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-switch>`
   }
 })

@@ -34,7 +34,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string> {
 
 getLibrary("native").registerComponent("list", {
   importPath: "@formsey/fields-native/ListField",
-    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ListFieldDefinition, string> ) => {
-    return html`<formsey-list id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${<string>value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
+    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ListFieldDefinition, string> ) => {
+    return html`<formsey-list id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${<string>value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
   }
 })

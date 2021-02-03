@@ -44,7 +44,7 @@ export class TextField extends Field<TextFieldDefinition, string> {
 
 getLibrary("vaadin").registerComponent("text", {
   importPath: "@formsey/fields-vaadin/TextField",
-    factory: ( { components, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<TextFieldDefinition, string> ) => {
-    return html`<formsey-text-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text-vaadin>`
+    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<TextFieldDefinition, string> ) => {
+    return html`<formsey-text-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text-vaadin>`
   }
 })

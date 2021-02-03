@@ -8,7 +8,7 @@ import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const createField = (resources: Resources<FieldDefinition, any>): TemplateResult | undefined => {
-  if ( !resources.definition.type ) {
+  if (!resources.definition.type) {
     throw Error("Cannot create field as type is undefined")
   }
   const component = resources.components[resources.definition.type];
@@ -16,10 +16,10 @@ export const createField = (resources: Resources<FieldDefinition, any>): Templat
     return component.factory(resources)
   } else {
     const libraries = getLibraries()
-    for ( let key of Object.keys(libraries) ) {
+    for (let key of Object.keys(libraries)) {
       const library = libraries[key]
       const component = library.components[resources.definition.type]
-      if ( component ) {
+      if (component) {
         return component.factory(resources)
       }
     }
@@ -41,13 +41,16 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   value: V | undefined
 
+  @property({ type: Object })
+  context: any
+
   @property()
   parentPath: string | undefined
 
   @property({ type: String })
   set library(librarys: string) {
     let registeredLibrary = getLibrary(librarys)
-    if (registeredLibrary.components ) {
+    if (registeredLibrary.components) {
       this.components = registeredLibrary.components
     } else {
       let defaultLibrary = getDefaultLibrary()
@@ -67,10 +70,10 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   report: boolean = false
 
   @property({ type: Object })
-  errors : InvalidErrors | null = null
+  errors: InvalidErrors | null = null
 
   @property({ type: Object })
-  customErrors : InvalidErrors | null = null
+  customErrors: InvalidErrors | null = null
 
   public path(): string {
     return typeof this.definition?.name !== "undefined" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
@@ -162,7 +165,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected invalid(e: InvalidEvent) {
-    if ( this.errors ) {
+    if (this.errors) {
       this.dispatchEvent(new InvalidEvent(this.errors))
     }
   }
