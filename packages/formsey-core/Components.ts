@@ -65,11 +65,12 @@ export interface Editor extends FieldDefinition {
   title: string
   icon: TemplateResult
   interaction?: string
-  cell?: boolean
   summary?: (definition: FieldDefinition) => TemplateResult
 }
 
 export interface FormEditor extends Editor, FormDefinition { }
+
+export interface Renderer extends FormDefinition { }
 
 export interface LayoutEditor extends Editor {
   fields?: FieldDefinition[]
@@ -86,6 +87,7 @@ export interface Category {
   types: string[];
   icon?: TemplateResult
 }
+
 export type Categories = Category[]
 
 export interface Icons {
@@ -110,13 +112,7 @@ export function getUniqueElementId(): string {
 }
 
 export function getLibraries(): Libraries {
-  let libraries = (window as any)['__formseyLibraries'] as Libraries
-  if (typeof libraries === "undefined") {
-    console.log("Create library registry")
-    libraries = {};
-    (window as any)['__formseyLibraries'] = libraries
-  }
-  return libraries
+  return getRegistry("libraries")
 }
 
 export function getLibrary(name: string): Library {
@@ -142,32 +138,59 @@ export function getDefaultLibrary(): string | undefined {
   return undefined
 }
 
-export function getEditors(): Editors {
-  let editors = (window as any)['__formseyEditors'] as Editors
-  if (typeof editors === "undefined") {
-    console.log("Create editor registry")
-    editors = {};
-    (window as any)['__formseyEditors'] = editors
+function getRegistry(name: string, init?: any): any {
+  let registries = (window as any)['__formsey']
+  if (typeof registries === "undefined") {
+    registries = {} as Object
+    (window as any)['__formsey'] = registries
+    console.log("Create registry")
   }
-  return editors
+  let registry = registries[name]
+  if (typeof registries[name] === "undefined") {
+    registry = init || {}
+    registries[name] = registry
+  }
+  return registry
 }
 
-export function getEditor(name: string): Editor | undefined {
-  return getEditors()?.[name]
+function get<T>(registry: string, name: string): T {
+  return getRegistry(registry)[name]
 }
 
-export function registerEditor(name: string, editor: Editor) {
-  getEditors()[name] = editor
+function register<T>(registry: string, name: string, item: T) {
+  getRegistry(registry)[name] = item
+}
+
+export function getEditors(): Editors {
+  return getRegistry("editors")
+}
+
+export function getEditor(name: string, context?: any): Editor | undefined {
+  const editor = get("editors", name)
+  if (typeof editor == "function") {
+    return editor(context)
+  }
+  return editor as Editor
+}
+
+export function registerEditor(name: string, editor: Editor | ((context: any) => Editor)) {
+  register("editors", name, editor)
+}
+
+export function getRenderers(): { [key: string]: Renderer | undefined } {
+  return getRegistry("renderers")
+}
+
+export function getRenderer(name: string): Renderer | undefined {
+  return get("renderers", name)
+}
+
+export function registerRenderer(name: string, renderer: Renderer) {
+  register("renderers", name, renderer)
 }
 
 export function getCategories(): Categories {
-  let categories = (window as any)['__formseyCategories'] as Categories
-  if (typeof categories === "undefined") {
-    console.log("Create category registry")
-    categories = [];
-    (window as any)['__formseyCategories'] = categories
-  }
-  return categories
+  return getRegistry("categories", [])
 }
 
 export function getCategory(name: string): Category | null {
@@ -184,57 +207,39 @@ export function addCategory(category: Category) {
 }
 
 export function getIcons(): Icons {
-  let icons = (window as any)['__formseyIcons'] as Icons
-  if (typeof icons === "undefined") {
-    console.log("Create icon registry")
-    icons = {};
-    (window as any)['__formseyIcons'] = icons
-  }
-  return icons
+  return getRegistry("icons")
 }
 
 export function getIcon(name: string): TemplateResult | undefined {
-  return getIcons()?.[name]
+  return get("icons", name)
 }
 
 export function registerIcon(name: string, template: TemplateResult) {
-  getIcons()[name] = template
+  register("icons", name, template)
 }
 
 export function getFormatters(): Formatters {
-  let formatters = (window as any)['__formseyFormatters'] as Formatters
-  if (typeof formatters === "undefined") {
-    console.log("Create formatter registry")
-    formatters = {};
-    (window as any)['__formseyFormatters'] = formatters
-  }
-  return formatters
+  return getRegistry("formatters", {})
 }
 
 export function getFormatter(name: string): Formatter | undefined {
-  return getFormatters()?.[name]
+  return get("formatters", name)
 }
 
 export function registerFormatter(name: string, formatter: Formatter) {
-  getFormatters()[name] = formatter
+  register("formatters", name, formatter)
 }
 
 export function getMessages(): { [key: string]: any } {
-  let messages = (window as any)['__formseyMessages'] as Icons
-  if (typeof messages === "undefined") {
-    console.log("Create message registry")
-    messages = {};
-    (window as any)['__formseyMessages'] = messages
-  }
-  return messages
+  return getRegistry("messages")
 }
 
 export function translate(key: string, data: any): TemplateResult | undefined {
-  return getIcons()?.[key]
+  return get("messages", key)
 }
 
 export function registerMessages(locale: string, messages: { [key: string]: any }) {
-  getMessages()[locale] = {}
+  register("messages", locale, messages)
 }
 
 export function area(field: FieldDefinition, fields: FieldDefinition[]): string {

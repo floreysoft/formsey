@@ -19,6 +19,7 @@
     "@floreysoft/utils": "^0.4.0",
     "@formsey/core": "^0.3.131",
     "@popperjs/core": "^2.6.0",
+    "intl-messageformat": "^9.4.6",
     "lit-element": "^2.3.0"
   },
   "scripts": {

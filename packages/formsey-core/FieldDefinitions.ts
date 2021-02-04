@@ -65,7 +65,7 @@ export interface StringFieldDefinition extends InputFieldDefinition {
 }
 
 export interface LabelFieldDefinition extends FieldDefinition {
-  wrap?: boolean
+  wrap?: "wrap" | "nowrap"
   locale?: string
   format?: string
   skeleton?: string
