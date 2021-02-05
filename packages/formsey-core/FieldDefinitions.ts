@@ -65,10 +65,12 @@ export interface StringFieldDefinition extends InputFieldDefinition {
 }
 
 export interface LabelFieldDefinition extends FieldDefinition {
-  wrap?: "wrap" | "nowrap"
   locale?: string
   format?: string
   skeleton?: string
+  wrap?: "wrap" | "nowrap"
+  horizontal?: "left" | "center" | "right" | "expand"
+  vertical?: "top" | "middle" | "bottom"
 }
 
 export interface UploadFieldDefinition extends InputFieldDefinition {

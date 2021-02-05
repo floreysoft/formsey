@@ -3,7 +3,7 @@ import { LabeledField } from '@formsey/core';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Components';
 import { ToggleFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { css, CSSResult, customElement, html, LitElement, property, query } from "lit-element";
+import { css, CSSResult, customElement, html, LitElement, property, query, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 @customElement("formsey-tgl")
@@ -12,7 +12,7 @@ export class Toggle extends LitElement {
   id: string;
 
   @property()
-  label: string;
+  label: string | TemplateResult
 
   @property({ type: Boolean, reflect: true })
   selected: boolean
@@ -28,6 +28,7 @@ export class Toggle extends LitElement {
         :host {
             display: flex;
             align-items: center;
+            flex-grow: 1;
             border: 1px solid var(--formsey-border);
             border-right-color: transparent;
             overflow: hidden;
@@ -77,9 +78,6 @@ export class Toggle extends LitElement {
   }
 
   render() {
-    if (!this.id) {
-      this.id = this.label
-    }
     if (this.label) {
       return html`<button class='${this.selected ? "selected" : ""}' ?disabled="${this.disabled}" @click="${this.toggle}">${this.label}</button>`
     } else {
@@ -233,8 +231,9 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
   renderField() {
     const buttons = []
     for (let i = 0; i < this.definition.buttons?.length; i++) {
-      const icon = typeof this.definition.buttons[i].icon == "string" ? getIcon(this.definition.buttons[i].icon as string) : this.definition.buttons[i].icon
-      buttons.push(html`<formsey-tgl id=${this.definition.buttons[i].name} ?selected=${this.definition.buttons[i].name == this.value}>${icon}</formsey-tgl>`)
+      const button = this.definition.buttons[i]
+      const icon = typeof button.icon == "string" ? getIcon(button.icon as string) : button.icon
+      buttons.push(html`<formsey-tgl id=${button.name} ?selected=${button.name == this.value} .label=${button.text}>${icon}</formsey-tgl>`)
     }
     return html`<formsey-tgls @select=${this.select}>${buttons}</formsey-tgls>`
   }

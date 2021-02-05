@@ -1,10 +1,11 @@
-import { createField, Field, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition } from '@formsey/core';
+import { createField, DEFAULT_BREAKPOINTS, Field, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition, SUPPORTED_BREAKPOINTS } from '@formsey/core';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Components';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { Layout } from '@formsey/core/Layouts';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property } from "lit-element";
+import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class SelectableSectionValue {
@@ -17,9 +18,40 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   @property({ converter: Object })
   value: SelectableSectionValue;
 
-  values: string[]
-  selectedValue: string
-  index: number
+
+  @property({ converter: Object })
+  // @ts-ignore()
+  set definition(definition: SelectableSectionFieldDefinition) {
+    this._definition = definition;
+    this.updateLayout()
+    this.requestUpdate();
+  }
+
+  get definition() {
+    return this._definition
+  }
+
+  @property()
+  protected layout: Layout | undefined
+
+  @query("section")
+  private section: HTMLElement | undefined
+
+  private resizeObserver: ResizeObserver
+  private values: string[]
+  private selectedValue: string
+  private index: number
+  private size: string | undefined
+  protected _definition: SelectableSectionFieldDefinition | undefined
+
+  constructor() {
+    super()
+    this.resizeObserver = new ResizeObserver((entries, observer) => {
+      for (const entry of entries) {
+        this.resize(entry.contentRect.width)
+      }
+    });
+  }
 
   render() {
     let form = undefined
@@ -40,12 +72,18 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       }
     }
     const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
-    return html`<section style=${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}>${super.render()}${form}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
+    const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
+    const style = `${staticFormatter?.containerStyle(this.definition.layout?.static)};${responsiveFormatter?.containerStyle(this.layout, this.definition)}`
+    return html`<section style=${style}>${super.render()}${form}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
   }
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
     return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "list", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+  }
+
+  firstUpdated() {
+    this.resizeObserver.observe(this.section)
   }
 
   public focusField(path: string) {
@@ -55,6 +93,38 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       return (<any>child).focusField()
     }
     return false
+  }
+
+  protected resize(availableWidth: number) {
+    // If available with larger than larges breakpoint, default to the largest
+    let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
+    for (let size of SUPPORTED_BREAKPOINTS) {
+      let breakpoint = this.definition?.layout?.breakpoints?.[size]
+      if (typeof breakpoint === "undefined") {
+        breakpoint = DEFAULT_BREAKPOINTS[size]
+      }
+      if (breakpoint > availableWidth) {
+        detectedSize = size
+        break
+      }
+    }
+    if (this.size != detectedSize) {
+      // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
+      this.size = detectedSize
+      this.updateLayout()
+    }
+  }
+
+  protected updateLayout() {
+    this.layout = undefined
+    let sizeFound = false
+    for (let size of SUPPORTED_BREAKPOINTS) {
+      sizeFound = (size == this.size || sizeFound)
+      this.layout = this.definition?.layout?.responsive?.[size] || this.layout
+      if (this.layout && sizeFound) {
+        break
+      }
+    }
   }
 
   protected selectionChanged(e: ValueChangedEvent<string>) {

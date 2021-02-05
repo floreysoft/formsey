@@ -714,6 +714,7 @@ export const FORM_STYLES = css`
   formsey-table .b {
     display: flex;
     flex-direction: row;
+    align-self: flex-start;
     border: 1px solid var(--formsey-shade);
     border-radius: var(--formsey-border-radius);
   }

@@ -128,14 +128,14 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           }
         }
       }
-      pager = html`<formsey-form .components=${this.components} .settings=${this.settings} .definition=${pagerDefinition} @click=${this.page}></formsey-form>`
+      pager = html`<formsey-form-field .components=${this.components} .settings=${this.settings} .definition=${pagerDefinition} @click=${this.page}></formsey-form-field>`
     }
     const fixedFormatter = getFormatter(this.definition.layout?.static?.formatter)
     return html`<section style="${ifDefined(fixedFormatter?.containerStyle(this.definition.layout?.static))}">
       <div class="ffg">
-        <div class="tw" style="${ifDefined((<TableLayout>this.layout)?.fill == "grow" ? "flex-grow:1" : undefined)}">
+        <div class="tw">
            <div class="vscroll">
-            <div class="b">
+            <div class="b" style="${ifDefined((<TableLayout>this.layout)?.fill == "grow" ? "align-self:stretch" : undefined)}">
               ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
               <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>
             </div>

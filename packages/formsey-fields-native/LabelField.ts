@@ -10,8 +10,9 @@ import { IntlMessageFormat } from 'intl-messageformat'
 @customElement("formsey-label")
 export class LabelField extends LabeledField<LabelFieldDefinition, any> {
   protected renderField() {
-    const formatted = new IntlMessageFormat(`{value, ${this.definition.format}, ${this.definition.skeleton}}`, this.definition.locale).format({ value: this.value })
-    return html`<div class="${classMap({ l: true, "w": this.definition.wrap == "wrap" ? true : false })}"><span>${formatted}</span></div>`
+    const formatted = new IntlMessageFormat(`{value${this.definition.format ? `,${this.definition.format}${this.definition.skeleton ? `,${this.definition.skeleton}` : ""}` : ""}}`, this.definition.locale).format({ value: this.value })
+    const style = `align-self:${this.definition.horizontal == "center" ? "center" : this.definition.horizontal == "right" ? "flex-end" : "flex-start"}`
+    return html`<div style="${style}" class="${classMap({ l: true, "w": this.definition.wrap == "wrap" ? true : false })}"><span>${formatted}</span></div>`
   }
 }
 getLibrary("native").registerComponent("label", {

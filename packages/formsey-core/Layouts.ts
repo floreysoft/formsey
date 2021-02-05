@@ -75,6 +75,7 @@ export interface TableLayout extends Layout {
     visible?: boolean
     searchable?: boolean
     sortable?: boolean
+    horizontal?: "left" | "center" | "right",
     width?: {
       selection: "auto" | "minmax"
       value?: {
