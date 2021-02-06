@@ -1,7 +1,8 @@
 import { getLibrary, Resources } from '@formsey/core/Components';
-import { createField } from '@formsey/core/Field';
-import { FormDefinition } from '@formsey/core/FieldDefinitions';
+import { createField, Field } from '@formsey/core/Field';
+import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
+import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
@@ -129,10 +130,13 @@ export class StyledForm extends Form {
   @query(".themed")
   themed: HTMLElement
 
+  @query('#field')
+  form: FormField<FormDefinition, Object> | undefined
+
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField({ id: 'form', components: this.components, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
+      field = createField({ id: 'field', components: this.components, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
     return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme']?.['selection'])} .themes=${themes}><div class="themed" part="form">${form}</div></fs-theme>` : form

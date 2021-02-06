@@ -71,7 +71,10 @@ export interface Editor extends FieldDefinition {
 
 export interface FormEditor extends Editor, FormDefinition { }
 
-export interface Renderer extends FormDefinition { }
+export interface Renderer {
+  type: string
+  editor: FormEditor
+}
 
 export interface LayoutEditor extends Editor {
   fields?: FieldDefinition[]
