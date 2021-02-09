@@ -46,6 +46,7 @@ export class Toggle extends LitElement {
         }
         button {
             display: flex;
+            box-sizing: border-box;
             align-items: center;
             flex-grow: 1;
             justify-content: center;
@@ -61,6 +62,7 @@ export class Toggle extends LitElement {
             background: none;
             color: inherit;
             cursor: pointer;
+            height: var(--formsey-input-height, 2em);
         }
         button:disabled {
             cursor: default;

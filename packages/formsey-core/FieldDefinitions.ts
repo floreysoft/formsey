@@ -67,10 +67,22 @@ export interface StringFieldDefinition extends InputFieldDefinition {
 export interface LabelFieldDefinition extends FieldDefinition {
   locale?: string
   format?: string
-  skeleton?: string
+  style?: {
+    selection?: string
+    value?: {
+      currency?: string
+      currencyDisplay?: string
+      currencySign?: string
+      unit?: string
+      unitDisplay?: string
+    }
+  }
+  notation?: string
+  signDisplay?: string
+  useGrouping?: boolean
+  unit?: string
+  unitDisplay?: string
   wrap?: "wrap" | "nowrap"
-  horizontal?: "left" | "center" | "right" | "expand"
-  vertical?: "top" | "middle" | "bottom"
 }
 
 export interface UploadFieldDefinition extends InputFieldDefinition {
@@ -92,6 +104,7 @@ export interface DateFieldDefinition extends InputFieldDefinition {
 export interface Option {
   label: string
   value: string
+  icon?: TemplateResult | string
 }
 
 export interface Image {
@@ -111,6 +124,11 @@ export interface ImagesFieldDefinition extends InputFieldDefinition {
 
 export interface ListFieldDefinition extends InputFieldDefinition {
   options: Option[]
+  max?: number
+  searchThreshold?: number
+  hideCheckmark?: boolean
+  multiselect?: boolean
+  query?: string
 }
 
 export interface CheckboxesFieldDefinition extends InputFieldDefinition {
@@ -141,7 +159,7 @@ export interface Selection extends FormDefinition {
 
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
-  multipleChoice?: boolean
+  selection?: string
   layout?: ResponsiveLayout
 }
 export interface TabsFieldDefinition extends InputFieldDefinition {

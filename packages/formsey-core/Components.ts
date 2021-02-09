@@ -67,6 +67,7 @@ export interface Editor extends FieldDefinition {
   interaction?: string
   summary?: (definition: FieldDefinition) => TemplateResult
   prepareFieldsForLayout?: (context: any) => FieldDefinition[]
+  prepareDefaultLayout?: (context: any) => Layout
 }
 
 export interface FormEditor extends Editor, FormDefinition { }

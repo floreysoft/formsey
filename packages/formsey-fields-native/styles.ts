@@ -307,18 +307,88 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
     gap: var(--formsey-space-narrow);
   }
-  formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
-    display: flex;
-    position:relative;
-    flex-direction: column;
-    flex-grow: 1;
-  }
   .fbg {
     position: absolute;
     inset: 0px;
     border-radius: inherit;
     pointer-events: none;
   }
+
+  formsey-option>button {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    gap: var(--formsey-space-wide);
+    padding: var(--formsey-space-narrow);
+    align-items: center;
+    height: var(--formsey-input-height, 2em);
+    border: 1px solid transparent;
+    border-radius:var(--formsey-border-radius);
+    outline: none;
+    color: var(--formsey-color, inherit);
+    background: none;
+  }
+  formsey-option>button.c {
+    border: 1px solid var(--formsey-border, transparent);
+  }
+  formsey-option>button:focus, formsey-option>button.c:focus {
+    border: 1px solid var(--formsey-border-focus, transparent);
+  }
+  formsey-option>button:hover {
+    background: var(--formsey-widget-background-hover);
+  }
+  formsey-option>button>.cm {
+    padding: var(--formsey-space-narrow);
+    width: 1em;
+  }
+
+  /* Combobox, Listbox */
+  formsey-popup-section, formsey-select {
+    position: relative;
+
+  }
+
+  formsey-select button.input {
+    justify-content: left;
+  }
+
+  formsey-combobox .popup, formsey-select .popup {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    visibility: hidden;
+    z-index: 8;
+    position: fixed;
+    background: var(--formsey-background);
+    max-height: 50vh;
+  }
+
+  formsey-option .label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  formsey-option .label b {
+    font-weight: bolder;
+  }
+
+  formsey-list, formsey-list>.lfw  {
+    overflow: hidden;
+  }
+
+  /* Expand various items */
+  formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+    display: flex;
+    position:relative;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  formsey-string {
+    flex-grow: 1;
+  }
+
 
   /* Stats View */
   formsey-stats-view .statistics {
@@ -369,7 +439,7 @@ export const FORM_STYLES = css`
   /* Labeled field */
   .lfw {
     box-sizing: border-box;
-    transition: all 0.2s ease-out;
+    transition: color 0.2s ease-out;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -382,7 +452,7 @@ export const FORM_STYLES = css`
     font: var(--formsey-label-font, inherit);
     color: var(--formsey-label-color, inherit);
     padding: var(--formsey-space-narrow);
-    transition: all 0.12s ease-out;
+    transition: color 0.12s ease-out;
     opacity: 0.8;
   }
 
@@ -525,6 +595,11 @@ export const FORM_STYLES = css`
   }
 
   /* List field */
+  formsey-list .options {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   formsey-list option {
     background: var(--formsey-background);
   }
@@ -686,8 +761,11 @@ export const FORM_STYLES = css`
     z-index: 3;
     background-color: var(--formsey-background);
     padding: var(--formsey-space-narrow);
-    border: 1px solid var(--fs-border-color);
+    border: 1px solid var(--formsey-border-color);
     border-radius: var(--formsey-border-radius);
+  }
+  formsey-popup-section formsey-select {
+    min-width: 10em;
   }
 
   /* Text field */
@@ -840,9 +918,13 @@ export const FORM_STYLES = css`
   /* Layouts, Toggled */
   formsey-layout {
     display: flex;
-    flex-wrap: wrap;
+  }
+
+  formsey-layout>.lfw>.toggles {
+    flex-direction: row;
     column-gap: var(--formsey-space-wide);
     row-gap: var(--formsey-space-narrow);
+    flex-wrap: wrap;
   }
 
   formsey-layout fs-toggles {

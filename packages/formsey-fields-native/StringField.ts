@@ -1,7 +1,5 @@
 import { StringFieldDefinition } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Components';
 import { customElement, html } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { InputField } from './InputField';

@@ -79,7 +79,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
-    return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "list", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+    return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: this.definition.selection, name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
   }
 
   firstUpdated() {

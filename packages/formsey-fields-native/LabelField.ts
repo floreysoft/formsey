@@ -1,18 +1,18 @@
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
-import { FieldDefinition, LabelFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Components';
+import { LabelFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { LabeledField } from "@formsey/core/LabeledField";
 import { customElement, html } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { IntlMessageFormat } from 'intl-messageformat'
 
 @customElement("formsey-label")
 export class LabelField extends LabeledField<LabelFieldDefinition, any> {
   protected renderField() {
-    const formatted = new IntlMessageFormat(`{value${this.definition.format ? `,${this.definition.format}${this.definition.skeleton ? `,${this.definition.skeleton}` : ""}` : ""}}`, this.definition.locale).format({ value: this.value })
-    const style = `align-self:${this.definition.horizontal == "center" ? "center" : this.definition.horizontal == "right" ? "flex-end" : "flex-start"}`
-    return html`<div style="${style}" class="${classMap({ l: true, "w": this.definition.wrap == "wrap" ? true : false })}"><span>${formatted}</span></div>`
+    let formatted = this.value
+    if (this.definition.format == "number") {
+      formatted = new Intl.NumberFormat(this.definition.locale || navigator.language, { style: this.definition.style.selection, currency: this.definition.style.value.currency, currencyDisplay: this.definition.style.value.currencyDisplay, currencySign: this.definition.style.value.currencySign, useGrouping: this.definition.useGrouping, signDisplay: this.definition.signDisplay, unit: this.definition.style.value.unit, unitDisplay: this.definition.style.value.unitDisplay }).format(this.value)
+    }
+    return html`<div class="${classMap({ l: true, "w": this.definition.wrap == "wrap" ? true : false })}"><span>${formatted}</span></div>`
   }
 }
 getLibrary("native").registerComponent("label", {
