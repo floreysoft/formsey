@@ -1,5 +1,5 @@
 import { CompoundField } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -35,7 +35,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
 
 getLibrary("native").registerComponent("creditCard", {
   importPath: "@formsey/fields-compound/CreditCardField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CreditCardFieldDefinition, Object> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CreditCardFieldDefinition, Object> ) => {
     return html`<formsey-creditcard id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-creditcard>`
   }
 })

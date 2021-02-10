@@ -1,4 +1,4 @@
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { Field } from '@formsey/core/Field';
 import { CheckboxesFieldDefinition, FieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -114,7 +114,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
 
 getLibrary("vaadin").registerComponent("checkboxes", {
   importPath: "@formsey/fields-vaadin/CheckboxesField",
-  factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxesFieldDefinition, string[]> ) => {
+  template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxesFieldDefinition, string[]> ) => {
     return html`<formsey-checkboxes-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-vaadin>`
   }
 })

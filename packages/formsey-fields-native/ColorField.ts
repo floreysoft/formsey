@@ -1,4 +1,4 @@
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -30,7 +30,7 @@ export class ColorField extends StringField {
 
 getLibrary("native").registerComponent("color", {
   importPath: "@formsey/fields-native/ColorField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<StringFieldDefinition, string> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<StringFieldDefinition, string> ) => {
     return html`<formsey-color id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-color>`
   }
 })

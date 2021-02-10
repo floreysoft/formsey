@@ -1,6 +1,6 @@
 import '@floreysoft/splitter';
 import { createField, Field, InvalidEvent } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition, SplitPanelDefinition } from '@formsey/core/FieldDefinitions';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property } from "lit-element";
@@ -25,14 +25,14 @@ export class SplitPanelField extends Field<SplitPanelDefinition, any> {
 
 getLibrary("native").registerComponent("horizontalSplitPanel", {
   importPath: "@formsey/fields-native/SplitPanel",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
     return html`<formsey-split-panel id="${ifDefined(id)}" .components=${components} .context=${context} .settings=${settings} .definition=${{ ...definition, direction: "horizontal" }} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-split-panel>`
   }
 })
 
 getLibrary("native").registerComponent("verticalSplitPanel", {
   importPath: "@formsey/fields-native/SplitPanel",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
     return html`<formsey-split-panel id="${ifDefined(id)}" .components=${components} .context=${context} .settings=${settings} .definition=${{ ...definition, direction: "vertical" }} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-split-panel>`
   }
 })

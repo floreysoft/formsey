@@ -1,6 +1,6 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { Field, ValueChangedEvent } from '@formsey/core';
-import { getIcon, getLibrary, Resources } from '@formsey/core/Components';
+import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { Option } from '@formsey/core/FieldDefinitions';
 import { customElement, html, property, query } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
@@ -49,7 +49,7 @@ export class OptionField extends Field<Option, boolean> {
 
 getLibrary("native").registerComponent("option", {
   importPath: "@formsey/fields-native/OptionField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler }: Resources<Option, boolean>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler }: Resources<Option, boolean>) => {
     return html`<formsey-option .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-option>`
   }
 })

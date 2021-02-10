@@ -286,10 +286,6 @@ export const FORM_STYLES = css`
   }
 
   /* Form Field */
-  formsey-form-field {
-    display: flex;
-    flex-grow: 1;
-  }
   formsey-form-field fieldset {
     padding: 5px;
     border: 0;
@@ -299,6 +295,7 @@ export const FORM_STYLES = css`
   .fff {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
   .ffg {
     display: flex;
@@ -306,6 +303,7 @@ export const FORM_STYLES = css`
     width: 100%;
     box-sizing: border-box;
     gap: var(--formsey-space-narrow);
+    overflow: hidden;
   }
   .fbg {
     position: absolute;
@@ -373,16 +371,13 @@ export const FORM_STYLES = css`
     font-weight: bolder;
   }
 
-  formsey-list, formsey-list>.lfw  {
-    overflow: hidden;
-  }
-
   /* Expand various items */
-  formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;
     flex-grow: 1;
+    overflow: hidden;
   }
 
   formsey-string {
@@ -394,6 +389,7 @@ export const FORM_STYLES = css`
   formsey-stats-view .statistics {
     display: flex;
     flex-wrap: wrap;
+    overflow-y: auto;
   }
 
   formsey-stats-view .statistics formsey-stats {
@@ -444,6 +440,7 @@ export const FORM_STYLES = css`
     flex-direction: column;
     flex-grow: 1;
     max-width: 100%;
+    overflow: hidden;
   }
 
   .lfl {
@@ -788,6 +785,7 @@ export const FORM_STYLES = css`
     flex-direction: column;
     flex-grow: 1;
     max-width: 100%;
+    overflow: hidden;
   }
   formsey-table .b {
     display: flex;
@@ -847,7 +845,7 @@ export const FORM_STYLES = css`
   }
 
   /* Repeating section */
-  formsey-repeating-section .form {
+  formsey-repeating-section>section>.lfw>div>.form {
     position: relative;
     margin: .25em 0 .25em 1em;
     padding: 0.25em 0px 0.25em 1em;
@@ -855,21 +853,21 @@ export const FORM_STYLES = css`
     font-size: var(--formsey-repeating-section-icon-size, inherit);
     transition: all 0.12s ease-out;
   }
-  formsey-repeating-section .form:hover {
+  formsey-repeating-section>section>.lfw>div>.form:hover {
     border-left: 2px solid var(--formsey-widget-background-hover, #CAC4C2);
   }
-  formsey-repeating-section .fs-remove-wrapper {
+  formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper {
     position: absolute;
     line-height: 0;
     padding: 0.4em 0;
     top: calc(50% - 1em);
     left: -0.8em;
   }
-  formsey-repeating-section button fs-icon {
+  formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper>button fs-icon, formsey-repeating-section>section>.lfw>.fs-add fs-icon {
     width: 1em;
     height: 1em;
   }
-  formsey-repeating-section button {
+  formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper>button,formsey-repeating-section>section>.lfw>.fs-add {
     color: inherit;
     display: flex;
     width: 1.4em;
@@ -881,30 +879,26 @@ export const FORM_STYLES = css`
     border: var(--formsey-input-border, 1px solid transparent);
     padding: 0.15em;
   }
-  formsey-repeating-section button:focus {
+  formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper>button:focus, formsey-repeating-section>section>.lfw>.fs-add:focus {
     outline: none;
     border: 1px solid var(--formsey-border-focus, #020b2f);
   }
-  formsey-repeating-section .form:hover .fs-remove-wrapper {
+  formsey-repeating-section>section>.lfw>div>.form:hover>.fs-remove-wrapper {
     opacity: 1;
   }
-  formsey-repeating-section .form:hover .fs-remove, formsey-repeating-section .fs-add:hover {
+  formsey-repeating-section>section>.lfw>div>.form:hover>.fs-remove-wrapper>.fs-remove, formsey-repeating-section>section>.lfw>.fs-add:hover {
     background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-widget-background-hover, #CAC4C2));
   }
-  formsey-repeating-section .fs-add {
+  formsey-repeating-section>section>.lfw>.fs-add {
     margin: .25em 0.4em;
   }
 
   @media (pointer: coarse) {
-    formsey-repeating-section .form {
+    formsey-repeating-section>section>.lfw>div>.form {
       padding: 0 0 0 1.5em;
       margin: .25em 0 .25em 1em;
     }
-    formsey-repeating-section button {
-      width: 2em;
-      height: 2em;
-    }
-    formsey-repeating-section button fs-icon {
+    formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper>button,formsey-repeating-section>section>.lfw>.fs-add fs-icon {
       width: 2em;
       height: 2em;
     }

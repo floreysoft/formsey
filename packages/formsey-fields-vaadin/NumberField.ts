@@ -1,4 +1,4 @@
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { NumberFieldDefinition } from '@formsey/core/FieldDefinitions';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
@@ -19,7 +19,7 @@ export class NumberField extends InputField<NumberFieldDefinition, string> {
 
 getLibrary("vaadin").registerComponent("number", {
   importPath: "@formsey/fields-vaadin/NumberField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<NumberFieldDefinition, string> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<NumberFieldDefinition, string> ) => {
     return html`<formsey-number-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-number-vaadin>`
   }
 })

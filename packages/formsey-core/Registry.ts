@@ -34,7 +34,8 @@ export interface Resources<D extends FieldDefinition, V> {
 
 export interface Component {
   importPath: string | string[],
-  factory: (resources: Resources<FieldDefinition, any>) => TemplateResult
+  template: (resources: Resources<FieldDefinition, any>) => TemplateResult
+  renderer?: string,
   module?: string,
   focusable?: boolean
 }
@@ -71,11 +72,6 @@ export interface Editor extends FieldDefinition {
 }
 
 export interface FormEditor extends Editor, FormDefinition { }
-
-export interface Renderer {
-  type: string
-  editor: FormEditor
-}
 
 export interface LayoutEditor extends Editor {
   fields?: FieldDefinition[]
@@ -182,16 +178,16 @@ export function registerEditor(name: string, editor: Editor | ((context: any) =>
   register("editors", name, editor)
 }
 
-export function getRenderers(): { [key: string]: Renderer | undefined } {
-  return getRegistry("renderers")
+export function getRendererEditors(): { [key: string]: string | undefined } {
+  return getRegistry("rendererEditors")
 }
 
-export function getRenderer(name: string): Renderer | undefined {
-  return get("renderers", name)
+export function getRendererEditor(name: string): string | undefined {
+  return get("rendererEditors", name)
 }
 
-export function registerRenderer(name: string, renderer: Renderer) {
-  register("renderers", name, renderer)
+export function registerRendererEditor(name: string, rendererEditor: string) {
+  register("rendererEditors", name, rendererEditor)
 }
 
 export function getCategories(): Categories {

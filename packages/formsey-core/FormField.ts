@@ -1,6 +1,6 @@
 import { customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { getFormatter, getLibrary, Resources } from './Components';
+import { getFormatter, getLibrary, Resources } from './Registry';
 import { createField, Field } from './Field';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
@@ -243,7 +243,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 }
 getLibrary("native").registerComponent("form", {
   importPath: "@formsey/core/FormField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
     return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   }
 })

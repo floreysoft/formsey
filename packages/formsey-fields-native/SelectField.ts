@@ -1,6 +1,6 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { createField, LabeledField, ListFieldDefinition, StringFieldDefinition } from '@formsey/core';
-import { getFormatter, getLibrary, Resources } from '@formsey/core/Components';
+import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { BoxLayout } from '@formsey/core/Layouts';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property, query } from "lit-element";
@@ -82,7 +82,7 @@ export class SelectField extends LabeledField<ListFieldDefinition, string> {
 
 getLibrary("native").registerComponent("select", {
   importPath: "@formsey/fields-native/SelectField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
     return html`<formsey-select id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${<string>value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-select>`
   }
 })

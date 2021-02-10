@@ -1,5 +1,5 @@
 import { createField, DEFAULT_BREAKPOINTS, Field, InvalidEvent } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ResponsivePanelFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, property } from "lit-element";
@@ -69,7 +69,7 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
 
 getLibrary("native").registerComponent("responsivePanel", {
   importPath: "@formsey/fields-native/ResponsivePanelField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
     return html`<formsey-responsive-panel id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-responsive-panel>`
   }
 })

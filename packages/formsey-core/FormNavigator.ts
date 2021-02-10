@@ -1,6 +1,6 @@
 import { css, customElement, html, LitElement, property, query, TemplateResult } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
-import { Components } from "./Components";
+import { Components } from "./Registry";
 import { FieldDefinition, FormDefinition, InputFieldDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
 import { get } from "./Form";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";

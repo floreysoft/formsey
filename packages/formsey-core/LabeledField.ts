@@ -1,6 +1,6 @@
 import { html, TemplateResult } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
-import { getUniqueElementId } from './Components';
+import { getUniqueElementId } from './Registry';
 import { Field } from './Field';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 

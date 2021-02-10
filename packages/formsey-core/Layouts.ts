@@ -28,7 +28,8 @@ export interface Layout {
 
 export interface BoxLayout extends Layout {
   formatter: "box"
-  spacing: "none" | "narrow" | "wide"
+  margin: "none" | "narrow" | "wide"
+  padding: "none" | "narrow" | "wide"
   elevation: number
   border: "sharp" | "soft"
   color: string

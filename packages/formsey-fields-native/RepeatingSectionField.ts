@@ -1,5 +1,5 @@
 import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
-import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Components';
+import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -120,7 +120,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
 getLibrary("native").registerComponent("repeatingSection", {
   importPath: "@formsey/fields-native/RepeatingSectionField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<RepeatingFieldDefinition, Object[]>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<RepeatingFieldDefinition, Object[]>) => {
     return html`<formsey-repeating-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-repeating-section>`
   }
 })

@@ -4,7 +4,7 @@ export { CheckboxesField } from './CheckboxesField';
 export { CheckboxField } from './CheckboxField';
 export { ColorField, ICON_COLOR_FIELD } from './ColorField';
 export { ComboboxField } from './ComboboxField';
-export { CurrencyCodeField } from './CurrencyCodeField';
+export { CurrencyField } from './CurrencyField';
 export { DateField } from './DateField';
 export { DateTimeField } from './DateTimeField';
 export { EmailField } from './EmailField';
@@ -44,7 +44,7 @@ export { ICON_FILE, ICON_REMOVE, ICON_UPLOAD, UploadField } from './UploadField'
 export { URLField } from './URLField';
 export { WeekField } from './WeekField';
 export { YouTubeField } from './YouTubeField';
-import { getLibrary } from '@formsey/core/Components';
+import { getLibrary } from '@formsey/core/Registry';
 import { html } from 'lit-html';
 
 export const ICON_BROWSER = html`<svg viewBox="0 0 32 32"><path d="M30 2h-28c-1 0-2 .9-2 2v24c0 1.102.9 2 2 2h28c1 0 2-.9 2-2v-24c.002-1.1-.9-2-2-2zM11.5 3.5c.83 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5c-.83 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5zM7.5 3.5c.83 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5c-.83 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5zM3.5 3.5c.83 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5zM30 28c-.004 0-.004 0-.004.004h-28c-.002-.004-.002-.004-.004-.004v-20h28v20z"></path></svg>`

@@ -1,5 +1,5 @@
 import { createField, Field } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -7,7 +7,7 @@ import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, CSSResult, customElement, html, LitElement, property, query, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { classMap } from 'lit-html/directives/class-map';
-import { getIcon } from '../formsey-core/Components';
+import { getIcon } from '@formsey/core/Registry';
 @customElement("formsey-tab")
 export class Tab extends LitElement {
   @property()
@@ -304,7 +304,7 @@ export class TabsField extends Field<TabsFieldDefinition, Object> {
 
 getLibrary("native").registerComponent("tabs", {
   importPath: "@formsey/fields-native/TabsField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TabsFieldDefinition, Object>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TabsFieldDefinition, Object>) => {
     return html`<formsey-tab-panel id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-tab-panel>`
   }
 })

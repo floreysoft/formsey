@@ -1,4 +1,4 @@
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { Field } from '@formsey/core/Field';
 import { CheckboxFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -63,14 +63,14 @@ export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
 
 getLibrary("vaadin").registerComponent("checkbox", {
   importPath: "@formsey/fields-vaadin/CheckboxField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxFieldDefinition, boolean> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxFieldDefinition, boolean> ) => {
     return html`<formsey-checkbox-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkbox-vaadin>`
   }
 })
 
 getLibrary("vaadin").registerComponent("switch", {
   importPath: "@formsey/fields-vaadin/CheckboxField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxFieldDefinition, boolean> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxFieldDefinition, boolean> ) => {
     return html`<formsey-checkbox-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkbox-vaadin>`
   }
 })

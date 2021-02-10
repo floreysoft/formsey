@@ -1,4 +1,4 @@
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import "@vaadin/vaadin-text-field/vaadin-email-field";
 import { EmailFieldElement } from '@vaadin/vaadin-text-field/vaadin-email-field';
@@ -17,7 +17,7 @@ export class EmailField extends InputField<StringFieldDefinition, string> {
 
 getLibrary("vaadin").registerComponent("email", {
   importPath: "@formsey/fields-vaadin/EmailField",
-  factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<StringFieldDefinition, string> ) => {
+  template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<StringFieldDefinition, string> ) => {
     return html`<formsey-email-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-email-vaadin>`
   }
 })

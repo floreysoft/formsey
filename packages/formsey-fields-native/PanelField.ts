@@ -1,5 +1,5 @@
 import { createField, Field } from '@formsey/core';
-import { getIcon, getLibrary, Resources } from '@formsey/core/Components';
+import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition, PanelFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -24,7 +24,7 @@ export class PanelField extends Field<PanelFieldDefinition, Object> {
 
 getLibrary("native").registerComponent("panel", {
   importPath: "@formsey/fields-native/PanelField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PanelFieldDefinition, Object>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PanelFieldDefinition, Object>) => {
     return html`<formsey-panel id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-panel>`
   }
 })

@@ -1,10 +1,10 @@
-import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Components';
 import { createField } from '@formsey/core/Field';
 import { FieldClickEvent } from '@formsey/core/FieldClickEvent';
 import { ButtonFieldDefinition, CheckboxFieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { TableLayout, ToolbarLayout } from '@formsey/core/Layouts';
+import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, TemplateResult } from "lit-element";
 import { classMap } from 'lit-html/directives/class-map';
@@ -54,18 +54,19 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       fixed = [...fixed, ...searchFixed]
       scrollable = [...scrollable, ...searchScrollable]
       if (this.value?.data) {
-        for (let i: number = 0; (i + (this.value.pageStart || 0)) < this.value.data.length && i < (this.definition.pageLength || this.value.data.length); i++) {
-          const value = { ...this.value.data[i + (this.value.pageStart || 0)] }
-          const key = this.definition.key ? value[this.definition.key] : i
+        const lastRow = Math.min(this.definition.pageLength || 999, this.value.data.length) - 1
+        for (let row: number = 0; (row + (this.value.pageStart || 0)) < this.value.data.length && row < (this.definition.pageLength || this.value.data.length); row++) {
+          const value = { ...this.value.data[row + (this.value.pageStart || 0)] }
+          const key = this.definition.key ? value[this.definition.key] : row
           if (this.definition.selectable) {
             const templates = fixedColumns > 0 ? fixed : scrollable
             const classes = {
               td: true,
               cell: true,
               first: true,
-              last: i == (this.definition.pageLength || this.value.data.length) - 1
+              last: row == lastRow
             }
-            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: this.definition.selectable && this.value.selections?.includes(key), parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
+            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: this.value.selections?.includes(key.toString()), parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
           }
           (<TableLayout>this.layout).columns.forEach((column, index) => {
             if (column.visible) {
@@ -76,9 +77,9 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                   td: true,
                   cell: true,
                   first: !this.definition.selectable && index == 0,
-                  last: i == (this.definition.pageLength || this.value.data.length) - 1
+                  last: row == lastRow
                 }
-                templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
+                templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + row + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
               }
             }
           })
@@ -87,9 +88,19 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     }
     let pager: TemplateResult
     if (this.definition?.pageLength < this.value?.data?.length || this.definition?.dataSource) {
+      const disable = (this.value?.selections?.length || 0) == 0
       let pagerDefinition = {
         type: "form",
         fields: [
+          ...this.definition?.actions.map(action => {
+            return {
+              type: "button",
+              icon: action.icon,
+              name: action.name,
+              text: action.label,
+              disabled: disable
+            }
+          }),
           {
             type: "button",
             name: "start",
@@ -218,7 +229,6 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           }
         })
       }
-      this.requestUpdate()
     } else if (e.detail.name.startsWith(this.path() + ".search")) {
       const tokens = e.detail.name.split(".")
       const field = tokens[tokens.length - 1]
@@ -226,12 +236,13 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       this.value['search'][field] = e.detail.value
     }
     this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
+    this.requestUpdate()
   }
 }
 
 getLibrary("native").registerComponent("table", {
   importPath: "@formsey/fields-native/TableField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
     // value = { ...value, "data": DUMMY_DATA }
     return html`<formsey-table id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
   }

@@ -1,5 +1,5 @@
 import { CheckboxFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-checkbox/mwc-checkbox.js";
@@ -48,7 +48,7 @@ export class CheckboxField extends MaterialField<CheckboxFieldDefinition, boolea
 
 getLibrary("material").registerComponent("checkbox", {
   importPath: "@formsey/fields-material/CheckboxField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxFieldDefinition, boolean> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxFieldDefinition, boolean> ) => {
     return html`<formsey-checkbox-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkbox-material>`
   }
 })

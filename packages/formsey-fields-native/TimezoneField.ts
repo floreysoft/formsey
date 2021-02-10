@@ -1,5 +1,5 @@
 import { createField, LabeledField, ValueChangedEvent } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { customElement, html } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -103,7 +103,7 @@ export class TimezoneField extends LabeledField<FieldDefinition, string> {
 
 getLibrary("native").registerComponent("timezone", {
   importPath: "@formsey/fields-native/TimezoneField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
     return html`<formsey-timezone id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-timezone>`
   }
 })

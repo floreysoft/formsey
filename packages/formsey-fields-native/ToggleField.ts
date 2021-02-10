@@ -1,6 +1,6 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { LabeledField } from '@formsey/core';
-import { getIcon, getLibrary, Resources } from '@formsey/core/Components';
+import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ToggleFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, CSSResult, customElement, html, LitElement, property, query, TemplateResult } from "lit-element";
@@ -62,7 +62,6 @@ export class Toggle extends LitElement {
             background: none;
             color: inherit;
             cursor: pointer;
-            height: var(--formsey-input-height, 2em);
         }
         button:disabled {
             cursor: default;
@@ -133,6 +132,7 @@ export class Toggles extends LitElement {
         :host {
             display: inline-flex;
             flex-direction: row;
+            height: var(--formsey-input-height, 2em);
         }
         ::slotted(:first-child) {
             border-top-left-radius: var(--formsey-border-radius);
@@ -248,7 +248,7 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
 
 getLibrary("native").registerComponent("toggle", {
   importPath: "@formsey/fields-native/ToggleField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ToggleFieldDefinition, string>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ToggleFieldDefinition, string>) => {
     return html`<formsey-toggle id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-toggle>`
   }
 })

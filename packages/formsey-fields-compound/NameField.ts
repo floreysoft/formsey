@@ -1,5 +1,5 @@
 import { CompoundField } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
@@ -38,7 +38,7 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
 
 getLibrary("native").registerComponent("name", {
   importPath: "@formsey/fields-compound/NameField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<NameFieldDefinition, Object>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<NameFieldDefinition, Object>) => {
     return html`<formsey-name id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-name>`
   }
 })

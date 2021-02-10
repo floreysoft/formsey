@@ -1,5 +1,5 @@
 import { CompoundField } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -46,7 +46,7 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
 
 getLibrary("native").registerComponent("address", {
   importPath: "@formsey/fields-compound/AddessField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<AddressFieldDefinition, Object>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<AddressFieldDefinition, Object>) => {
     return html`<formsey-address id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-address>`
   }
 })

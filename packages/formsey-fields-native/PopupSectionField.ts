@@ -1,5 +1,5 @@
 import { createField, Field, LabeledField } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ButtonFieldDefinition, FormDefinition, PopupSectionFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -141,7 +141,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
 
 getLibrary("native").registerComponent("popupSection", {
   importPath: "@formsey/fields-native/PopupSectionField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PopupSectionFieldDefinition, Object>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PopupSectionFieldDefinition, Object>) => {
     return html`<formsey-popup-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
   }
 })

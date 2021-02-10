@@ -1,5 +1,5 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { customElement, html, query, queryAll, TemplateResult } from "lit-element";
@@ -84,7 +84,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
 
 getLibrary("native").registerComponent("checkboxes", {
   importPath: "@formsey/fields-native/CheckboxesField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
     return html`<formsey-checkboxes id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes>`
   }
 })

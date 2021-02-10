@@ -1,5 +1,5 @@
 import { Field, StringFieldDefinition } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
@@ -65,7 +65,7 @@ export class TextField extends Field<StringFieldDefinition, string> {
 
 getLibrary("material").registerComponent("text", {
   importPath: "@formsey/fields-material/TextField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<StringFieldDefinition, string>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<StringFieldDefinition, string>) => {
     return html`<formsey-text-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text-material>`
   }
 })

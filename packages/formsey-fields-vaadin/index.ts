@@ -18,7 +18,7 @@ export { TextField } from './TextField'
 export { TimeField } from './TimeField'
 export { URLField } from './URLField'
 export { WeekField } from './WeekField'
-import { getLibrary, Settings } from '@formsey/core/Components'
+import { getLibrary, Settings } from '@formsey/core/Registry'
 import { FormDefinition } from '@formsey/core/FieldDefinitions'
 import { html } from 'lit-html'
 

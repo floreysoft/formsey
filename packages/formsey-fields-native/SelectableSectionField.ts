@@ -1,5 +1,5 @@
 import { createField, DEFAULT_BREAKPOINTS, Field, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition, SUPPORTED_BREAKPOINTS } from '@formsey/core';
-import { getFormatter, getLibrary, Resources } from '@formsey/core/Components';
+import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -79,7 +79,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
-    return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: this.definition.selection, name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+    return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: this.definition.selection || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
   }
 
   firstUpdated() {
@@ -156,7 +156,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
 getLibrary("native").registerComponent("selectableSection", {
   importPath: "@formsey/fields-native/SelectableSectionField",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
     return html`<formsey-selectable-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-selectable-section>`
   }
 })

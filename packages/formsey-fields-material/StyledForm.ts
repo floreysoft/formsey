@@ -1,4 +1,4 @@
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { createField } from '@formsey/core/Field';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
@@ -96,7 +96,7 @@ export class StyledForm extends Form {
 
 getLibrary("material").registerComponent("styledForm", {
   importPath: "@formsey/fields-material/StyledForm",
-  factory: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
+  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
     return html`<formsey-styled-form-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form-material>`
   }
 })

@@ -1,5 +1,5 @@
 import { CheckboxFieldDefinition, createField, Field, OptionalSectionFieldDefinition } from '@formsey/core';
-import { Components, getFormatter, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getFormatter, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -94,7 +94,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
 getLibrary("native").registerComponent("optionalSection", {
   importPath: "@formsey/fields-native/OptionalSectionField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<OptionalSectionFieldDefinition, Object> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<OptionalSectionFieldDefinition, Object> ) => {
     return html`<formsey-optional-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-optional-section>`
   }
 })

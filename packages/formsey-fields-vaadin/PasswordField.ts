@@ -1,4 +1,4 @@
-import { getLibrary, Resources } from '@formsey/core/Components';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import "@vaadin/vaadin-text-field/vaadin-password-field";
 import { PasswordFieldElement } from '@vaadin/vaadin-text-field/vaadin-password-field';
@@ -18,7 +18,7 @@ export class PasswordField extends InputField<StringFieldDefinition, string> {
 
 getLibrary("vaadin").registerComponent("password", {
   importPath: "@formsey/fields-vaadin/PasswordField",
-    factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<StringFieldDefinition, string> ) => {
+    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<StringFieldDefinition, string> ) => {
     return html`<formsey-password-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-password-vaadin>`
   }
 })

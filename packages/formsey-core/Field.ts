@@ -1,5 +1,5 @@
 import { LitElement, property, TemplateResult } from "lit-element";
-import { Components, getDefaultLibrary, getLibraries, getLibrary, Resources, Settings } from './Components';
+import { Components, getDefaultLibrary, getLibraries, getLibrary, Resources, Settings } from './Registry';
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
@@ -13,14 +13,14 @@ export const createField = (resources: Resources<FieldDefinition, any>): Templat
   }
   const component = resources.components[resources.definition.type];
   if (component) {
-    return component.factory(resources)
+    return component.template(resources)
   } else {
     const libraries = getLibraries()
     for (let key of Object.keys(libraries)) {
       const library = libraries[key]
       const component = library.components[resources.definition.type]
       if (component) {
-        return component.factory(resources)
+        return component.template(resources)
       }
     }
     console.error(`Your form is using a field of type=${resources.definition.type} but no matching component has been registered in any library!`);

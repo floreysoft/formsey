@@ -1,9 +1,9 @@
 import { html } from 'lit-element'
-import { area, registerFormatter, registerIcon } from './Components'
+import { area, registerFormatter, registerIcon } from './Registry'
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions'
 import { AreasLayout, BoxLayout, ColumnsLayout, TableLayout, ToolbarLayout } from './Layouts'
 
-export * from './Components'
+export * from './Registry'
 export * from './Field'
 export { FieldBlurEvent } from './FieldBlurEvent'
 export { FieldClickEvent } from './FieldClickEvent'
@@ -35,9 +35,10 @@ registerIcon("Checkmark", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27 4l
 
 registerFormatter("box", {
   containerStyle(layout: BoxLayout): string {
-    const spacing = layout.spacing == "narrow" ? "var(--formsey-space-narrow)" : layout.spacing == "wide" ? "var(--formsey-space-wide)" : "0"
+    const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
+    const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
     const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
-    return `margin:${spacing};${layout.elevation > 0 ? `padding:${spacing}` : ""};box-shadow:${shadow};border-radius:var(--formsey-border-radius)`
+    return `margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:var(--formsey-border-radius)`
   },
   fieldStyle(layout: BoxLayout): string {
     const background = layout.color || "var(--formsey-color)"

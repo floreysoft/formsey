@@ -1,5 +1,5 @@
 import { ImageFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Components';
+import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { InvalidErrors } from '@formsey/core/InvalidEvent';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -30,7 +30,7 @@ export class ImageField extends LabeledField<ImageFieldDefinition, string> {
 
 getLibrary("native").registerComponent("image", {
   importPath: "@formsey/fields-native/ImageField",
-  factory: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ImageFieldDefinition, string> ) => {
+  template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ImageFieldDefinition, string> ) => {
     return html`<formsey-image id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-image>`
   }
 })
