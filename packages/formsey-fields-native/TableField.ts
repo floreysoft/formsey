@@ -89,47 +89,48 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     let pager: TemplateResult
     if (this.definition?.pageLength < this.value?.data?.length || this.definition?.dataSource) {
       const disable = (this.value?.selections?.length || 0) == 0
+      let fields: ButtonFieldDefinition[] = this.definition?.actions ? this.definition?.actions?.map(action => {
+        return {
+          type: "button",
+          icon: action.icon,
+          name: action.name,
+          text: action.label,
+          disabled: disable
+        }
+      }) : []
+      fields = [...fields,
+      {
+        type: "button",
+        name: "start",
+        icon: "Start",
+        buttonType: "button",
+        disabled: !this.value?.dataSource?.canFirst || false
+      } as ButtonFieldDefinition,
+      {
+        type: "button",
+        name: "prev",
+        icon: "Previous",
+        buttonType: "button",
+        disabled: !this.value?.dataSource?.canPrevious || this.value.pageStart == 0
+      } as ButtonFieldDefinition,
+      {
+        type: "button",
+        name: "next",
+        icon: "Next",
+        buttonType: "button",
+        disabled: !this.value?.dataSource?.canNext || this.value.pageStart + this.definition.pageLength > this.value.data.length
+      } as ButtonFieldDefinition,
+      {
+        type: "button",
+        name: "end",
+        icon: "Start",
+        buttonType: "button",
+        disabled: !this.value?.dataSource?.canLast
+      } as ButtonFieldDefinition
+      ]
       let pagerDefinition = {
         type: "form",
-        fields: [
-          ...this.definition?.actions.map(action => {
-            return {
-              type: "button",
-              icon: action.icon,
-              name: action.name,
-              text: action.label,
-              disabled: disable
-            }
-          }),
-          {
-            type: "button",
-            name: "start",
-            icon: "Start",
-            buttonType: "button",
-            disabled: !this.value?.dataSource?.canFirst || false
-          } as ButtonFieldDefinition,
-          {
-            type: "button",
-            name: "prev",
-            icon: "Previous",
-            buttonType: "button",
-            disabled: !this.value?.dataSource?.canPrevious || this.value.pageStart == 0
-          } as ButtonFieldDefinition,
-          {
-            type: "button",
-            name: "next",
-            icon: "Next",
-            buttonType: "button",
-            disabled: !this.value?.dataSource?.canNext || this.value.pageStart + this.definition.pageLength > this.value.data.length
-          } as ButtonFieldDefinition,
-          {
-            type: "button",
-            name: "end",
-            icon: "Start",
-            buttonType: "button",
-            disabled: !this.value?.dataSource?.canLast
-          } as ButtonFieldDefinition
-        ],
+        fields,
         layout: {
           responsive: {
             xs: {
