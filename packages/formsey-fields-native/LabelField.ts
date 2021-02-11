@@ -10,6 +10,7 @@ export class LabelField extends LabeledField<LabelFieldDefinition, any> {
   protected renderField() {
     let formatted = this.value
     if (this.definition.format == "number") {
+      // @ts-ignore
       formatted = new Intl.NumberFormat(this.definition.locale || navigator.language, { style: this.definition.style.selection, currency: this.definition.style.value.currency, currencyDisplay: this.definition.style.value.currencyDisplay, currencySign: this.definition.style.value.currencySign, useGrouping: this.definition.useGrouping, signDisplay: this.definition.signDisplay, unit: this.definition.style.value.unit, unitDisplay: this.definition.style.value.unitDisplay }).format(this.value)
     }
     return html`<div class="${classMap({ l: true, "w": this.definition.wrap == "wrap" ? true : false })}"><span>${formatted}</span></div>`
