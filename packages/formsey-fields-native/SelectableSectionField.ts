@@ -74,12 +74,12 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
     const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
     const style = `${staticFormatter?.containerStyle(this.definition.layout?.static)};${responsiveFormatter?.containerStyle(this.layout, this.definition)}`
-    return html`<section style=${style}>${super.render()}${form}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
+    return html`<section class="ffg" style=${style}>${super.render()}${form}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
   }
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
-    return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: this.definition.selection || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+    return html`${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: this.definition.control || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
   }
 
   firstUpdated() {

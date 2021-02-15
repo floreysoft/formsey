@@ -372,7 +372,7 @@ export const FORM_STYLES = css`
   }
 
   /* Expand various items */
-  formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;
@@ -793,6 +793,7 @@ export const FORM_STYLES = css`
     align-self: flex-start;
     border: 1px solid var(--formsey-shade);
     border-radius: var(--formsey-border-radius);
+    max-width: 100%;
   }
   formsey-table .t {
     display: flex;
@@ -800,6 +801,7 @@ export const FORM_STYLES = css`
   }
   formsey-table .vscroll {
     overflow-y: auto;
+    overflow-x: hidden;
     flex-direction: column;
     display: flex;
     flex-grow: 1;
@@ -826,9 +828,16 @@ export const FORM_STYLES = css`
   formsey-table .td.last {
     border-bottom: none;
   }
+  formsey-table .td.selected {
+    background-color: var(--formsey-shade);
+  }
   formsey-table .th {
     cursor: pointer;
     max-height: 2em;
+    font-weight: 500;
+  }
+  formsey-table .th.sort {
+    color: var(--formsey-accent-color)
   }
   formsey-table .th fs-icon {
     font-size: smaller;
@@ -842,6 +851,67 @@ export const FORM_STYLES = css`
   formsey-table .cell {
     box-sizing: border-box;
     overflow: hidden;
+  }
+
+  /* Toggles */
+formsey-toggle>.lfw>div {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+formsey-toggle>.lfw>div>button {
+  display: flex;
+  flex-grow: 1;
+  height: var(--formsey-input-height, 2em);
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--formsey-border);
+  border-radius: 0;
+  border-right-color: transparent;
+  background-color: var(--formsey-widget-background);
+  padding: var(--formsey-space-narrow);
+  outline: none;
+  cursor: pointer;
+}
+formsey-toggle>div>button:disabled {
+  cursor: default;
+  color: var(--formsey-color-disabled);
+}
+formsey-toggle>.lfw>div>button:first-child {
+    border-top-left-radius: var(--formsey-border-radius);
+    border-bottom-left-radius: var(--formsey-border-radius);
+}
+formsey-toggle>.lfw>div>button:last-child {
+    border-top-right-radius: var(--formsey-border-radius);
+    border-bottom-right-radius: var(--formsey-border-radius);
+    border-right-color: var(--formsey-border);
+}
+formsey-toggle>.lfw>div>button:last-child:last-child:focus-within {
+    border-right-color: var(--formsey-border-focus);
+}
+formsey-toggle>.lfw>div>button[selected] {
+  background-color: var(--formsey-widget-background-hover, inherit);
+  color: var(--formsey-accent-color);
+}
+formsey-toggle>.lfw>div>button:focus-within {
+  border-color: var(--formsey-border-focus);
+}
+formsey-toggle>.lfw>div>button:hover:not([disabled]) {
+  background-color: var(--formsey-widget-background-hover, inherit);
+}
+
+@media (pointer: coarse) {
+  formsey-toggle {
+        margin: 0.25em;
+    }
+}
+
+  /* Selectable section */
+  formsey-selectable-section>section>.lfw {
+    flex-grow: 0;
+  }
+  formsey-selectable-section>section>.form {
+    flex-grow: 1;
   }
 
   /* Repeating section */

@@ -24,7 +24,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       hasSearchableColumns = (<TableLayout>this.layout).columns?.filter(column => column.searchable).length > 0
       if (this.definition.selectable) {
         const templates = fixedColumns > 0 ? fixed : scrollable
-        templates.push(html`<div class="td">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
+        templates.push(html`<div class="td th">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
         if (hasSearchableColumns) {
           const search = fixedColumns > 0 ? searchFixed : searchScrollable
           search.push(html`<div class="td ts"></div>`)
@@ -35,10 +35,16 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           const field = this.definition.fields?.filter(field => field.name == column.field)[0]
           if (field) {
             const templates = index < fixedColumns ? fixed : scrollable
+            const sort = this.value?.sortedBy === field.name
+            const classes = {
+              td: true,
+              th: true,
+              sort
+            }
             if (column.sortable) {
-              templates.push(html`<div class="td th" title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value.sortedBy === field.name ? this.value.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
+              templates.push(html`<div class=${classMap(classes)} title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value.sortedBy === field.name ? this.value.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
             } else {
-              templates.push(html`<div class="td th" title=${field.helpText}>${field.label}</div>`)
+              templates.push(html`<div class=${classMap(classes)} title=${field.helpText}>${field.label}</div>`)
             }
             if (hasSearchableColumns) {
               const search = index < fixedColumns ? searchFixed : searchScrollable
@@ -58,15 +64,17 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         for (let row: number = 0; (row + (this.value.pageStart || 0)) < this.value.data.length && row < (this.definition.pageLength || this.value.data.length); row++) {
           const value = { ...this.value.data[row + (this.value.pageStart || 0)] }
           const key = this.definition.key ? value[this.definition.key] : row
+          const selected = this.definition.selectable && this.value.selections?.includes(key.toString())
           if (this.definition.selectable) {
             const templates = fixedColumns > 0 ? fixed : scrollable
             const classes = {
               td: true,
               cell: true,
               first: true,
-              last: row == lastRow
+              last: row == lastRow,
+              selected
             }
-            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: this.value.selections?.includes(key.toString()), parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
+            templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: selected, parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
           }
           (<TableLayout>this.layout).columns.forEach((column, index) => {
             if (column.visible) {
@@ -77,7 +85,8 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                   td: true,
                   cell: true,
                   first: !this.definition.selectable && index == 0,
-                  last: row == lastRow
+                  last: row == lastRow,
+                  selected
                 }
                 templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle(this.layout, field))}">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + row + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
               }
@@ -148,8 +157,8 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         <div class="tw">
            <div class="vscroll">
             <div class="b" style="${ifDefined((<TableLayout>this.layout)?.fill == "grow" ? "align-self:stretch" : undefined)}">
-              ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${fixed}</div>` : undefined}
-              <div class="scroll" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable, hasSearchableColumns))}" @gridSizeChanged="${this.gridSizeChanged}">${scrollable}</div>
+              ${(<TableLayout>this.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, true, this.definition.selectable, hasSearchableColumns))}">${fixed}</div>` : undefined}
+              <div class="scroll"><div style="${ifDefined(formatter?.containerStyle(this.layout, this.definition, false, !(<TableLayout>this.layout)?.fixedColumns && this.definition.selectable, hasSearchableColumns))}">${scrollable}</div></div>
             </div>
           </div>
           <div class="tnav">${pager}</div>

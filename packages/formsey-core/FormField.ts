@@ -84,12 +84,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         }
       }
     }
-    return html`<section style="${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}"><div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}" @gridSizeChanged="${this.gridSizeChanged}">${templates}</div>${hidden}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`
-  }
-
-  gridSizeChanged(e: CustomEvent) {
-    e.stopPropagation()
-    this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath() + "." + e.detail.id, size: e.detail.size } }))
+    return html`<section style="${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}"><div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}">${templates}</div>${hidden}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`
   }
 
   firstUpdated() {
@@ -165,10 +160,8 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
       }
     }
     if (this.size != detectedSize) {
-      // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
       this.size = detectedSize
       this.updateLayout()
-      this.dispatchEvent(new CustomEvent('gridSizeChanged', { bubbles: true, composed: true, detail: { id: this.domPath(), size: detectedSize } }))
     }
   }
 
@@ -217,28 +210,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         }
       }
     }
-  }
-
-  private domPath() {
-    const container = this.closestElement(".fff", this)
-    if (container && container.parentElement) {
-      const index = [...Array.from(container.parentElement.children)].indexOf(container)
-      return index
-    } else {
-      return 0
-    }
-  }
-
-  private closestElement(selector: string, base: Element = this) {
-    function __closestFrom(el: Element | Window | Document): Element {
-      if (!el || el === document || el === window) return null;
-      if ((el as any).assignedSlot) el = (el as any).assignedSlot;
-      let found = (el as Element).closest(selector);
-      return found
-        ? found
-        : __closestFrom(((el as Element).getRootNode() as ShadowRoot).host);
-    }
-    return __closestFrom(base);
   }
 }
 getLibrary("native").registerComponent("form", {

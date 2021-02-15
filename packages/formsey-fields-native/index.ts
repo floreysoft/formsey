@@ -234,12 +234,7 @@ if (nativeLibrary) {
               "responsive": {
                 "s": {
                   "formatter": "columns",
-                  "columns": [
-                    1,
-                    1,
-                    1,
-                    1
-                  ]
+                  "columns": [{ width: 1 }, { width: 1 }, { width: 1 }, { width: 1 }]
                 }
               }
             }
@@ -250,13 +245,14 @@ if (nativeLibrary) {
             "value": "none"
           }
         ],
-        "type": "selectableSection"
+        "type": "selectableSection",
+        "control": "list"
       }
     ],
     "layout": {
       "static": {
         "formatter": "box",
-        "spacing": "narrow"
+        "margin": "wide"
       },
       "responsive": {
         "xs": {

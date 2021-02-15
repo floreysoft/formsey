@@ -27,6 +27,8 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   private right: string | undefined
   private top: string | undefined
   private bottom: string | undefined
+  private maxWidth: string | undefined
+  private maxHeight: string | undefined
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -45,7 +47,9 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
       left: this.left,
       right: this.right,
       top: this.top,
-      bottom: this.bottom
+      bottom: this.bottom,
+      maxWidth: this.maxWidth,
+      maxHeight: this.maxHeight
     }
     return html`${createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
@@ -66,19 +70,23 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
           // Show on the right
           this.left = rect.left + "px"
           this.right = undefined
+          this.maxWidth = `${window.innerWidth - rect.left}px`
         } else {
           // Show on the left
           this.left = undefined
           this.right = window.innerWidth - rect.right + "px"
+          this.maxWidth = `${rect.right}px`
         }
         if ((rect.top + rect.height / 2 <= cy)) {
           // Show below
           this.top = rect.top + rect.height + "px"
           this.bottom = undefined
+          this.maxHeight = `${window.innerHeight - (rect.top + rect.height)}px`
         } else {
           // Show above
           this.top = undefined
           this.bottom = window.innerHeight - rect.top + "px"
+          this.maxHeight = `${window.innerHeight - rect.top}px`
         }
       }
     })

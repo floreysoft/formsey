@@ -31,6 +31,7 @@ export interface InputFieldDefinition extends InteractiveFieldDefinition {
 export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
   text?: string | TemplateResult
   icon?: string | TemplateResult
+  tooltip?: string
   buttonType?: "button" | "submit" | "reset" | "menu"
 }
 
@@ -159,7 +160,7 @@ export interface Selection extends FormDefinition {
 
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
-  selection?: string
+  control?: "list" | "multipleChoice" | "select"
   layout?: ResponsiveLayout
 }
 export interface TabsFieldDefinition extends InputFieldDefinition {
@@ -189,6 +190,7 @@ export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
 export interface PopupSectionFieldDefinition extends FormDefinition, InteractiveFieldDefinition {
   icon?: string | TemplateResult
   text?: string
+  width: string
 }
 export interface SignatureFieldDefinition extends InputFieldDefinition {
   width: string
