@@ -372,7 +372,7 @@ export const FORM_STYLES = css`
   }
 
   /* Expand various items */
-  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section, formsey-form-field,formsey-form-field-designer,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section,formsey-form-field,formsey-form-field-designer,formsey-form-field-designer>.lfw>section,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;
