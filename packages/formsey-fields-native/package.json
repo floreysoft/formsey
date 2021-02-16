@@ -13,6 +13,7 @@
     "/esm/*"
   ],
   "dependencies": {
+    "@a11y/focus-trap": "^1.0.5",
     "@floreysoft/ace": "^0.4.0",
     "@floreysoft/splitter": "^0.4.0",
     "@floreysoft/theme": "^0.4.0",

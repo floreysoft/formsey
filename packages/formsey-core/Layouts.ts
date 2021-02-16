@@ -28,11 +28,12 @@ export interface Layout {
 
 export interface BoxLayout extends Layout {
   formatter: "box"
-  margin: "none" | "narrow" | "wide"
-  padding: "none" | "narrow" | "wide"
-  elevation: number
-  border: "sharp" | "soft"
-  color: string
+  margin?: "none" | "narrow" | "wide"
+  padding?: "none" | "narrow" | "wide"
+  elevation?: number
+  border?: "sharp" | "soft"
+  color?: string
+  opacity?: number
 }
 
 export interface ToolbarLayout extends Layout {

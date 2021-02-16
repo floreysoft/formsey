@@ -38,11 +38,12 @@ registerFormatter("box", {
     const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
     const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
     const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
-    return `margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:var(--formsey-border-radius)`
+    const borderRadius = layout.border == 'soft' ? "var(--formsey-border-radius)" : "0"
+    return `margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:${borderRadius}`
   },
   fieldStyle(layout: BoxLayout): string {
     const background = layout.color || "var(--formsey-color)"
-    const opacity = layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)"
+    const opacity = layout.opacity || (layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)")
     return `background:${background};opacity:${opacity}`
   }
 })

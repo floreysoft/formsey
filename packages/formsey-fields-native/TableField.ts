@@ -42,7 +42,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
               sort
             }
             if (column.sortable) {
-              templates.push(html`<div class=${classMap(classes)} title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value.sortedBy === field.name ? this.value.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
+              templates.push(html`<div class=${classMap(classes)} title=${field.helpText} @click="${e => this.sort(field.name)}">${field.label}${this.value?.sortedBy === field.name ? this.value?.sortDirection == "ascending" ? getIcon("Sort ascending") : getIcon("Sort descending") : undefined}</div>`)
             } else {
               templates.push(html`<div class=${classMap(classes)} title=${field.helpText}>${field.label}</div>`)
             }

@@ -287,7 +287,7 @@ export const FORM_STYLES = css`
 
   /* Form Field */
   formsey-form-field fieldset {
-    padding: 5px;
+    padding: 0;
     border: 0;
     margin: 0;
     min-width: 0;
@@ -296,6 +296,7 @@ export const FORM_STYLES = css`
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    z-index: 1;
   }
   .ffg {
     display: flex;
@@ -341,7 +342,7 @@ export const FORM_STYLES = css`
   }
 
   /* Combobox, Listbox */
-  formsey-popup-section, formsey-select {
+  formsey-popup-section, formsey-select, formsey-dialog-section {
     position: relative;
 
   }
@@ -740,29 +741,55 @@ export const FORM_STYLES = css`
     height: 100%;
   }
 
-  /* Popup section field */
-  formsey-popup-section>.lfw {
+  /* Popup / Dialog section field */
+  formsey-popup-section>.lfw, formsey-dialog-section>.lfw {
     position: relative;
   }
-  formsey-popup-section>.lfw>#glass {
+  formsey-popup-section>.lfw>#glass, formsey-dialog-section>.lfw>#glass, formsey-dialog-section .dialogWrapper {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     background-color: var(--formsey-shade);
-    z-index: 2;
+    z-index: 8;
+  }
+  formsey-dialog-section .dialogWrapper {
+    background-color: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+  }
+  formsey-dialog-section .dialog>header {
+    color: var(--formsey-accent-contrast);
+    background: var(--formsey-accent-color);
+    padding: var(--formsey-space-wide);
+    cursor: move;
+  }
+
+  formsey-dialog-section .dialog>footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: var(--formsey-space-narrow);
+    padding: var(--formsey-space-wide);
   }
   formsey-popup-section>.lfw>#form {
     position: fixed;
-    z-index: 3;
+  }
+
+  formsey-popup-section>.lfw>#form, formsey-dialog-section .dialog {
+    z-index: 10;
     background-color: var(--formsey-background);
-    padding: var(--formsey-space-narrow);
     border: 1px solid var(--formsey-border-color);
     border-radius: var(--formsey-border-radius);
   }
-  formsey-popup-section formsey-select {
-    min-width: 10em;
+  formsey-dialog-section .dialog {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: var(--formsey-elevation-2-shadow, none);
   }
 
   /* Text field */
@@ -1017,6 +1044,14 @@ formsey-toggle>.lfw>div>button:hover:not([disabled]) {
   }
   formsey-layout .ovl.d {
     background-color: var(--formsey-token-library);
+  }
+
+  /* Login field */
+  formsey-profile .photo {
+      width: 2em;
+      height: auto;
+      margin-right: var(--formsey-space-wide);
+      margin-left: -.25em;
   }
 
   /* Markdown field */

@@ -192,6 +192,14 @@ export interface PopupSectionFieldDefinition extends FormDefinition, Interactive
   text?: string
   width: string
 }
+
+export interface DialogSectionFieldDefinition extends PopupSectionFieldDefinition {
+  header?: string
+  visible?: boolean
+  actions?: ButtonFieldDefinition[]
+}
+
+
 export interface SignatureFieldDefinition extends InputFieldDefinition {
   width: string
   height: string

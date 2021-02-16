@@ -138,14 +138,18 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected changed(e: any) {
     e.stopPropagation()
-    this.value = e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
+    if (this.value !== e.currentTarget?.value) {
+      this.value = e.currentTarget.value;
+      this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
+    }
   }
 
   protected inputted(e: any) {
     e.stopPropagation()
-    this.value = e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+    if (this.value !== e.currentTarget?.value) {
+      this.value = e.currentTarget.value;
+      this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+    }
   }
 
   protected clicked(e: any) {

@@ -5,6 +5,7 @@ export { CheckboxField } from './CheckboxField';
 export { ColorField, ICON_COLOR_FIELD } from './ColorField';
 export { ComboboxField } from './ComboboxField';
 export { CurrencyField } from './CurrencyField';
+export { DialogSectionField } from './DialogSectionField';
 export { DateField } from './DateField';
 export { DateTimeField } from './DateTimeField';
 export { EmailField } from './EmailField';
