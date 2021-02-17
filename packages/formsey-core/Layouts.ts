@@ -36,11 +36,12 @@ export interface BoxLayout extends Layout {
   opacity?: number
 }
 
-export interface ToolbarLayout extends Layout {
-  formatter: "toolbar"
+export interface FlexLayout extends Layout {
+  formatter: "flex"
   direction: "horizontal" | "vertical"
-  horizontal?: "left" | "center" | "right" | "expand",
+  horizontal?: "left" | "center" | "right" | "expand"
   vertical?: "top" | "middle" | "bottom"
+  gaps?: "none" | "narrow" | "wide"
   wrap?: "wrap" | "nowrap"
   grow?: {
     [index: string]: number

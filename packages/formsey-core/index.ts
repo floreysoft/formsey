@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import { area, registerFormatter, registerIcon } from './Registry'
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions'
-import { AreasLayout, BoxLayout, ColumnsLayout, TableLayout, ToolbarLayout } from './Layouts'
+import { AreasLayout, BoxLayout, ColumnsLayout, TableLayout, FlexLayout } from './Layouts'
 
 export * from './Registry'
 export * from './Field'
@@ -78,15 +78,16 @@ registerFormatter("areas", {
     return `grid-area:_${name};align-self:${vertical == "top" ? "start" : vertical == "bottom" ? "end" : vertical == "middle" ? "center" : "stretch"};justify-self:${horizontal == "left" ? "start" : horizontal == "right" ? "end" : horizontal == "center" ? "center" : "stretch"}`
   }
 })
-registerFormatter("toolbar", {
-  containerStyle(layout: ToolbarLayout): string {
+registerFormatter("flex", {
+  containerStyle(layout: FlexLayout): string {
+    const gaps = layout.gaps == "wide" ? "var(--formsey-space-wide)" : layout.gaps == "none" ? "0" : "var(--formsey-space-narrow)"
     const horizontal = layout.horizontal == "left" ? "flex-start" : layout.horizontal == "right" ? "flex-end" : layout.horizontal == "expand" ? "space-between" : "center"
     const vertical = layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"
     const justifyContent = layout.direction == "vertical" ? vertical : horizontal
     const alignItems = layout.direction == "vertical" ? horizontal : vertical
-    return `display:flex;flex-grow:1;flex-direction: ${layout.direction == "vertical" ? "column" : "row"};flex-wrap: ${layout.wrap == "wrap" ? "wrap" : "nowrap"};align-items:${alignItems};justify-content:${justifyContent}`
+    return `display:flex;flex-grow:1;flex-direction: ${layout.direction == "vertical" ? "column" : "row"};flex-wrap: ${layout.wrap == "wrap" ? "wrap" : "nowrap"};align-items:${alignItems};justify-content:${justifyContent};gaps:${gaps}`
   },
-  fieldStyle(layout: ToolbarLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
+  fieldStyle(layout: FlexLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
     const name = area(field, fields)
     return `${layout.horizontal == "expand" && layout.direction == "vertical" ? "align-self:stretch;" : ""}flex-grow: ${layout.grow?.[name] || 0}`
   }

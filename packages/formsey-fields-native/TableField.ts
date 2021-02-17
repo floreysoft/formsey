@@ -3,7 +3,7 @@ import { FieldClickEvent } from '@formsey/core/FieldClickEvent';
 import { ButtonFieldDefinition, CheckboxFieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { TableLayout, ToolbarLayout } from '@formsey/core/Layouts';
+import { TableLayout, FlexLayout } from '@formsey/core/Layouts';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { customElement, html, TemplateResult } from "lit-element";
@@ -143,9 +143,9 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         layout: {
           responsive: {
             xs: {
-              formatter: "toolbar",
+              formatter: "flex",
               horizontal: "right"
-            } as ToolbarLayout
+            } as FlexLayout
           }
         }
       }
