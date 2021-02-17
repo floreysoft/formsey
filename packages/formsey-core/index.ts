@@ -85,7 +85,7 @@ registerFormatter("flex", {
     const vertical = layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"
     const justifyContent = layout.direction == "vertical" ? vertical : horizontal
     const alignItems = layout.direction == "vertical" ? horizontal : vertical
-    return `display:flex;flex-grow:1;flex-direction: ${layout.direction == "vertical" ? "column" : "row"};flex-wrap: ${layout.wrap == "wrap" ? "wrap" : "nowrap"};align-items:${alignItems};justify-content:${justifyContent};gaps:${gaps}`
+    return `display:flex;flex-grow:1;flex-direction: ${layout.direction == "vertical" ? "column" : "row"};flex-wrap: ${layout.wrap == "wrap" ? "wrap" : "nowrap"};align-items:${alignItems};justify-content:${justifyContent};gap:${gaps}`
   },
   fieldStyle(layout: FlexLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
     const name = area(field, fields)
