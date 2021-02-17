@@ -71,7 +71,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   renderField() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
-    const staticFormatter = this.definition.layout?.static?.formatter ? getFormatter(this.definition.layout?.static?.formatter) : undefined
     const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
@@ -84,7 +83,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         }
       }
     }
-    return html`<section style="${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}"><div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}">${templates}</div>${hidden}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`
+    return html`<section style="${ifDefined(responsiveFormatter?.boxStyle(this.layout))}"><div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}">${templates}</div>${hidden}<div class="fbg" style="${ifDefined(responsiveFormatter?.backgroundStyle(this.layout))}"></div></section>`
   }
 
   firstUpdated() {

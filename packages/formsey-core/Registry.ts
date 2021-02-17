@@ -96,6 +96,8 @@ export interface Icons {
 }
 
 export interface Formatter {
+  boxStyle(layout: Layout, ...context: any): string
+  backgroundStyle(layout: Layout, ...context: any): string
   containerStyle(layout: Layout, ...context: any): string
   fieldStyle(layout: Layout, ...context: any): string
 }

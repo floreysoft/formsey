@@ -24,16 +24,16 @@ export interface Breakpoints {
 
 export interface Layout {
   formatter: string
-}
-
-export interface BoxLayout extends Layout {
-  formatter: "box"
   margin?: "none" | "narrow" | "wide"
   padding?: "none" | "narrow" | "wide"
   elevation?: number
   border?: "sharp" | "soft"
   color?: string
   opacity?: number
+}
+
+export interface BoxLayout extends Layout {
+  formatter: "box"
 }
 
 export interface FlexLayout extends Layout {
