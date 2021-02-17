@@ -834,6 +834,7 @@ export const FORM_STYLES = css`
   }
   formsey-table .scroll {
     overflow-x: auto;
+    flex-grow: 1;
   }
   formsey-table .fixed {
     width: initial;
