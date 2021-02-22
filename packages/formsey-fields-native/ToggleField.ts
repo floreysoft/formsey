@@ -16,7 +16,15 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
     for (let i = 0; i < this.definition.buttons?.length; i++) {
       const button = this.definition.buttons[i]
       const icon = typeof button.icon == "string" ? getIcon(button.icon as string) : button.icon
-      buttons.push(html`<button id=${button.name} type="button" ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}<span>${button.text}</span></button>`)
+      let color
+      if (button.color) {
+        if (button.color.startsWith('palette')) {
+          color = `var(--formsey-palette-${button.color})`
+        } else {
+          color = button.color
+        }
+      }
+      buttons.push(html`<button type="button" style=${ifDefined(color)} ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}<span>${button.text}</span></button>`)
     }
     return html`<div @select=${this.select}>${buttons}</div>`
   }

@@ -1,9 +1,11 @@
 import { TemplateResult } from "lit-element";
 import { ResponsiveLayout } from "./Layouts";
 
-export interface FieldDefinition {
-  name?: string
+export interface Definition {
   type?: string
+}
+export interface FieldDefinition extends Definition {
+  name?: string
   label?: string | TemplateResult
   helpText?: string | TemplateResult
   default?: any
@@ -33,6 +35,8 @@ export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
   icon?: string | TemplateResult
   tooltip?: string
   buttonType?: "button" | "submit" | "reset" | "menu"
+  color?: string
+  theme?: "default" | "primary"
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {
@@ -190,13 +194,16 @@ export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
 export interface PopupSectionFieldDefinition extends FormDefinition, InteractiveFieldDefinition {
   icon?: string | TemplateResult
   text?: string
-  width: string
+  width?: string
+  widthUnit?: "em" | "px"
 }
 
 export interface DialogSectionFieldDefinition extends PopupSectionFieldDefinition {
   header?: string
   visible?: boolean
-  actions?: ButtonFieldDefinition[]
+  heightUnit?: "em" | "px"
+  actions?: ButtonFieldDefinition[],
+  height?: string
 }
 
 

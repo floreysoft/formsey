@@ -151,8 +151,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       }
       pager = html`<formsey-form-field .components=${this.components} .settings=${this.settings} .definition=${pagerDefinition} @click=${this.page}></formsey-form-field>`
     }
-    const fixedFormatter = getFormatter(this.definition.layout?.static?.formatter)
-    return html`<section style="${ifDefined(fixedFormatter?.containerStyle(this.definition.layout?.static))}">
+    return html`<section>
       <div class="ffg">
         <div class="tw">
            <div class="vscroll">

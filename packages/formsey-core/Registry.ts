@@ -74,7 +74,7 @@ export interface Editor extends FieldDefinition {
 export interface FormEditor extends Editor, FormDefinition { }
 
 export interface LayoutEditor extends Editor {
-  fields?: FieldDefinition[]
+  parentFields?: FieldDefinition[]
   isMatching(layout: Layout): boolean
 }
 
@@ -96,10 +96,10 @@ export interface Icons {
 }
 
 export interface Formatter {
-  boxStyle(layout: Layout, ...context: any): string
-  backgroundStyle(layout: Layout, ...context: any): string
-  containerStyle(layout: Layout, ...context: any): string
-  fieldStyle(layout: Layout, ...context: any): string
+  boxStyle?(layout: Layout, ...context: any): string
+  backgroundStyle?(layout: Layout, ...context: any): string
+  containerStyle?(layout: Layout, ...context: any): string
+  fieldStyle?(layout: Layout, ...context: any): string
 }
 
 export type Formatters = { [index: string]: Formatter }

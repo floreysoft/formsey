@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import { area, getFormatter, registerFormatter, registerIcon } from './Registry'
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions'
-import { AreasLayout, BoxLayout, ColumnsLayout, TableLayout, FlexLayout } from './Layouts'
+import { AreasLayout, BoxLayout, ColumnsLayout, TableLayout, FlexLayout, SizeLayout } from './Layouts'
 
 export * from './Registry'
 export * from './Field'
@@ -33,30 +33,29 @@ registerIcon("Next", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M16 27v-10l
 
 registerIcon("Checkmark", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27 4l-15 15-7-7-5 5 12 12 20-20z"></path></svg></fs-icon>`)
 
-function boxStyle(layout: BoxLayout): string {
-  const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
-  const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
-  const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
-  const borderRadius = layout.border == 'soft' ? "var(--formsey-border-radius)" : "0"
-  return `margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:${borderRadius}`
-}
-
-function backgroundStyle(layout: BoxLayout): string {
-  const background = layout.color || "var(--formsey-color)"
-  const opacity = layout.opacity || (layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)")
-  return `background:${background};opacity:${opacity}`
-}
-
+registerFormatter("box", {
+  backgroundStyle(layout: BoxLayout): string {
+    const background = layout.backgroundColor || "var(--formsey-color)"
+    const opacity = layout.opacity || (layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)")
+    return `background:${background};opacity:${opacity}`
+  },
+  boxStyle(layout: BoxLayout): string {
+    const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
+    const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
+    const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
+    const borderRadius = layout.border == 'soft' ? "var(--formsey-border-radius)" : "0"
+    return `margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:${borderRadius}`
+  }
+})
 registerFormatter("columns", {
   containerStyle(layout: ColumnsLayout): string {
-    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")}`
+    const gaps = layout.gaps == "wide" ? "var(--formsey-space-wide)" : layout.gaps == "none" ? "0" : "var(--formsey-space-narrow)"
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")};gap:${gaps}`
   },
   fieldStyle(layout: ColumnsLayout, field: FieldDefinition, fields: FieldDefinition[], index: number): string {
     const horizontal = layout.columns[index % layout.columns.length]?.horizontal
     return `display:flex;flex-direction:column;align-items:${horizontal == "left" ? "flex-start" : horizontal == "right" ? "flex-end" : horizontal == "center" ? "center" : "stretch"}`
-  },
-  boxStyle,
-  backgroundStyle
+  }
 })
 registerFormatter("table", {
   containerStyle(layout: TableLayout, definition: TableFieldDefinition, fixed: boolean, selectable: boolean, searchable: boolean): string {
@@ -65,13 +64,12 @@ registerFormatter("table", {
   fieldStyle(layout: TableLayout, field?: FieldDefinition): string {
     const horizontal = layout.columns?.filter(column => column.field == field?.name)?.[0]?.horizontal
     return `justify-self:stretch;justify-content:${horizontal == "left" ? "flex-start" : horizontal == "right" ? "flex-end" : horizontal == "center" ? "center" : "stretch"};align-items:${layout.vertical == "top" ? "flex-start" : layout.vertical == "bottom" ? "flex-end" : "center"}`
-  },
-  boxStyle,
-  backgroundStyle
+  }
 })
 registerFormatter("areas", {
   containerStyle(layout: AreasLayout): string {
-    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_" + column)).join(" ")}'`).join(" ")}`
+    const gaps = layout.gaps == "wide" ? "var(--formsey-space-wide)" : layout.gaps == "none" ? "0" : "var(--formsey-space-narrow)"
+    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_" + column)).join(" ")}'`).join(" ")};gap:${gaps}`
   },
   fieldStyle(layout: AreasLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
     const name = area(field, fields)
@@ -79,9 +77,7 @@ registerFormatter("areas", {
     const horizontal = alignment?.horizontal
     const vertical = alignment?.vertical
     return `grid-area:_${name};align-self:${vertical == "top" ? "start" : vertical == "bottom" ? "end" : vertical == "middle" ? "center" : "stretch"};justify-self:${horizontal == "left" ? "start" : horizontal == "right" ? "end" : horizontal == "center" ? "center" : "stretch"}`
-  },
-  boxStyle,
-  backgroundStyle
+  }
 })
 registerFormatter("flex", {
   containerStyle(layout: FlexLayout): string {
@@ -95,7 +91,5 @@ registerFormatter("flex", {
   fieldStyle(layout: FlexLayout, field: FieldDefinition, fields: FieldDefinition[]): string {
     const name = area(field, fields)
     return `${layout.horizontal == "expand" && layout.direction == "vertical" ? "align-self:stretch;" : ""}flex-grow: ${layout.grow?.[name] || 0};`
-  },
-  boxStyle,
-  backgroundStyle
+  }
 })

@@ -372,7 +372,7 @@ export const FORM_STYLES = css`
   }
 
   /* Expand various items */
-  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tab-panel,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section,formsey-form-field,formsey-form-field-designer,formsey-form-field-designer>.lfw>section,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tabs,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section,formsey-form-field,formsey-form-field-designer,formsey-form-field-designer>.lfw>section,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;
@@ -384,6 +384,70 @@ export const FORM_STYLES = css`
     flex-grow: 1;
   }
 
+  formsey-tabs .container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+    border-bottom-left-radius: var(--formsey-border-radius);
+    border-bottom-right-radius: var(--formsey-border-radius);
+  }
+  formsey-tabs .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  formsey-tabs .tab {
+    display: flex;
+    padding: var(--formsey-space-wide);
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    background-color: var(--formsey-widget-background);
+    border: 1px solid transparent;
+    transition: all 0.12s ease-out;
+    color: var(--formsey-color);
+  }
+  formsey-tabs .top .tab {
+    border-top-left-radius: var(--formsey-border-radius);
+    border-top-right-radius: var(--formsey-border-radius);
+  }
+  formsey-tabs .tab:focus-within {
+      border: 1px solid var(--formsey-border-focus, inherit);
+  }
+  formsey-tabs .tab:hover {
+      color:  var(--formsey-color, inherit);
+      background-color: var(--formsey-widget-background-hover);
+  }
+  formsey-tabs .tab.expand {
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  formsey-tabs .tab.selected {
+      color:  var(--formsey-accent-color, inherit);
+      background-color: var(--formsey-widget-background-hover, inherit);
+  }
+  formsey-tabs .tab .icon {
+      display: flex;
+      margin: 0 .2em;
+  }
+  formsey-tabs .tab fs-icon {
+      width: 1.15em;
+      height: 1.15em;
+      margin-right: .2em;
+  }
+  formsey-tabs .content {
+      flex-grow: 1;
+      display: flex;
+  }
+  @media (pointer: coarse) {
+    formsey-tabs .tab {
+          min-height: 2.5em;
+      }
+  }
 
   /* Stats View */
   formsey-stats-view .statistics {
@@ -1012,6 +1076,7 @@ formsey-toggle>.lfw>div>button:hover:not([disabled]) {
   }
 
   formsey-layout>.lfw>.toggles {
+    display: flex;
     flex-direction: row;
     column-gap: var(--formsey-space-wide);
     row-gap: var(--formsey-space-narrow);

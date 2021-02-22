@@ -29,6 +29,12 @@ const themes = new Map([
         --formsey-widget-background-hover: #dddddd;
         --formsey-shade: #80808030;
 
+        --formsey-palette-1: #493657;
+        --formsey-palette-2: #CE7DA5;
+        --formsey-palette-3: #BEE5BF;
+        --formsey-palette-4: #DFF3E3;
+        --formsey-palette-5: #FFD1BA;
+
         --formsey-token-invisible: #bfbfbf;
         --formsey-token-keyword: #0000FF;
         --formsey-token-constant: #06960e;

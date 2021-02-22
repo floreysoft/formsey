@@ -28,8 +28,8 @@ export class SelectField extends LabeledField<ListFieldDefinition, string> {
   renderField() {
     const selectedOption = this.definition.options.filter(option => this.value && (option.value || option.label) == this.value)?.[0]
     const button = createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "button", name: "value", icon: selectedOption?.icon, text: selectedOption?.label } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) })
-    const box = getFormatter("flex")
-    const layout = { elevation: 1 } as FlexLayout
+    const box = getFormatter("box")
+    const layout = { elevation: 1 } as BoxLayout
     const style = `${box.boxStyle(layout)};visibility:${this.popupVisible ? "visible" : "hidden"};top:${this.top};width:${this.width}`
     const backgroundStyle = `${box.backgroundStyle(layout)};visibility:${this.popupVisible ? "visible" : "hidden"}`
     const list = html`<div class="popup" @keydown=${this.keyDown} style=${style}>${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options: this.definition.options, hideCheckmark: typeof this.value === "undefined", searchThreshold: this.definition.searchThreshold } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.optionSelected(event) })}</div><div class="fbg" style="${backgroundStyle}"></div>`

@@ -49,47 +49,45 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
       top: this.top,
       bottom: this.bottom,
       maxWidth: this.maxWidth,
-      maxHeight: this.maxHeight
+      maxHeight: this.maxHeight,
+      minWidth: `${this.definition.width || 0}${this.definition.widthUnit || "em"}`
     }
-    return html`${createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
+    return html`${createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
     <div id="form" style=${styleMap(position)}>${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
   }
 
-  firstUpdated() {
-    const trigger = this.renderRoot.querySelector('formsey-button') as HTMLElement
-    trigger.addEventListener("click", (e: CustomEvent) => {
-      e.stopPropagation()
-      if (e.detail['name'] == this.path()) {
-        this.visible = true
-        // Do some clever stuff
-        const cx = window.innerWidth / 2
-        const cy = window.innerHeight / 2
-        const rect = trigger.getBoundingClientRect()
-        if ((rect.left + rect.width / 2 <= cx)) {
-          // Show on the right
-          this.left = rect.left + "px"
-          this.right = undefined
-          this.maxWidth = `${window.innerWidth - rect.left}px`
-        } else {
-          // Show on the left
-          this.left = undefined
-          this.right = window.innerWidth - rect.right + "px"
-          this.maxWidth = `${rect.right}px`
-        }
-        if ((rect.top + rect.height / 2 <= cy)) {
-          // Show below
-          this.top = rect.top + rect.height + "px"
-          this.bottom = undefined
-          this.maxHeight = `${window.innerHeight - (rect.top + rect.height)}px`
-        } else {
-          // Show above
-          this.top = undefined
-          this.bottom = window.innerHeight - rect.top + "px"
-          this.maxHeight = `${window.innerHeight - rect.top}px`
-        }
+  open(e: CustomEvent) {
+    e.stopPropagation()
+    if (e.detail['name'] == this.path()) {
+      this.visible = true
+      // Calculate available popup size / position
+      const cx = window.innerWidth / 2
+      const cy = window.innerHeight / 2
+      const rect = (<HTMLElement>e.currentTarget).getBoundingClientRect()
+      if ((rect.left + rect.width / 2 <= cx)) {
+        // Show on the right
+        this.left = rect.left + "px"
+        this.right = undefined
+        this.maxWidth = `${window.innerWidth - rect.left}px`
+      } else {
+        // Show on the left
+        this.left = undefined
+        this.right = window.innerWidth - rect.right + "px"
+        this.maxWidth = `${rect.right}px`
       }
-    })
+      if ((rect.top + rect.height / 2 <= cy)) {
+        // Show below
+        this.top = rect.top + rect.height + "px"
+        this.bottom = undefined
+        this.maxHeight = `${window.innerHeight - (rect.top + rect.height)}px`
+      } else {
+        // Show above
+        this.top = undefined
+        this.bottom = window.innerHeight - rect.top + "px"
+        this.maxHeight = `${window.innerHeight - rect.top}px`
+      }
+    }
   }
 
   close(e: Event) {

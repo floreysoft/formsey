@@ -15,8 +15,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   protected _fields: HTMLElement[]
 
   protected render(): void | TemplateResult {
-    const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
-    return html`<section style=${ifDefined(staticFormatter?.containerStyle(this.definition.layout?.static))}>${super.render()}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
+    return html`<section>${super.render()}<div class="fbg"></div></section>`;
   }
 
   renderField() {

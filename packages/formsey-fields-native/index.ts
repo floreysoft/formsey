@@ -232,11 +232,9 @@ if (nativeLibrary) {
             "label": "Custom",
             "name": "custom",
             "layout": {
-              "responsive": {
-                "s": {
-                  "formatter": "columns",
-                  "columns": [{ width: 1 }, { width: 1 }, { width: 1 }, { width: 1 }]
-                }
+              "s": {
+                "formatter": "columns",
+                "columns": [{ width: 1 }, { width: 1 }, { width: 1 }, { width: 1 }]
               }
             }
           },

@@ -38,10 +38,12 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
     const position = {
       left: this.left,
       top: this.top,
-      position: this.left ? "fixed" : "relative"
+      position: this.left ? "fixed" : "relative",
+      minWidth: `${this.definition.width || 0}${this.definition.widthUnit || "em"}`,
+      minHeight: `${this.definition.height || 0}${this.definition.heightUnit || "em"}`,
     }
     return html`
-    ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, invalidHandler: (event: InvalidEvent) => this.invalid(event) }) : undefined}
+    ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) }) : undefined}
     ${this.definition.visible ? html`
     <div class="dialogWrapper" @mouseup=${this.endDrag} @mousemove=${this.drag}>
       <focus-trap>
@@ -56,23 +58,18 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
     </div>` : undefined}`
   }
 
-  firstUpdated() {
-    const trigger = this.renderRoot.querySelector('formsey-button') as HTMLElement
-    trigger.addEventListener("click", (e: CustomEvent) => {
-      this.cancelValue = JSON.parse(JSON.stringify(this.value || {}))
-      e.stopPropagation()
-      if (e.detail['name'] == this.path()) {
-        this.definition.visible = true
-        document.addEventListener('keydown', this.keyHandler)
-        this.updateComplete.then(() => {
-          setTimeout(() => {
-            this.focusField(this.path() + "." + this.definition.fields[0].name)
-            this.dispatchEvent(new FieldClickEvent(this.path()))
-          }, 1)
-        })
-        this.requestUpdate()
-      }
+  open(e: Event) {
+    e.stopPropagation()
+    this.cancelValue = JSON.parse(JSON.stringify(this.value || {}))
+    this.definition.visible = true
+    document.addEventListener('keydown', this.keyHandler)
+    this.updateComplete.then(() => {
+      setTimeout(() => {
+        this.focusField(this.path() + "." + this.definition.fields[0].name)
+        this.dispatchEvent(new FieldClickEvent(this.path()))
+      }, 1)
     })
+    this.requestUpdate()
   }
 
   public focusField(path: string) {

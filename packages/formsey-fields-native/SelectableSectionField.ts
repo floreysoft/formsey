@@ -71,10 +71,9 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         form = html`${selection?.fields ? html`<div class="form">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
       }
     }
-    const staticFormatter = getFormatter(this.definition.layout?.static?.formatter)
     const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
-    const style = `${staticFormatter?.containerStyle(this.definition.layout?.static)};${responsiveFormatter?.containerStyle(this.layout, this.definition)}`
-    return html`<section class="ffg" style=${style}>${super.render()}${form}<div class="fbg" style="${ifDefined(staticFormatter?.fieldStyle(this.definition.layout?.static))}"></div></section>`;
+    const style = `${responsiveFormatter?.containerStyle(this.layout, this.definition)}`
+    return html`<section class="ffg" style=${style}>${super.render()}${form}<div class="fbg"></div></section>`;
   }
 
   renderField() {
@@ -120,7 +119,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     let sizeFound = false
     for (let size of SUPPORTED_BREAKPOINTS) {
       sizeFound = (size == this.size || sizeFound)
-      this.layout = this.definition?.layout?.responsive?.[size] || this.layout
+      this.layout = this.definition?.layout?.[size] || this.layout
       if (this.layout && sizeFound) {
         break
       }

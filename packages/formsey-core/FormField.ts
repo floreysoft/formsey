@@ -54,7 +54,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   protected layout: Layout | undefined
 
   protected size: string | undefined
-  private resizeObserver: ResizeObserver
+  protected resizeObserver: ResizeObserver
 
   @query(".ffg")
   private grid: HTMLElement | undefined
@@ -71,6 +71,8 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   renderField() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
+    const staticLayout = this.definition.layout?.['static']
+    const staticFormatter = staticLayout ? getFormatter(staticLayout.formatter) : undefined
     const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
@@ -83,7 +85,10 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         }
       }
     }
-    return html`<section style="${ifDefined(responsiveFormatter?.boxStyle(this.layout))}"><div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}">${templates}</div>${hidden}<div class="fbg" style="${ifDefined(responsiveFormatter?.backgroundStyle(this.layout))}"></div></section>`
+    return html`<section style="${staticFormatter?.boxStyle?.(staticLayout) || ""};${responsiveFormatter?.boxStyle?.(this.layout) || ""}">
+      <div class="fbg" style="${staticFormatter?.backgroundStyle?.(staticLayout) || ""};${responsiveFormatter?.backgroundStyle?.(this.layout) || ""}"></div>
+      <div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}">${templates}</div>${hidden}
+    </section>`
   }
 
   firstUpdated() {
@@ -169,7 +174,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     let sizeFound = false
     for (let size of SUPPORTED_BREAKPOINTS) {
       sizeFound = (size == this.size || sizeFound)
-      this.layout = this.definition?.layout?.responsive?.[size] || this.layout
+      this.layout = this.definition?.layout?.[size] || this.layout
       if (this.layout && sizeFound) {
         break
       }

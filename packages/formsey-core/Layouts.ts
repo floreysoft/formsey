@@ -1,15 +1,13 @@
 export interface ResponsiveLayout {
-  static?: Layout
   breakpoints?: Breakpoints
-  responsive?: {
-    xxs?: Layout
-    xs?: Layout
-    s?: Layout
-    m?: Layout
-    l?: Layout
-    xl?: Layout
-    xxl?: Layout
-  }
+  static?: Layout
+  xxs?: Layout
+  xs?: Layout
+  s?: Layout
+  m?: Layout
+  l?: Layout
+  xl?: Layout
+  xxl?: Layout
 }
 
 export interface Breakpoints {
@@ -24,16 +22,21 @@ export interface Breakpoints {
 
 export interface Layout {
   formatter: string
-  margin?: "none" | "narrow" | "wide"
-  padding?: "none" | "narrow" | "wide"
-  elevation?: number
-  border?: "sharp" | "soft"
-  color?: string
-  opacity?: number
+}
+
+export interface SizeLayout extends Layout {
+  formatter: "size"
+  width?: string
 }
 
 export interface BoxLayout extends Layout {
   formatter: "box"
+  margin?: "none" | "narrow" | "wide"
+  padding?: "none" | "narrow" | "wide"
+  elevation?: number
+  border?: "sharp" | "soft"
+  backgroundColor?: string
+  opacity?: number
 }
 
 export interface FlexLayout extends Layout {
@@ -50,6 +53,7 @@ export interface FlexLayout extends Layout {
 
 export interface ColumnsLayout extends Layout {
   formatter: "columns"
+  gaps?: "none" | "narrow" | "wide"
   columns: {
     width: number
     horizontal?: string
@@ -58,6 +62,7 @@ export interface ColumnsLayout extends Layout {
 
 export interface AreasLayout extends Layout {
   formatter: "areas"
+  gaps?: "none" | "narrow" | "wide"
   columns: number[]
   areas: string[]
   alignments: {
