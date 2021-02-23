@@ -1,4 +1,4 @@
-      import { KEYCODE } from '@floreysoft/utils';
+import { KEYCODE } from '@floreysoft/utils';
 import { createField, Field } from '@formsey/core';
 import { FormDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
@@ -27,26 +27,14 @@ export class TabsField extends Field<TabsFieldDefinition, Object> {
       const icon: TemplateResult = typeof selection.icon == "string" ? getIcon(selection.icon as string) : selection.icon as TemplateResult
       tabs.push(html`<div tabIndex="0" @keydown=${(e: KeyboardEvent) => this.keyDown(e, index)} @click=${(e: Event) => { this.select(index) }} class="${classMap({ tab: true, selected: index == this.selectedIndexIndex, expand: this.definition.expand })}">${icon}${selection.label}</div>`)
       if (index == this.selectedIndexIndex) {
-        content = createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+        content = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout, name: selection.name } as FormDefinition, value: selection.name ? this.value?.[selection.name] : this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
       }
     })
     return html`<div class="container">${this.definition.location == "bottom" ? html`<div class="content">${content}</div><div part="tabs" class="tabs bottom">${tabs}</div>` : html`<div part="tabs" class="tabs top">${tabs}</div><div class="content">${content}</div>`}</div>`
   }
 
-  public focusField(path: string) {
-    if (path == this.path() + ".selection") {
-      let child = this.firstElementChild.firstElementChild.nextElementSibling as Field<any, any>
-      this.dispatchEvent(new FieldFocusEvent(this.path() + ".selection"));
-      return (<any>child).focusField()
-    }
-    return false
-  }
-
   protected changed(e: ValueChangedEvent<any>) {
-    e.stopPropagation()
-    if (e.detail?.name) {
-      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
-    }
+    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
   }
 
   private select(index: number) {
@@ -66,7 +54,7 @@ export class TabsField extends Field<TabsFieldDefinition, Object> {
         break;
       case KEYCODE.RIGHT:
       case KEYCODE.DOWN:
-        newIndex = Math.min(this.definition.selections?.length-1 || 0, index + 1)
+        newIndex = Math.min(this.definition.selections?.length - 1 || 0, index + 1)
         break;
       default:
         return;
@@ -82,7 +70,7 @@ export class TabsField extends Field<TabsFieldDefinition, Object> {
 
 getLibrary("native").registerComponent("tabs", {
   importPath: "@formsey/fields-native/TabsField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TabsFieldDefinition, Object>) => {
-    return html`<formsey-tabs id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-tabs>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TabsFieldDefinition, Object>) => {
+    return html`<formsey-tabs id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-tabs>`
   }
 })

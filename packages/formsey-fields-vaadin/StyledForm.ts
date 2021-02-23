@@ -25,7 +25,7 @@ export class StyledForm extends Form {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField({ id: 'form', components: this.components, context: this.context, settings: this.settings, definition: this.definition,value: this.value, parentPath: this.definition?.name,errors: this.errors,changeHandler: (event: ValueChangedEvent<any>) => this.changed(event),invalidHandler: (event: InvalidEvent) => this.invalid(event)});
+      field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition,value: this.value, parentPath: this.definition?.name,errors: this.errors,changeHandler: (event: ValueChangedEvent<any>) => this.changed(event),invalidHandler: (event: InvalidEvent) => this.invalid(event)});
     }
     const form = html`
     <custom-style>
@@ -64,7 +64,7 @@ export class StyledForm extends Form {
 
 getLibrary("vaadin").registerComponent("styledForm", {
   importPath: "@formsey/fields-vaadin/StyledForm",
-    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FormDefinition, any> ) => {
-    return html`<formsey-styled-form-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form-vaadin>`
+    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FormDefinition, any> ) => {
+    return html`<formsey-styled-form-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form-vaadin>`
   }
 })

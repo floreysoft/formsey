@@ -18,7 +18,7 @@ export class LabelField extends LabeledField<LabelFieldDefinition, any> {
 }
 getLibrary("native").registerComponent("label", {
   importPath: "@formsey/fields-native/LabelField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<LabelFieldDefinition, any>) => {
-    return html`<formsey-label id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-label>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<LabelFieldDefinition, any>) => {
+    return html`<formsey-label id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-label>`
   }
 })

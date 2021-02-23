@@ -429,6 +429,16 @@ export const FORM_STYLES = css`
   formsey-tabs .tab.selected {
       color:  var(--formsey-accent-color, inherit);
       background-color: var(--formsey-widget-background-hover, inherit);
+      position: relative;
+  }
+  formsey-tabs .tab.selected::after {
+    content:"";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right:0;
+    height: 2px;
+    background-color: var(--formsey-accent-color);
   }
   formsey-tabs .tab .icon {
       display: flex;
@@ -442,11 +452,7 @@ export const FORM_STYLES = css`
   formsey-tabs .content {
       flex-grow: 1;
       display: flex;
-  }
-  @media (pointer: coarse) {
-    formsey-tabs .tab {
-          min-height: 2.5em;
-      }
+      background: var(--formsey-widget-background-hover);
   }
 
   /* Stats View */

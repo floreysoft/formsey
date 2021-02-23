@@ -45,221 +45,508 @@ export { ICON_FILE, ICON_REMOVE, ICON_UPLOAD, UploadField } from './UploadField'
 export { URLField } from './URLField';
 export { WeekField } from './WeekField';
 export { YouTubeField } from './YouTubeField';
+import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary } from '@formsey/core/Registry';
 import { html } from 'lit-html';
 
 export const ICON_BROWSER = html`<svg viewBox="0 0 32 32"><path d="M30 2h-28c-1 0-2 .9-2 2v24c0 1.102.9 2 2 2h28c1 0 2-.9 2-2v-24c.002-1.1-.9-2-2-2zM11.5 3.5c.83 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5c-.83 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5zM7.5 3.5c.83 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5c-.83 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5zM3.5 3.5c.83 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5zM30 28c-.004 0-.004 0-.004.004h-28c-.002-.004-.002-.004-.004-.004v-20h28v20z"></path></svg>`
 
+const themes = new Map<string, Theme>([
+  ["formsey", {
+    mode: "light",
+    colors: {
+      light: {
+        "--formsey-color": "#000000",
+        "--formsey-error-text-color": "#ff3333",
+        "--formsey-background": "#ffffff",
+        "--formsey-accent-color": "#007dd2",
+        "--formsey-accent-contrast": "#ffffff",
+        "--formsey-border": "transparent",
+        "--formsey-border-focus": "#007fd4",
+        "--formsey-widget-background": "#eeeeee",
+        "--formsey-widget-background-hover": "#dddddd",
+        "--formsey-shade": "#80808030",
+
+        "--formsey-palette-1": "#493657",
+        "--formsey-palette-2": "#CE7DA5",
+        "--formsey-palette-3": "#BEE5BF",
+        "--formsey-palette-4": "#DFF3E3",
+        "--formsey-palette-5": "#FFD1BA",
+
+        "--formsey-token-invisible": "#bfbfbf",
+        "--formsey-token-keyword": "#0000FF",
+        "--formsey-token-constant": "#06960e",
+        "--formsey-token-language": "#0000FF",
+        "--formsey-token-library": "#06960e",
+        "--formsey-token-invalid": "#CD3131",
+        "--formsey-token-operator": "#000000",
+        "--formsey-token-function": "#3c4c72",
+        "--formsey-token-type": "#0000FF",
+        "--formsey-token-string": "#A31515",
+        "--formsey-token-comment": "#008000",
+        "--formsey-token-tag": "#800000",
+        "--formsey-token-numeric": "#098658",
+        "--formsey-token-variable": "#000000",
+        "--formsey-marker-step": "#fcff00",
+        "--formsey-marker-stack": "#a4e565",
+        "--formsey-marker-selection": "#3a3d4111",
+        "--formsey-marker-selected-word": "#3a3d4144",
+
+        "--formsey-elevation-1-shadow": "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+        "--formsey-elevation-2-shadow": "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+        "--formsey-elevation-3-shadow": "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+
+        "--formsey-elevation-0-opacity": "0%",
+        "--formsey-elevation-1-opacity": "5%",
+        "--formsey-elevation-2-opacity": "5%",
+        "--formsey-elevation-3-opacity": "5%",
+      },
+      dark: {
+        "--formsey-color": "#f5f5f5",
+        "--formsey-error-text-color": "#ff9f9f",
+        "--formsey-background": "#000000",
+        "--formsey-accent-color": "#007fd4",
+        "--formsey-accent-contrast": "#ffffff",
+        "--formsey-border": "transparent",
+        "--formsey-border-focus": "#007fd4",
+        "--formsey-shade": "#80808040",
+        "--formsey-widget-background": "#2d2d2d",
+        "--formsey-widget-background-hover": "#37373d",
+
+        "--formsey-token-invisible": "#bfbfbf",
+        "--formsey-token-keyword": "#569CD6",
+        "--formsey-token-constant": "#06960e",
+        "--formsey-token-language": "#569CD6",
+        "--formsey-token-library": "#06960e",
+        "--formsey-token-invalid": "#F44747",
+        "--formsey-token-operator": "#D4D4D4",
+        "--formsey-token-function": "#3c4c72",
+        "--formsey-token-type": "#6d79de",
+        "--formsey-token-string": "#ce9178",
+        "--formsey-token-comment": "#6A9955",
+        "--formsey-token-tag": "#569CD6",
+        "--formsey-token-numeric": "#B5CEA8",
+        "--formsey-token-variable": "#9cdcfe",
+        "--formsey-marker-step": "#fcff00",
+        "--formsey-marker-stack": "#a4e565",
+        "--formsey-marker-selection": "#3a3d4166",
+        "--formsey-marker-selected-word": "#3a3d41",
+
+        "--formsey-elevation-0-opacity": "0",
+        "--formsey-elevation-1-opacity": "10%",
+        "--formsey-elevation-2-opacity": "14%",
+        "--formsey-elevation-3-opacity": "18%"
+      }
+    },
+    fonts: {
+      "--formsey-font": "14px Roboto",
+      "--formsey-font-coarse": "15px Roboto"
+    },
+    spacing: {
+      "--formsey-space-narrow": ".25em",
+      "--formsey-space-wide": ".5em",
+      "--formsey-border-radius": "3px",
+    }
+  }]
+])
+
+type CustomProperties = { [key: string]: string }
+
+type Theme = {
+  mode: string
+  colors: {
+    light: CustomProperties
+    dark: CustomProperties
+  }
+  fonts: CustomProperties
+  spacing: CustomProperties
+}
+
+function createFonts(properties: CustomProperties): any[] {
+  return [
+    {
+      "type": "string",
+      "name": "--formsey-font",
+      "label": "Font"
+    },
+    {
+      "type": "string",
+      "name": "--formsey-font-coarse",
+      "label": "Font on touch devices"
+    }].map(field => { return { ...field, default: properties[field.name] } })
+}
+
+function createSpacing(properties: CustomProperties): any[] {
+  return [
+    {
+      "type": "string",
+      "name": "--formsey-space-narrow",
+      "label": "Spacing narrow"
+    },
+    {
+      "type": "string",
+      "name": "--formsey-space-wide",
+      "label": "Spacing wide"
+    },
+    {
+      "type": "string",
+      "name": "--formsey-border-radius",
+      "label": "Border radius"
+    }].map(field => { return { ...field, default: properties[field.name] } })
+}
+
+function createColors(properties: CustomProperties): any[] {
+  return [
+    {
+      "type": "color",
+      "name": "--formsey-background",
+      "label": "Background color",
+      "helpText": "Background color of the form"
+    },
+    {
+      "helpText": "Foreground color used for text, icons and more",
+      "name": "--formsey-color",
+      "type": "color",
+      "label": "Text color"
+    },
+    {
+      "label": "Fields shade",
+      "helpText": "Background color for input fields",
+      "name": "--formsey-shade",
+      "placeholder": "#80808030",
+      "type": "color"
+    },
+    {
+      "autocomplete": "off",
+      "helpText": "Color to highlight active field",
+      "type": "color",
+      "name": "--formsey-accent-color",
+      "label": "Accent color"
+    },
+    {
+      "label": "Accent hover color",
+      "helpText": "Hover color for accented items",
+      "name": "--formsey-accent-hover",
+      "type": "color"
+    },
+    {
+      "autocomplete": "off",
+      "helpText": "Used for text and icons on top of accent color",
+      "label": "Accent contrast",
+      "name": "--formsey-accent-contrast",
+      "type": "color"
+    },
+    {
+      "name": "--formsey-error-backkground",
+      "placeholder": "#FF000020",
+      "helpText": "Background color for invalid fields",
+      "type": "color",
+      "label": "Error color",
+      "default": "#FF000020"
+    },
+    {
+      "label": "Error text color",
+      "helpText": "Text color for error message",
+      "name": "--formsey-error-text",
+      "type": "color"
+    },
+    {
+      "autocomplete": "off",
+      "helpText": "Background color for buttons",
+      "label": "Buttons",
+      "name": "--formsey-widget-background",
+      "type": "color"
+    },
+    {
+      "type": "color",
+      "name": "--formsey-widget-background-hover",
+      "helpText": "Background color on hover",
+      "label": "Buttons hover"
+    },
+    {
+      "placeholder": "",
+      "name": "--formsey-border",
+      "type": "color",
+      "label": "Border color",
+      "helpText": "Input field borders"
+    },
+    {
+      "label": "Focus color",
+      "placeholder": "",
+      "name": "--formsey-border-focus",
+      "helpText": "Focused border color",
+      "type": "color"
+    }
+  ].map(field => { return { ...field, default: properties[field.name] } })
+}
+
+function createTheme(theme: Theme): any[] {
+  return [
+    {
+      "type": "tabs",
+      "expand": false,
+      "location": "top",
+      "selections": [
+        {
+          "label": "Colors",
+          "name": "colors",
+          "fields": [
+            {
+              "expand": true,
+              "selections": [
+                {
+                  "fields": createColors(theme.colors.light),
+                  "label": "Light mode",
+                  "name": "light",
+                  "layout": {
+                    "l": {
+                      "formatter": "areas",
+                      "areas": [
+                        "--formsey-background --formsey-color --formsey-shade --formsey-accent-color --formsey-accent-hover --formsey-accent-contrast",
+                        "--formsey-error-backkground --formsey-error-text --formsey-widget-background --formsey-widget-background-hover --formsey-border --formsey-border-focus"
+                      ],
+                      "alignments": [],
+                      "columns": [
+                        2,
+                        2,
+                        2,
+                        2,
+                        2,
+                        2
+                      ]
+                    },
+                    "m": {
+                      "columns": [
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "horizontal": "expand",
+                          "width": 1
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        }
+                      ],
+                      "formatter": "columns",
+                      "gaps": "narrow"
+                    },
+                    "static": {
+                      "formatter": "box",
+                      "elevation": "0",
+                      "padding": "wide"
+                    },
+                    "xs": {
+                      "formatter": "columns",
+                      "columns": [
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        }
+                      ]
+                    },
+                    "s": {
+                      "formatter": "columns",
+                      "columns": [
+                        {
+                          "horizontal": "expand",
+                          "width": 1
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "label": "Dark mode",
+                  "fields": createColors(theme.colors.dark),
+                  "name": "dark",
+                  "layout": {
+                    "l": {
+                      "formatter": "areas",
+                      "alignments": [],
+                      "areas": [
+                        "--formsey-background --formsey-color --formsey-shade --formsey-accent-color --formsey-accent-hover --formsey-accent-contrast",
+                        "--formsey-error-backkground --formsey-error-text --formsey-widget-background --formsey-widget-background-hover --formsey-border --formsey-border-focus"
+                      ],
+                      "columns": [
+                        2,
+                        2,
+                        2,
+                        2,
+                        2,
+                        2
+                      ]
+                    },
+                    "s": {
+                      "columns": [
+                        {
+                          "horizontal": "expand",
+                          "width": 1
+                        },
+                        {
+                          "horizontal": "expand",
+                          "width": 1
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        }
+                      ],
+                      "formatter": "columns"
+                    },
+                    "xs": {
+                      "formatter": "columns",
+                      "columns": [
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "horizontal": "expand",
+                          "width": 1
+                        }
+                      ]
+                    },
+                    "static": {
+                      "padding": "wide",
+                      "elevation": "0",
+                      "formatter": "box"
+                    },
+                    "m": {
+                      "columns": [
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        },
+                        {
+                          "width": 1,
+                          "horizontal": "expand"
+                        }
+                      ],
+                      "gaps": "narrow",
+                      "formatter": "columns"
+                    }
+                  }
+                }
+              ],
+              "location": "bottom",
+              "type": "tabs"
+            }
+          ]
+        },
+        {
+          "name": "fonts",
+          "label": "Fonts",
+          "fields": [
+            ...createFonts(theme.fonts),
+            {
+              "type": "optionalSection",
+              "control": "switch",
+              "controlLabel": "Load font",
+              "name": "loadWebfont",
+              "label": "Load custom web font",
+              "fields": [
+                {
+                  "type": "url",
+                  "label": "URL",
+                  "name": "url",
+                  "autocomplete": "off"
+                }
+              ]
+            }
+          ],
+          "layout": {
+            "static": {
+              "padding": "wide",
+              "formatter": "box"
+            }
+          }
+        },
+        {
+          "name": "spacing",
+          "label": "Spacing",
+          "fields": createSpacing(theme.spacing),
+          "layout": {
+            "xs": {
+              "horizontal": "expand",
+              "gaps": "narrow",
+              "formatter": "flex",
+              "vertical": "top",
+              "wrap": "wrap",
+              "direction": "horizontal"
+            },
+            "static": {
+              "formatter": "box",
+              "padding": "wide"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
 let nativeLibrary = getLibrary('native')
 if (nativeLibrary) {
   nativeLibrary.icon = ICON_BROWSER
   nativeLibrary.displayName = "Native"
+  nativeLibrary.defaultSettings = {
+    theme: {
+      value: themes.get("formsey")
+    }
+  }
   nativeLibrary.settingsEditor = {
     "type": "form",
     "fields": [
       {
         "name": "theme",
+        "type": "selectableSection",
         "label": "Theme",
-        "helpText": "Select the theme for your form",
+        "selection": "select",
         "selections": [
           {
-            "label": "Light",
-            "name": "light",
-            "value": "light",
-            "fields": [
-              {
-                "type": "markdown",
-                "default": "Make sure to load the Roboto fonts when using this theme by adding the following snippet in the head of your page:\n```\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap\">\n\n```"
-              }
-            ],
-            "layout": {
-              "sizes": {
-                "xs": {
-                  "formatter": "columns",
-                  "columns": [
-                    1
-                  ]
-                }
-              }
-            }
-          },
-          {
-            "value": "dark",
-            "name": "dark",
-            "label": "Dark",
-            "fields": [
-              {
-                "type": "markdown",
-                "default": "Make sure to load the Roboto fonts when using this theme by adding the following snippet in the head of your page:\n```\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap\">\n\n```"
-              }
-            ],
-            "layout": {
-              "sizes": {
-                "xs": {
-                  "formatter": "columns",
-                  "columns": [
-                    1
-                  ]
-                }
-              }
-            }
-          },
-          {
-            "fields": [
-              {
-                "type": "string",
-                "label": "Font",
-                "name": "--formsey-font",
-                "helpText": "Enter font family and size",
-                "placeholder": "13px Arial, sans-serif",
-                "autocomplete": "off"
-              },
-              {
-                "type": "string",
-                "label": "Font on mobile",
-                "name": "--formsey-font-coarse",
-                "helpText": "Font used on pointer devices",
-                "placeholder": "15px Arial, sans-serif",
-                "autocomplete": "off"
-              },
-              {
-                "helpText": "Background color of the form",
-                "autocomplete": "off",
-                "type": "color",
-                "name": "--formsey-background",
-                "label": "Background color"
-              },
-              {
-                "name": "--formsey-color",
-                "label": "Text color",
-                "helpText": "Foreground color used for text, icons and more",
-                "type": "color",
-                "autocomplete": "off"
-              },
-              {
-                "label": "Fields shade",
-                "name": "--formsey-shade",
-                "helpText": "Background color for input fields",
-                "autocomplete": "off",
-                "type": "color",
-                "placeholder": "#80808030"
-              },
-              {
-                "label": "Accent color",
-                "autocomplete": "off",
-                "name": "--formsey-accent-color",
-                "type": "color",
-                "helpText": "Color to highlight active field"
-              },
-              {
-                "label": "Accent hover color",
-                "autocomplete": "off",
-                "name": "--formsey-accent-hover",
-                "type": "color",
-                "helpText": "Hover color for accented items"
-              },
-              {
-                "autocomplete": "off",
-                "type": "color",
-                "name": "--formsey-accent-contrast",
-                "label": "Accent contrast",
-                "helpText": "Used for text and icons on top of accent color"
-              },
-              {
-                "name": "--formsey-error-backkground",
-                "label": "Error color",
-                "helpText": "Background color for invalid fields",
-                "type": "color",
-                "autocomplete": "off",
-                "placeholder": "#FF000020",
-                "default": "#FF000020"
-              },
-              {
-                "name": "--formsey-error-text",
-                "label": "Error text color",
-                "helpText": "Text color for error message",
-                "type": "color",
-                "autocomplete": "off"
-              },
-              {
-                "type": "color",
-                "helpText": "Background color for buttons",
-                "label": "Buttons",
-                "autocomplete": "off",
-                "name": "--formsey-widget-background"
-              },
-              {
-                "label": "Buttons hover",
-                "name": "--formsey-widget-background-hover",
-                "helpText": "Background color on hover",
-                "autocomplete": "off",
-                "type": "color"
-              },
-              {
-                "label": "Border color",
-                "name": "--formsey-border",
-                "helpText": "Input field borders",
-                "autocomplete": "off",
-                "type": "color",
-                "placeholder": ""
-              },
-              {
-                "label": "Focus color",
-                "name": "--formsey-border-focus",
-                "helpText": "Focused border color",
-                "autocomplete": "off",
-                "type": "color",
-                "placeholder": ""
-              },
-              {
-                "placeholder": "3px",
-                "label": "Border radius",
-                "name": "--formsey-border-radius",
-                "helpText": "Round borders for form fields",
-                "autocomplete": "off",
-                "type": "string"
-              },
-              {
-                "label": "Padding",
-                "autocomplete": "off",
-                "placeholder": "0.1em 0.25em",
-                "type": "string",
-                "helpText": "Vertical and horizontal spacing",
-                "name": "--formsey-padding"
-              }
-            ],
-            "value": "custom",
-            "label": "Custom",
-            "name": "custom",
-            "layout": {
-              "s": {
-                "formatter": "columns",
-                "columns": [{ width: 1 }, { width: 1 }, { width: 1 }, { width: 1 }]
-              }
-            }
-          },
-          {
-            "label": "None",
-            "name": "none",
-            "value": "none"
+            "value": "formsey",
+            "name": "formsey",
+            "label": "Formsey",
+            "fields": createTheme(themes.get("formsey"))
           }
         ],
-        "type": "selectableSection",
-        "control": "list"
+        "default": {
+          selection: "formsey",
+          value: themes.get("formsey")
+        }
       }
     ],
-    "layout": {
-      "static": {
-        "formatter": "box",
-        "margin": "wide"
-      },
-      "responsive": {
-        "xs": {
-          "formatter": "columns",
-          "columns": [
-            1
-          ]
-        }
+    layout: {
+      static: {
+        formatter: "box",
+        padding: "wide"
       }
     }
   } as any

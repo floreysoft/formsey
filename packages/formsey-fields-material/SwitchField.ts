@@ -49,7 +49,7 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
 
 getLibrary("material").registerComponent("switch", {
   importPath: "@formsey/fields-material/SwitchField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SwitchFieldDefinition, boolean>) => {
-    return html`<formsey-switch-material id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-switch-material>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SwitchFieldDefinition, boolean>) => {
+    return html`<formsey-switch-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-switch-material>`
   }
 })

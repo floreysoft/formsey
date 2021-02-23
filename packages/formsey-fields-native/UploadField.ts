@@ -118,7 +118,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
 
 getLibrary("native").registerComponent("upload", {
   importPath: "@formsey/fields-native/UploadField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<UploadFieldDefinition, FileObject[]>) => {
-    return html`<formsey-upload id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-upload>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<UploadFieldDefinition, FileObject[]>) => {
+    return html`<formsey-upload id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-upload>`
   }
 })

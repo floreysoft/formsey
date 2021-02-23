@@ -77,7 +77,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         const value = this.value && field.name ? this.value[field.name] : this.value
-        let fieldTemplate = createField({ components: this.components, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+        let fieldTemplate = createField({ library: this.library, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
@@ -184,7 +184,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   protected changed(e: ValueChangedEvent<any>) {
     e.stopPropagation()
     if (e.detail?.name) {
-      if (typeof this.definition.name === "undefined") {
+      if (typeof this.definition.name === "undefined" || this.definition.name === "") {
         // If this is an unnamed form, just pass event to parent
         this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
       } else {
@@ -218,7 +218,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 }
 getLibrary("native").registerComponent("form", {
   importPath: "@formsey/core/FormField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
-    return html`<formsey-form-field id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
+    return html`<formsey-form-field id=${ifDefined(id)} .library=${library} .settings=${settings} .definition=${definition} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   }
 })

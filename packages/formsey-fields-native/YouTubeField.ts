@@ -69,7 +69,7 @@ export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
 
 getLibrary("native").registerComponent("youtube", {
 	importPath: "@formsey/fields-native/YouTubeField",
-	template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<YouTubeFieldDefinition, string>) => {
-		return html`<formsey-youtube id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-youtube>`
+	template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<YouTubeFieldDefinition, string>) => {
+		return html`<formsey-youtube id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-youtube>`
 	}
 })

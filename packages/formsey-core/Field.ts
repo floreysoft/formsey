@@ -1,5 +1,5 @@
 import { LitElement, property, TemplateResult } from "lit-element";
-import { Components, getDefaultLibrary, getLibraries, getLibrary, Resources, Settings } from './Registry';
+import { Components, getDefaultLibrary, getLibraries, getLibrary, Library, Resources, Settings } from './Registry';
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
@@ -11,7 +11,7 @@ export const createField = (resources: Resources<FieldDefinition, any>): Templat
   if (!resources.definition.type) {
     throw Error("Cannot create field as type is undefined")
   }
-  const component = resources.components[resources.definition.type];
+  const component = resources.library?.components[resources.definition.type];
   if (component) {
     return component.template(resources)
   } else {
@@ -30,7 +30,7 @@ export const createField = (resources: Resources<FieldDefinition, any>): Templat
 
 export class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ converter: Object })
-  components: Components | undefined
+  library: Library | undefined
 
   @property({ converter: Object })
   settings: Settings | undefined
@@ -46,22 +46,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   @property()
   parentPath: string | undefined
-
-  @property({ type: String })
-  set library(librarys: string) {
-    let registeredLibrary = getLibrary(librarys)
-    if (registeredLibrary.components) {
-      this.components = registeredLibrary.components
-    } else {
-      let defaultLibrary = getDefaultLibrary()
-      if (defaultLibrary) {
-        console.warn("Library '" + librarys + "' not availble, using '" + defaultLibrary + "' instead")
-        this.components = getLibrary(defaultLibrary).components
-      } else {
-        console.error("Librarys '" + librarys + "' not availble, no libraries installed!")
-      }
-    }
-  }
 
   @property({ type: Boolean })
   valid: boolean = true
@@ -126,12 +110,12 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
         this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
       }
     }
-    if (!this.components) {
-      let defaultLibrary = getDefaultLibrary()
-      if (typeof defaultLibrary != "undefined") {
-        this.components = getLibrary(defaultLibrary).components
-      }
-      return typeof this.components != "undefined"
+    if (!this.library) {
+      this.library = getDefaultLibrary()
+      return typeof this.library != "undefined"
+    }
+    if (!this.settings) {
+      this.settings = getDefaultLibrary().defaultSettings
     }
     return true
   }

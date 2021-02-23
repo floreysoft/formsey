@@ -26,7 +26,7 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
 
 getLibrary("vaadin").registerComponent("button", {
   importPath: "@formsey/fields-vaadin/ButtonField",
-    template: ( { components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ButtonFieldDefinition, boolean> ) => {
-    return html`<formsey-button-vaadin id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-button-vaadin>`
+    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<ButtonFieldDefinition, boolean> ) => {
+    return html`<formsey-button-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-button-vaadin>`
   }
 })

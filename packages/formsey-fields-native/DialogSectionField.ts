@@ -43,15 +43,15 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
       minHeight: `${this.definition.height || 0}${this.definition.heightUnit || "em"}`,
     }
     return html`
-    ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) }) : undefined}
+    ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) }) : undefined}
     ${this.definition.visible ? html`
     <div class="dialogWrapper" @mouseup=${this.endDrag} @mousemove=${this.drag}>
       <focus-trap>
         <div class="dialog" style=${styleMap(position)}>
           ${this.definition.header ? html`<header @mousedown=${this.startDrag} @mouseup=${this.endDrag} @mousemove=${this.drag}>${this.definition.header}</header>` : undefined}
-          <div id="form">${createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
+          <div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
           <footer>
-            ${this.definition.actions?.map((action: ButtonFieldDefinition) => html`${createField({ id: this.elementId, components: this.components, context: this.context, settings: this.settings, definition: { type: "button", name: action.name, buttonType: "button", text: action.text, icon: action.icon } as ButtonFieldDefinition, parentPath: this.path(), clickHandler: e => this.buttonClicked(e) })}`)}
+            ${this.definition.actions?.map((action: ButtonFieldDefinition) => html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", name: action.name, buttonType: "button", text: action.text, icon: action.icon } as ButtonFieldDefinition, parentPath: this.path(), clickHandler: e => this.buttonClicked(e) })}`)}
           </footer>
         </div>
       </focus-trap>
@@ -173,7 +173,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
 
 getLibrary("native").registerComponent("dialogSection", {
   importPath: "@formsey/fields-native/DialogSectionField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<DialogSectionFieldDefinition, Object>) => {
-    return html`<formsey-dialog-section id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @click=${clickHandler} @invalid=${invalidHandler}></formsey-dialog-section>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<DialogSectionFieldDefinition, Object>) => {
+    return html`<formsey-dialog-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @click=${clickHandler} @invalid=${invalidHandler}></formsey-dialog-section>`
   }
 })

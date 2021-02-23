@@ -14,7 +14,7 @@ const options = currencyCodes.map(locale => {
 @customElement("formsey-currency")
 export class CurrencyField extends LabeledField<FieldDefinition, string> {
   protected renderField() {
-    return createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (e: CustomEvent) => this.changed(e) })
+    return createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (e: CustomEvent) => this.changed(e) })
   }
 
   protected changed(e: CustomEvent) {
@@ -25,7 +25,7 @@ export class CurrencyField extends LabeledField<FieldDefinition, string> {
 
 getLibrary("native").registerComponent("currency", {
   importPath: "@formsey/fields-native/CurrencyField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
-    return html`<formsey-currency id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-currency>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
+    return html`<formsey-currency id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-currency>`
   }
 })

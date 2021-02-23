@@ -20,7 +20,7 @@ if (!customElementRegistry.oldDefine) {
 
 export interface Resources<D extends FieldDefinition, V> {
   id?: string
-  components: Components
+  library: Library
   definition: D
   context: any
   settings?: Settings
@@ -51,6 +51,7 @@ export class Library {
   icon?: TemplateResult
   displayName?: string
   settingsEditor?: FormDefinition
+  defaultSettings?: Settings
   onSettingsChanged?: (settings: Settings) => Settings
 
   registerComponent(type: string, component: Component) {
@@ -128,10 +129,10 @@ export function getLibrary(name: string): Library {
   return library
 }
 
-export function getDefaultLibrary(): string | undefined {
+export function getDefaultLibrary(): Library | undefined {
   let libraries = getLibraries()
   if (typeof libraries != "undefined") {
-    let avaliableLibraries = Object.keys(libraries)
+    let avaliableLibraries = Object.values(libraries)
     if (avaliableLibraries.length == 0) {
       return undefined;
     } else {

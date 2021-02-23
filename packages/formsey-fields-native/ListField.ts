@@ -19,10 +19,10 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
   private firstMatchingOption
 
   renderField() {
-    const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? createField({ components: this.components, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) }) : undefined
+    const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) }) : undefined
     let visible = 0
     this.firstMatchingOption = undefined
-    return html`<div class="search" @keydown=${this.searchKeyDown}>${search}</div><div class="options">${this.definition.options.map((option) => {
+    return html`<div class="search" @keydown=${this.searchKeyDown}>${search}</div><div class="options">${this.definition.options?.map((option) => {
       let label = option.label || option.value;
       let value = option.value || option.label;
       let checked = false
@@ -109,7 +109,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
 
 getLibrary("native").registerComponent("list", {
   importPath: "@formsey/fields-native/ListField",
-  template: ({ components, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string | string[]>) => {
-    return html`<formsey-list id="${ifDefined(id)}" .components=${components} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string | string[]>) => {
+    return html`<formsey-list id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
   }
 })
