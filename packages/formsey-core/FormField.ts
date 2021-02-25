@@ -1,12 +1,48 @@
 import { customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { getFormatter, getLibrary, Resources } from './Registry';
 import { createField, Field } from './Field';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
 import { Breakpoints, Layout } from "./Layouts";
+import { Components, getFormatter, getLibrary, Resources } from './Registry';
 import { ValueChangedEvent } from './ValueChangedEvent';
+
+export function isFormDefinition(definition: FieldDefinition): definition is FormDefinition {
+  return definition['fields'] !== undefined;
+}
+
+export function removeDeletedFields<V>(components: Components, definition: FormDefinition, value: Object) {
+  if (definition && definition.fields && value) {
+    // Only keep fields that are defined
+    let newValue = {} as V
+    addDefinedFields(components, definition.fields, value, newValue)
+    addMemberValueIfPresent("type", newValue, value)
+    return newValue
+  }
+}
+
+function addDefinedFields(components: Components, fields: FieldDefinition[], value: Object, newValue: Object) {
+  for (let field of fields) {
+    if (typeof field.name !== "undefined" && field.name !== "") {
+      if (typeof value[field.name] !== "undefined") {
+        newValue[field.name] = value[field.name]
+      }
+    } else {
+      // Fetch all unnamed forms/fields to keep lifted fields
+      const nestedForms = components[field.type]?.nestedFields?.(field, value)
+      if (nestedForms) {
+        addDefinedFields(components, nestedForms, value, newValue)
+      }
+    }
+  }
+}
+
+function addMemberValueIfPresent(name: string, newValue: Object, value: Object) {
+  if (typeof value[name] != "undefined") {
+    newValue[name] = value[name]
+  }
+}
 
 export const SUPPORTED_BREAKPOINTS = ["xs", "s", "m", "l", "xl"]
 
@@ -22,7 +58,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   @property({ converter: Object })
   // @ts-ignore()
   set value(value: V) {
-    this._value = value
+    this._value = removeDeletedFields<V>(this.library.components, this._definition, value)
     this.applyHiddenFields()
     this.requestUpdate()
   }
@@ -95,16 +131,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     this.resizeObserver.observe(this.grid)
   }
 
-  updated() {
-    let counter = 0;
-    for (let field of this._fields) {
-      let child = field.firstElementChild as any
-      if (child && typeof child['setIndex'] == "function") {
-        child.setIndex(counter)
-        counter++
-      }
-    }
-  }
 
   public focusField(path: string): boolean {
     for (let field of this._fields) {
@@ -198,12 +224,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     }
   }
 
-  protected addMemberValueIfPresent(name: string, newValue: Object) {
-    if (typeof this.value[name] != "undefined") {
-      newValue[name] = this.value[name]
-    }
-  }
-
   protected applyHiddenFields() {
     if (this._definition && this._definition.fields && this._value) {
       for (let field of this._definition.fields) {
@@ -220,5 +240,8 @@ getLibrary("native").registerComponent("form", {
   importPath: "@formsey/core/FormField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
     return html`<formsey-form-field id=${ifDefined(id)} .library=${library} .settings=${settings} .definition=${definition} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
+  },
+  nestedFields: (definition: FormDefinition, value: any) => {
+    return definition.fields
   }
 })

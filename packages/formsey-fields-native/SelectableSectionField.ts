@@ -161,5 +161,13 @@ getLibrary("native").registerComponent("selectableSection", {
   importPath: "@formsey/fields-native/SelectableSectionField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
     return html`<formsey-selectable-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-selectable-section>`
+  },
+  nestedFields: (definition: SelectableSectionFieldDefinition, value: any) => {
+    const fields = []
+    definition.selections?.forEach(selection => {
+      if ( selection.name )
+      fields.push({ ...selection, type: "form" })
+    })
+    return fields
   }
 })

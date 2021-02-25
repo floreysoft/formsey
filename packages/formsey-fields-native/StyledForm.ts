@@ -3,7 +3,7 @@ import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { getLibrary, Resources } from '@formsey/core/Registry';
+import { getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { css, customElement, html, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -28,11 +28,44 @@ export class StyledForm extends Form {
   `]
   }
 
+  // @ts-ignore
+  set settings(settings: Settings) {
+    if (settings != this._settings) {
+      this._settings = settings
+      this._style = this.concatProperties(settings?.['theme']?.['value']?.['colors']?.[settings?.['mode']]) + this.concatProperties(this.settings?.['theme']?.['value']?.['fonts']) + this.concatProperties(this.settings?.['theme']?.['value']?.['spacing'])
+      const webFont = settings?.['theme']?.['value']?.['fonts']?.['loadWebfont']?.['url']
+      if (webFont) {
+        let hash = 0, i, chr;
+        for (i = 0; i < webFont.length; i++) {
+          chr = webFont.charCodeAt(i);
+          hash = ((hash << 5) - hash) + chr;
+          hash |= 0;
+        }
+        let fontElement = window.document.getElementById(""+hash)
+        if (!fontElement) {
+          let link = document.createElement("link")
+          link.setAttribute("id", ""+hash)
+          link.setAttribute("rel", "stylesheet")
+          link.setAttribute("type", "text/css")
+          link.setAttribute("href", webFont)
+          window.document.getElementsByTagName("head")[0].appendChild(link)
+        }
+      }
+    }
+  }
+
+  get settings() {
+    return this._settings
+  }
+
   @query(".themed")
   themed: HTMLElement
 
   @query('#field')
   form: FormField<FormDefinition, Object> | undefined
+
+  private _settings: Settings
+  private _style: string = ""
 
   render() {
     let field = undefined
@@ -40,17 +73,19 @@ export class StyledForm extends Form {
       field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
-    return this.settings ? html`<div class="themed" part="form">${form}</div>` : form
+    return html`<div class="themed" style=${this._style}>${form}</div>`
   }
 
-  updated() {
-    if (this.settings) {
-      const mode = this.settings?.['mode']
-      this.themed.setAttribute("style", "")
-      this.applyProperties(this.themed.style, this.settings?.['theme']?.['value']?.['colors']?.[mode])
-      this.applyProperties(this.themed.style, this.settings?.['theme']?.['value']?.['fonts'])
-      this.applyProperties(this.themed.style, this.settings?.['theme']?.['value']?.['spacing'])
+  private concatProperties(properties?: Object): string {
+    let style = ""
+    if (properties) {
+      Object.entries(properties).forEach(([key, value]) => {
+        if (key.startsWith("--")) {
+          style += `${key}:${value};`
+        }
+      })
     }
+    return style
   }
 
   public path(): string {
@@ -67,16 +102,6 @@ export class StyledForm extends Form {
 
   protected invalid(e: InvalidEvent) {
     this.dispatchEvent(new InvalidEvent(e.detail));
-  }
-
-  private applyProperties(style: CSSStyleDeclaration, properties?: Object) {
-    if (properties) {
-      Object.entries(properties).forEach(([key, value]) => {
-        if (key.startsWith("--")) {
-          style.setProperty(key, value as string);
-        }
-      })
-    }
   }
 }
 

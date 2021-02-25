@@ -38,6 +38,7 @@ export interface Component {
   renderer?: string,
   module?: string,
   focusable?: boolean
+  nestedFields?: (definition: FieldDefinition, value: any) => FieldDefinition[]
 }
 
 export interface Components {

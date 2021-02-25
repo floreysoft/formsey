@@ -71,5 +71,11 @@ getLibrary("native").registerComponent("responsivePanel", {
   importPath: "@formsey/fields-native/ResponsivePanelField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
     return html`<formsey-responsive-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-responsive-panel>`
+  },
+  nestedFields: (definition: ResponsivePanelFieldDefinition, value: any) => {
+    const fields = []
+    fields.push({ ...definition.first, type: "form" })
+    fields.push({ ...definition.second, type: "form" })
+    return fields
   }
 })

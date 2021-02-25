@@ -37,7 +37,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
           this.firstMatchingOption = value
         }
         if (this.definition.max && ++visible > this.definition.max) return
-        return html`<formsey-option @keydown=${this.keyDown} ?hideCheckmark=${this.definition.hideCheckmark} .query=${this.query} .definition=${{ name: value, icon: option.icon, label, value }} .value=${checked} .parentPath=${this.path()} @inputChange=${this.changed}>${option.label || option.value}</formsey-option>`
+        return html`<formsey-option @keydown=${this.keyDown} passive ?hideCheckmark=${this.definition.hideCheckmark} .query=${this.query} .definition=${{ name: value, icon: option.icon, label, value }} .value=${checked} .parentPath=${this.path()} @inputChange=${this.changed}>${option.label || option.value}</formsey-option>`
       }
     })}</div>`;
   }

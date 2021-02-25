@@ -10,6 +10,9 @@ export class OptionField extends Field<Option, boolean> {
   @property({ type: Boolean })
   hideCheckmark: boolean
 
+  @property({ type: Boolean })
+  passive: boolean
+
   @property()
   query: string
 
@@ -27,7 +30,7 @@ export class OptionField extends Field<Option, boolean> {
 
   protected clicked(e: Event) {
     e.stopPropagation()
-    this.value = !this.value
+    if (!this.passive) { this.value = !this.value }
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
   }
 
@@ -50,6 +53,6 @@ export class OptionField extends Field<Option, boolean> {
 getLibrary("native").registerComponent("option", {
   importPath: "@formsey/fields-native/OptionField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler }: Resources<Option, boolean>) => {
-    return html`<formsey-option.library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-option>`
+    return html`<formsey-option .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-option>`
   }
 })

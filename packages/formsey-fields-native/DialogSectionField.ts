@@ -175,5 +175,8 @@ getLibrary("native").registerComponent("dialogSection", {
   importPath: "@formsey/fields-native/DialogSectionField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<DialogSectionFieldDefinition, Object>) => {
     return html`<formsey-dialog-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @click=${clickHandler} @invalid=${invalidHandler}></formsey-dialog-section>`
+  },
+  nestedFields: (definition: FormDefinition, value: any) => {
+    return definition.fields
   }
 })

@@ -53,7 +53,6 @@ export const ICON_BROWSER = html`<svg viewBox="0 0 32 32"><path d="M30 2h-28c-1 
 
 const themes = new Map<string, Theme>([
   ["formsey", {
-    mode: "light",
     colors: {
       light: {
         "--formsey-color": "#000000",
@@ -147,13 +146,107 @@ const themes = new Map<string, Theme>([
       "--formsey-space-wide": ".5em",
       "--formsey-border-radius": "3px",
     }
+  }],
+  ["candy", {
+    colors: {
+      light: {
+        "--formsey-color": "#550051",
+        "--formsey-error-text-color": "#ff3333",
+        "--formsey-background": "#768546",
+        "--formsey-accent-color": "#007dd2",
+        "--formsey-accent-contrast": "#ffffff",
+        "--formsey-border": "transparent",
+        "--formsey-border-focus": "#007fd4",
+        "--formsey-widget-background": "#eeeeee",
+        "--formsey-widget-background-hover": "#dddddd",
+        "--formsey-shade": "#80808030",
+
+        "--formsey-palette-1": "#493657",
+        "--formsey-palette-2": "#CE7DA5",
+        "--formsey-palette-3": "#BEE5BF",
+        "--formsey-palette-4": "#DFF3E3",
+        "--formsey-palette-5": "#FFD1BA",
+
+        "--formsey-token-invisible": "#bfbfbf",
+        "--formsey-token-keyword": "#0000FF",
+        "--formsey-token-constant": "#06960e",
+        "--formsey-token-language": "#0000FF",
+        "--formsey-token-library": "#06960e",
+        "--formsey-token-invalid": "#CD3131",
+        "--formsey-token-operator": "#000000",
+        "--formsey-token-function": "#3c4c72",
+        "--formsey-token-type": "#0000FF",
+        "--formsey-token-string": "#A31515",
+        "--formsey-token-comment": "#008000",
+        "--formsey-token-tag": "#800000",
+        "--formsey-token-numeric": "#098658",
+        "--formsey-token-variable": "#000000",
+        "--formsey-marker-step": "#fcff00",
+        "--formsey-marker-stack": "#a4e565",
+        "--formsey-marker-selection": "#3a3d4111",
+        "--formsey-marker-selected-word": "#3a3d4144",
+
+        "--formsey-elevation-1-shadow": "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+        "--formsey-elevation-2-shadow": "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+        "--formsey-elevation-3-shadow": "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+
+        "--formsey-elevation-0-opacity": "0%",
+        "--formsey-elevation-1-opacity": "5%",
+        "--formsey-elevation-2-opacity": "5%",
+        "--formsey-elevation-3-opacity": "5%",
+      },
+      dark: {
+        "--formsey-color": "#f5f5f5",
+        "--formsey-error-text-color": "#ff9f9f",
+        "--formsey-background": "#000000",
+        "--formsey-accent-color": "#007fd4",
+        "--formsey-accent-contrast": "#ffffff",
+        "--formsey-border": "transparent",
+        "--formsey-border-focus": "#007fd4",
+        "--formsey-shade": "#80808040",
+        "--formsey-widget-background": "#2d2d2d",
+        "--formsey-widget-background-hover": "#37373d",
+
+        "--formsey-token-invisible": "#bfbfbf",
+        "--formsey-token-keyword": "#569CD6",
+        "--formsey-token-constant": "#06960e",
+        "--formsey-token-language": "#569CD6",
+        "--formsey-token-library": "#06960e",
+        "--formsey-token-invalid": "#F44747",
+        "--formsey-token-operator": "#D4D4D4",
+        "--formsey-token-function": "#3c4c72",
+        "--formsey-token-type": "#6d79de",
+        "--formsey-token-string": "#ce9178",
+        "--formsey-token-comment": "#6A9955",
+        "--formsey-token-tag": "#569CD6",
+        "--formsey-token-numeric": "#B5CEA8",
+        "--formsey-token-variable": "#9cdcfe",
+        "--formsey-marker-step": "#fcff00",
+        "--formsey-marker-stack": "#a4e565",
+        "--formsey-marker-selection": "#3a3d4166",
+        "--formsey-marker-selected-word": "#3a3d41",
+
+        "--formsey-elevation-0-opacity": "0",
+        "--formsey-elevation-1-opacity": "10%",
+        "--formsey-elevation-2-opacity": "14%",
+        "--formsey-elevation-3-opacity": "18%"
+      }
+    },
+    fonts: {
+      "--formsey-font": "15px Arial",
+      "--formsey-font-coarse": "16px Arial"
+    },
+    spacing: {
+      "--formsey-space-narrow": ".3em",
+      "--formsey-space-wide": ".6em",
+      "--formsey-border-radius": "5px",
+    }
   }]
 ])
 
 type CustomProperties = { [key: string]: string }
 
 type Theme = {
-  mode: string
   colors: {
     light: CustomProperties
     dark: CustomProperties
@@ -173,7 +266,8 @@ function createFonts(properties: CustomProperties): any[] {
       "type": "string",
       "name": "--formsey-font-coarse",
       "label": "Font on touch devices"
-    }].map(field => { return { ...field, default: properties[field.name] } })
+    }
+  ]
 }
 
 function createSpacing(properties: CustomProperties): any[] {
@@ -192,7 +286,8 @@ function createSpacing(properties: CustomProperties): any[] {
       "type": "string",
       "name": "--formsey-border-radius",
       "label": "Border radius"
-    }].map(field => { return { ...field, default: properties[field.name] } })
+    }
+  ]
 }
 
 function createColors(properties: CustomProperties): any[] {
@@ -277,7 +372,7 @@ function createColors(properties: CustomProperties): any[] {
       "helpText": "Focused border color",
       "type": "color"
     }
-  ].map(field => { return { ...field, default: properties[field.name] } })
+  ]
 }
 
 function createTheme(theme: Theme): any[] {
@@ -534,7 +629,15 @@ if (nativeLibrary) {
             "value": "formsey",
             "name": "formsey",
             "label": "Formsey",
-            "fields": createTheme(themes.get("formsey"))
+            "fields": createTheme(themes.get("formsey")),
+            "default": themes.get("formsey")
+          },
+          {
+            "value": "candy",
+            "name": "candy",
+            "label": "Candy",
+            "fields": createTheme(themes.get("candy")),
+            "default": themes.get("candy")
           }
         ],
         "default": {

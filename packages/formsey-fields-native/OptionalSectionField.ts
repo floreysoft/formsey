@@ -96,5 +96,8 @@ getLibrary("native").registerComponent("optionalSection", {
   importPath: "@formsey/fields-native/OptionalSectionField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<OptionalSectionFieldDefinition, Object>) => {
     return html`<formsey-optional-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-optional-section>`
+  },
+  nestedFields: (definition: FormDefinition, value: any) => {
+    return definition.fields
   }
 })

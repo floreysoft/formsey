@@ -1,7 +1,7 @@
 import { customElement, property, query } from "lit-element";
 import { Field } from './Field';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
-import { FormField } from './FormField';
+import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -204,6 +204,9 @@ export class Form extends Field<FieldDefinition, any> {
       this.value[name] = e.detail.value;
     } else {
       this.value = e.detail.value
+    }
+    if (isFormDefinition(this.definition)) {
+      this.value = removeDeletedFields<Object>(this.library.components, this.definition, this.value)
     }
     if (e.type == "inputChange" || e.type == "input") {
       this.dispatchEvent(new ValueChangedEvent("input", e.detail.name, this.value, true));
