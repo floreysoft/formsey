@@ -60,6 +60,9 @@ export interface NumberFieldDefinition extends InputFieldDefinition {
   step?: number
 }
 
+export interface NumberUnitFieldDefinition extends NumberFieldDefinition, ToggleFieldDefinition {
+}
+
 export interface StringFieldDefinition extends InputFieldDefinition {
   placeholder?: string
   pattern?: string

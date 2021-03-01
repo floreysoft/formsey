@@ -5,17 +5,19 @@ export { CheckboxField } from './CheckboxField';
 export { ColorField, ICON_COLOR_FIELD } from './ColorField';
 export { ComboboxField } from './ComboboxField';
 export { CurrencyField } from './CurrencyField';
-export { DialogSectionField } from './DialogSectionField';
 export { DateField } from './DateField';
 export { DateTimeField } from './DateTimeField';
+export { DialogSectionField } from './DialogSectionField';
 export { EmailField } from './EmailField';
 export { ImageField } from './ImageField';
 export { ImagesField } from './ImagesField';
 export { LabelField } from './LabelField';
 export { ListField } from './ListField';
+export { LocaleField } from './LocaleField';
 export { MonthField } from './MonthField';
 export { MultipleChoiceField } from './MultipleChoiceField';
 export { NumberField } from './NumberField';
+export { NumberUnitField } from './NumberUnitField';
 export { OptionalSectionField } from './OptionalSectionField';
 export { OptionField } from './OptionField';
 export { PanelField } from './PanelField';
@@ -26,7 +28,6 @@ export { RangeField } from './RangeField';
 export { RepeatingSectionField } from './RepeatingSectionField';
 export { ResponsivePanelField } from './ResponsivePanelField';
 export { SearchField } from './SearchField';
-export { LocaleField } from './LocaleField';
 export { SelectableSectionField } from './SelectableSectionField';
 export { SelectField } from './SelectField';
 export { SplitPanelField } from './SplitPanelField';
@@ -45,7 +46,6 @@ export { ICON_FILE, ICON_REMOVE, ICON_UPLOAD, UploadField } from './UploadField'
 export { URLField } from './URLField';
 export { WeekField } from './WeekField';
 export { YouTubeField } from './YouTubeField';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary } from '@formsey/core/Registry';
 import { html } from 'lit-html';
 
@@ -270,20 +270,36 @@ function createFonts(properties: CustomProperties): any[] {
   ]
 }
 
+const sizeField = {
+  type: "numberUnit",
+  min: 0,
+  step: 0.01,
+  buttons: [
+    {
+      "text": "PX",
+      "name": "px"
+    },
+    {
+      "name": "em",
+      "text": "EM"
+    }
+  ]
+}
+
 function createSpacing(properties: CustomProperties): any[] {
   return [
     {
-      "type": "string",
+      ...sizeField,
       "name": "--formsey-space-narrow",
       "label": "Spacing narrow"
     },
     {
-      "type": "string",
+      ...sizeField,
       "name": "--formsey-space-wide",
       "label": "Spacing wide"
     },
     {
-      "type": "string",
+      ...sizeField,
       "name": "--formsey-border-radius",
       "label": "Border radius"
     }
@@ -607,12 +623,14 @@ function createTheme(theme: Theme): any[] {
   ]
 }
 
+
 let nativeLibrary = getLibrary('native')
 if (nativeLibrary) {
   nativeLibrary.icon = ICON_BROWSER
   nativeLibrary.displayName = "Native"
   nativeLibrary.defaultSettings = {
     theme: {
+      selection: "formsey",
       value: themes.get("formsey")
     }
   }

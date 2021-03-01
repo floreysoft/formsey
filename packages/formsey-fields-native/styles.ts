@@ -346,6 +346,26 @@ export const FORM_STYLES = css`
 
   }
 
+  /* NumberUnit */
+  formsey-numberunit>.lfw>.nu {
+    display: flex;
+  }
+  formsey-numberunit>.lfw>.nu>formsey-number {
+    flex-grow: 1;
+  }
+  formsey-numberunit>.lfw>.nu>formsey-number>.lfw>input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  formsey-numberunit>.lfw>.nu>formsey-toggle>.lfw>div>button:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  formsey-numberunit>.lfw>.nu>formsey-toggle {
+    flex-grow: 0;
+  }
+
   formsey-select button.input {
     justify-content: left;
   }
@@ -452,7 +472,7 @@ export const FORM_STYLES = css`
   formsey-tabs .content {
       flex-grow: 1;
       display: flex;
-      background: var(--formsey-widget-background-hover);
+      background: var(--formsey-shade);
   }
 
   /* Stats View */
