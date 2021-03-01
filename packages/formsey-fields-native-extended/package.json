@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native-extended",
-  "version": "0.3.142",
+  "version": "0.3.143",
   "description": "Heavy-weight fields",
   "module": "/esm/formsey-fields-native-extended.min.js",
   "files": [
@@ -14,7 +14,7 @@
   "dependencies": {
     "@floreysoft/ace": "^0.4.0",
     "@floreysoft/utils": "^0.4",
-    "@formsey/fields-native": "^0.3.142",
+    "@formsey/fields-native": "^0.3.143",
     "@ts-stack/markdown": ">0",
     "highlight.js": "^10.1.1",
     "lit-element": "^2.3.0",
