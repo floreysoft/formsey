@@ -2,6 +2,8 @@ import { ButtonFieldDefinition, LabeledField } from '@formsey/core';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { customElement, html, property, query } from "lit-element";
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { classMap } from 'lit-html/directives/class-map';
+import { KEYCODE } from '@floreysoft/utils';
 
 @customElement("formsey-button")
 export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
@@ -13,7 +15,17 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
 
   renderField() {
     const icon = typeof this.definition.icon == "string" ? getIcon(this.definition.icon) : this.definition.icon
-    return html`<button class="input" type="${this.definition.buttonType || "button"}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}" title=${ifDefined(this.definition.tooltip)}>${icon}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
+    return html`<button class=${classMap({ input: true, left: this.definition.align == "left" })} type="${this.definition.buttonType || "button"}" @click="${this.clicked}" @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}" title=${ifDefined(this.definition.tooltip)} @keydown=${this.keyDown}>${icon}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
+  }
+
+  keyDown(e: KeyboardEvent) {
+    switch (e.keyCode) {
+      case KEYCODE.SPACE:
+      case KEYCODE.RETURN:
+        e.preventDefault()
+        e.stopPropagation()
+        this.clicked(e)
+    }
   }
 
   focusField(): boolean {

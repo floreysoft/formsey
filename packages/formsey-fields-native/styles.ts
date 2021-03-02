@@ -113,8 +113,16 @@ export const FORM_STYLES = css`
     justify-content: center;
     background: var(--formsey-widget-background);
   }
+  button.input.left {
+    justify-content: flex-start;
+  }
   button fs-icon + span {
     margin-left: .25em;
+  }
+  button .photo {
+    width: 1.5em;
+    border-radius: 50%;
+    margin-right: var(--formsey-space-wide);
   }
   button:hover:not([disabled]) {
     cursor: pointer;

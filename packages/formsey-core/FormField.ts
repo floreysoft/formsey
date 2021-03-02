@@ -18,6 +18,7 @@ export function removeDeletedFields<V>(components: Components, definition: FormD
     let newValue = {} as V
     addDefinedFields(components, definition.fields, value, newValue)
     addMemberValueIfPresent("type", newValue, value)
+    addMemberValueIfPresent("data", newValue, value)
     return newValue
   }
 }
@@ -58,6 +59,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   @property({ converter: Object })
   // @ts-ignore()
   set value(value: V) {
+    this._value = value
     this._value = removeDeletedFields<V>(this.library.components, this._definition, value)
     this.applyHiddenFields()
     this.requestUpdate()

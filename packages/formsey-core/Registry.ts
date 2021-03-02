@@ -18,6 +18,29 @@ if (!customElementRegistry.oldDefine) {
   }
 }
 
+export function resolve(data: { [key: string]: any }, path: string): any {
+  if (!data || !path) {
+    return undefined
+  }
+  let tokens = path.split('.')
+  let token = tokens.shift()
+  if (token) {
+    path = tokens.join('.')
+    let found: any
+    if (token.endsWith(']')) {
+      let index = token.substring(token.indexOf('[') + 1, token.indexOf(']'));
+      found = data[token.substring(0, token.indexOf('['))][index]
+    } else {
+      found = data[token]
+    }
+    if (found && path) {
+      return resolve(found, path)
+    } else {
+      return found
+    }
+  }
+}
+
 export interface Resources<D extends FieldDefinition, V> {
   id?: string
   library: Library
@@ -235,15 +258,35 @@ export function registerFormatter(name: string, formatter: Formatter) {
   register("formatters", name, formatter)
 }
 
-export function getMessages(): { [key: string]: any } {
-  return getRegistry("messages")
+export function setLanguage(lang: string) {
+  (window as any)['__lang'] = lang
 }
 
-export function translate(key: string, data: any): TemplateResult | undefined {
-  return get("messages", key)
+export type Value = string | number;
+export type Values = { [key: string]: Value };
+
+export function translate(path: string, values?: Values): string {
+  const lang = (window as any)['__lang'] || "en"
+  const messages = get("messages", lang)
+  if (messages) {
+    let message = resolve(messages, path)
+    if (values) {
+      Object.entries(values).forEach(([key, value]) => {
+        message = message.replace(`{${key}}`, value)
+      })
+    }
+    return message
+  } else {
+    return path
+  }
+}
+
+export function getMessages(lang: string): Formatters {
+  return get("messages", lang)
 }
 
 export function registerMessages(locale: string, messages: { [key: string]: any }) {
+  const allMessages = getMessages(locale);
   register("messages", locale, messages)
 }
 

@@ -42,9 +42,10 @@ registerFormatter("box", {
   boxStyle(layout: BoxLayout): string {
     const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
     const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
+    const fontSize = layout.fontSize ? `font-size:${layout.fontSize};` : ""
     const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
     const borderRadius = layout.border == 'soft' ? "var(--formsey-border-radius)" : "0"
-    return `margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:${borderRadius}`
+    return `${fontSize}margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:${borderRadius}`
   }
 })
 registerFormatter("columns", {
@@ -59,7 +60,7 @@ registerFormatter("columns", {
 })
 registerFormatter("table", {
   containerStyle(layout: TableLayout, definition: TableFieldDefinition, fixed: boolean, selectable: boolean, searchable: boolean): string {
-    return `display:grid;${!fixed && layout.fill == "grow" ? "flex-grow:1;" : ""}gap:0;grid-template-rows:2em${searchable ? " 2.5em" : ""};grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2.5em"});grid-template-columns:${selectable ? "min-content " : ""}${layout.columns.filter((column, index) => column.visible && (!layout.fixedColumns || index < layout.fixedColumns && fixed || index >= layout.fixedColumns && !fixed)).map(column => column.width?.selection == "minmax" ? `minmax(${column.width?.value?.minWidth && column.width?.value?.minWidthUnit ? column.width.value.minWidth + column.width.value.minWidthUnit : "auto"},${column.width?.value?.maxWidth && column.width?.value?.maxWidthUnit ? column.width.value.maxWidth + column.width.value.maxWidthUnit : "auto"})` : "auto").join(" ")}`
+    return `display:grid;${!fixed && layout.fill == "grow" ? "flex-grow:1;" : ""}gap:0;grid-template-rows:2em${searchable ? " 2.5em" : ""};grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2.5em"});grid-template-columns:${selectable ? "min-content " : ""}${layout.columns?.filter((column, index) => column.visible && (!layout.fixedColumns || index < layout.fixedColumns && fixed || index >= layout.fixedColumns && !fixed)).map(column => column.width?.selection == "minmax" ? `minmax(${column.width?.value?.minWidth && column.width?.value?.minWidthUnit ? column.width.value.minWidth + column.width.value.minWidthUnit : "auto"},${column.width?.value?.maxWidth && column.width?.value?.maxWidthUnit ? column.width.value.maxWidth + column.width.value.maxWidthUnit : "auto"})` : "auto").join(" ")}`
   },
   fieldStyle(layout: TableLayout, field?: FieldDefinition): string {
     const horizontal = layout.columns?.filter(column => column.field == field?.name)?.[0]?.horizontal

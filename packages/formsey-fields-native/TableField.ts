@@ -141,12 +141,10 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         type: "form",
         fields,
         layout: {
-          responsive: {
-            xs: {
-              formatter: "flex",
-              horizontal: "right"
-            } as FlexLayout
-          }
+          xs: {
+            formatter: "flex",
+            horizontal: "right"
+          } as FlexLayout
         }
       }
       pager = html`<formsey-form-field .components=${this.library} .settings=${this.settings} .definition=${pagerDefinition} @click=${this.page}></formsey-form-field>`

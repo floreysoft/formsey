@@ -36,7 +36,8 @@ export interface BoxLayout extends Layout {
   elevation?: number
   border?: "sharp" | "soft"
   backgroundColor?: string
-  opacity?: number
+  opacity?: number,
+  fontSize?: "small" | "smaller" | "medium" | "larger" | "large"
 }
 
 export interface FlexLayout extends Layout {

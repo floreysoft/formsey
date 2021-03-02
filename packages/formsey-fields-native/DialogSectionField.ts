@@ -65,7 +65,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
     document.addEventListener('keydown', this.keyHandler)
     this.updateComplete.then(() => {
       setTimeout(() => {
-        this.focusField(this.path() + "." + this.definition.fields[0].name)
+        this.focusField(this.path() + "." + (this.definition.focus || this.definition.fields[0].name))
         this.dispatchEvent(new FieldClickEvent(this.path()))
       }, 1)
     })
