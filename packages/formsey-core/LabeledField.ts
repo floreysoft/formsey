@@ -1,8 +1,9 @@
-import { html, TemplateResult } from 'lit-element';
-import { classMap } from 'lit-html/directives/class-map';
-import { getUniqueElementId } from './Registry';
+import { html, TemplateResult } from "lit";
+import { classMap } from 'lit/directives/class-map';
 import { Field } from './Field';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
+import { getUniqueElementId } from './Registry';
+
 
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
   protected elementId = getUniqueElementId()

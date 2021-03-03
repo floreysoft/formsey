@@ -1,8 +1,10 @@
 import { createField, LabeledField, ValueChangedEvent } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 const options = [
   { "label": "(GMT-12:00) International Date Line West", "value": "Etc/GMT+12" },

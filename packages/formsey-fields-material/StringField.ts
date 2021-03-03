@@ -1,12 +1,12 @@
 import { StringFieldDefinition } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 @customElement("formsey-string-material")
 export class StringField extends InputField<StringFieldDefinition, string> {
   @property({ type: String })

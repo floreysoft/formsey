@@ -1,10 +1,11 @@
-import { LitElement, property, TemplateResult } from "lit-element";
-import { Components, getDefaultLibrary, getLibraries, getLibrary, Library, Resources, Settings } from './Registry';
+import { LitElement, TemplateResult } from "lit";
+import { property } from "lit/decorators";
 import { FieldBlurEvent } from './FieldBlurEvent';
 import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
+import { getDefaultLibrary, getLibraries, Library, Resources, Settings } from './Registry';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
 export const createField = (resources: Resources<FieldDefinition, any>): TemplateResult | undefined => {

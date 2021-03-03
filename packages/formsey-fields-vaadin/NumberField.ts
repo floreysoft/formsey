@@ -1,12 +1,14 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { NumberFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import "@vaadin/vaadin-text-field/vaadin-number-field";
 import { NumberFieldElement } from '@vaadin/vaadin-text-field/vaadin-number-field';
-import { customElement, html, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 @customElement("formsey-number-vaadin")
 export class NumberField extends InputField<NumberFieldDefinition, string> {
   @query("vaadin-number-field")

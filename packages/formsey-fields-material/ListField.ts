@@ -3,9 +3,11 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-list/mwc-list-item";
 import { Select } from "@material/mwc-select";
 import "@material/mwc-select/mwc-select";
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 @customElement("formsey-list-material")
 export class ListField extends InputField<ListFieldDefinition, string> {
   @property({ type: String })

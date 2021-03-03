@@ -1,8 +1,10 @@
 import { NumberFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { NumberField } from './NumberField';
+
 
 @customElement("formsey-range")
 export class RangeField extends NumberField {

@@ -1,5 +1,6 @@
-import { customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, TemplateResult } from "lit";
+import { customElement, property, query, queryAll } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { createField, Field } from './Field';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';

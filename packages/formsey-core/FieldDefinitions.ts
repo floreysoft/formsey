@@ -1,4 +1,4 @@
-import { TemplateResult } from "lit-element";
+import { TemplateResult } from "lit";
 import { ResponsiveLayout } from "./Layouts";
 
 export interface Definition {

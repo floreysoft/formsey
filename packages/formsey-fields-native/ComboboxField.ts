@@ -1,10 +1,12 @@
 import { createField, LabeledField } from '@formsey/core';
-import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ListFieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { BoxLayout } from '@formsey/core/Layouts';
+import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-combobox")
 export class ComboboxField extends LabeledField<ListFieldDefinition, string> {

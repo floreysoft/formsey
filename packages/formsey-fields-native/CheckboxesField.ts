@@ -1,10 +1,10 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { customElement, html, query, queryAll, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html, TemplateResult } from "lit";
+import { customElement, query, queryAll } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { StringField } from './StringField';
+
 
 @customElement("formsey-checkboxes")
 export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, string[]> {

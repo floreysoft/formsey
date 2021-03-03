@@ -1,9 +1,11 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { Field, ValueChangedEvent } from '@formsey/core';
-import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { Option } from '@formsey/core/FieldDefinitions';
-import { customElement, html, property, query } from "lit-element";
-import { classMap } from 'lit-html/directives/class-map';
+import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { classMap } from 'lit/directives/class-map';
+
 
 @customElement("formsey-option")
 export class OptionField extends Field<Option, boolean> {

@@ -1,8 +1,9 @@
 import { ImageFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-image")
 export class ImageField extends LabeledField<ImageFieldDefinition, string> {

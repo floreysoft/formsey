@@ -1,13 +1,14 @@
 import { LabeledField } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Marked, Renderer } from '@ts-stack/markdown';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
-import { css, customElement, html, property } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { html } from "lit";
+import { customElement, property } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+import { unsafeHTML } from 'lit/directives/unsafe-html';
+
 hljs.registerLanguage('javascript', javascript);
 @customElement("formsey-markdown")
 export class MarkdownField extends LabeledField<FieldDefinition, string> {

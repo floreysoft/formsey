@@ -1,9 +1,11 @@
+import { KEYCODE } from '@floreysoft/utils';
 import { ButtonFieldDefinition, LabeledField } from '@formsey/core';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
-import { classMap } from 'lit-html/directives/class-map';
-import { KEYCODE } from '@floreysoft/utils';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { classMap } from 'lit/directives/class-map';
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-button")
 export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {

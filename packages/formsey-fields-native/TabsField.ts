@@ -1,13 +1,14 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { createField, Field } from '@formsey/core';
 import { FormDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property, query, TemplateResult } from "lit-element";
-import { classMap } from 'lit-html/directives/class-map';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, TemplateResult } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { classMap } from 'lit/directives/class-map';
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-tabs")
 export class TabsField extends Field<TabsFieldDefinition, Object> {

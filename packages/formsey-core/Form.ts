@@ -1,9 +1,10 @@
-import { customElement, property, query } from "lit-element";
+import { customElement, property, query } from "lit/decorators";
 import { Field } from './Field';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { ValueChangedEvent } from './ValueChangedEvent';
+
 
 export function get(data: { [key: string]: any }, path: string): any {
   if (!data || !path) {

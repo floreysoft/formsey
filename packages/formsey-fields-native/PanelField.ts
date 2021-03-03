@@ -1,10 +1,12 @@
 import { createField, Field } from '@formsey/core';
-import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition, PanelFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-panel")
 export class PanelField extends Field<PanelFieldDefinition, Object> {

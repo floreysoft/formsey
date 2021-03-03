@@ -1,10 +1,11 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ImagesFieldDefinition, LabeledField } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, LitElement, property, query, queryAll, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, LitElement, TemplateResult } from "lit";
+import { customElement, property, query, queryAll } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-image-checkbox")
 export class ImageCheckbox extends LitElement {

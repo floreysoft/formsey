@@ -1,7 +1,7 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Field } from '@formsey/core/Field';
 import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
@@ -9,8 +9,10 @@ import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
-import { css, customElement, html, property, query, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { css, html, TemplateResult } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-multiple-choice-vaadin")
 export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String> {

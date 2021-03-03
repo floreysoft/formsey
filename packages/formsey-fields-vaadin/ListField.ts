@@ -1,13 +1,15 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Field } from '@formsey/core/Field';
 import { ListFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 
 @customElement("formsey-list-vaadin")

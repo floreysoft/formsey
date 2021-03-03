@@ -4,9 +4,10 @@ import { ButtonFieldDefinition, DialogSectionFieldDefinition, FormDefinition } f
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
-import { styleMap } from 'lit-html/directives/style-map';
+import { html } from "lit";
+import { customElement, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+import { styleMap } from 'lit/directives/style-map';
 import { ButtonField } from './ButtonField';
 
 @customElement("formsey-dialog-section")

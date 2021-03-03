@@ -1,9 +1,11 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { LabeledField, StringFieldDefinition, TextFieldDefinition } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 @customElement("formsey-text")
 export class TextField extends LabeledField<TextFieldDefinition, string> {
   @property({ type: String })

@@ -3,7 +3,8 @@ import { InputFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { property, query } from "lit-element";
+import { property, query } from "lit/decorators";
+
 
 export abstract class InputField<D extends InputFieldDefinition,V> extends Field<D, V> {
   @property({ type: String })

@@ -3,12 +3,14 @@ import { FieldClickEvent } from '@formsey/core/FieldClickEvent';
 import { ButtonFieldDefinition, CheckboxFieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { TableLayout, FlexLayout } from '@formsey/core/Layouts';
+import { FlexLayout, TableLayout } from '@formsey/core/Layouts';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, TemplateResult } from "lit-element";
-import { classMap } from 'lit-html/directives/class-map';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, TemplateResult } from "lit";
+import { customElement } from "lit/decorators";
+import { classMap } from 'lit/directives/class-map';
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-table")
 export class TableField extends FormField<TableFieldDefinition, Records> {

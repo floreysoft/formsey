@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from "lit";
 
 export const FORM_STYLES = css`
   .input:focus-within {

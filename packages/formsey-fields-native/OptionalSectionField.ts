@@ -1,11 +1,13 @@
 import { CheckboxFieldDefinition, createField, Field, OptionalSectionFieldDefinition } from '@formsey/core';
-import { Components, getFormatter, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
+import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
-import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-optional-section")
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, Object> {

@@ -1,8 +1,10 @@
 import { NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 
 @customElement("formsey-number")
 export class NumberField extends InputField<NumberFieldDefinition, number> {

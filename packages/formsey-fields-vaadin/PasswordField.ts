@@ -1,10 +1,12 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-text-field/vaadin-password-field";
 import { PasswordFieldElement } from '@vaadin/vaadin-text-field/vaadin-password-field';
-import { customElement, html, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 
 @customElement("formsey-password-vaadin")
 export class PasswordField extends InputField<StringFieldDefinition, string> {

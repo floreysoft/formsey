@@ -1,9 +1,11 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { LabelFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { LabeledField } from "@formsey/core/LabeledField";
-import { customElement, html } from "lit-element";
-import { classMap } from 'lit-html/directives/class-map';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { classMap } from 'lit/directives/class-map';
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-label")
 export class LabelField extends LabeledField<LabelFieldDefinition, any> {

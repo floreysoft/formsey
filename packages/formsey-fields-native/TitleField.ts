@@ -1,9 +1,9 @@
 import { Field } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
-import { customElement, html, property } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement, property } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 
 @customElement("formsey-title")
 export class TitleField extends Field<FieldDefinition, void> {

@@ -1,9 +1,10 @@
-import { css, customElement, html, LitElement, property, query, TemplateResult } from "lit-element";
-import { classMap } from 'lit-html/directives/class-map';
-import { Components } from "./Registry";
+import { css, html, LitElement, TemplateResult } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { classMap } from 'lit/directives/class-map';
 import { FieldDefinition, FormDefinition, InputFieldDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
 import { get } from "./Form";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";
+import { Components } from "./Registry";
 
 interface FieldInfo {
   filled: boolean

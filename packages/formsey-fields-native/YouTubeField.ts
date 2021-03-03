@@ -1,8 +1,10 @@
 import { LabeledField } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { customElement, html, property } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement, property } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 interface YouTubeFieldDefinition extends FieldDefinition {
 	url: string

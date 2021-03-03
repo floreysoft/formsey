@@ -1,10 +1,12 @@
 import { Field, StringFieldDefinition } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-text-material")
 export class TextField extends Field<StringFieldDefinition, string> {

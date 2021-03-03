@@ -1,10 +1,12 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { DateFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { DateField } from "./DateField";
+
 @customElement("formsey-month-material")
 export class MonthField extends DateField {
   protected get type(): TextFieldType {

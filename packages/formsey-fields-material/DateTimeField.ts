@@ -1,10 +1,11 @@
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { DateFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { DateFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { DateField } from "./DateField";
+
 @customElement("formsey-datetime-material")
 export class DateTimeField extends DateField {
  protected get type() : TextFieldType {

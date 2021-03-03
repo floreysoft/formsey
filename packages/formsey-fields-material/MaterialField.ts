@@ -1,6 +1,6 @@
 import { FieldDefinition, InputFieldDefinition, LabeledField } from '@formsey/core';
-import { css, html, TemplateResult } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, TemplateResult } from "lit";
+
 
 export abstract class MaterialField<T extends FieldDefinition, V> extends LabeledField<T, V> {
   render() {

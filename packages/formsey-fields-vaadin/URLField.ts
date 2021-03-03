@@ -1,8 +1,10 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { StringField } from './StringField';
+
 
 @customElement("formsey-url-vaadin")
 export class URLField extends StringField {

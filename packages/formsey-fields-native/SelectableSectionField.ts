@@ -1,12 +1,14 @@
 import { createField, DEFAULT_BREAKPOINTS, Field, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition, SUPPORTED_BREAKPOINTS } from '@formsey/core';
-import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { Layout } from '@formsey/core/Layouts';
+import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 export class SelectableSectionValue {
   selection: string;

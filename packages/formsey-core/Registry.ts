@@ -1,4 +1,4 @@
-import { TemplateResult } from 'lit-element';
+import { TemplateResult } from 'lit';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors } from './InvalidEvent';
 import { Layout } from './Layouts';

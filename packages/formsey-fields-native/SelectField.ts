@@ -1,10 +1,12 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { createField, LabeledField, ListFieldDefinition, StringFieldDefinition } from '@formsey/core';
+import { BoxLayout } from '@formsey/core/Layouts';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
-import { BoxLayout, FlexLayout } from '@formsey/core/Layouts';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-select")
 export class SelectField extends LabeledField<ListFieldDefinition, string> {

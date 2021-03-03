@@ -11,8 +11,8 @@ export default {
   plugins: [
     {
       resolveId(id) {
-        if (id.startsWith('lit-element') || id.startsWith('lit-html')) {
-          return { id: `https://unpkg.com/@floreysoft/lit?module`, external: true };
+        if (id.startsWith('lit')) {
+          return { id: `https://cdn.skypack.dev/lit`, external: true };
         }
         if (id.startsWith('@formsey/core')) {
           return { id: `https://unpkg.com/@formsey/core?module`, external: true };

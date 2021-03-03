@@ -1,8 +1,10 @@
 import { createField, LabeledField, ValueChangedEvent } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { getLibrary, Resources } from '@formsey/core/Registry';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 const locales = ["af", "ar-dz", "ar-kw", "ar-ly", "ar-ma", "ar-sa", "ar-tn", "ar", "az", "be", "bg", "bn-bd", "bn", "br", "bs", "ca", "cs", "cy", "da", "de-at", "de-ch", "de", "el", "en-au", "en-ca", "en-gb", "en-ie", "en-il", "en-in", "en-nz", "en-sg", "eo", "es-do", "es-mx", "es-us", "es", "et", "eu", "fa", "fi", "fil", "fo", "fr-ca", "fr-ch", "fr", "fy", "gd", "gl", "gu", "he", "hi", "hr", "hu", "hy-am", "id", "is", "it-ch", "it", "ja", "jv", "ka", "kk", "km", "kn", "ko", "ku", "ky", "lb", "lo", "lt", "lv", "mi", "mk", "ml", "mn", "mr", "ms-my", "ms", "mt", "my", "nb", "ne", "nl-be", "nl", "nn", "pa-in", "pl", "pt-br", "pt", "ro", "ru", "sd", "si", "sk", "sl", "sq", "sr-cyrl", "sr", "sv", "sw", "ta", "te", "tg", "th", "tk", "tl-ph", "tr", "ug-cn", "uk", "ur", "uz-latn", "uz", "vi", "yo", "zh-cn", "zh-hk", "zh-mo", "zh-tw"]
 
 // @ts-ignore

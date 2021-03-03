@@ -1,10 +1,12 @@
 import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
-import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html, property, queryAll, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, TemplateResult } from "lit";
+import { customElement, property, queryAll } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-repeating-section")
 export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, Object[]> {

@@ -1,15 +1,15 @@
 import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidErrors } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-radio/mwc-radio";
 import { Radio } from "@material/mwc-radio/mwc-radio";
 import "@material/mwc-textfield/mwc-textfield";
 import { TextField } from "@material/mwc-textfield/mwc-textfield";
-import { css, customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, TemplateResult } from "lit";
+import { customElement, property, query, queryAll } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { MaterialField } from './MaterialField';
+
 @customElement("formsey-multiple-choice-material")
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {
   @property({ type: String })

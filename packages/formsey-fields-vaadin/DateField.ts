@@ -1,13 +1,15 @@
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { DateFieldDefinition, FieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { DateFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-date-picker';
 import { DatePickerElement } from "@vaadin/vaadin-date-picker";
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 @customElement("formsey-date-vaadin")
 export class DateField extends InputField<DateFieldDefinition, string> {
   @property({ type: String })

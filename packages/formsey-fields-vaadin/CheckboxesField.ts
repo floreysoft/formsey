@@ -1,15 +1,17 @@
-import { Components, getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { Field } from '@formsey/core/Field';
-import { CheckboxesFieldDefinition, FieldDefinition, Option } from '@formsey/core/FieldDefinitions';
-import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
+import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
-import { css, customElement, html, property, query, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { css, html, TemplateResult } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-checkboxes-vaadin")
 export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> {

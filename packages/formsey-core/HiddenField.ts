@@ -1,8 +1,9 @@
-import { customElement, html } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { getLibrary, Resources } from "./Registry";
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { Field } from './Field';
 import { FieldDefinition } from "./FieldDefinitions";
+import { getLibrary, Resources } from "./Registry";
 
 @customElement("formsey-hidden")
 export class HiddenField extends Field<FieldDefinition, any> {

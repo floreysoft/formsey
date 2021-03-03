@@ -2,9 +2,11 @@ import { NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 @customElement("formsey-number-material")
 export class NumberField extends InputField<NumberFieldDefinition, number> {
   @property({ type: Number })

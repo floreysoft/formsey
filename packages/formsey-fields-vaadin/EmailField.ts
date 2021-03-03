@@ -1,10 +1,12 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-text-field/vaadin-email-field";
 import { EmailFieldElement } from '@vaadin/vaadin-text-field/vaadin-email-field';
-import { customElement, html, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 @customElement("formsey-email-vaadin")
 export class EmailField extends InputField<StringFieldDefinition, string> {
   @query("vaadin-email-field")

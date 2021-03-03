@@ -1,13 +1,15 @@
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Field } from '@formsey/core/Field';
 import { TextFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TextAreaElement } from '@vaadin/vaadin-text-field/vaadin-text-area';
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 @customElement("formsey-text-vaadin")
 export class TextField extends Field<TextFieldDefinition, string> {
   @property({ type: String })

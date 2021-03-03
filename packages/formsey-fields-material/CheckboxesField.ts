@@ -5,9 +5,11 @@ import "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from "@material/mwc-textfield/mwc-textfield.js";
-import { css, customElement, html, property, query, queryAll, TemplateResult } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { css, html, TemplateResult } from "lit";
+import { customElement, property, query, queryAll } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { MaterialField } from './MaterialField';
+
 
 @customElement("formsey-checkboxes-material")
 export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, string[]> {

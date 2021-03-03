@@ -4,7 +4,8 @@ import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { SelectBase } from '@material/mwc-select/mwc-select-base';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from '@material/mwc-textfield/mwc-textfield.js';
-import { TemplateResult } from "lit-element";
+import { TemplateResult } from "lit";
+
 
 export abstract class InputField<T extends InputFieldDefinition, V> extends Field<T, V> {
   value: V;

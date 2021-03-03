@@ -5,9 +5,11 @@ import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { css, customElement, html, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { css, html } from "lit";
+import { customElement, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { FORM_STYLES } from './styles';
+
 
 @customElement("formsey-styled-form")
 export class StyledForm extends Form {

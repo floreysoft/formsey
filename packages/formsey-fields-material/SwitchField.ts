@@ -1,13 +1,15 @@
 import { ValueChangedEvent } from '@formsey/core';
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { SwitchFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-switch/mwc-switch";
 import { Switch } from "@material/mwc-switch/mwc-switch";
-import { customElement, html, property, query } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement, property, query } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { MaterialField } from './MaterialField';
+
 
 @customElement("formsey-switch-material")
 export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {

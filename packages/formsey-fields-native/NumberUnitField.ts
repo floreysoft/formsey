@@ -2,8 +2,10 @@ import { createField, LabeledField } from '@formsey/core';
 import { ListFieldDefinition, NumberFieldDefinition, NumberUnitFieldDefinition, ToggleFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
+
 
 @customElement("formsey-numberunit")
 export class NumberUnitField extends LabeledField<NumberUnitFieldDefinition, string> {

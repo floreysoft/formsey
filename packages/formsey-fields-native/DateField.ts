@@ -1,8 +1,10 @@
 import { DateFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { customElement, html } from "lit-element";
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html } from "lit";
+import { customElement } from "lit/decorators";
+import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
+
 @customElement("formsey-date")
 export class DateField extends InputField<DateFieldDefinition, string> {
   protected get type() : "datetime" | "date" | "month" | "week" | "time" | "datetime-local" {
