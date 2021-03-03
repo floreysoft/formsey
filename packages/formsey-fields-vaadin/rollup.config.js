@@ -11,7 +11,7 @@ export default {
   plugins: [
     {
       resolveId(id) {
-        if (id.startsWith('lit-element') || id.startsWith('lit-html')) {
+        if (id.startsWith('lit')) {
           return { id: `https://unpkg.com/@floreysoft/lit?module`, external: true };
         }
         if (id.startsWith('@formsey/core')) {
