@@ -5,7 +5,8 @@ import { createField, Field } from './Field';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
-import { Breakpoints, Layout } from "./Layouts";
+import { LayoutController } from "./LayoutController";
+import { Breakpoints } from "./Layouts";
 import { Components, getFormatter, getLibrary, Resources } from './Registry';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -75,7 +76,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   set definition(definition: D) {
     this._definition = definition;
     this.applyHiddenFields();
-    this.updateLayout()
     this.requestUpdate();
   }
 
@@ -88,23 +88,16 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 
   @queryAll(".fff")
   protected _fields: HTMLElement[] | undefined
-
-  @property()
-  protected layout: Layout | undefined
-
   protected size: string | undefined
   protected resizeObserver: ResizeObserver
+  protected layoutController = new LayoutController(this)
 
   @query(".ffg")
   private grid: HTMLElement | undefined
 
   constructor() {
     super()
-    this.resizeObserver = new ResizeObserver((entries, observer) => {
-      for (const entry of entries) {
-        this.resize(entry.contentRect.width)
-      }
-    });
+    this.addController(this.layoutController)
   }
 
   renderField() {
@@ -112,7 +105,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     let hidden: TemplateResult[] = []
     const staticLayout = this.definition.layout?.['static']
     const staticFormatter = staticLayout ? getFormatter(staticLayout.formatter) : undefined
-    const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
+    const responsiveFormatter = this.layoutController.layout?.formatter ? getFormatter(this.layoutController.layout?.formatter) : undefined
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         const value = this.value && field.name ? this.value[field.name] : this.value
@@ -120,20 +113,15 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
-          templates.push(html`<div class='fff' style="${ifDefined(responsiveFormatter?.fieldStyle(this.layout, field, this.definition.fields, index))}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff' style="${ifDefined(responsiveFormatter?.fieldStyle(this.layoutController.layout, field, this.definition.fields, index))}">${fieldTemplate}</div>`)
         }
       }
     }
-    return html`<section style="${staticFormatter?.boxStyle?.(staticLayout) || ""};${responsiveFormatter?.boxStyle?.(this.layout) || ""}">
-      <div class="fbg" style="${staticFormatter?.backgroundStyle?.(staticLayout) || ""};${responsiveFormatter?.backgroundStyle?.(this.layout) || ""}"></div>
-      <div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layout, this.definition))}">${templates}</div>${hidden}
+    return html`<section style="${staticFormatter?.boxStyle?.(staticLayout) || ""};${responsiveFormatter?.boxStyle?.(this.layoutController.layout) || ""}">
+      <div class="fbg" style="${staticFormatter?.backgroundStyle?.(staticLayout) || ""};${responsiveFormatter?.backgroundStyle?.(this.layoutController.layout) || ""}"></div>
+      <div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layoutController.layout, this.definition))}">${templates}</div>${hidden}
     </section>`
   }
-
-  firstUpdated() {
-    this.resizeObserver.observe(this.grid)
-  }
-
 
   public focusField(path: string): boolean {
     for (let field of this._fields) {
@@ -177,37 +165,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
       }
     }
     return validity;
-  }
-
-  protected resize(availableWidth: number) {
-    // If available with larger than larges breakpoint, default to the largest
-    let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
-    for (let size of SUPPORTED_BREAKPOINTS) {
-      let breakpoint = this.definition?.layout?.breakpoints?.[size]
-      if (typeof breakpoint === "undefined") {
-        breakpoint = DEFAULT_BREAKPOINTS[size]
-      }
-      if (breakpoint > availableWidth) {
-        detectedSize = size
-        break
-      }
-    }
-    if (this.size != detectedSize) {
-      this.size = detectedSize
-      this.updateLayout()
-    }
-  }
-
-  protected updateLayout() {
-    this.layout = undefined
-    let sizeFound = false
-    for (let size of SUPPORTED_BREAKPOINTS) {
-      sizeFound = (size == this.size || sizeFound)
-      this.layout = this.definition?.layout?.[size] || this.layout
-      if (this.layout && sizeFound) {
-        break
-      }
-    }
   }
 
   protected changed(e: ValueChangedEvent<any>) {

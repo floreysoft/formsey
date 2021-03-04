@@ -13,6 +13,8 @@ import { FORM_STYLES } from './styles';
 
 @customElement("formsey-styled-form")
 export class StyledForm extends Form {
+  static shadowDom = true
+
   static get styles() {
     return [FORM_STYLES, css`
     :host, .themed, fs-theme, form {
@@ -43,10 +45,10 @@ export class StyledForm extends Form {
           hash = ((hash << 5) - hash) + chr;
           hash |= 0;
         }
-        let fontElement = window.document.getElementById(""+hash)
+        let fontElement = window.document.getElementById("" + hash)
         if (!fontElement) {
           let link = document.createElement("link")
-          link.setAttribute("id", ""+hash)
+          link.setAttribute("id", "" + hash)
           link.setAttribute("rel", "stylesheet")
           link.setAttribute("type", "text/css")
           link.setAttribute("href", webFont)
@@ -92,10 +94,6 @@ export class StyledForm extends Form {
 
   public path(): string {
     return this.parentPath
-  }
-
-  protected createRenderRoot(): Element | ShadowRoot {
-    return this.attachShadow({ mode: 'open' });
   }
 
   protected changed(e: ValueChangedEvent<any>) {

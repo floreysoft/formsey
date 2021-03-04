@@ -4,7 +4,7 @@ import { Form } from '@formsey/core/Form';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
-import { css, html } from "lit";
+import { adoptStyles, css, html, ReactiveElement } from "lit";
 import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { FORM_STYLES } from './styles';
@@ -27,7 +27,7 @@ export class StyledForm extends Form {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition,value: this.value, parentPath: this.definition?.name,errors: this.errors,changeHandler: (event: ValueChangedEvent<any>) => this.changed(event),invalidHandler: (event: InvalidEvent) => this.invalid(event)});
+      field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.definition?.name, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     }
     const form = html`
     <custom-style>
@@ -38,7 +38,9 @@ export class StyledForm extends Form {
   }
 
   protected createRenderRoot(): Element | ShadowRoot {
-    return this.attachShadow({ mode: 'open' });
+    const renderRoot = this.shadowRoot ?? this.attachShadow((this.constructor as typeof ReactiveElement).shadowRootOptions);
+    adoptStyles(renderRoot, (this.constructor as typeof ReactiveElement).elementStyles!);
+    return renderRoot;
   }
 
   updated() {
@@ -66,7 +68,7 @@ export class StyledForm extends Form {
 
 getLibrary("vaadin").registerComponent("styledForm", {
   importPath: "@formsey/fields-vaadin/StyledForm",
-    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FormDefinition, any> ) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
     return html`<formsey-styled-form-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form-vaadin>`
   }
 })

@@ -60,6 +60,8 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   @property({ type: Object })
   customErrors: InvalidErrors | null = null
 
+  static shadowDom = false
+
   public path(): string {
     return typeof this.definition?.name !== "undefined" && this.definition.name !== "" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
     // return typeof this.definition?.name !== "undefined" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
@@ -100,7 +102,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected createRenderRoot(): Element | ShadowRoot {
-    return this;
+    return (this.constructor as typeof Field).shadowDom ? super.createRenderRoot() : this
   }
 
   protected shouldUpdate(changedProperties?: Map<string | number | symbol, unknown>): boolean {
