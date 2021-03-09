@@ -15,7 +15,7 @@ export class SwitchField extends LabeledField<CheckboxFieldDefinition, boolean> 
   checkbox: HTMLInputElement
 
   renderField() {
-    return html`<label class="swl"><div class="sw"><input type="checkbox" ?disabled="${this.definition.disabled}" @input=${this.changed} @change="${this.changed}" .checked=${this.value} ?checked=${this.value}><span class="sl"></span></div>${this.definition.controlLabel}</label>`
+    return html`<label class="swl"><div class="sw"><input class="hid" type="checkbox" ?disabled="${this.definition.disabled}" @input=${this.changed} @change="${this.changed}" .checked=${this.value} ?checked=${this.value}><span class="sl"></span></div>${this.definition.controlLabel}</label>`
   }
 
   focusField(path: string): boolean {

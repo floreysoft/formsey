@@ -148,6 +148,7 @@ export const FORM_STYLES = css`
     border-radius: 50%;
     margin-right: var(--formsey-space-wide);
   }
+
   button:hover:not([disabled]) {
     cursor: pointer;
   }
@@ -165,7 +166,7 @@ export const FORM_STYLES = css`
   button:active:not([disabled])::before {
     opacity: 0.1;
   }
-  formsey-checkbox input[type="checkbox"]~.cm::before, button::before {
+  .b::before, button::before {
     content: "";
     position: absolute;
     inset: -1px;
@@ -174,10 +175,15 @@ export const FORM_STYLES = css`
     opacity: 0;
     transition: opacity 0.12s;
   }
-  button:hover::before, formsey-checkbox input[type="checkbox"]~.cm:hover::before {
+  button:hover::before, .b:hover::before {
     opacity: 0.05;
   }
-
+  .hid {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
   /* Panel */
   formsey-panel {
     overflow: hidden;
@@ -256,12 +262,6 @@ export const FORM_STYLES = css`
     margin-right: 4px;
   }
 
-  formsey-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
   formsey-switch .sl {
     position: absolute;
     cursor: pointer;
@@ -303,33 +303,47 @@ export const FORM_STYLES = css`
     transform: translateX(calc(var(--formsey-switch-size, 60px) / 2));
   }
 
-  /* Checkbox */
-  formsey-checkbox input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
+  formsey-checkbox .cm, formsey-multiple-choice .rb {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    width: 1.5em;
+    height: 1.5em;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--formsey-border-radius);
+    border: 1px solid var(--formsey-border);
+    background-color: var(--formsey-shade);
+  }
+  formsey-checkbox .cm {
+    border-radius: var(--formsey-border-radius);
+    padding: var(--formsey-space-narrow);
+  }
+  formsey-multiple-choice .rb, formsey-multiple-choice .r {
+    border-radius: 50%;
+  }
+  formsey-multiple-choice .r {
+    background-color: currentColor;
+    transition: all 0.2s ease-out;
+  }
+  formsey-multiple-choice input ~ .rb>.r {
     width: 0;
     height: 0;
   }
-  formsey-checkbox input[type="checkbox"]~.cm {
-    width: 1em;
-    height: 1em;
-    position: relative;
-    border-radius: var(--formsey-border-radius);
-    border: 1px solid var(--formsey-border);
-    border-radius: var(--formsey-border-radius);
-    background-color: var(--formsey-shade);
-    padding: var(--formsey-space-narrow);
+  formsey-multiple-choice input:checked ~ .rb>.r {
+    width: .65em;
+    height: .65em;
   }
-  formsey-checkbox input~.cm>fs-icon {
+  formsey-checkbox input ~ .cm>fs-icon {
     display: none;
   }
   formsey-checkbox input:checked ~ .cm>fs-icon {
     display: block;
   }
-  formsey-checkbox input~.cl {
+  formsey-checkbox .cl, formsey-multiple-choice .rl {
     margin-left: var(--formsey-space-wide);
   }
-  formsey-checkbox input[type="checkbox"]~.cm:hover::before {
+  formsey-checkbox .cm:hover::before, formsey-multiple-choice .rb:hover::before {
     content: "";
     position: absolute;
     inset: -1px;
@@ -338,7 +352,7 @@ export const FORM_STYLES = css`
     opacity: 0.05;
     transition: opacity 0.12s;
   }
-  formsey-checkbox:focus-within input[type="checkbox"]~.cm:not([disabled]) {
+  formsey-checkbox:focus-within input:not([disabled])~.cm, formsey-multiple-choice label:focus-within input:not([disabled]) ~.rb {
     border: 1px solid var(--formsey-accent-color, transparent);
   }
 
@@ -346,11 +360,11 @@ export const FORM_STYLES = css`
   formsey-checkboxes .options, formsey-multiple-choice .options, formsey-checkboxes .other, formsey-multiple-choice .other {
     display: flex;
     flex-direction: column;
-  }
-  formsey-checkboxes .options>div, formsey-multiple-choice .options>div, formsey-checkboxes .other>div, formsey-multiple-choice .other>div {
-    line-height: var(--formsey-input-height, 2em);
+    row-gap: var(--formsey-space-narrow);
   }
   formsey-checkboxes label, formsey-multiple-choice label {
+    display: flex;
+    align-items: center;
     line-height: inherit;
   }
   formsey-checkboxes .other label , formsey-multiple-choice .other label {
@@ -656,12 +670,6 @@ export const FORM_STYLES = css`
   formsey-image-checkbox {
     display: inline-block;
     position: relative;
-  }
-  formsey-image-checkbox input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
   }
   formsey-image-checkbox img {
     width: 100%;

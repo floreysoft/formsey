@@ -6,6 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined';
 import { CheckboxField } from './CheckboxField';
 import { StringField } from './StringField';
 
+
 @customElement("formsey-checkboxes")
 export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, string[]> {
   @query("formsey-string")

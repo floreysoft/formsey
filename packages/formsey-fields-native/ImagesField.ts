@@ -37,7 +37,7 @@ export class ImageCheckbox extends LitElement {
   checkbox: HTMLInputElement
 
   render() {
-    return html`<input id="${this.path}.${this.id}.cb" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @change="${this.changed}" @focus="${e => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('focus'))}}"  @blur="${e => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('blur'))}}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.path}.${this.id}.cb"><img src="${this.src}" alt="${this.alt}"/>${ifDefined(this.label)}</label>`;
+    return html`<input class="hid" id="${this.path}.${this.id}.cb" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @change="${this.changed}" @focus="${e => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('focus'))}}"  @blur="${e => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('blur'))}}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.path}.${this.id}.cb"><img src="${this.src}" alt="${this.alt}"/>${ifDefined(this.label)}</label>`;
   }
 
   protected createRenderRoot(): Element | ShadowRoot {
