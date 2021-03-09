@@ -17,7 +17,7 @@ export class StyledForm extends Form {
 
   static get styles() {
     return [FORM_STYLES, css`
-    :host, .themed, fs-theme, form {
+    :host, .themed, form {
       display: flex;
       flex-grow: 1;
       flex-direction: column;
@@ -77,7 +77,8 @@ export class StyledForm extends Form {
       field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
-    return html`<div class="themed" style=${this._style}>${form}</div>`
+    const classes = `themed ${this.settings['mode'] || ""}`
+    return html`<div class=${classes} style=${this._style}>${form}</div>`
   }
 
   private concatProperties(properties?: Object): string {

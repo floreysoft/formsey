@@ -75,7 +75,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         }
       }
       if (selection) {
-        form = html`${selection?.fields ? html`<div class="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
+        form = html`${selection?.fields ? html`<div class="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, clickHandler: (event: ValueChangedEvent<string>) => this.clicked(event), changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
       }
     }
     const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
@@ -161,14 +161,14 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
 getLibrary("native").registerComponent("selectableSection", {
   importPath: "@formsey/fields-native/SelectableSectionField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
-    return html`<formsey-selectable-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-selectable-section>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
+    return html`<formsey-selectable-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-selectable-section>`
   },
   nestedFields: (definition: SelectableSectionFieldDefinition, value: any) => {
     const fields = []
     definition.selections?.forEach(selection => {
-      if ( selection.name )
-      fields.push({ ...selection, type: "form" })
+      if (selection.name)
+        fields.push({ ...selection, type: "form" })
     })
     return fields
   }

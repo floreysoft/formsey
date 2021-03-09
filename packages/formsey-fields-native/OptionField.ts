@@ -23,7 +23,11 @@ export class OptionField extends Field<Option, boolean> {
 
   render() {
     const icon = typeof this.definition.icon == "string" ? getIcon(this.definition.icon) : this.definition.icon
-    return html`<button type="button" @keydown=${this.keyDown} @click=${this.clicked} class=${classMap({ c: this.value })} tabindex="0">${this.hideCheckmark ? undefined : html`<div class="cm">${this.value ? getIcon("Checkmark") : undefined}</div>`}${icon ? html`<div class="icon">${icon}</div>` : ""}<div class="label">${this.definition.label ? this.highlight(this.definition.label) : ""}</div></button>`;
+    return html`<button type="button" @keydown=${this.keyDown} @click=${this.clicked} class=${classMap({ left: true, c: this.value })} tabindex="0">
+    ${this.hideCheckmark ? undefined : html`<div class="cm">${this.value ? getIcon("Checkmark") : undefined}</div>`}
+    ${icon ? html`<div class="icon">${icon}</div>` : ""}
+    <div class="label">${this.definition.label ? this.highlight(this.definition.label) : ""}</div>
+    </button>`;
   }
 
   protected focusField(path?: string) {

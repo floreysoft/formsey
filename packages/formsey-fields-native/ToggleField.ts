@@ -5,6 +5,7 @@ import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators";
+import { classMap } from "lit/directives/class-map";
 import { ifDefined } from 'lit/directives/if-defined';
 
 
@@ -18,15 +19,12 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
     for (let i = 0; i < this.definition.buttons?.length; i++) {
       const button = this.definition.buttons[i]
       const icon = typeof button.icon == "string" ? getIcon(button.icon as string) : button.icon
+      const text = button.text ? html`<span>${button.text}</span>` : undefined
       let color
       if (button.color) {
-        if (button.color.startsWith('palette')) {
-          color = `var(--formsey-palette-${button.color})`
-        } else {
-          color = button.color
-        }
+        color = `background-color:${button.color}`
       }
-      buttons.push(html`<button type="button" style=${ifDefined(color)} ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}<span>${button.text}</span></button>`)
+      buttons.push(html`<button type="button" class=${classMap({ left: button?.align == "left" })} style=${ifDefined(color)} ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}${text}</button>`)
     }
     return html`<div @select=${this.select}>${buttons}</div>`
   }

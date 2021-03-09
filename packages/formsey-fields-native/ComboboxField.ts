@@ -1,53 +1,100 @@
 import { createField, LabeledField } from '@formsey/core';
-import { ListFieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { ListFieldDefinition, StringFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { BoxLayout } from '@formsey/core/Layouts';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query, state } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 
 
 @customElement("formsey-combobox")
 export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
   @query(".popup")
-  popup: HTMLElement
+  protected popup: HTMLElement
 
-  @query(".string")
-  string: HTMLElement
+  @query(".trigger")
+  protected trigger: HTMLElement
+
+  @state()
+  protected popupVisible: boolean = false
+  @state()
+  protected width: string
+  protected top: string
+
+  protected over = false
+
+  private query: string = ""
+  private firstMatch: Option
+
+  private closeHandler = (e: Event) => this.hidePopup()
 
   renderField() {
-    const string = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: "value" } as StringFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) })
-    const options = this.definition.options.filter(option => this.value && option.label.toLowerCase().startsWith(this.value.toLowerCase()))
+    const trigger = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: "value" } as StringFieldDefinition, value: this.query, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) })
     let list = undefined
-    if (options.length > 0 && (options.length > 1 || (options[0].value || options[0].label) != this.value)) {
+    this.firstMatch = undefined
+    const options = this.definition.options?.filter(option => this.value && option.label.toLowerCase().startsWith(this.query.toLowerCase()))
+    if (this.popupVisible && options && options.length > 0 && (options.length > 1 || (options[0].label != this.query))) {
+      this.firstMatch = options[0]
       const box = getFormatter("box")
-      const layout = { elevation: 1 } as BoxLayout
-      list = html`<div class="popup" style=${box.boxStyle(layout)}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options, hideCheckmark: true, query: this.value } as ListFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.optionSelected(event) })}<div class="fbg" style="${box.backgroundStyle(layout)}"></div></div>`
+      const layout = { elevation: 1, border: "soft" } as BoxLayout
+      const style = `${box.boxStyle(layout)};top:${this.top};width:${this.width}`
+      list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options, hideCheckmark: true, query: this.value } as ListFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.optionSelected(event) })}<div class="fbg" style="${box.backgroundStyle(layout)}"></div></div>`
     }
-    return html`<div class="string">${string}</div>${list}`
+    return html`<div class="trigger">${trigger}</div>${list}`
   }
 
-  updated() {
-    this.updateComplete.then(() => {
-      if (this.popup) {
-        const rect = this.string.firstElementChild.getBoundingClientRect()
-        const height = this.popup.getBoundingClientRect().height
-        this.popup.style.visibility = "visible"
-        this.popup.style.top = `${rect.top + rect.height}px`
-        this.popup.style.width = `${rect.width}px`
+  firstUpdated() {
+    this.trigger.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (this.popup && this.popupVisible) {
+        switch (event.key) {
+          case "Tab":
+          case "Enter":
+            event.preventDefault()
+            this.value = this.firstMatch.value || this.firstMatch.label
+            this.query = this.firstMatch.label || this.firstMatch.value
+            this.optionSelected()
+            break;
+          case "Escape":
+            this.popupVisible = false
+            break;
+        }
+        document.addEventListener('click', this.closeHandler)
       }
     })
   }
 
-  private search(e: CustomEvent) {
-    this.value = e.detail.value
-    this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+  protected openPopup() {
+    const rect = this.trigger.firstElementChild.getBoundingClientRect()
+    this.top = `${rect.top + (this.over ? 0 : rect.height)}px`
+    this.width = `${rect.width}px`
+    this.popupVisible = true
+    document.addEventListener('click', this.closeHandler)
   }
 
-  private optionSelected(e: CustomEvent) {
-    this.value = e.detail.value
+  protected hidePopup() {
+    this.popupVisible = false;
+    (<any>this.trigger.firstElementChild).focusField()
+    document.removeEventListener('click', this.closeHandler)
+  }
+
+  protected optionSelected(e?: CustomEvent) {
+    this.hidePopup()
+    this.value = e ? e.detail.value : this.value
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+  }
+
+  private search(e: CustomEvent) {
+    this.openPopup()
+    const options = this.definition.options?.filter(option => option.label == e.detail.value)
+    if (options && options.length == 1) {
+      this.query = options[0].label
+      this.value = options[0].value || this.query
+    } else {
+      this.value = e.detail.value
+      this.query = this.value
+    }
+    this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
   }
 }
 

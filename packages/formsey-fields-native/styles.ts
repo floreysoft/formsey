@@ -12,6 +12,23 @@ export const FORM_STYLES = css`
     -webkit-font-smoothing: antialiased;
   }
 
+  .light {
+    --formsey-elevation-1-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --formsey-elevation-2-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --formsey-elevation-3-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    --formsey-elevation-0-opacity: 0%;
+    --formsey-elevation-1-opacity: 5%;
+    --formsey-elevation-2-opacity: 5%;
+    --formsey-elevation-3-opacity: 5%;
+  }
+
+  .dark {
+    --formsey-elevation-0-opacity: 0;
+    --formsey-elevation-1-opacity: 10%;
+    --formsey-elevation-2-opacity: 14%;
+    --formsey-elevation-3-opacity: 18%;
+  }
+
   ::-webkit-scrollbar {
     width: .75em;
     height: .75em;
@@ -20,10 +37,7 @@ export const FORM_STYLES = css`
       background-color: var(--formsey-background);
   }
   ::-webkit-scrollbar-thumb {
-      background-color: var(--formsey-widget-background);
-  }
-  ::-webkit-scrollbar-thumb:hover {
-      background-color: var(--formsey-widget-background-hover);
+      background-color: var(--formsey-surface);
   }
 
   * {
@@ -102,18 +116,28 @@ export const FORM_STYLES = css`
   }
 
   .input:focus-within {
-    border: 1px solid var(--formsey-border-focus, transparent);
+    border: 1px solid var(--formsey-accent-color, transparent);
   }
 
-  button.input {
+  button {
     display: flex;
+    flex-direction: row;
+    gap: var(--formsey-space-wide);
+    height: var(--formsey-input-height, 2em);
+    padding: var(--formsey-space-narrow);
+    box-sizing: border-box;
+    width: auto;
+    position: relative;
     align-items: center;
-    overflow: hidden;
     white-space: nowrap;
     justify-content: center;
-    background: var(--formsey-widget-background);
+    background: var(--formsey-surface);
+    border: 1px solid var(--formsey-border, transparent);
+    border-radius:var(--formsey-border-radius);
+    outline: none;
+    color: var(--formsey-color, inherit);
   }
-  button.input.left {
+  button.left {
     justify-content: flex-start;
   }
   button fs-icon + span {
@@ -126,13 +150,9 @@ export const FORM_STYLES = css`
   }
   button:hover:not([disabled]) {
     cursor: pointer;
-    background: var(--formsey-widget-background-hover);
   }
   button:focus:not([disabled]) {
-    border: 1px solid var(--formsey-border-focus, transparent);
-  }
-  button:active:not([disabled]) {
-    background: var(--formsey-widget-background-hover);
+    border: 1px solid var(--formsey-accent-color, transparent);
   }
   button:disabled {
     opacity: 0.5;
@@ -142,8 +162,20 @@ export const FORM_STYLES = css`
     color: var(--formsey-accent-contrast);
     text-transform: uppercase;
   }
-  button.primary:hover {
-    background: var(--formsey-accent-hover);
+  button:active:not([disabled])::before {
+    opacity: 0.1;
+  }
+  formsey-checkbox input[type="checkbox"]~.cm::before, button::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background-color: currentColor;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.12s;
+  }
+  button:hover::before, formsey-checkbox input[type="checkbox"]~.cm:hover::before {
+    opacity: 0.05;
   }
 
   /* Panel */
@@ -155,7 +187,7 @@ export const FORM_STYLES = css`
     flex-direction: row;
     padding: var(--formsey-space-wide);
     gap: var(--formsey-space-wide);
-    background: var(--formsey-widget-background);
+    background: var(--formsey-surface);
   }
   formsey-panel .panel {
     display: flex;
@@ -237,8 +269,8 @@ export const FORM_STYLES = css`
     left: 0;
     right: 0;
     bottom: 0;
-    border: 1px solid var(--formsey-border, inherit);
-    background-color: var(--formsey-widget-background-hover, inherit);
+    border: 1px solid var(--formsey-border, transparent);
+    background-color: var(--formsey-surface, inherit);
     transition: .12s ease-out;
     border-radius:  calc(var(--formsey-switch-size) / 2);
   }
@@ -264,11 +296,50 @@ export const FORM_STYLES = css`
   }
 
   formsey-switch input:focus + .sl {
-      border: 1px solid var(--formsey-border-focus, inherit);
+      border: 1px solid var(--formsey-accent-color, transparent);
   }
 
   formsey-switch input:checked + .sl:before {
     transform: translateX(calc(var(--formsey-switch-size, 60px) / 2));
+  }
+
+  /* Checkbox */
+  formsey-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  formsey-checkbox input[type="checkbox"]~.cm {
+    width: 1em;
+    height: 1em;
+    position: relative;
+    border-radius: var(--formsey-border-radius);
+    border: 1px solid var(--formsey-border);
+    border-radius: var(--formsey-border-radius);
+    background-color: var(--formsey-shade);
+    padding: var(--formsey-space-narrow);
+  }
+  formsey-checkbox input~.cm>fs-icon {
+    display: none;
+  }
+  formsey-checkbox input:checked ~ .cm>fs-icon {
+    display: block;
+  }
+  formsey-checkbox input~.cl {
+    margin-left: var(--formsey-space-wide);
+  }
+  formsey-checkbox input[type="checkbox"]~.cm:hover::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background-color: currentColor;
+    border-radius: inherit;
+    opacity: 0.05;
+    transition: opacity 0.12s;
+  }
+  formsey-checkbox:focus-within input[type="checkbox"]~.cm:not([disabled]) {
+    border: 1px solid var(--formsey-accent-color, transparent);
   }
 
   /* Checkboxes Field / Multiple Choice Field*/
@@ -320,28 +391,9 @@ export const FORM_STYLES = css`
     pointer-events: none;
   }
 
-  formsey-option>button {
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    gap: var(--formsey-space-wide);
-    padding: var(--formsey-space-narrow);
-    align-items: center;
-    height: var(--formsey-input-height, 2em);
-    border: 1px solid transparent;
-    border-radius:var(--formsey-border-radius);
-    outline: none;
-    color: var(--formsey-color, inherit);
-    background: none;
-  }
-  formsey-option>button.c {
-    border: 1px solid var(--formsey-border, transparent);
-  }
-  formsey-option>button:focus, formsey-option>button.c:focus {
-    border: 1px solid var(--formsey-border-focus, transparent);
-  }
-  formsey-option>button:hover {
-    background: var(--formsey-widget-background-hover);
+  /* Option */
+  formsey-option>button.c:not([disabled])::before {
+    opacity: 0.1;
   }
   formsey-option>button>.cm {
     padding: var(--formsey-space-narrow);
@@ -382,7 +434,6 @@ export const FORM_STYLES = css`
     display: flex;
     overflow: hidden;
     width: 100%;
-    visibility: hidden;
     z-index: 8;
     position: fixed;
     background: var(--formsey-background);
@@ -412,52 +463,32 @@ export const FORM_STYLES = css`
     flex-grow: 1;
   }
 
+  /* Tabs panel */
   formsey-tabs .container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     overflow: hidden;
-    border-bottom-left-radius: var(--formsey-border-radius);
-    border-bottom-right-radius: var(--formsey-border-radius);
   }
   formsey-tabs .tabs {
     display: flex;
     flex-wrap: wrap;
     position: relative;
   }
-  formsey-tabs .tab {
-    display: flex;
-    padding: var(--formsey-space-wide);
-    align-items: center;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    overflow: hidden;
-    background-color: var(--formsey-widget-background);
-    border: 1px solid transparent;
-    transition: all 0.12s ease-out;
-    color: var(--formsey-color);
+  formsey-tabs .top  .tab {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
-  formsey-tabs .top .tab {
-    border-top-left-radius: var(--formsey-border-radius);
-    border-top-right-radius: var(--formsey-border-radius);
-  }
-  formsey-tabs .tab:focus-within {
-      border: 1px solid var(--formsey-border-focus, inherit);
-  }
-  formsey-tabs .tab:hover {
-      color:  var(--formsey-color, inherit);
-      background-color: var(--formsey-widget-background-hover);
+  formsey-tabs .bottom .tab {
+    border-radius: 0;
   }
   formsey-tabs .tab.expand {
     flex-grow: 1;
     justify-content: center;
     text-align: center;
   }
-  formsey-tabs .tab.selected {
-      color:  var(--formsey-accent-color, inherit);
-      background-color: var(--formsey-widget-background-hover, inherit);
-      position: relative;
+  formsey-tabs .tab.selected::before {
+    opacity: 0.1;
   }
   formsey-tabs .tab.selected::after {
     content:"";
@@ -480,7 +511,7 @@ export const FORM_STYLES = css`
   formsey-tabs .content {
       flex-grow: 1;
       display: flex;
-      background: var(--formsey-shade);
+      background-color: var(--formsey-surface);
   }
 
   /* Stats View */
@@ -521,7 +552,7 @@ export const FORM_STYLES = css`
   }
 
   .cf:focus-within .cfps {
-    border: 1px solid var(--formsey-border-focus, #020b2f);
+    border: 1px solid var(--formsey-accent-color, #020b2f);
   }
 
   .cf svg {
@@ -660,7 +691,7 @@ export const FORM_STYLES = css`
   formsey-image-checkbox label::after {
     content: ' ';
     color: var(--formsey-text-color, #ffffff);
-    background: var(--formsey-widget-background, inherit);
+    background: var(--formsey-surface, inherit);
     border-radius: 50%;
     position: absolute;
     right: .25em;
@@ -693,10 +724,19 @@ export const FORM_STYLES = css`
   formsey-list .options {
     overflow-y: auto;
     overflow-x: hidden;
+    border: 1px solid var(--formsey-border, transparent);
+    border-radius: var(--formsey-border-radius);
   }
-
-  formsey-list option {
-    background: var(--formsey-background);
+  formsey-list formsey-option>button {
+    border-color: transparent;
+  }
+  formsey-list formsey-option:not(:first-child)>button {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  formsey-list formsey-option:not(:last-child)>button {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   /* Sourcecode field */
@@ -714,7 +754,7 @@ export const FORM_STYLES = css`
   }
 
   formsey-signature .input:focus-within {
-    border: 1px solid var(--formsey-border-focus, #020b2f);
+    border: 1px solid var(--formsey-accent-color, #020b2f);
   }
 
   formsey-signature canvas {
@@ -985,18 +1025,9 @@ formsey-toggle>.lfw>div {
     flex-grow: 1;
 }
 formsey-toggle>.lfw>div>button {
-  display: flex;
-  flex-grow: 1;
-  height: var(--formsey-input-height, 2em);
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--formsey-border);
   border-radius: 0;
   border-right-color: transparent;
-  background-color: var(--formsey-widget-background);
-  padding: var(--formsey-space-narrow);
-  outline: none;
-  cursor: pointer;
+  flex-grow: 1;
 }
 formsey-toggle>div>button:disabled {
   cursor: default;
@@ -1012,17 +1043,14 @@ formsey-toggle>.lfw>div>button:last-child {
     border-right-color: var(--formsey-border);
 }
 formsey-toggle>.lfw>div>button:last-child:last-child:focus-within {
-    border-right-color: var(--formsey-border-focus);
+    border-right-color: var(--formsey-accent-color);
 }
-formsey-toggle>.lfw>div>button[selected] {
-  background-color: var(--formsey-widget-background-hover, inherit);
-  color: var(--formsey-accent-color);
+formsey-toggle>.lfw>div>button[selected]:not([disabled]) {
+  color: var(--formsey-accent-contrast);
+  background-color: var(--formsey-accent-color);
 }
-formsey-toggle>.lfw>div>button:focus-within {
-  border-color: var(--formsey-border-focus);
-}
-formsey-toggle>.lfw>div>button:hover:not([disabled]) {
-  background-color: var(--formsey-widget-background-hover, inherit);
+formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
+  opacity: 0.1;
 }
 
 @media (pointer: coarse) {
@@ -1044,12 +1072,12 @@ formsey-toggle>.lfw>div>button:hover:not([disabled]) {
     position: relative;
     margin: .25em 0 .25em 1em;
     padding: 0.25em 0px 0.25em 1em;
-    border-left: 2px solid var(--formsey-widget-background, #E2DDDB);
+    border-left: 2px solid var(--formsey-surface, #E2DDDB);
     font-size: var(--formsey-repeating-section-icon-size, inherit);
     transition: all 0.12s ease-out;
   }
   formsey-repeating-section>section>.lfw>div>.form:hover {
-    border-left: 2px solid var(--formsey-widget-background-hover, #CAC4C2);
+    border-left: 2px solid var(--formsey-surface, #CAC4C2);
   }
   formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper {
     position: absolute;
@@ -1069,20 +1097,20 @@ formsey-toggle>.lfw>div>button:hover:not([disabled]) {
     height: 1.4em;
     font-size: var(--formsey-repeating-section-icon-size, inherit);
     border-radius: 50%;
-    background-color: var(--formsey-repeating-section-icon-background-color, var(--formsey-widget-background, #E2DDDB));
+    background-color: var(--formsey-repeating-section-icon-background-color, var(--formsey-surface, #E2DDDB));
     transition: background-color 0.12s ease-out;
     border: var(--formsey-input-border, 1px solid transparent);
     padding: 0.15em;
   }
   formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper>button:focus, formsey-repeating-section>section>.lfw>.fs-add:focus {
     outline: none;
-    border: 1px solid var(--formsey-border-focus, #020b2f);
+    border: 1px solid var(--formsey-accent-color, #020b2f);
   }
   formsey-repeating-section>section>.lfw>div>.form:hover>.fs-remove-wrapper {
     opacity: 1;
   }
   formsey-repeating-section>section>.lfw>div>.form:hover>.fs-remove-wrapper>.fs-remove, formsey-repeating-section>section>.lfw>.fs-add:hover {
-    background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-widget-background-hover, #CAC4C2));
+    background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-surface, #CAC4C2));
   }
   formsey-repeating-section>section>.lfw>.fs-add {
     margin: .25em 0.4em;

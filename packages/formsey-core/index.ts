@@ -34,6 +34,9 @@ registerIcon("Next", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M16 27v-10l
 
 registerIcon("Checkmark", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27 4l-15 15-7-7-5 5 12 12 20-20z"></path></svg></fs-icon>`)
 
+registerIcon("Dark mode", html`<fs-icon><svg viewBox="0 0 24 24"><path d="M12 18q2.484 0 4.242-1.758t1.758-4.242-1.758-4.242-4.242-1.758-4.242 1.758-1.758 4.242 1.758 4.242 4.242 1.758zM20.016 15.328v4.688h-4.688l-3.328 3.281-3.328-3.281h-4.688v-4.688l-3.281-3.328 3.281-3.328v-4.688h4.688l3.328-3.281 3.328 3.281h4.688v4.688l3.281 3.328z"></path></svg></fs-icon>`)
+registerIcon("Light mode", html`<fs-icon><svg viewBox="0 0 24 24"><path d="M12 8.016q1.641 0 2.813 1.172t1.172 2.813-1.172 2.813-2.813 1.172-2.813-1.172-1.172-2.813 1.172-2.813 2.813-1.172zM12 18q2.484 0 4.242-1.758t1.758-4.242-1.758-4.242-4.242-1.758-4.242 1.758-1.758 4.242 1.758 4.242 4.242 1.758zM20.016 8.672l3.281 3.328-3.281 3.328v4.688h-4.688l-3.328 3.281-3.328-3.281h-4.688v-4.688l-3.281-3.328 3.281-3.328v-4.688h4.688l3.328-3.281 3.328 3.281h4.688v4.688z"></path></svg></fs-icon>`)
+
 registerFormatter("box", {
   backgroundStyle(layout: BoxLayout): string {
     const background = layout.backgroundColor || "var(--formsey-color)"

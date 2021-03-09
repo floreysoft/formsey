@@ -2,6 +2,7 @@ import { html, TemplateResult } from "lit";
 import { customElement, property, query, queryAll } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { createField, Field } from './Field';
+import { FieldClickEvent } from "./FieldClickEvent";
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
@@ -109,7 +110,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         const value = this.value && field.name ? this.value[field.name] : this.value
-        let fieldTemplate = createField({ library: this.library, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+        let fieldTemplate = createField({ library: this.library, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), clickHandler: (event: FieldClickEvent<any>) => this.clicked(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
@@ -198,8 +199,8 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 }
 getLibrary("native").registerComponent("form", {
   importPath: "@formsey/core/FormField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
-    return html`<formsey-form-field id=${ifDefined(id)} .library=${library} .settings=${settings} .definition=${definition} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
+    return html`<formsey-form-field id=${ifDefined(id)} .library=${library} .settings=${settings} .definition=${definition} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-form-field>`
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields

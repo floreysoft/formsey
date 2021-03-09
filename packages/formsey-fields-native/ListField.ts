@@ -3,28 +3,25 @@ import { createField, Field, LabeledField, ValueChangedEvent } from '@formsey/co
 import { FieldDefinition, ListFieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 
 
 @customElement("formsey-list")
 export class ListField extends LabeledField<ListFieldDefinition, string | string[]> {
-  @property()
-  query: string
-
   @query(".search")
   searchBox: Field<FieldDefinition, string>
 
   @query(".options")
   firstOption: Field<FieldDefinition, string>
 
-  private firstMatchingOption
+  private firstMatchingOption: string
 
   renderField() {
-    const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) }) : undefined
+    const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) })}</div>` : undefined
     let visible = 0
     this.firstMatchingOption = undefined
-    return html`<div class="search" @keydown=${this.searchKeyDown}>${search}</div><div class="options">${this.definition.options?.map((option) => {
+    return html`${search}<div class="options">${this.definition.options?.map((option) => {
       let label = option.label || option.value;
       let value = option.value || option.label;
       let checked = false
@@ -34,12 +31,12 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
       } else {
         checked = this.value == value;
       }
-      if ((!this.query || value.toLowerCase().startsWith(this.query))) {
-        if (this.query && !this.firstMatchingOption) {
+      if ((!this.definition.query || label.toLowerCase().startsWith(this.definition.query.toLowerCase()))) {
+        if (this.definition.query && !this.firstMatchingOption) {
           this.firstMatchingOption = value
         }
         if (this.definition.max && ++visible > this.definition.max) return
-        return html`<formsey-option @keydown=${this.keyDown} passive ?hideCheckmark=${this.definition.hideCheckmark} .query=${this.query} .definition=${{ name: value, icon: option.icon, label, value }} .value=${checked} .parentPath=${this.path()} @inputChange=${this.changed}>${option.label || option.value}</formsey-option>`
+        return html`<formsey-option passive @keydown=${this.keyDown} ?hideCheckmark=${this.definition.hideCheckmark} .query=${this.definition.query} .definition=${{ name: value, icon: option.icon, label, value }} .value=${checked} .parentPath=${this.path()} @inputChange=${this.changed}></formsey-option>`
       }
     })}</div>`;
   }
@@ -59,10 +56,10 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
       if (!Array.isArray(this.value)) {
         this.value = []
       }
-      if (e.detail.value) {
-        this.value.push(option)
-      } else {
+      if (this.value.includes(option)) {
         this.value = this.value.filter(item => item != option)
+      } else {
+        this.value.push(option)
       }
     } else {
       this.value = option
@@ -71,7 +68,8 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
   }
 
   private search(e: CustomEvent) {
-    this.query = e.detail.value
+    this.definition.query = e.detail.value
+    this.requestUpdate()
   }
 
   private keyDown(event: KeyboardEvent) {

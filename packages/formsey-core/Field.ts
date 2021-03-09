@@ -141,7 +141,8 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected clicked(e: any) {
-    this.dispatchEvent(new FieldClickEvent(this.path()));
+    e.stopPropagation()
+    this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value));
   }
 
   protected focused(e: any) {
@@ -170,6 +171,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return (this.definition?.name ? this.definition.name : "") + "." + path
   }
 }
+
 
 export abstract class CompoundField<T extends FieldDefinition, V> extends Field<T, V> {
   protected renderHeader() {

@@ -74,7 +74,7 @@ export class Library {
   components: Components = {}
   icon?: TemplateResult
   displayName?: string
-  settingsEditor?: FormDefinition
+  settingsEditor?: FieldDefinition
   defaultSettings?: Settings
   onSettingsChanged?: (settings: Settings) => Settings
 
