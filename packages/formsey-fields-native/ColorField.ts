@@ -14,7 +14,7 @@ export class ColorField extends StringField {
   color: HTMLInputElement
 
   protected renderField() {
-    const style = this.value ? "background-color:"+this.value : undefined
+    const style = this.value ? "background-color:" + this.value : undefined
     return html`<div class="cf" @keydown="${this.keyDown}">${super.renderField()}<div class="${this.value ? 'cfp cfps' : 'cfp'}" style="${ifDefined(style)}">${!this.value ? ICON_COLOR_FIELD : undefined}<input type="color" value="${this.value ? this.value : '#ff0000'}" @change="${this.changed}" @input="${this.inputted}" tabindex="-1"></div></div>`
   }
 
@@ -23,7 +23,7 @@ export class ColorField extends StringField {
   }
 
   private keyDown(e: KeyboardEvent) {
-    if ( e.keyCode == 13 ) {
+    if (e.keyCode == 13) {
       e.stopPropagation()
       this.color.click()
     }
@@ -32,7 +32,7 @@ export class ColorField extends StringField {
 
 getLibrary("native").registerComponent("color", {
   importPath: "@formsey/fields-native/ColorField",
-    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<StringFieldDefinition, string> ) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<StringFieldDefinition, string>) => {
     return html`<formsey-color id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-color>`
   }
 })

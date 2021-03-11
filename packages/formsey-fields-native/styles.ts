@@ -16,6 +16,8 @@ export const FORM_STYLES = css`
     --formsey-elevation-1-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     --formsey-elevation-2-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     --formsey-elevation-3-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    --formsey-elevation-opacity: 0;
+    --formsey-elevation-margin: 0;
     --formsey-elevation-0-opacity: 0%;
     --formsey-elevation-1-opacity: 5%;
     --formsey-elevation-2-opacity: 5%;
@@ -23,6 +25,9 @@ export const FORM_STYLES = css`
   }
 
   .dark {
+    position: relative;
+    --formsey-elevation-opacity: 0;
+    --formsey-elevation-margin: 0;
     --formsey-elevation-0-opacity: 0;
     --formsey-elevation-1-opacity: 10%;
     --formsey-elevation-2-opacity: 14%;
@@ -201,13 +206,6 @@ export const FORM_STYLES = css`
     overflow: auto;
   }
 
-  /* Checkbox Field */
-  .cfl {
-    height: var(--formsey-input-height, 2em);
-    display: flex;
-    align-items: center;
-  }
-
   /* Label */
   formsey-label {
     display: flex;
@@ -303,6 +301,16 @@ export const FORM_STYLES = css`
     transform: translateX(calc(var(--formsey-switch-size, 60px) / 2));
   }
 
+
+
+  /* Checkbox Field */
+  .cfl {
+    height: var(--formsey-input-height, 2em);
+    display: flex;
+    align-items: center;
+  }
+
+  /* Checkboxes Field / Multiple Choice Field*/
   formsey-checkbox .cm, formsey-multiple-choice .rb {
     display: flex;
     position: relative;
@@ -342,6 +350,7 @@ export const FORM_STYLES = css`
   }
   formsey-checkbox .cl, formsey-multiple-choice .rl {
     margin-left: var(--formsey-space-wide);
+    user-select: none;
   }
   formsey-checkbox .cm:hover::before, formsey-multiple-choice .rb:hover::before {
     content: "";
@@ -356,11 +365,13 @@ export const FORM_STYLES = css`
     border: 1px solid var(--formsey-accent-color, transparent);
   }
 
-  /* Checkboxes Field / Multiple Choice Field*/
   formsey-checkboxes .options, formsey-multiple-choice .options, formsey-checkboxes .other, formsey-multiple-choice .other {
     display: flex;
     flex-direction: column;
     row-gap: var(--formsey-space-narrow);
+  }
+  formsey-checkboxes .options .cfl {
+    height: auto;
   }
   formsey-checkboxes label, formsey-multiple-choice label {
     display: flex;
@@ -385,24 +396,27 @@ export const FORM_STYLES = css`
     margin: 0;
     min-width: 0;
   }
-  .fff {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
   .ffg {
+    position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
     box-sizing: border-box;
     gap: var(--formsey-space-narrow);
     overflow: hidden;
   }
   .fbg {
     position: absolute;
-    inset: 0px;
-    border-radius: inherit;
+    inset: 0;
     pointer-events: none;
+    background-color: currentColor;
+    opacity: 0;
+  }
+  .fff {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    --formsey-elevation-opacity: 0;
+    --formsey-elevation-margin: 0;
   }
 
   /* Option */
@@ -417,7 +431,6 @@ export const FORM_STYLES = css`
   /* Combobox, Listbox */
   formsey-popup-section, formsey-select, formsey-dialog-section {
     position: relative;
-
   }
 
   /* NumberUnit */
@@ -470,7 +483,6 @@ export const FORM_STYLES = css`
     position:relative;
     flex-direction: column;
     flex-grow: 1;
-    overflow: hidden;
   }
 
   formsey-string {
@@ -887,8 +899,9 @@ export const FORM_STYLES = css`
   }
 
   /* Popup / Dialog section field */
-  formsey-popup-section>.lfw, formsey-dialog-section>.lfw {
+  formsey-popup-section .lfw, formsey-dialog-section>.lfw {
     position: relative;
+    overflow: visible;
   }
   formsey-popup-section>.lfw>#glass, formsey-dialog-section>.lfw>#glass, formsey-dialog-section .dialogWrapper {
     position: fixed;

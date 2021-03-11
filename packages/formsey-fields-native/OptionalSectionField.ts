@@ -18,6 +18,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   form: HTMLElement
 
   private untouched: boolean = true
+  private on: boolean = false
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -32,8 +33,9 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   render() {
-    return html`<section>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, value: typeof this.value !== "undefined", parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
-    ${this.value || this.definition.default ? html`<div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout } } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}</div></section>`
+    const on = this.definition.name ? typeof this.value !== "undefined" : this.on;
+    return html`<section>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, value: on, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
+    ${on ? html`<div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout } } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}</div></section>`
   }
 
   public focusField(path: string) {
@@ -74,23 +76,35 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   protected selectionChanged(e: ValueChangedEvent<boolean>) {
-    this.value = e.detail.value ? {} : undefined
+    if (this.definition.name) {
+      this.value = e.detail.value ? {} : undefined;
+      this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
+    } else if (e.type == "input") {
+      this.on = !this.on
+    }
     this.untouched = false
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", this.path(), this.value));
     if (e.type == "input") {
       this.focused(e)
     }
   }
 
   protected changed(e: ValueChangedEvent<any>) {
-    let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
-    if (!this.value) {
-      this.value = {}
+    if (e.detail?.name) {
+      if (typeof this.definition.name === "undefined" || this.definition.name === "") {
+        // If this is an unnamed form, just pass event to parent
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+      } else {
+
+        let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
+        if (!this.value) {
+          this.value = {}
+        }
+        this.value[name] = e.detail.value;
+        this.requestUpdate()
+        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
+      }
     }
-    this.value[name] = e.detail.value;
-    this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
   }
 }
 

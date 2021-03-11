@@ -15,11 +15,10 @@ export class SelectField extends ComboboxField {
   renderField() {
     const selectedOption = this.definition.options?.filter(option => this.value && (option.value || option.label) == this.value)?.[0]
     const button = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "button", name: "value", align: "left", icon: selectedOption?.icon, text: selectedOption?.label } as StringFieldDefinition, parentPath: this.path(), errors: this.errors })
-    const box = getFormatter("box")
+    const formatter = getFormatter("flex")
     const layout = { elevation: 1, border: "soft" } as BoxLayout
-    const style = `${box.boxStyle(layout)};visibility:${this.popupVisible ? "visible" : "hidden"};top:${this.top};width:${this.width}`
-    const backgroundStyle = `${box.backgroundStyle(layout)};visibility:${this.popupVisible ? "visible" : "hidden"}`
-    const list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options: this.definition.options, hideCheckmark: typeof this.value === "undefined", searchThreshold: this.definition.searchThreshold } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.optionSelected(event) })}</div><div class="fbg" style="${backgroundStyle}"></div>`
+    const style = `${formatter.outerBoxStyle?.(layout)};${formatter.innerBoxStyle?.(layout)};visibility:${this.popupVisible ? "visible" : "hidden"};top:${this.top};width:${this.width}`
+    const list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options: this.definition.options, hideCheckmark: typeof this.value === "undefined", searchThreshold: this.definition.searchThreshold } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.optionSelected(event) })}</div>`
     return html`<div class="trigger">${button}</div>${list}`
   }
 

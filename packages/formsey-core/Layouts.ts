@@ -30,17 +30,15 @@ export interface SizeLayout extends Layout {
 }
 
 export interface BoxLayout extends Layout {
-  formatter: "box"
   margin?: "none" | "narrow" | "wide"
   padding?: "none" | "narrow" | "wide"
   elevation?: number
   border?: "sharp" | "soft"
   backgroundColor?: string
-  opacity?: number,
   fontSize?: "small" | "smaller" | "medium" | "larger" | "large"
 }
 
-export interface FlexLayout extends Layout {
+export interface FlexLayout extends BoxLayout {
   formatter: "flex"
   direction: "horizontal" | "vertical"
   horizontal?: "left" | "center" | "right" | "expand"
@@ -52,7 +50,7 @@ export interface FlexLayout extends Layout {
   }
 }
 
-export interface ColumnsLayout extends Layout {
+export interface ColumnsLayout extends BoxLayout {
   formatter: "columns"
   gaps?: "none" | "narrow" | "wide"
   columns: {

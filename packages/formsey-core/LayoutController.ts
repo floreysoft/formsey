@@ -9,9 +9,11 @@ export class LayoutController implements ReactiveController {
   protected host: Field<FormDefinition, any>
   protected size: string
   private resizeObserver: ResizeObserver
+  private element: HTMLElement
 
-  constructor(host: Field<FormDefinition, any>) {
+  constructor(host: Field<FormDefinition, any>, element?: HTMLElement) {
     this.host = host
+    this.element = element || host
     this.resizeObserver = new ResizeObserver((entries, observer) => {
       for (const entry of entries) {
         this.resize(entry.contentRect.width)
@@ -20,11 +22,11 @@ export class LayoutController implements ReactiveController {
   }
 
   hostConnected() {
-    this.resizeObserver.observe(this.host)
+    this.resizeObserver.observe(this.element)
   }
 
   hostDisconnected() {
-    this.resizeObserver.unobserve(this.host)
+    this.resizeObserver.unobserve(this.element)
   }
 
   hostUpdate() {

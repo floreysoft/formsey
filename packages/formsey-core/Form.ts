@@ -1,5 +1,6 @@
 import { customElement, property, query } from "lit/decorators";
 import { Field } from './Field';
+import { FieldClickEvent } from "./FieldClickEvent";
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
@@ -121,7 +122,7 @@ export class Form extends Field<FieldDefinition, any> {
     if (!this.errors) {
       this.errors = new InvalidErrors()
     }
-    return this.library?.components?.["styledForm"]?.template({ library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+    return this.library?.components?.["styledForm"]?.template({ library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
   }
 
   updated() {
@@ -129,11 +130,6 @@ export class Form extends Field<FieldDefinition, any> {
       this._loaded = true;
       this.dispatchEvent(new CustomEvent('load', { detail: { definition: this.definition, value: this.value, theme: this.library } }))
     }
-  }
-
-  connectedCallback() {
-    super.connectedCallback()
-    this.addEventListener('click', this.clicked)
   }
 
   renderHeader() {
@@ -194,8 +190,9 @@ export class Form extends Field<FieldDefinition, any> {
   }
 
   protected clicked(e: CustomEvent) {
-    if (!e.detail?.name) {
-      e.stopPropagation()
+    e.stopPropagation()
+    if (e.detail.name) {
+      this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value, true));
     }
   }
 
@@ -206,7 +203,7 @@ export class Form extends Field<FieldDefinition, any> {
     } else {
       this.value = e.detail.value
     }
-    if (isFormDefinition(this.definition)) {
+    if (!this.anonymous && isFormDefinition(this.definition)) {
       this.value = removeDeletedFields<Object>(this.library.components, this.definition, this.value)
     }
     if (e.type == "inputChange" || e.type == "input") {

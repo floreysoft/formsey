@@ -37,22 +37,29 @@ registerIcon("Checkmark", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M27 4l
 registerIcon("Dark mode", html`<fs-icon><svg viewBox="0 0 24 24"><path d="M12 18q2.484 0 4.242-1.758t1.758-4.242-1.758-4.242-4.242-1.758-4.242 1.758-1.758 4.242 1.758 4.242 4.242 1.758zM20.016 15.328v4.688h-4.688l-3.328 3.281-3.328-3.281h-4.688v-4.688l-3.281-3.328 3.281-3.328v-4.688h4.688l3.328-3.281 3.328 3.281h4.688v4.688l3.281 3.328z"></path></svg></fs-icon>`)
 registerIcon("Light mode", html`<fs-icon><svg viewBox="0 0 24 24"><path d="M12 8.016q1.641 0 2.813 1.172t1.172 2.813-1.172 2.813-2.813 1.172-2.813-1.172-1.172-2.813 1.172-2.813 2.813-1.172zM12 18q2.484 0 4.242-1.758t1.758-4.242-1.758-4.242-4.242-1.758-4.242 1.758-1.758 4.242 1.758 4.242 4.242 1.758zM20.016 8.672l3.281 3.328-3.281 3.328v4.688h-4.688l-3.328 3.281-3.328-3.281h-4.688v-4.688l-3.281-3.328 3.281-3.328v-4.688h4.688l3.328-3.281 3.328 3.281h4.688v4.688z"></path></svg></fs-icon>`)
 
-registerFormatter("box", {
-  backgroundStyle(layout: BoxLayout): string {
-    const background = layout.backgroundColor || "var(--formsey-color)"
-    const opacity = layout.opacity || (layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)")
-    return `background:${background};opacity:${opacity}`
-  },
-  boxStyle(layout: BoxLayout): string {
-    const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
-    const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
-    const fontSize = layout.fontSize ? `font-size:${layout.fontSize};` : ""
-    const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
-    const borderRadius = layout.border == 'soft' ? "var(--formsey-border-radius)" : "0"
-    return `${fontSize}margin:${margin};padding:${padding};box-shadow:${shadow};border-radius:${borderRadius}`
-  }
-})
+function elevationStyle(layout: BoxLayout): string {
+  const opacity = layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)"
+  return `opacity:${opacity}`
+}
+function backgroundStyle(layout: BoxLayout): string {
+  return layout.backgroundColor ? `--formsey-background:var(--formsey-bg-${layout.backgroundColor});background:var(--formsey-background)` : ""
+}
+function outerBoxStyle(layout: BoxLayout): string {
+  const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
+  const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
+  const borderRadius = layout.border == 'soft' ? "var(--formsey-border-radius)" : "0"
+  return `margin:${margin};box-shadow:${shadow};border-radius:${borderRadius}`
+}
+function innerBoxStyle(layout: BoxLayout): string {
+  const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
+  const fontSize = layout.fontSize ? `font-size:${layout.fontSize};` : ""
+  return `${fontSize};padding:${padding};`
+}
 registerFormatter("columns", {
+  innerBoxStyle,
+  outerBoxStyle,
+  elevationStyle,
+  backgroundStyle,
   containerStyle(layout: ColumnsLayout): string {
     const gaps = layout.gaps == "wide" ? "var(--formsey-space-wide)" : layout.gaps == "none" ? "0" : "var(--formsey-space-narrow)"
     return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")};gap:${gaps}`
@@ -63,6 +70,10 @@ registerFormatter("columns", {
   }
 })
 registerFormatter("table", {
+  innerBoxStyle,
+  outerBoxStyle,
+  elevationStyle,
+  backgroundStyle,
   containerStyle(layout: TableLayout, definition: TableFieldDefinition, fixed: boolean, selectable: boolean, searchable: boolean): string {
     return `display:grid;${!fixed && layout.fill == "grow" ? "flex-grow:1;" : ""}gap:0;grid-template-rows:2em${searchable ? " 2.5em" : ""};grid-auto-rows:minmax(0,${layout.rowHeight == "xl" ? "5em" : layout.rowHeight == "l" ? "4em" : layout.rowHeight == "m" ? "3em" : "2.5em"});grid-template-columns:${selectable ? "min-content " : ""}${layout.columns?.filter((column, index) => column.visible && (!layout.fixedColumns || index < layout.fixedColumns && fixed || index >= layout.fixedColumns && !fixed)).map(column => column.width?.selection == "minmax" ? `minmax(${column.width?.value?.minWidth && column.width?.value?.minWidthUnit ? column.width.value.minWidth + column.width.value.minWidthUnit : "auto"},${column.width?.value?.maxWidth && column.width?.value?.maxWidthUnit ? column.width.value.maxWidth + column.width.value.maxWidthUnit : "auto"})` : "auto").join(" ")}`
   },
@@ -72,6 +83,10 @@ registerFormatter("table", {
   }
 })
 registerFormatter("areas", {
+  innerBoxStyle,
+  outerBoxStyle,
+  elevationStyle,
+  backgroundStyle,
   containerStyle(layout: AreasLayout): string {
     const gaps = layout.gaps == "wide" ? "var(--formsey-space-wide)" : layout.gaps == "none" ? "0" : "var(--formsey-space-narrow)"
     return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column}fr)`).join(" ")};grid-template-areas:${layout.areas.map((row: string) => `'${row.split(" ").map(column => column == "." ? column : ("_" + column)).join(" ")}'`).join(" ")};gap:${gaps}`
@@ -85,6 +100,9 @@ registerFormatter("areas", {
   }
 })
 registerFormatter("flex", {
+  innerBoxStyle,
+  outerBoxStyle,
+  backgroundStyle,
   containerStyle(layout: FlexLayout): string {
     const gaps = layout.gaps == "wide" ? "var(--formsey-space-wide)" : layout.gaps == "none" ? "0" : "var(--formsey-space-narrow)"
     const horizontal = layout.horizontal == "left" ? "flex-start" : layout.horizontal == "right" ? "flex-end" : layout.horizontal == "expand" ? "space-between" : "center"

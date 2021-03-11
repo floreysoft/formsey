@@ -36,10 +36,10 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
     const options = this.definition.options?.filter(option => this.value && option.label.toLowerCase().startsWith(this.query.toLowerCase()))
     if (this.popupVisible && options && options.length > 0 && (options.length > 1 || (options[0].label != this.query))) {
       this.firstMatch = options[0]
-      const box = getFormatter("box")
+      const formatter = getFormatter("flex")
       const layout = { elevation: 1, border: "soft" } as BoxLayout
-      const style = `${box.boxStyle(layout)};top:${this.top};width:${this.width}`
-      list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options, hideCheckmark: true, query: this.value } as ListFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.optionSelected(event) })}<div class="fbg" style="${box.backgroundStyle(layout)}"></div></div>`
+      const style = `${formatter.outerBoxStyle?.(layout)};${formatter.innerBoxStyle?.(layout)};;top:${this.top};width:${this.width}`
+      list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options, hideCheckmark: true, query: this.value } as ListFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.optionSelected(event) })}</div>`
     }
     return html`<div class="trigger">${trigger}</div>${list}`
   }

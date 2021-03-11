@@ -2,12 +2,12 @@ import { KEYCODE } from '@floreysoft/utils';
 import { createField, Field, FieldClickEvent, LabeledField } from '@formsey/core';
 import { ButtonFieldDefinition, DialogSectionFieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { getLibrary, Resources } from '@formsey/core/Registry';
+import { LayoutController } from '@formsey/core/LayoutController';
+import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
-import { styleMap } from 'lit/directives/style-map';
 import { ButtonField } from './ButtonField';
 
 @customElement("formsey-dialog-section")
@@ -25,6 +25,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
   private top: string | undefined
   private keyHandler = (e: KeyboardEvent) => this.keyDown(e)
   private cancelValue = undefined
+  private layoutController: LayoutController
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -36,27 +37,23 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
   }
 
   renderField() {
-    const position = {
-      left: this.left,
-      top: this.top,
-      position: this.left ? "fixed" : "relative",
-      minWidth: `${this.definition.width || 0}${this.definition.widthUnit || "em"}`,
-      minHeight: `${this.definition.height || 0}${this.definition.heightUnit || "em"}`,
-    }
+    const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
+    const style = `left:${this.left};top:${this.top};position:${this.left ? "fixed" : "relative"};minWidth:${this.definition.width || 0}${this.definition.widthUnit || "em"};minHeight:${this.definition.height || 0}${this.definition.heightUnit || "em"};${formatter ? `${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""}`
     return html`
     ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) }) : undefined}
     ${this.definition.visible ? html`
     <div class="dialogWrapper" @mouseup=${this.endDrag} @mousemove=${this.drag}>
       <focus-trap>
-        <div class="dialog" style=${styleMap(position)}>
+        <div class="dialog" style=${style}>
           ${this.definition.header ? html`<header @mousedown=${this.startDrag} @mouseup=${this.endDrag} @mousemove=${this.drag}>${this.definition.header}</header>` : undefined}
-          <div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
+          <div id="form" style="${formatter ? formatter.innerBoxStyle(this.layoutController?.layout) : ""}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
           <footer>
             ${this.definition.actions?.map((action: ButtonFieldDefinition) => html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", name: action.name, buttonType: "button", text: action.text, icon: action.icon } as ButtonFieldDefinition, parentPath: this.path(), clickHandler: e => this.buttonClicked(e) })}`)}
           </footer>
         </div>
       </focus-trap>
-    </div>` : undefined}`
+    </div>` : undefined
+      } `
   }
 
   open(e: Event) {
@@ -64,13 +61,15 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
     this.cancelValue = JSON.parse(JSON.stringify(this.value || {}))
     this.definition.visible = true
     document.addEventListener('keydown', this.keyHandler)
+    this.requestUpdate()
     this.updateComplete.then(() => {
+      this.layoutController = new LayoutController(this, this._dialog)
+      this.addController(this.layoutController)
       setTimeout(() => {
         this.focusField(this.path() + "." + (this.definition.focus || this.definition.fields[0].name))
         this.dispatchEvent(new FieldClickEvent(this.path()))
       }, 1)
     })
-    this.requestUpdate()
   }
 
   public focusField(path: string) {
@@ -162,6 +161,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
   private close(e: Event) {
     e.preventDefault()
     e.stopPropagation()
+    this.removeController(this.layoutController)
     this.top = undefined
     this.left = undefined
     this.definition.visible = false;

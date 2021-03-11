@@ -8,7 +8,6 @@ import { customElement, property } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { ifDefined } from 'lit/directives/if-defined';
 
-
 @customElement("formsey-toggle")
 export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
   @property({ converter: Object })

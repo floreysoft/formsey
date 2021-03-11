@@ -16,6 +16,7 @@ export interface FormDefinition extends FieldDefinition {
   target?: "_blank" | "_parent" | "_self" | "_top"
   action?: string
   method?: "GET" | "POST"
+  deferLayout?: boolean
 }
 
 export interface InteractiveFieldDefinition extends FieldDefinition {

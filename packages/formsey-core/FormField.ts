@@ -1,5 +1,5 @@
 import { html, TemplateResult } from "lit";
-import { customElement, property, query, queryAll } from "lit/decorators";
+import { customElement, property, queryAll } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { createField, Field } from './Field';
 import { FieldClickEvent } from "./FieldClickEvent";
@@ -7,7 +7,7 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
 import { LayoutController } from "./LayoutController";
-import { Breakpoints } from "./Layouts";
+import { Breakpoints, Layout } from "./Layouts";
 import { Components, getFormatter, getLibrary, Resources } from './Registry';
 import { ValueChangedEvent } from './ValueChangedEvent';
 
@@ -89,12 +89,7 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
 
   @queryAll(".fff")
   protected _fields: HTMLElement[] | undefined
-  protected size: string | undefined
-  protected resizeObserver: ResizeObserver
   protected layoutController = new LayoutController(this)
-
-  @query(".ffg")
-  private grid: HTMLElement | undefined
 
   constructor() {
     super()
@@ -104,8 +99,6 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   renderField() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
-    const staticLayout = this.definition.layout?.['static']
-    const staticFormatter = staticLayout ? getFormatter(staticLayout.formatter) : undefined
     const responsiveFormatter = this.layoutController.layout?.formatter ? getFormatter(this.layoutController.layout?.formatter) : undefined
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
@@ -118,9 +111,10 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         }
       }
     }
-    return html`<section style="${staticFormatter?.boxStyle?.(staticLayout) || ""};${responsiveFormatter?.boxStyle?.(this.layoutController.layout) || ""}">
-      <div class="fbg" style="${staticFormatter?.backgroundStyle?.(staticLayout) || ""};${responsiveFormatter?.backgroundStyle?.(this.layoutController.layout) || ""}"></div>
-      <div class="ffg" style="${ifDefined(responsiveFormatter?.containerStyle(this.layoutController.layout, this.definition))}">${templates}</div>${hidden}
+    const boxStyle = !this.definition.deferLayout ? `${responsiveFormatter?.outerBoxStyle?.(this.layoutController.layout)};${responsiveFormatter?.innerBoxStyle?.(this.layoutController.layout)};${responsiveFormatter?.backgroundStyle?.(this.layoutController.layout)};` : ""
+    const style = `${boxStyle}${responsiveFormatter?.containerStyle(this.layoutController.layout, this.definition)}`
+    return html`<section>
+      <div class="ffg" style="${style}">${!this.definition.deferLayout && responsiveFormatter?.backgroundStyle ? html`<div class="fbg" style=${responsiveFormatter?.elevationStyle?.(this.layoutController.layout) || ""}></div>` : undefined}${templates}</div>${hidden}
     </section>`
   }
 

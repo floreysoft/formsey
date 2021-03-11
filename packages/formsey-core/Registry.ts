@@ -121,10 +121,13 @@ export interface Icons {
 }
 
 export interface Formatter {
-  boxStyle?(layout: Layout, ...context: any): string
+  innerBoxStyle?(layout: Layout, ...context: any): string
+  outerBoxStyle?(layout: Layout, ...context: any): string
   backgroundStyle?(layout: Layout, ...context: any): string
+  elevationStyle?(layout: Layout, ...context: any): string
   containerStyle?(layout: Layout, ...context: any): string
   fieldStyle?(layout: Layout, ...context: any): string
+  backgroundStyle?(layout: Layout, ...context: any): string
 }
 
 export type Formatters = { [index: string]: Formatter }
