@@ -10,9 +10,13 @@ export interface FieldDefinition extends Definition {
   helpText?: string | TemplateResult
   default?: any
 }
-export interface FormDefinition extends FieldDefinition {
+
+export interface LayoutFieldDefinition extends FieldDefinition {
+  layout?: ResponsiveLayout
+}
+
+export interface FormDefinition extends LayoutFieldDefinition {
   fields: FieldDefinition[]
-  layout?: ResponsiveLayout,
   target?: "_blank" | "_parent" | "_self" | "_top"
   action?: string
   method?: "GET" | "POST"

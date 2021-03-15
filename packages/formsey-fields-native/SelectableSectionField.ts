@@ -2,6 +2,7 @@ import { createField, DEFAULT_BREAKPOINTS, Field, LabeledField, ListFieldDefinit
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { LayoutController } from '@formsey/core/LayoutController';
 import { Layout } from '@formsey/core/Layouts';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
@@ -25,7 +26,6 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   // @ts-ignore()
   set definition(definition: SelectableSectionFieldDefinition) {
     this._definition = definition;
-    this.updateLayout()
     this.requestUpdate();
   }
 
@@ -39,20 +39,15 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   @query("section")
   private section: HTMLElement | undefined
 
-  private resizeObserver: ResizeObserver
   private values: string[]
   private selectedValue: string
   private index: number
-  private size: string | undefined
   protected _definition: SelectableSectionFieldDefinition | undefined
+  protected layoutController = new LayoutController(this)
 
   constructor() {
     super()
-    this.resizeObserver = new ResizeObserver((entries, observer) => {
-      for (const entry of entries) {
-        this.resize(entry.contentRect.width)
-      }
-    });
+    this.addController(this.layoutController)
   }
 
   render() {
@@ -78,18 +73,16 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         form = html`${selection?.fields ? html`<div class="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, clickHandler: (event: ValueChangedEvent<string>) => this.clicked(event), changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
       }
     }
-    const responsiveFormatter = this.layout?.formatter ? getFormatter(this.layout?.formatter) : undefined
-    const style = `${responsiveFormatter?.containerStyle(this.layout, this.definition)}`
-    return html`<section class="ffg" style=${style}>${super.render()}${form}<div class="fbg"></div></section>`;
+    this.layoutController.updateLayout(this.definition.layout)
+    const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
+    const style = formatter ? `${formatter.innerBoxStyle(this.layoutController?.layout)};${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter?.containerStyle(this.layoutController.layout, this.definition) || ""};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""
+
+    return html`<section class="ffg" style=${style}>${super.render()}${form}<div class="fbg" style=${formatter?.elevationStyle?.(this.layoutController.layout) || ""}></div></section>`;
   }
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
     return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
-  }
-
-  firstUpdated() {
-    this.resizeObserver.observe(this.section)
   }
 
   public focusField(path: string) {
@@ -99,38 +92,6 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       return (<any>child).focusField()
     }
     return false
-  }
-
-  protected resize(availableWidth: number) {
-    // If available with larger than larges breakpoint, default to the largest
-    let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
-    for (let size of SUPPORTED_BREAKPOINTS) {
-      let breakpoint = this.definition?.layout?.breakpoints?.[size]
-      if (typeof breakpoint === "undefined") {
-        breakpoint = DEFAULT_BREAKPOINTS[size]
-      }
-      if (breakpoint > availableWidth) {
-        detectedSize = size
-        break
-      }
-    }
-    if (this.size != detectedSize) {
-      // console.log("Grid size in form=" + this.definition.name + " changed from '" + this.gridSize + "' to '" + size + "'")
-      this.size = detectedSize
-      this.updateLayout()
-    }
-  }
-
-  protected updateLayout() {
-    this.layout = undefined
-    let sizeFound = false
-    for (let size of SUPPORTED_BREAKPOINTS) {
-      sizeFound = (size == this.size || sizeFound)
-      this.layout = this.definition?.layout?.[size] || this.layout
-      if (this.layout && sizeFound) {
-        break
-      }
-    }
   }
 
   protected selectionChanged(e: ValueChangedEvent<string>) {

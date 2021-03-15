@@ -59,7 +59,7 @@ export interface ColumnsLayout extends BoxLayout {
   }[]
 }
 
-export interface AreasLayout extends Layout {
+export interface AreasLayout extends BoxLayout {
   formatter: "areas"
   gaps?: "none" | "narrow" | "wide"
   columns: number[]
@@ -71,7 +71,7 @@ export interface AreasLayout extends Layout {
   }[]
 }
 
-export interface TableLayout extends Layout {
+export interface TableLayout extends BoxLayout {
   formatter: "table"
   vertical?: "top" | "middle" | "bottom"
   rowHeight?: "s" | "m" | "l" | "xl"

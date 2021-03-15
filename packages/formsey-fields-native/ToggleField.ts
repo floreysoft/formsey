@@ -30,7 +30,11 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
 
   private select(e: Event, value: string) {
     e.stopPropagation()
-    this.value = value
+    if (!this.definition.required && this.value == value) {
+      this.value = undefined
+    } else {
+      this.value = value
+    }
     this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
   }
 

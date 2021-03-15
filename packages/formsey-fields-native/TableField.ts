@@ -19,6 +19,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     let scrollable: TemplateResult[] = [];
     const searchFixed: TemplateResult[] = [];
     const searchScrollable: TemplateResult[] = [];
+    this.layoutController.updateLayout(this.definition.layout)
     const formatter = getFormatter(this.layoutController.layout?.formatter)
     const fixedColumns = (<TableLayout>this.layoutController.layout)?.fixedColumns || 0
     let hasSearchableColumns = false
@@ -155,7 +156,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       <div class="ffg">
         <div class="tw">
            <div class="vscroll">
-            <div class="b" style="${ifDefined((<TableLayout>this.layoutController.layout)?.fill == "grow" ? "align-self:stretch" : undefined)}">
+            <div class="tb" style="${ifDefined((<TableLayout>this.layoutController.layout)?.fill == "grow" ? "align-self:stretch" : undefined)}">
               ${(<TableLayout>this.layoutController.layout)?.fixedColumns ? html`<div class="fixed" style="${ifDefined(formatter?.containerStyle(this.layoutController.layout, this.definition, true, this.definition.selectable, hasSearchableColumns))}">${fixed}</div>` : undefined}
               <div class="scroll"><div style="${ifDefined(formatter?.containerStyle(this.layoutController.layout, this.definition, false, !(<TableLayout>this.layoutController.layout)?.fixedColumns && this.definition.selectable, hasSearchableColumns))}">${scrollable}</div></div>
             </div>

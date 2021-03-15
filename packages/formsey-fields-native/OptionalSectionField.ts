@@ -2,7 +2,9 @@ import { CheckboxFieldDefinition, createField, Field, OptionalSectionFieldDefini
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { getLibrary, Resources } from '@formsey/core/Registry';
+import { LayoutController } from '@formsey/core/LayoutController';
+import { Layout } from '@formsey/core/Layouts';
+import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators";
@@ -19,6 +21,12 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
   private untouched: boolean = true
   private on: boolean = false
+  protected layoutController = new LayoutController(this)
+
+  constructor() {
+    super()
+    this.addController(this.layoutController)
+  }
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -33,9 +41,12 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   render() {
+    this.layoutController.updateLayout(this.definition.layout)
+    const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
+    const style = formatter ? `${formatter.innerBoxStyle(this.layoutController?.layout)};${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""
     const on = this.definition.name ? typeof this.value !== "undefined" : this.on;
-    return html`<section>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, value: on, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
-    ${on ? html`<div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout } } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}</div></section>`
+    return html`<section style="${style}"><div class="fbg" style=${formatter?.elevationStyle?.(this.layoutController.layout) || ""}></div>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, value: on, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<boolean>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
+    ${on ? html`<div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout, deferLayout: true } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}</div></section>`
   }
 
   public focusField(path: string) {

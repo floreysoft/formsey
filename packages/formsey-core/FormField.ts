@@ -99,7 +99,8 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
   renderField() {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
-    const responsiveFormatter = this.layoutController.layout?.formatter ? getFormatter(this.layoutController.layout?.formatter) : undefined
+    this.layoutController.updateLayout(this.definition.layout)
+    const formatter = this.layoutController.layout?.formatter ? getFormatter(this.layoutController.layout?.formatter) : undefined
     if (this.definition.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         const value = this.value && field.name ? this.value[field.name] : this.value
@@ -107,14 +108,14 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
         if (field.type == "hidden") {
           hidden.push(fieldTemplate)
         } else {
-          templates.push(html`<div class='fff' style="${ifDefined(responsiveFormatter?.fieldStyle(this.layoutController.layout, field, this.definition.fields, index))}">${fieldTemplate}</div>`)
+          templates.push(html`<div class='fff' style="${ifDefined(formatter?.fieldStyle(this.layoutController.layout, field, this.definition.fields, index))}">${fieldTemplate}</div>`)
         }
       }
     }
-    const boxStyle = !this.definition.deferLayout ? `${responsiveFormatter?.outerBoxStyle?.(this.layoutController.layout)};${responsiveFormatter?.innerBoxStyle?.(this.layoutController.layout)};${responsiveFormatter?.backgroundStyle?.(this.layoutController.layout)};` : ""
-    const style = `${boxStyle}${responsiveFormatter?.containerStyle(this.layoutController.layout, this.definition)}`
+    const boxStyle = !this.definition.deferLayout ? `${formatter?.outerBoxStyle?.(this.layoutController.layout) || ""};${formatter?.innerBoxStyle?.(this.layoutController.layout) || ""};${formatter?.backgroundStyle?.(this.layoutController.layout) || ""};` : ""
+    const style = `${boxStyle}${formatter?.containerStyle(this.layoutController.layout, this.definition) || ""}`
     return html`<section>
-      <div class="ffg" style="${style}">${!this.definition.deferLayout && responsiveFormatter?.backgroundStyle ? html`<div class="fbg" style=${responsiveFormatter?.elevationStyle?.(this.layoutController.layout) || ""}></div>` : undefined}${templates}</div>${hidden}
+      <div class="ffg" style="${style}">${!this.definition.deferLayout && formatter?.backgroundStyle ? html`<div class="fbg" style=${formatter?.elevationStyle?.(this.layoutController.layout) || ""}></div>` : undefined}${templates}</div>${hidden}
     </section>`
   }
 
@@ -160,6 +161,12 @@ export class FormField<D extends FormDefinition, V extends any> extends LabeledF
       }
     }
     return validity;
+  }
+
+  public layoutChanged(layout: Layout) {
+    if (this.definition.deferLayout) {
+      this.dispatchEvent(new CustomEvent('layoutChanged', { bubbles: true, composed: true, detail: layout }))
+    }
   }
 
   protected changed(e: ValueChangedEvent<any>) {

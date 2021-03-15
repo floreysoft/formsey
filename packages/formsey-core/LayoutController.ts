@@ -1,17 +1,18 @@
 import { ReactiveController } from "lit";
 import { Field } from "./Field";
-import { FormDefinition } from "./FieldDefinitions";
+import { LayoutFieldDefinition } from "./FieldDefinitions";
 import { DEFAULT_BREAKPOINTS, SUPPORTED_BREAKPOINTS } from "./FormField";
-import { Layout } from "./Layouts";
+import { Layout, ResponsiveLayout } from "./Layouts";
 
 export class LayoutController implements ReactiveController {
   public layout: Layout | undefined
-  protected host: Field<FormDefinition, any>
-  protected size: string
+
+  private host: Field<LayoutFieldDefinition, any>
+  private size: string
   private resizeObserver: ResizeObserver
   private element: HTMLElement
 
-  constructor(host: Field<FormDefinition, any>, element?: HTMLElement) {
+  constructor(host: Field<LayoutFieldDefinition, any>, element?: HTMLElement) {
     this.host = host
     this.element = element || host
     this.resizeObserver = new ResizeObserver((entries, observer) => {
@@ -33,6 +34,18 @@ export class LayoutController implements ReactiveController {
     this.layout = this.host.definition?.layout?.[this.size] || this.layout
   }
 
+  updateLayout(layout?: ResponsiveLayout) {
+    this.layout = undefined
+    let sizeFound = false
+    for (let size of SUPPORTED_BREAKPOINTS) {
+      sizeFound = (size == this.size || sizeFound)
+      this.layout = layout?.[size] || this.layout
+      if (this.layout && sizeFound) {
+        break
+      }
+    }
+  }
+
   protected resize(availableWidth: number) {
     // If available with larger than larges breakpoint, default to the largest
     let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
@@ -48,19 +61,11 @@ export class LayoutController implements ReactiveController {
     }
     if (this.size != detectedSize) {
       this.size = detectedSize
-      this.sizeChanged()
-      this.layout = undefined
-      let sizeFound = false
-      for (let size of SUPPORTED_BREAKPOINTS) {
-        sizeFound = (size == this.size || sizeFound)
-        this.layout = this.host.definition?.layout?.[size] || this.layout
-        if (this.layout && sizeFound) {
-          break
-        }
-      }
+      this.sizeChanged(this.host, this.size)
+      this.updateLayout(this.host.definition?.layout)
       this.host.requestUpdate()
     }
   }
 
-  protected sizeChanged() { }
+  protected sizeChanged(host: Field<LayoutFieldDefinition, any>, size: string) { }
 }

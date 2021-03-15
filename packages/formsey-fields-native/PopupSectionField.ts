@@ -2,7 +2,8 @@ import { createField, Field, LabeledField } from '@formsey/core';
 import { ButtonFieldDefinition, FormDefinition, PopupSectionFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { getLibrary, Resources } from '@formsey/core/Registry';
+import { LayoutController } from '@formsey/core/LayoutController';
+import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators";
@@ -31,6 +32,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   private bottom: string | undefined
   private maxWidth: string | undefined
   private maxHeight: string | undefined
+  private layoutController: LayoutController
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -45,18 +47,11 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   }
 
   renderField() {
-    const position = {
-      left: this.left,
-      right: this.right,
-      top: this.top,
-      bottom: this.bottom,
-      maxWidth: this.maxWidth,
-      maxHeight: this.maxHeight,
-      minWidth: `${this.definition.width || 0}${this.definition.widthUnit || "em"}`
-    }
+    const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
+    const style = `left:${this.left || "auto"};right:${this.right || "auto"};top:${this.top || "auto"};bottom:${this.bottom || "auto"};position:fixed;width:${this.definition.width || "auto"};max-height:${this.maxHeight || "auto"};max-width:${this.maxWidth || "auto"};${formatter ? `${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter.innerBoxStyle(this.layoutController?.layout)};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""}`
     return html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
-    <div id="form" style=${styleMap(position)}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
+    <div id="form" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", deferLayout: true, fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
   }
 
   open(e: CustomEvent) {
@@ -89,6 +84,10 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
         this.bottom = window.innerHeight - rect.top + "px"
         this.maxHeight = `${window.innerHeight - rect.top}px`
       }
+      this.updateComplete.then(() => {
+        this.layoutController = new LayoutController(this, this.form)
+        this.addController(this.layoutController)
+      })
     }
   }
 
@@ -96,6 +95,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     e.preventDefault()
     e.stopPropagation()
     this.visible = false;
+    this.removeController(this.layoutController)
   }
 
   public focusField(path: string) {

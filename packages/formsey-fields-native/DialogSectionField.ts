@@ -38,7 +38,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
 
   renderField() {
     const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
-    const style = `left:${this.left};top:${this.top};position:${this.left ? "fixed" : "relative"};minWidth:${this.definition.width || 0}${this.definition.widthUnit || "em"};minHeight:${this.definition.height || 0}${this.definition.heightUnit || "em"};${formatter ? `${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""}`
+    const style = `left:${this.left || "auto"};top:${this.top || "auto"};position:${this.left ? "fixed" : "relative"};width:${this.definition.width || "auto"};max-height:${this.definition.height || "auto"};${formatter ? `${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""}`
     return html`
     ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) }) : undefined}
     ${this.definition.visible ? html`
@@ -46,7 +46,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
       <focus-trap>
         <div class="dialog" style=${style}>
           ${this.definition.header ? html`<header @mousedown=${this.startDrag} @mouseup=${this.endDrag} @mousemove=${this.drag}>${this.definition.header}</header>` : undefined}
-          <div id="form" style="${formatter ? formatter.innerBoxStyle(this.layoutController?.layout) : ""}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
+          <div id="form" style="overflow-y:auto;flex-grow:1;${formatter ? formatter.innerBoxStyle(this.layoutController?.layout) : ""}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
           <footer>
             ${this.definition.actions?.map((action: ButtonFieldDefinition) => html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", name: action.name, buttonType: "button", text: action.text, icon: action.icon } as ButtonFieldDefinition, parentPath: this.path(), clickHandler: e => this.buttonClicked(e) })}`)}
           </footer>

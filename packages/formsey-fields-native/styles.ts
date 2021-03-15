@@ -29,9 +29,9 @@ export const FORM_STYLES = css`
     --formsey-elevation-opacity: 0;
     --formsey-elevation-margin: 0;
     --formsey-elevation-0-opacity: 0;
-    --formsey-elevation-1-opacity: 10%;
-    --formsey-elevation-2-opacity: 14%;
-    --formsey-elevation-3-opacity: 18%;
+    --formsey-elevation-1-opacity: 4%;
+    --formsey-elevation-2-opacity: 8%;
+    --formsey-elevation-3-opacity: 10%;
   }
 
   ::-webkit-scrollbar {
@@ -196,6 +196,7 @@ export const FORM_STYLES = css`
   formsey-panel header {
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding: var(--formsey-space-wide);
     gap: var(--formsey-space-wide);
     background: var(--formsey-surface);
@@ -478,11 +479,12 @@ export const FORM_STYLES = css`
   }
 
   /* Expand various items */
-  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tabs,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section,formsey-form-field,formsey-form-field-designer,formsey-form-field-designer>.lfw>section,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-panel>div,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tabs,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section,formsey-form-field,formsey-form-field-designer,formsey-form-field-designer>.lfw>section,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
     display: flex;
     position:relative;
     flex-direction: column;
     flex-grow: 1;
+    overflow: hidden;
   }
 
   formsey-string {
@@ -501,12 +503,17 @@ export const FORM_STYLES = css`
     flex-wrap: wrap;
     position: relative;
   }
+  formsey-tabs .tab {
+    border-color: transparent;
+  }
   formsey-tabs .top  .tab {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    border-bottom: none;
   }
   formsey-tabs .bottom .tab {
     border-radius: 0;
+    border-top: none;
   }
   formsey-tabs .tab.expand {
     flex-grow: 1;
@@ -514,7 +521,7 @@ export const FORM_STYLES = css`
     text-align: center;
   }
   formsey-tabs .tab.selected::before {
-    opacity: 0.1;
+    opacity: 0;
   }
   formsey-tabs .tab.selected::after {
     content:"";
@@ -524,15 +531,6 @@ export const FORM_STYLES = css`
     right:0;
     height: 2px;
     background-color: var(--formsey-accent-color);
-  }
-  formsey-tabs .tab .icon {
-      display: flex;
-      margin: 0 .2em;
-  }
-  formsey-tabs .tab fs-icon {
-      width: 1.15em;
-      height: 1.15em;
-      margin-right: .2em;
   }
   formsey-tabs .content {
       flex-grow: 1;
@@ -899,7 +897,7 @@ export const FORM_STYLES = css`
   }
 
   /* Popup / Dialog section field */
-  formsey-popup-section .lfw, formsey-dialog-section>.lfw {
+  formsey-popup-section>.lfw,   formsey-dialog-section>.lfw {
     position: relative;
     overflow: visible;
   }
@@ -943,11 +941,16 @@ export const FORM_STYLES = css`
     background-color: var(--formsey-background);
     border: 1px solid var(--formsey-border-color);
     border-radius: var(--formsey-border-radius);
+    overflow: visible;
   }
   formsey-dialog-section .dialog {
-    max-width: 100%;
-    max-height: 100%;
+    min-height: 10em;
+    min-width: 10em;
+    max-width: 100vw;
+    max-height: 100vh;
     box-shadow: var(--formsey-elevation-2-shadow, none);
+    display: flex;
+    flex-direction: column;
   }
 
   /* Text field */
@@ -972,7 +975,7 @@ export const FORM_STYLES = css`
     max-width: 100%;
     overflow: hidden;
   }
-  formsey-table .b {
+  formsey-table .tb {
     display: flex;
     flex-direction: row;
     align-self: flex-start;
@@ -1232,35 +1235,35 @@ formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
     font-size: larger;
   }
   .hljs-subst{
-    color:var(--formsey-token-variable, #444)
+    color:var(--formsey-text)
   }
   .hljs-comment{
-      color:var(--formsey-token-comment, #888)
+    color:var(--formsey-palette-3)
   }
   .hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta-keyword,.hljs-name,.hljs-selector-tag{
-      font-weight:bolder
+    color:var(--formsey-palette-5)
   }
   .hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
-      color:var(--formsey-token-string, #800)
+      color:var(--formsey-palette-1)
   }
   .hljs-section,.hljs-title{
-      color:var(--formsey-token-string, #800);
+      color:var(--formsey-palette-1);
       font-weight:700
   }
   .hljs-link,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{
-      color: var(--formsey-token-tag, #bc6060)
+      color: var(--formsey-palette-2);
   }
   .hljs-literal {
-      color: var(--formsey-token-constant,#78a960)
+      color: var(--formsey-palette-3);
   }
   .hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{
-      color:var(--formsey-token-keyword, #397300)
+      color:var(--formsey-palette-3);
   }
   .hljs-meta{
-      color:var(--formsey-token-language, #1f7199)
+      color:var(--formsey-palette-4);
   }
   .hljs-meta-string{
-      color:var(--formsey-token-variable, #4d99bf)
+      color:var(--formsey-palette-4);
   }
   .hljs-emphasis{
       font-style:italic

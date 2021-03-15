@@ -62,10 +62,10 @@ registerFormatter("columns", {
   backgroundStyle,
   containerStyle(layout: ColumnsLayout): string {
     const gaps = layout.gaps == "wide" ? "var(--formsey-space-wide)" : layout.gaps == "none" ? "0" : "var(--formsey-space-narrow)"
-    return `display:grid;grid-template-columns:${layout.columns.map(column => `minmax(0,${column.width}fr)`).join(" ")};gap:${gaps}`
+    return `display:grid;grid-template-columns:${layout.columns?.map(column => `minmax(0,${typeof column == "number" ? column : column.width}fr)`).join(" ") || "1fr"};gap:${gaps}`
   },
   fieldStyle(layout: ColumnsLayout, field: FieldDefinition, fields: FieldDefinition[], index: number): string {
-    const horizontal = layout.columns[index % layout.columns.length]?.horizontal
+    const horizontal = layout.columns?.[index % layout.columns.length]?.horizontal
     return `display:flex;flex-direction:column;align-items:${horizontal == "left" ? "flex-start" : horizontal == "right" ? "flex-end" : horizontal == "center" ? "center" : "stretch"}`
   }
 })

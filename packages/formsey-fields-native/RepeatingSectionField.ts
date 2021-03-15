@@ -1,7 +1,8 @@
 import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
+import { LayoutController } from '@formsey/core/LayoutController';
+import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html, TemplateResult } from "lit";
 import { customElement, property, queryAll } from "lit/decorators";
@@ -15,9 +16,18 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
   @queryAll(".form")
   protected _fields: HTMLElement[]
+  protected layoutController = new LayoutController(this)
+
+  constructor() {
+    super()
+    this.addController(this.layoutController)
+  }
 
   protected render(): void | TemplateResult {
-    return html`<section>${super.render()}<div class="fbg"></div></section>`;
+    this.layoutController.updateLayout(this.definition.layout)
+    const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
+    const style = formatter ? `${formatter.innerBoxStyle(this.layoutController?.layout)};${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""
+    return html`<section style="${style}">${super.render()}<div class="fbg" style=${formatter?.elevationStyle?.(this.layoutController.layout) || ""}></div></section>`;
   }
 
   renderField() {
@@ -35,7 +45,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         const value = this.value[i];
         const template = html`<div class="form" draggable="true" @drop="${e => this.drop(e, i)}" @dragover="${e => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${getIcon('Minus')}</button></div>` : undefined}
-        ${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: { ...this.definition.layout, static: undefined } } as FormDefinition, value: value, parentPath: this.path() + "[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`;
+        ${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout, deferLayout: true } as FormDefinition, value: value, parentPath: this.path() + "[" + i + "]", errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`;
         itemTemplates.push(template);
       }
     }
