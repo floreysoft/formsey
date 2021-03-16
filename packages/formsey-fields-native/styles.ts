@@ -386,6 +386,9 @@ export const FORM_STYLES = css`
     flex-direction: row;
     align-items: center;
   }
+  formsey-checkboxes .options.horizontal, formsey-multiple-choice .options.horizontal {
+    height: var(--formsey-input-height, 2em);
+  }
   formsey-checkboxes .options.horizontal div, formsey-multiple-choice .options.horizontal div {
     margin-right: .5em;
   }

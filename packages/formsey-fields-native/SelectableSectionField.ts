@@ -96,10 +96,11 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   protected selectionChanged(e: ValueChangedEvent<string>) {
     let value = e.detail.value;
-    let option = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label === value))[0].value;
-    if (option) {
-      this.value.selection = option;
-      this.value.value = undefined
+    let selection = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label === value))[0];
+    if (selection) {
+      this.value.selection = selection.value || selection.label
+      this.value.value = JSON.parse(JSON.stringify(selection.default))
+      this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
       this.requestUpdate()
     }
   }
