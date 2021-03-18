@@ -1,27 +1,27 @@
 import { Field } from '@formsey/core/Field';
 import { InputFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { property, query } from "lit/decorators";
+import { TemplateResult } from 'lit';
+import { query } from "lit/decorators";
 
 
-export abstract class InputField<D extends InputFieldDefinition,V> extends Field<D, V> {
-  @property({ type: String })
-  value: V;
-
+export abstract class InputField<D extends InputFieldDefinition, V extends string> extends Field<D, V> {
   @query("vaadin-text-field")
   vaadinField: any
 
   render() {
-    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
-    return this.renderField(customValidity)
+    if (this.definition) {
+      const customValidity = this.errors?.get(this.path())?.validityMessage || this.definition.customValidity
+      return this.renderField(customValidity)
+    }
   }
 
-  abstract renderField(customValidity : string)
+  abstract renderField(customValidity?: string) : TemplateResult | undefined
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
+    if (path == this.definition?.name) {
       this.vaadinField.focus()
     }
   }
@@ -35,7 +35,7 @@ export abstract class InputField<D extends InputFieldDefinition,V> extends Field
   }
 
   invalid() {
-    let validityState = {}
+    let validityState : {[key: string] : string}= {}
     const validity = (this.vaadinField.focusElement as any).validity
     for (let key in validity) {
       if (validity[key]) {
@@ -43,6 +43,7 @@ export abstract class InputField<D extends InputFieldDefinition,V> extends Field
       }
     }
     const validationMessage = this.vaadinField.errorMessage || (this.vaadinField.focusElement as any).validationMessage
+    this.errors = this.errors || new InvalidErrors()
     this.errors.set(this.path(), new InvalidError(validationMessage, false, validityState))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }

@@ -1,6 +1,6 @@
 import { Field } from '@formsey/core/Field';
 import { TextFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
@@ -13,24 +13,25 @@ import { ifDefined } from 'lit/directives/if-defined';
 @customElement("formsey-text-vaadin")
 export class TextField extends Field<TextFieldDefinition, string> {
   @property({ type: String })
-  value: string;
+  value: string | undefined
 
   @query("vaadin-text-area")
-  vaadinTextArea: TextAreaElement
+  vaadinTextArea: TextAreaElement | undefined
 
   render() {
-    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
-    return html`<vaadin-text-area style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.inputted}" @change="${this.changed}" name="${this.definition.name}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${this.definition.disabled}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}"></vaadin-text-area>`;
+    if (!this.definition) return
+    const customValidity = this.errors?.get(this.path())?.validityMessage || this.definition.customValidity
+    return html`<vaadin-text-area style="display:flex" label="${ifDefined(this.definition.label)}" .helperText="${typeof this.definition.helpText == "string" ? this.definition.helpText : ""}" ?autofocus="${this.definition.autofocus}" ?required="${this.definition.required}" autocomplete="${ifDefined(this.definition.autocomplete)}" @input="${this.inputted}" @change="${this.changed}" name="${ifDefined(this.definition.name)}" placeholder="${ifDefined(this.definition.placeholder)}" error-message="${ifDefined(customValidity)}" maxlength="${ifDefined(this.definition.maxlength)}" ?disabled="${this.definition.disabled}" pattern="${ifDefined(this.definition.pattern)}" preventinvalidinput="true" .value="${this.value ? this.value : ''}"></vaadin-text-area>`;
   }
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
-      this.vaadinTextArea.focus()
+    if (path == this.definition?.name) {
+      this.vaadinTextArea?.focus()
     }
   }
 
   validate(report: boolean) {
-    this.valid = report ? this.vaadinTextArea.validate() : this.vaadinTextArea.checkValidity() as boolean
+    this.valid = report ? this.vaadinTextArea?.validate() || false : this.vaadinTextArea?.checkValidity() as boolean
     if (!this.valid) {
       this.invalid()
     }
@@ -38,15 +39,18 @@ export class TextField extends Field<TextFieldDefinition, string> {
   }
 
   invalid() {
-    this.errors[this.definition.name] = new InvalidError(this.vaadinTextArea.errorMessage, false, { })
-    this.dispatchEvent(new InvalidEvent(this.errors))
+    if (this.definition?.name) {
+      this.errors = this.errors || new InvalidErrors()
+      this.errors.set(this.definition.name, new InvalidError(this.vaadinTextArea?.errorMessage || "", false, {}))
+      this.dispatchEvent(new InvalidEvent(this.errors))
+    }
   }
 
 }
 
 getLibrary("vaadin").registerComponent("text", {
   importPath: "@formsey/fields-vaadin/TextField",
-    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<TextFieldDefinition, string> ) => {
-    return html`<formsey-text-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text-vaadin>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<TextFieldDefinition, string>) => {
+    return html`<formsey-text-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-text-vaadin>`
   }
 })

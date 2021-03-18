@@ -1,8 +1,8 @@
 import { Field } from '@formsey/core/Field';
-import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
-import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
-import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
+import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
+import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
@@ -10,20 +10,17 @@ import '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { css, html, TemplateResult } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 
 
 @customElement("formsey-multiple-choice-vaadin")
 export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String> {
-  @property({ type: String })
-  value: string;
-
   @query("vaadin-radio-group")
-  private vaadinRadioGroup: RadioGroupElement;
+  private vaadinRadioGroup: RadioGroupElement | undefined
 
   @query("vaadin-text-field")
-  otherTextField: TextFieldElement
+  otherTextField: TextFieldElement | undefined
 
   static get styles() {
     return [css`
@@ -48,6 +45,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
   }
 
   render() {
+    if (!this.definition) return
     let templates: TemplateResult[] = [];
     if (this.definition.options) {
       for (let i = 0; i < this.definition.options.length; i++) {
@@ -62,42 +60,40 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
       let filtered = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label))
       let checked = (typeof this.value != "undefined") && (filtered.length == 0)
       templates.push(html`<vaadin-radio-button class="other" value="__other" .checked="${checked}">Other</vaadin-radio-button>
-      <vaadin-text-field @input="${this.changed}" ?disabled=${this.definition.disabled || !checked} .value="${checked ? this.value : ''}"></vaadin-text-field>`);
+      <vaadin-text-field @input="${this.changed}" ?disabled=${this.definition.disabled || !checked} .value=${checked ? this.value || <string>"" : ""}></vaadin-text-field>`);
     }
-    const customValidity = this.errors.get(this.path())?.validityMessage || this.definition.customValidity
-    return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${this.definition.helpText}" theme="${this.definition.layout == "horizontal" ? "horizontal" : "vertical"}" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
+    const customValidity = this.errors?.get(this.path())?.validityMessage || this.definition.customValidity
+    return html`<vaadin-radio-group @value-changed="${this.changed}" label="${ifDefined(this.definition.label)}" .helperText="${typeof this.definition.helpText == "string" ? this.definition.helpText : ""}" theme="${this.definition.layout == "horizontal" ? "horizontal" : "vertical"}" ?required="${this.definition.required}" ?disabled="${this.definition.disabled}" error-message="${ifDefined(customValidity)}" >${templates}</vaadin-radio-group>`;
   }
 
   focusField(path: string) {
-    if ( path == this.definition.name ) {
-      this.vaadinRadioGroup.focus()
+    if (path == this.definition?.name) {
+      this.vaadinRadioGroup?.focus()
     }
   }
   changed(e: Event) {
-    this.value = this.vaadinRadioGroup.value
+    this.value = this.vaadinRadioGroup!.value || undefined
     let other = false
     if (this.value == "__other") {
       other = true
-      this.value = this.otherTextField.value
+      this.value = this.otherTextField!.value
     }
     if (!other && this.otherTextField) {
       this.otherTextField.value = ""
     }
     this.requestUpdate()
-    if (this.definition.name) {
-      this.dispatchEvent(new FieldChangeEvent("inputChange", this.definition.name, this.value));
-    }
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     if (other) {
       this.updateComplete.then(() => {
         let that = this
         setTimeout(
-          function () { that.otherTextField.focus() }, 100);
+          function () { that.otherTextField?.focus() }, 100);
       })
     }
   }
 
   validate(report: boolean) {
-    this.valid = report ? this.vaadinRadioGroup.validate() : this.vaadinRadioGroup.checkValidity() as boolean
+    this.valid = report ? this.vaadinRadioGroup?.validate() || false : this.vaadinRadioGroup?.checkValidity() as boolean
     if (!this.valid) {
       this.invalid()
     }
@@ -105,14 +101,15 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
   }
 
   invalid() {
-    this.errors.set(this.path(), new InvalidError(this.vaadinRadioGroup.errorMessage, false, { }))
+    this.errors = this.errors || new InvalidErrors()
+    this.errors.set(this.path(), new InvalidError(this.vaadinRadioGroup?.errorMessage || "", false, {}))
     this.dispatchEvent(new InvalidEvent(this.errors))
   }
 }
 
 getLibrary("vaadin").registerComponent("multipleChoice", {
   importPath: "@formsey/fields-vaadin/MultipleChoiceField",
-    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxesFieldDefinition, string> ) => {
-    return html`<formsey-multiple-choice-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice-vaadin>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string>) => {
+    return html`<formsey-multiple-choice-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice-vaadin>`
   }
 })

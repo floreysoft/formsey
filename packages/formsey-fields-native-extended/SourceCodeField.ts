@@ -1,5 +1,5 @@
 import { Ace } from '@floreysoft/ace';
-import { InputFieldDefinition, LabeledField } from '@formsey/core';
+import { FieldInputEvent, InputFieldDefinition, LabeledField } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
@@ -16,13 +16,14 @@ export interface SourceCodeFieldDefinition extends InputFieldDefinition {
 @customElement("formsey-sourcecode")
 export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, string> {
   @property({ type: String })
-  value: string
+  value: string | undefined
 
   @query("fs-ace")
-  editor: Ace
+  editor: Ace | undefined
 
   protected renderField() {
-    return html`
+    if (this.definition) {
+      return html`
     <style>
       fs-ace {
         flex-grow: 1;
@@ -48,6 +49,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     }
     </style>
     <fs-ace class="input" style="min-height:${ifDefined(this.definition.height)}" .value=${this.value} ?gutter="${this.definition.gutter}" mode="${ifDefined(this.definition.mode)}" theme="${ifDefined(this.definition.theme)}" ?readonly="${this.definition.readonly}" @change=${this.changed} @focus="${this.focused}" @blur="${this.blurred}"></fs-ace>`;
+    }
   }
 
   focusField() {
@@ -59,15 +61,13 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
   protected changed(e: any) {
     e.stopPropagation()
     this.value = e.detail.value;
-    if (this.definition.name) {
-      this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
-    }
+    this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
   }
 }
 
 getLibrary("native").registerComponent("sourceCode", {
   importPath: "@formsey/fields-native-extended/SourceCodeField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SourceCodeFieldDefinition, string>) => {
-    return html`<formsey-sourcecode id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-sourcecode>`
+    return html`<formsey-sourcecode id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-sourcecode>`
   }
 })

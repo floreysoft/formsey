@@ -15,17 +15,17 @@ export class InvalidError {
 }
 
 export class InvalidErrors extends Map<string, InvalidError> {
-    constructor(map? : Map<string,InvalidError>){
-        super(map);
+    constructor(map?: Map<string, InvalidError>) {
+        super(map || new Map());
     }
 }
 
 export class InvalidEvent extends CustomEvent<InvalidErrors> {
     constructor(errors: InvalidErrors) {
-        super("invalid", { bubbles : true, detail: errors });
+        super("invalid", { bubbles: true, detail: errors });
     }
 
     public addError(path: string, error: InvalidError) {
-        this.detail[path] = error
+        this.detail.set(path, error)
     }
 }

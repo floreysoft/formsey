@@ -1,3 +1,5 @@
+// Wait for highlight.js to fix https://github.com/highlightjs/highlight.js/issues/2682
+/// <reference path="../../node_modules/highlight.js/types/index.d.ts" />
 import { LabeledField } from '@formsey/core';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
@@ -8,7 +10,6 @@ import { html } from "lit";
 import { customElement, property } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { unsafeHTML } from 'lit/directives/unsafe-html';
-
 hljs.registerLanguage('javascript', javascript);
 @customElement("formsey-markdown")
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
@@ -24,16 +25,16 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
     return this._definition
   }
 
-  private markup: string
-  private _definition: FieldDefinition
+  private markup: string = ""
+  private _definition: FieldDefinition = {}
 
   constructor() {
     super()
     const renderer = new Renderer();
     const linkRenderer = renderer.link;
     renderer.link = (href, title, text) => {
-        const html = linkRenderer.call(renderer, href, title, text);
-        return html.replace(/^<a /, '<a target="_blank" rel="nofollow" ');
+      const html = linkRenderer.call(renderer, href, title, text);
+      return html.replace(/^<a /, '<a target="_blank" rel="nofollow" ');
     };
     Marked.setOptions({
       renderer,
@@ -64,7 +65,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
 
 getLibrary("native").registerComponent("markdown", {
   importPath: "@formsey/fields-native-extended/MarkdownField",
-    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<FieldDefinition, string> ) => {
-    return html`<formsey-markdown id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-markdown>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
+    return html`<formsey-markdown id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-markdown>`
   }
 })
