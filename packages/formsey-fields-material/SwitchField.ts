@@ -1,4 +1,4 @@
-import { ValueChangedEvent } from '@formsey/core';
+import { FieldChangeEvent } from '@formsey/core';
 import { SwitchFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
@@ -14,26 +14,27 @@ import { MaterialField } from './MaterialField';
 @customElement("formsey-switch-material")
 export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
   @property({ type: Boolean })
-  value: boolean;
+  value: boolean | undefined
 
   @query("mwc-switch")
-  materialSwitch: Switch
+  materialSwitch: Switch | undefined
 
   renderField() {
-    return html`<mwc-formfield label="${this.definition.controlLabel || ''}"><mwc-switch @input="${(event) => this.changed(event)}" @change="${(event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-switch></mwc-formfield>`;
+    if (!this.definition) return
+    return html`<mwc-formfield label="${this.definition.controlLabel || ''}"><mwc-switch @input="${(event: Event) => this.changed(event)}" @change="${(event: Event) => this.changed(event)}" ?disabled="${this.definition.disabled}" ?checked="${this.value}"></mwc-switch></mwc-formfield>`;
   }
 
   focusField(path: string) {
-    this.materialSwitch.focus()
+    this.materialSwitch?.focus()
     return true
   }
 
   public validate(report: boolean) {
-    let valid = !this.definition.required || this.materialSwitch.checked
+    let valid = !this.definition?.required || this.materialSwitch!.checked
     if (!valid) {
       let errors: InvalidErrors = new InvalidErrors()
       errors.set(this.path(), {
-        "validityMessage": this.definition.customValidity ? this.definition.customValidity : "Please check this box if you want to proceed", "validityState": {
+        "validityMessage": this.definition!.customValidity ? this.definition!.customValidity : "Please check this box if you want to proceed", "validityState": {
           "valueMissing": true
         }
       })
@@ -44,14 +45,14 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
 
   protected changed(e: Event) {
     e.stopPropagation()
-    this.value = this.materialSwitch.checked
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.value = this.materialSwitch!.checked
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 }
 
 getLibrary("material").registerComponent("switch", {
   importPath: "@formsey/fields-material/SwitchField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SwitchFieldDefinition, boolean>) => {
-    return html`<formsey-switch-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-switch-material>`
+    return html`<formsey-switch-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-switch-material>`
   }
 })

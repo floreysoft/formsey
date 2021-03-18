@@ -1,4 +1,4 @@
-import { createField, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { createField, LabeledField } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';

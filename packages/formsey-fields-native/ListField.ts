@@ -1,5 +1,5 @@
 import { KEYCODE } from '@floreysoft/utils';
-import { createField, Field, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { createField, Field, LabeledField } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FieldDefinition, ListFieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
@@ -7,7 +7,6 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
-
 
 @customElement("formsey-list")
 export class ListField extends LabeledField<ListFieldDefinition, string | string[]> {
@@ -21,7 +20,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
 
   renderField() {
     if (this.definition) {
-      const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, inputHandler: (event: ValueChangedEvent<any>) => this.search(event) })}</div>` : undefined
+      const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, inputHandler: (event: FieldChangeEvent<any>) => this.search(event) })}</div>` : undefined
       let visible = 0
       this.firstMatchingOption = undefined
       return html`${search}<div class="options">${this.definition.options?.map((option) => {

@@ -1,4 +1,4 @@
-import { NumberFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { FieldChangeEvent, FieldInputEvent, NumberFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement } from "lit/decorators";
@@ -12,13 +12,13 @@ export class NumberField extends InputField<NumberFieldDefinition, number> {
   protected changed(e: any) {
     e.stopPropagation()
     this.value = +e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   protected inputted(e: any) {
     e.stopPropagation()
     this.value = +e.currentTarget.value;
-    this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+    this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
   }
 
   protected get type() : "number" | "range" {

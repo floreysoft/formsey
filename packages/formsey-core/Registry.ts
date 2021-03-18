@@ -72,7 +72,7 @@ export interface Components<D extends FieldDefinition, V> {
   [index: string]: Component<D, V>
 }
 
-export type Settings = Object
+export type Settings = { [key: string] : any }
 
 export class Library {
   components: Components<any, any> = {}

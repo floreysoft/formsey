@@ -8,7 +8,7 @@ import { getUniqueElementId } from './Registry';
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
   protected elementId = getUniqueElementId()
 
-  protected render() {
+  protected render() : TemplateResult | undefined {
     return html`<div class="${classMap({ lfw: true, lfi: !this.valid && this.report })}">${this.renderHeader()}${this.renderFooter()}</div>`
   }
 

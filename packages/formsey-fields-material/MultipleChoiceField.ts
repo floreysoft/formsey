@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, FieldChangeEvent, Option } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-radio/mwc-radio";
@@ -13,15 +13,16 @@ import { MaterialField } from './MaterialField';
 @customElement("formsey-multiple-choice-material")
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {
   @property({ type: String })
-  value: string;
+  value: string | undefined
 
   @query("mwc-textfield")
-  otherTextField: TextField
+  otherTextField: TextField | undefined
 
   @queryAll("mwc-radio")
-  protected radios: Radio[]
+  protected radios: Radio[] | undefined
 
   renderField() {
+    if (!this.definition) return
     let templates: TemplateResult[] = [];
     if (this.definition.options) {
       for (let i = 0; i < this.definition.options.length; i++) {
@@ -42,9 +43,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
   otherChanged(e: Event) {
     this.value = (<TextField>e.target).value
     this.requestUpdate()
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
-    }
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   changed(e: Event) {
@@ -52,7 +51,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
     let other = false
     if (value == "__other") {
       other = true
-      this.value = (this.otherTextField.value)
+      this.value = (this.otherTextField?.value)
     } else {
       this.value = value
     }
@@ -60,12 +59,10 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
       this.otherTextField.value = ""
     }
     this.requestUpdate()
-    if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
-    }
-    if ( value == "__other" && other) {
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    if (value == "__other" && other) {
       this.updateComplete.then(() => {
-        this.otherTextField.focus()
+        this.otherTextField?.focus()
       })
     }
   }
@@ -73,7 +70,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
 
 getLibrary("material").registerComponent("multipleChoice", {
   importPath: "@formsey/fields-material/MultipleChoiceField",
-    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CheckboxesFieldDefinition, string> ) => {
-    return html`<formsey-multiple-choice-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice-material>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string>) => {
+    return html`<formsey-multiple-choice-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice-material>`
   }
 })

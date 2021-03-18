@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, Option } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
@@ -7,21 +7,18 @@ import "@material/mwc-formfield/mwc-formfield.js";
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from "@material/mwc-textfield/mwc-textfield.js";
 import { css, html, TemplateResult } from "lit";
-import { customElement, property, query, queryAll } from "lit/decorators";
+import { customElement, query, queryAll } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { MaterialField } from './MaterialField';
 
 
 @customElement("formsey-checkboxes-material")
 export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, string[]> {
-  @property({ converter: Object })
-  value: string[] = []
-
   @query("mwc-textfield")
-  otherTextField: TextField
+  otherTextField: TextField | undefined
 
   @queryAll("mwc-checkbox")
-  protected checkboxes: Checkbox[]
+  protected checkboxes: Checkbox[] | undefined
 
   static get styles() {
     return [css`
@@ -38,6 +35,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
   }
 
   renderField() {
+    if (!this.definition) return
     if (!this.value) {
       this.value = []
     }
@@ -52,15 +50,15 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
       }
     }
     if (this.definition.other) {
-      let checked = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0).length > 0
+      let checked = this.value.filter(value => this.definition!.options.filter(option => value == (option.value ? option.value : option.label)).length == 0).length > 0
       templates.push(html`<div class="other"><mwc-formfield label="Other"><mwc-checkbox .checked="${checked}" value="__other" @change="${this.changed}"></mwc-checkbox></mwc-formfield><mwc-textfield @input="${this.changed}" ?disabled="${this.definition.disabled || !checked}"></mwc-textfield></div>`);
     }
     return html`${templates}`;
   }
 
   focusField(path: string) {
-    if (path == this.definition.name) {
-      this.checkboxes[0].focus()
+    if (path == this.definition?.name) {
+      this.checkboxes?.[0].focus()
     }
   }
 
@@ -70,7 +68,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     for (let value of this.values()) {
       if (value == "__other") {
         other = true
-        values.push(this.otherTextField.value)
+        values.push(this.otherTextField!.value)
       } else {
         values.push(value)
       }
@@ -80,19 +78,19 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     }
     this.value = values
     this.requestUpdate()
-    if (this.definition.name) {
-      this.dispatchEvent(new FieldChangeEvent(this.definition.name, this.value));
+    if (this.definition!.name) {
+      this.dispatchEvent(new FieldChangeEvent(this.definition!.name, this.value));
     }
     if ((<Checkbox>e.target).value == "__other" && other) {
       this.updateComplete.then(() => {
-        this.otherTextField.focus()
+        this.otherTextField!.focus()
       })
     }
   }
 
   private values(): string[] {
-    let values = []
-    this.checkboxes.forEach(checkbox => {
+    let values: string[] = []
+    this.checkboxes?.forEach(checkbox => {
       if (checkbox.checked) {
         values.push(checkbox.value)
       }
@@ -104,6 +102,6 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
 getLibrary("material").registerComponent("checkboxes", {
   importPath: "@formsey/fields-material/CheckboxesField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
-    return html`<formsey-checkboxes-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-material>`
+    return html`<formsey-checkboxes-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-material>`
   }
 })

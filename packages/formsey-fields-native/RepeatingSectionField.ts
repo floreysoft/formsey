@@ -1,11 +1,11 @@
 import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html, TemplateResult } from "lit";
-import { customElement, property, queryAll } from "lit/decorators";
+import { customElement, queryAll } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 
 
@@ -13,20 +13,19 @@ import { ifDefined } from 'lit/directives/if-defined';
 export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, { [key: string]: any }[]> {
   @queryAll(".form")
   protected _fields: HTMLElement[] | undefined
-  protected layoutController = new LayoutController(this)
+  protected layoutController : LayoutController = new LayoutController(this)
 
   constructor() {
     super()
     this.addController(this.layoutController)
   }
 
-  protected render(): void | TemplateResult {
-    if (this.definition) {
-      this.layoutController.updateLayout(this.definition.layout)
-      const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
-      const style = formatter ? `${formatter.innerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.outerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.backgroundStyle?.(this.layoutController?.layout) || ""}` : ""
-      return html`<section style="${style}">${super.render()}<div class="fbg" style=${formatter?.elevationStyle?.(this.layoutController.layout) || ""}></div></section>`;
-    }
+  protected render() {
+    if (!this.definition) return
+    this.layoutController.updateLayout(this.definition.layout)
+    const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
+    const style = formatter ? `${formatter.innerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.outerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.backgroundStyle?.(this.layoutController?.layout) || ""}` : ""
+    return html`<section style="${style}">${super.render()}<div class="fbg" style=${formatter?.elevationStyle?.(this.layoutController.layout) || ""}></div></section>`;
   }
 
   renderField() {

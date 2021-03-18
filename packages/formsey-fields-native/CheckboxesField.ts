@@ -1,4 +1,4 @@
-import { CheckboxesFieldDefinition, CheckboxFieldDefinition, createField, LabeledField, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { CheckboxesFieldDefinition, CheckboxFieldDefinition, createField, LabeledField, StringFieldDefinition } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html, TemplateResult } from "lit";

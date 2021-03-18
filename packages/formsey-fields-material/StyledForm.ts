@@ -1,9 +1,9 @@
 import { createField } from '@formsey/core/Field';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { css, html } from "lit";
 import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -57,26 +57,25 @@ export class StyledForm extends Form {
   }
 
   @query(".themed")
-  themed: HTMLElement
+  themed: HTMLElement | undefined
 
   render() {
+    if (!this.definition) return
     let field = undefined
-    if (this.definition) {
-      field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.definition?.name, errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
-    }
-    const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
+    field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.definition?.name, errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
+    const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined((<any>this.definition)?.['action'])}" method="${ifDefined((<any>this.definition)?.['method'])}" target="${ifDefined((<any>this.definition)?.['target'])}">${field}<slot></slot></form>`
     return this.settings ? html`<fs-theme theme=${ifDefined(this.settings?.['theme']?.['selection'])} .themes=${themes}><div class="themed">${form}</div></fs-theme>` : form
   }
 
   updated() {
-    if (this.settings) {
+    if (this.settings && this.themed) {
       const theme = this.settings?.['theme']?.['selection']
       this.themed.setAttribute("style", "")
       if (theme == "custom") {
         const properties = this.settings?.['theme']?.['value']
         if (properties) {
           Object.entries(properties).forEach(([key, value]) => {
-            this.themed.style.setProperty(key, value as string);
+            this.themed!.style.setProperty(key, value as string);
           })
         }
       }
@@ -99,6 +98,6 @@ export class StyledForm extends Form {
 getLibrary("material").registerComponent("styledForm", {
   importPath: "@formsey/fields-material/StyledForm",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
-    return html`<formsey-styled-form-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form-material>`
+    return html`<formsey-styled-form-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form-material>`
   }
 })
