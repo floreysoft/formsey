@@ -8,13 +8,13 @@ import { getUniqueElementId } from './Registry';
 export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T, V> {
   protected elementId = getUniqueElementId()
 
-  protected render(): void | TemplateResult {
+  protected render() {
     return html`<div class="${classMap({ lfw: true, lfi: !this.valid && this.report })}">${this.renderHeader()}${this.renderFooter()}</div>`
   }
 
-  protected abstract renderField(): TemplateResult | void
+  protected abstract renderField(): TemplateResult | undefined
 
-  protected renderHeader(): TemplateResult | void {
+  protected renderHeader(): TemplateResult | undefined {
     let required = false
     if (this.definition?.hasOwnProperty('required')) {
       required = (<InputFieldDefinition>this.definition).required || false
@@ -22,7 +22,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
     return this.definition?.label ? html`<label class="lfl" id="${this.elementId}">${this.definition.label}${required ? html`<span class="lfr">&#9679;</span>` : undefined}</label>${this.renderField()}` : this.renderField()
   }
 
-  protected renderFooter(): TemplateResult | void {
+  protected renderFooter(): TemplateResult | undefined {
     const error = this.errors?.get(this.path())
     const validityMessage = error?.validityMessage || (<InputFieldDefinition>this.definition).customValidity
     let help = this.definition?.helpText

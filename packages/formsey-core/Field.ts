@@ -6,10 +6,11 @@ import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { getDefaultLibrary, getLibraries, Library, Resources, Settings } from './Registry';
-import { ValueChangedEvent } from './ValueChangedEvent';
+import { FieldChangeEvent } from './FieldChangeEvent';
+import { FieldInputEvent } from "./FieldInputEvent";
 
 export const createField = (resources: Resources<FieldDefinition, any>): TemplateResult | undefined => {
-  if (!resources.definition.type) {
+  if (!resources.definition?.type) {
     throw Error("Cannot create field as type is undefined")
   }
   const component = resources.library?.components[resources.definition.type];
@@ -55,10 +56,10 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   report: boolean = false
 
   @property({ type: Object })
-  errors: InvalidErrors | null = null
+  errors: InvalidErrors | undefined
 
   @property({ type: Object })
-  customErrors: InvalidErrors | null = null
+  customErrors: InvalidErrors | undefined
 
   static shadowDom = false
 
@@ -68,7 +69,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   public clearCustomValidity() {
-    this.customErrors = null
+    this.customErrors = undefined
   }
 
   public setCustomValidity(customErrors: InvalidErrors) {
@@ -111,7 +112,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
+        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
       }
     }
     if (!this.library) {
@@ -119,7 +120,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
       return typeof this.library != "undefined"
     }
     if (!this.settings) {
-      this.settings = getDefaultLibrary().defaultSettings
+      this.settings = getDefaultLibrary()?.defaultSettings
     }
     return true
   }
@@ -128,7 +129,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     e.stopPropagation()
     if (this.value !== e.currentTarget?.value) {
       this.value = e.currentTarget.value;
-      this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
+      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     }
   }
 
@@ -136,7 +137,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     e.stopPropagation()
     if (this.value !== e.currentTarget?.value) {
       this.value = e.currentTarget.value;
-      this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+      this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
     }
   }
 
@@ -171,7 +172,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return (this.definition?.name ? this.definition.name : "") + "." + path
   }
 }
-
 
 export abstract class CompoundField<T extends FieldDefinition, V> extends Field<T, V> {
   protected renderHeader() {

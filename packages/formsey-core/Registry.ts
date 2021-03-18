@@ -1,6 +1,9 @@
 import { TemplateResult } from 'lit';
+import { FieldChangeEvent } from './FieldChangeEvent';
+import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
-import { InvalidErrors } from './InvalidEvent';
+import { FieldInputEvent } from './FieldInputEvent';
+import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { Layout } from './Layouts';
 
 let customElementRegistry = window.customElements;
@@ -43,42 +46,43 @@ export function resolve(data: { [key: string]: any }, path: string): any {
 
 export interface Resources<D extends FieldDefinition, V> {
   id?: string
-  library: Library
-  definition: D
-  context: any
+  library?: Library
+  definition?: D
+  context?: any
   settings?: Settings
   value?: V
-  parentPath: string
+  parentPath?: string
   errors?: InvalidErrors
-  changeHandler?: any
-  clickHandler?: any
-  invalidHandler?: any
+  inputHandler?: (e: FieldInputEvent<any>) => void
+  changeHandler?: (e: FieldChangeEvent<any>) => void
+  clickHandler?: (e: FieldClickEvent<any>) => void
+  invalidHandler?: (e: InvalidEvent) => void
 }
 
-export interface Component {
+export interface Component<D extends FieldDefinition, V> {
   importPath: string | string[],
-  template: (resources: Resources<FieldDefinition, any>) => TemplateResult
+  template: (resources: Resources<D, V>) => TemplateResult
   renderer?: string,
   module?: string,
   focusable?: boolean
-  nestedFields?: (definition: FieldDefinition, value: any) => FieldDefinition[]
+  nestedFields?: (definition: D, value: V) => FieldDefinition[]
 }
 
-export interface Components {
-  [index: string]: Component
+export interface Components<D extends FieldDefinition, V> {
+  [index: string]: Component<D, V>
 }
 
 export type Settings = Object
 
 export class Library {
-  components: Components = {}
+  components: Components<any, any> = {}
   icon?: TemplateResult
   displayName?: string
   settingsEditor?: FieldDefinition
   defaultSettings?: Settings
   onSettingsChanged?: (settings: Settings) => Settings
 
-  registerComponent(type: string, component: Component) {
+  registerComponent<D extends FieldDefinition, V>(type: string, component: Component<D, V>) {
     this.components[type] = { focusable: true, ...component }
   }
 }
@@ -121,13 +125,13 @@ export interface Icons {
 }
 
 export interface Formatter {
-  innerBoxStyle?(layout: Layout, ...context: any): string
-  outerBoxStyle?(layout: Layout, ...context: any): string
-  backgroundStyle?(layout: Layout, ...context: any): string
-  elevationStyle?(layout: Layout, ...context: any): string
-  containerStyle?(layout: Layout, ...context: any): string
-  fieldStyle?(layout: Layout, ...context: any): string
-  backgroundStyle?(layout: Layout, ...context: any): string
+  innerBoxStyle?(layout?: Layout, ...context: any): string
+  outerBoxStyle?(layout?: Layout, ...context: any): string
+  backgroundStyle?(layout?: Layout, ...context: any): string
+  elevationStyle?(layout?: Layout, ...context: any): string
+  containerStyle?(layout?: Layout, ...context: any): string
+  fieldStyle?(layout?: Layout, ...context: any): string
+  backgroundStyle?(layout?: Layout, ...context: any): string
 }
 
 export type Formatters = { [index: string]: Formatter }
@@ -270,7 +274,7 @@ export type Values = { [key: string]: Value };
 
 export function translate(path: string, values?: Values): string {
   const lang = (window as any)['__lang'] || "en"
-  const messages = get("messages", lang)
+  const messages = get<{ [key: string]: any; }>("messages", lang)
   if (messages) {
     let message = resolve(messages, path)
     if (values) {

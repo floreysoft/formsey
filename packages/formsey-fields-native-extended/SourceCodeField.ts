@@ -1,7 +1,7 @@
 import { Ace } from '@floreysoft/ace';
 import { InputFieldDefinition, LabeledField } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -60,7 +60,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
     e.stopPropagation()
     this.value = e.detail.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("input", this.path(), this.value));
+      this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
     }
   }
 }

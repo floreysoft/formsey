@@ -5,7 +5,7 @@ import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { Layout } from '@formsey/core/Layouts';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -66,11 +66,11 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         this.selectedValue = selection.value ? selection.value : selection.label;
         if (this.selectedValue != previousValue && typeof this.value.value == "undefined") {
           this.value.value = selection.default
-          this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+          this.dispatchEvent(new FieldChangeEvent("inputChange", this.path(), this.value));
         }
       }
       if (selection) {
-        form = html`${selection?.fields ? html`<div class="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, clickHandler: (event: ValueChangedEvent<string>) => this.clicked(event), changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
+        form = html`${selection?.fields ? html`<div class="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, clickHandler: (event: FieldChangeEvent<string>) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
       }
     }
     this.layoutController.updateLayout(this.definition.layout)
@@ -82,7 +82,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
-    return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+    return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
   }
 
   public focusField(path: string) {
@@ -94,18 +94,18 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
     return false
   }
 
-  protected selectionChanged(e: ValueChangedEvent<string>) {
+  protected selectionChanged(e: FieldChangeEvent<string>) {
     let value = e.detail.value;
     let selection = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label === value))[0];
     if (selection) {
       this.value.selection = selection.value || selection.label
       this.value.value = JSON.parse(JSON.stringify(selection.default))
-      this.dispatchEvent(new ValueChangedEvent("change", this.path(), this.value));
+      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
       this.requestUpdate()
     }
   }
 
-  protected changed(e: ValueChangedEvent<any>) {
+  protected changed(e: FieldChangeEvent<any>) {
     if (e.detail.name.startsWith(this.path() + ".value")) {
       let name = e.detail.name.substring((this.path() + ".value").length + 1).split('.')[0].split('[')[0]
       if (name) {
@@ -116,7 +116,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       } else {
         this.value.value = e.detail.value
       }
-      this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail.name, this.value));
+      this.dispatchEvent(new FieldChangeEvent(e.type as "change" | "input" | "inputChange", e.detail.name, this.value));
     }
   }
 }

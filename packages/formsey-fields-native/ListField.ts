@@ -1,6 +1,8 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { createField, Field, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FieldDefinition, ListFieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators";
@@ -10,35 +12,39 @@ import { ifDefined } from 'lit/directives/if-defined';
 @customElement("formsey-list")
 export class ListField extends LabeledField<ListFieldDefinition, string | string[]> {
   @query(".search")
-  searchBox: Field<FieldDefinition, string>
+  searchBox: Field<FieldDefinition, string> | undefined
 
   @query(".options")
-  firstOption: Field<FieldDefinition, string>
+  firstOption: Field<FieldDefinition, string> | undefined
 
-  private firstMatchingOption: string
+  private firstMatchingOption: string | undefined
 
   renderField() {
-    const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.search(event) })}</div>` : undefined
-    let visible = 0
-    this.firstMatchingOption = undefined
-    return html`${search}<div class="options">${this.definition.options?.map((option) => {
-      let label = option.label || option.value;
-      let value = option.value || option.label;
-      let checked = false
-      if (this.definition.multiselect) {
-        this.value = this.value || []
-        checked = this.value.includes(value);
-      } else {
-        checked = this.value == value;
-      }
-      if ((!this.definition.query || label.toLowerCase().startsWith(this.definition.query.toLowerCase()))) {
-        if (this.definition.query && !this.firstMatchingOption) {
-          this.firstMatchingOption = value
+    if (this.definition) {
+      const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, inputHandler: (event: ValueChangedEvent<any>) => this.search(event) })}</div>` : undefined
+      let visible = 0
+      this.firstMatchingOption = undefined
+      return html`${search}<div class="options">${this.definition.options?.map((option) => {
+        if (this.definition) {
+          let label = option.label || option.value;
+          let value = option.value || option.label;
+          let checked = false
+          if (this.definition.multiselect) {
+            this.value = this.value || []
+            checked = this.value.includes(value);
+          } else {
+            checked = this.value == value;
+          }
+          if ((!this.definition.query || label.toLowerCase().startsWith(this.definition.query.toLowerCase()))) {
+            if (this.definition.query && !this.firstMatchingOption) {
+              this.firstMatchingOption = value
+            }
+            if (this.definition.max && ++visible > this.definition.max) return
+            return html`<formsey-option passive @keydown=${this.keyDown} ?hideCheckmark=${this.definition.hideCheckmark} .query=${this.definition.query || ""} .definition=${{ name: value, icon: option.icon, label, value } as any} .value=${checked as any} .parentPath=${this.path()} @change=${this.changed}></formsey-option>`
+          }
         }
-        if (this.definition.max && ++visible > this.definition.max) return
-        return html`<formsey-option passive @keydown=${this.keyDown} ?hideCheckmark=${this.definition.hideCheckmark} .query=${this.definition.query} .definition=${{ name: value, icon: option.icon, label, value }} .value=${checked} .parentPath=${this.path()} @inputChange=${this.changed}></formsey-option>`
-      }
-    })}</div>`;
+      })}</div>`;
+    }
   }
 
   focusField(path: string) {
@@ -52,7 +58,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
 
   protected changed(e: CustomEvent) {
     const option = e.detail.name.split('.').pop()
-    if (this.definition.multiselect) {
+    if (this.definition?.multiselect) {
       if (!Array.isArray(this.value)) {
         this.value = []
       }
@@ -64,12 +70,14 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
     } else {
       this.value = option
     }
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   private search(e: CustomEvent) {
-    this.definition.query = e.detail.value
-    this.requestUpdate()
+    if (this.definition) {
+      this.definition.query = e.detail.value
+      this.requestUpdate()
+    }
   }
 
   private keyDown(event: KeyboardEvent) {
@@ -98,9 +106,9 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
       (<any>this.firstOption.firstElementChild).focusField()
       event.preventDefault();
     } else if (event.keyCode == KEYCODE.RETURN) {
-      if (this.firstMatchingOption && !this.definition.multiselect) {
+      if (this.firstMatchingOption && !this.definition?.multiselect) {
         this.value = this.firstMatchingOption
-        this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+        this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
       }
       event.preventDefault();
     }
@@ -109,7 +117,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
 
 getLibrary("native").registerComponent("list", {
   importPath: "@formsey/fields-native/ListField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string | string[]>) => {
-    return html`<formsey-list id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-list>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ListFieldDefinition, string | string[]>) => {
+    return html`<formsey-list id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-list>`
   }
 })

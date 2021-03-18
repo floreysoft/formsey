@@ -2,7 +2,7 @@ import { Field } from '@formsey/core/Field';
 import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
@@ -91,7 +91,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
     this.value = values
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new FieldChangeEvent("inputChange", this.definition.name, this.value));
     }
     if (other) {
       this.updateComplete.then(() => {

@@ -2,7 +2,7 @@ import { Field } from '@formsey/core/Field';
 import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
@@ -85,7 +85,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
     }
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new FieldChangeEvent("inputChange", this.definition.name, this.value));
     }
     if (other) {
       this.updateComplete.then(() => {

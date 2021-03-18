@@ -1,23 +1,12 @@
-export interface ResponsiveLayout {
-  breakpoints?: Breakpoints
-  static?: Layout
-  xxs?: Layout
-  xs?: Layout
-  s?: Layout
-  m?: Layout
-  l?: Layout
-  xl?: Layout
-  xxl?: Layout
+
+export type Size = "xs" | "s" | "m" | "l" | "xl"
+type Threasholds = { [key in Size ]: number };
+type Layouts = { [key in Size]: Layout };
+export interface Breakpoints extends Threasholds {
 }
 
-export interface Breakpoints {
-  xxs?: number
-  xs?: number
-  s?: number
-  m?: number
-  l?: number
-  xl?: number
-  xxl?: number
+export interface ResponsiveLayout extends Layouts {
+  breakpoints?: Breakpoints
 }
 
 export interface Layout {

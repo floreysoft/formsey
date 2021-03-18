@@ -4,7 +4,7 @@ import { Form } from '@formsey/core/Form';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources, Settings } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { css, html } from "lit";
 import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -74,7 +74,7 @@ export class StyledForm extends Form {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
+      field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     }
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.definition?.['action'])}" method="${ifDefined(this.definition?.['method'])}" target="${ifDefined(this.definition?.['target'])}">${field}<slot></slot></form>`
     const classes = `themed ${this.settings['mode'] || ""}`
@@ -97,8 +97,8 @@ export class StyledForm extends Form {
     return this.parentPath
   }
 
-  protected changed(e: ValueChangedEvent<any>) {
-    this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail?.name, e.detail?.value));
+  protected changed(e: FieldChangeEvent<any>) {
+    this.dispatchEvent(new FieldChangeEvent(e.type as "change" | "input" | "inputChange", e.detail?.name, e.detail?.value));
   }
 
   protected invalid(e: InvalidEvent) {

@@ -2,7 +2,7 @@ import { Field } from '@formsey/core/Field';
 import { CheckboxFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { CheckboxElement } from "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
@@ -41,7 +41,7 @@ export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
   protected changed(e: Event) {
     e.stopPropagation()
     this.value = this.vaadinCheckbox.checked;
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent("inputChange", this.path(), this.value));
   }
 
   focusField(path: string) {

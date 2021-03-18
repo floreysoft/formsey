@@ -1,10 +1,9 @@
-import { createField, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { createField, FieldChangeEvent, LabeledField } from '@formsey/core';
 import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
-
 
 const options = [
   { "label": "(GMT-12:00) International Date Line West", "value": "Etc/GMT+12" },
@@ -94,18 +93,20 @@ const options = [
 @customElement("formsey-timezone")
 export class TimezoneField extends LabeledField<FieldDefinition, string> {
   protected renderField() {
-    return createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (e: CustomEvent) => this.changed(e) })
+    if (this.definition) {
+      return createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (e: CustomEvent) => this.changed(e) })
+    }
   }
 
   protected changed(e: CustomEvent) {
     this.value = e.detail.value
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 }
 
 getLibrary("native").registerComponent("timezone", {
   importPath: "@formsey/fields-native/TimezoneField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
-    return html`<formsey-timezone id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-timezone>`
+    return html`<formsey-timezone id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-timezone>`
   }
 })

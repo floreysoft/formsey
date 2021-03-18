@@ -2,7 +2,7 @@ import '@floreysoft/splitter';
 import { createField, Field, InvalidEvent } from '@formsey/core';
 import { SplitPanelDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -14,13 +14,13 @@ export class SplitPanelField extends Field<SplitPanelDefinition, any> {
 
   render() {
     return html`<fs-splitter direction=${this.definition.direction}>
-    <div id="first">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...this.definition.first, type: this.definition.first.type || "form" }, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
-    <div id="second">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...this.definition.second, type: this.definition.second.type || "form" }, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
+    <div id="first">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...this.definition.first, type: this.definition.first.type || "form" }, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
+    <div id="second">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...this.definition.second, type: this.definition.second.type || "form" }, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
     </fs-splitter>`
   }
 
-  protected changed(e: ValueChangedEvent<any>) {
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+  protected changed(e: FieldChangeEvent<any>) {
+    this.dispatchEvent(new FieldChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
   }
 }
 

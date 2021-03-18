@@ -1,7 +1,7 @@
 import { Field } from '@formsey/core/Field';
 import { ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
@@ -44,7 +44,7 @@ export class ListField extends Field<ListFieldDefinition, string> {
   protected changed(e: any) {
     this.value = e.currentTarget.value;
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new FieldChangeEvent("inputChange", this.definition.name, this.value));
     }
   }
 }

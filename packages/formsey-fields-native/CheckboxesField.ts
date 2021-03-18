@@ -1,4 +1,5 @@
 import { CheckboxesFieldDefinition, CheckboxFieldDefinition, createField, LabeledField, StringFieldDefinition, ValueChangedEvent } from '@formsey/core';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html, TemplateResult } from "lit";
 import { customElement, query, queryAll } from "lit/decorators";
@@ -10,17 +11,17 @@ import { StringField } from './StringField';
 @customElement("formsey-checkboxes")
 export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, string[]> {
   @query("formsey-string")
-  otherTextField: StringField
+  otherTextField: StringField | undefined
 
   @queryAll("formsey-checkbox")
-  protected checkboxes: CheckboxField[]
+  protected checkboxes: CheckboxField[] | undefined
 
   renderField() {
     if (!this.value) {
       this.value = []
     }
-    let templates: TemplateResult[] = [];
-    if (this.definition.options) {
+    let templates: (TemplateResult | undefined)[] = [];
+    if (this.definition?.options) {
       for (let i = 0; i < this.definition.options.length; i++) {
         let option = this.definition.options[i]
         let label = option.label || option.value;
@@ -29,22 +30,22 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
         templates.push(createField({ library: this.library, context: this.context, definition: { type: "checkbox", name: value, controlLabel: label } as CheckboxFieldDefinition, value: checked, parentPath: this.path(), changeHandler: this.changed }));
       }
     }
-    if (this.definition.other) {
-      let other = this.value.filter(value => this.definition.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
+    if (this.definition?.other) {
+      let other = this.value.filter(value => this.definition?.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
       let checked = other.length > 0
-      templates.push(html`<div class="other">${createField({ library: this.library, context: this.context, definition: { type: "checkbox", name: "__other", controlLabel: "Other" } as CheckboxFieldDefinition, value: checked, parentPath: this.path(), changeHandler: this.changed})}${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? other[0] : "", parentPath: this.path(), changeHandler: (e) => this.changed(e) })}</div>`);
+      templates.push(html`<div class="other">${createField({ library: this.library, context: this.context, definition: { type: "checkbox", name: "__other", controlLabel: "Other" } as CheckboxFieldDefinition, value: checked, parentPath: this.path(), changeHandler: this.changed })}${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? other[0] : "", parentPath: this.path(), changeHandler: (e) => this.changed(e) })}</div>`);
     }
-    return html`<div class=${this.definition.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
+    return html`<div class=${this.definition?.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
   }
 
-  otherChanged(e: ValueChangedEvent<string>) {
+  otherChanged(e: FieldChangeEvent<string[]>) {
     this.value = e.detail.value
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   focusField() {
-    this.checkboxes[0].focus()
+    this.checkboxes?.[0].focus()
     return true
   }
 
@@ -53,13 +54,13 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     let values = []
     let other = false
     for (let value of this.values()) {
-      if (value == "__other") {
+      if (value == "__other" && this.otherTextField?.definition) {
         other = true
         this.otherTextField.definition.disabled = false
         values.push(this.otherTextField.value)
         this.otherTextField.requestUpdate()
         this.otherTextField.updateComplete.then(() => {
-          this.otherTextField.focusField()
+          this.otherTextField?.focusField()
         })
       } else {
         values.push(value)
@@ -69,13 +70,13 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
       this.otherTextField.value = ""
     }
     this.value = values
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change", this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   private values(): string[] {
-    let values = []
-    this.checkboxes.forEach(checkbox => {
-      if (checkbox.value) {
+    let values: string[] = []
+    this.checkboxes?.forEach(checkbox => {
+      if (checkbox.definition?.name && checkbox.value) {
         values.push(checkbox.definition.name)
       }
     })
@@ -86,6 +87,6 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
 getLibrary("native").registerComponent("checkboxes", {
   importPath: "@formsey/fields-native/CheckboxesField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
-    return html`<formsey-checkboxes id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes>`
+    return html`<formsey-checkboxes id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes>`
   }
 })

@@ -2,7 +2,7 @@ import { CompoundField } from '@formsey/core';
 import { createField } from '@formsey/core/Field';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -30,7 +30,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
       helpText: this.definition.helpText,
       fields: fields
     }
-    return html`<div class="fs-nested-form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: form, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event) })}</div>`;
+    return html`<div class="fs-nested-form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: form, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event) })}</div>`;
   }
 }
 

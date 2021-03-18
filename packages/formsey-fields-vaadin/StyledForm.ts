@@ -3,7 +3,7 @@ import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { adoptStyles, css, html, ReactiveElement } from "lit";
 import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -27,7 +27,7 @@ export class StyledForm extends Form {
   render() {
     let field = undefined
     if (this.definition) {
-      field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.definition?.name, errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
+      field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.definition?.name, errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     }
     const form = html`
     <custom-style>
@@ -57,8 +57,8 @@ export class StyledForm extends Form {
     }
   }
 
-  protected changed(e: ValueChangedEvent<any>) {
-    this.dispatchEvent(new ValueChangedEvent(e.type as "change" | "input" | "inputChange", e.detail.name, e.detail.value));
+  protected changed(e: FieldChangeEvent<any>) {
+    this.dispatchEvent(new FieldChangeEvent(e.type as "change" | "input" | "inputChange", e.detail.name, e.detail.value));
   }
 
   protected invalid(e: InvalidEvent) {

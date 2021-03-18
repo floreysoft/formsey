@@ -8,16 +8,15 @@ import { ifDefined } from 'lit/directives/if-defined';
 
 
 @customElement("formsey-button")
-export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
-  @property({ type: Boolean })
-  value: boolean;
-
+export class ButtonField extends LabeledField<ButtonFieldDefinition, void> {
   @query("button")
-  button: HTMLButtonElement
+  button: HTMLButtonElement | undefined
 
   renderField() {
-    const icon = typeof this.definition.icon == "string" ? getIcon(this.definition.icon) : this.definition.icon
-    return html`<button class=${classMap({ left: this.definition.align == "left" })} type="${this.definition.buttonType || "button"}" @click=${this.clicked} @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}" title=${ifDefined(this.definition.tooltip)} @keydown=${this.keyDown}>${icon}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
+    if (this.definition) {
+      const icon = typeof this.definition.icon == "string" ? getIcon(this.definition.icon) : this.definition.icon
+      return html`<button class=${classMap({ left: this.definition.align == "left" })} type="${this.definition.buttonType || "button"}" @click=${this.clicked} @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}" title=${ifDefined(this.definition.tooltip)} @keydown=${this.keyDown}>${icon}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
+    }
   }
 
   keyDown(e: KeyboardEvent) {
@@ -37,7 +36,7 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
   }
 
   focusField(): boolean {
-    this.button.focus()
+    this.button?.focus()
     return true
   }
 }
@@ -45,6 +44,6 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, boolean> {
 getLibrary("native").registerComponent("button", {
   importPath: "@formsey/fields-native/ButtonField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<ButtonFieldDefinition, boolean>) => {
-    return html`<formsey-button id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler} @click=${clickHandler}></formsey-button>`
+    return html`<formsey-button id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @invalid=${invalidHandler} @click=${clickHandler}></formsey-button>`
   }
 })

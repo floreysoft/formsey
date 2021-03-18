@@ -1,10 +1,11 @@
 import { customElement, property, query } from "lit/decorators";
 import { Field } from './Field';
+import { FieldChangeEvent } from './FieldChangeEvent';
 import { FieldClickEvent } from "./FieldClickEvent";
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
+import { FieldInputEvent } from "./FieldInputEvent";
 import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
-import { ValueChangedEvent } from './ValueChangedEvent';
 
 
 export function get(data: { [key: string]: any }, path: string): any {
@@ -95,7 +96,7 @@ export class Form extends Field<FieldDefinition, any> {
   anonymous: boolean | undefined
 
   @query(':first-child')
-  form: FormField<FormDefinition, Object> | undefined
+  form: FormField | undefined
 
   @query('form')
   nativeForm: HTMLFormElement | undefined
@@ -115,14 +116,14 @@ export class Form extends Field<FieldDefinition, any> {
 
   render() {
     if (this.definition) {
-      this.definition['action'] = this.action
-      this.definition['method'] = this.method
-      this.definition['target'] = this.target
+      (<FormDefinition>this.definition)['action'] = this.action;
+      (<FormDefinition>this.definition)['method'] = this.method;
+      (<FormDefinition>this.definition)['target'] = this.target;
     }
     if (!this.errors) {
       this.errors = new InvalidErrors()
     }
-    return this.library?.components?.["styledForm"]?.template({ library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+    return this.library?.components?.["styledForm"]?.template({ library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), inputHandler: (event: FieldInputEvent<any>) => this.inputted(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
   }
 
   updated() {
@@ -196,23 +197,28 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
-  protected changed(e: ValueChangedEvent<any>) {
+  protected inputted(e: FieldChangeEvent<any>) {
+    this.applyEvent(e)
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, this.value, true));
+  }
+
+  protected changed(e: FieldChangeEvent<any>) {
+    this.applyEvent(e)
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value, true));
+  }
+
+  protected applyEvent(e: CustomEvent) {
     if (!this.anonymous && e.detail.name) {
       const name = e.detail.name.split(".")[0].split("[")[0]
       this.value[name] = e.detail.value;
     } else {
       this.value = e.detail.value
     }
-    if (!this.anonymous && isFormDefinition(this.definition)) {
-      this.value = removeDeletedFields<Object>(this.library.components, this.definition, this.value)
-    }
-    if (e.type == "inputChange" || e.type == "input") {
-      this.dispatchEvent(new ValueChangedEvent("input", e.detail.name, this.value, true));
-    }
-    if (e.type == "inputChange" || e.type == "change") {
-      this.dispatchEvent(new ValueChangedEvent("change", e.detail.name, this.value, true));
+    if (this.library && !this.anonymous && isFormDefinition(this.definition)) {
+      this.value = removeDeletedFields(this.library.components, this.definition, this.value)
     }
   }
+
 
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()

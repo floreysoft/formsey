@@ -1,7 +1,7 @@
 import { createField, DEFAULT_BREAKPOINTS, Field, InvalidEvent } from '@formsey/core';
-import { ResponsivePanelFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { ResponsivePanelFieldDefinition, SplitPanelDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -13,12 +13,13 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
   value: Object = {}
 
   @property()
-  layout: "split" | "tabs"
+  layout: "split" | "tabs" = "split"
+
   private resizeObserver: ResizeObserver
 
   constructor() {
     super()
-    this.resizeObserver = new ResizeObserver((entries, observer) => {
+    this.resizeObserver = new ResizeObserver((entries: any, observer: any) => {
       for (const entry of entries) {
         this.resize(entry.contentRect.width)
       }
@@ -26,38 +27,40 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
   }
 
   render() {
-    let definition
-    if (this.layout == "tabs") {
-      definition = {
-        type: "tabs",
-        location: "bottom",
-        expand: true,
-        selections: this.definition.reverse ?
-          [this.definition.second, this.definition.first] :
-          [this.definition.first, this.definition.second]
+    if (this.definition) {
+      let definition
+      if (this.layout == "tabs") {
+        definition = {
+          type: "tabs",
+          location: "bottom",
+          expand: true,
+          selections: this.definition.reverse ?
+            [this.definition.second, this.definition.first] :
+            [this.definition.first, this.definition.second]
+        } as TabsFieldDefinition
+      } else {
+        definition = {
+          type: "verticalSplitPanel",
+          first: {
+            ...this.definition.first,
+            type: "panel"
+          },
+          second: {
+            ...this.definition.second,
+            type: "panel"
+          }
+        } as SplitPanelDefinition
       }
-    } else {
-      definition = {
-        type: "verticalSplitPanel",
-        first: {
-          ...this.definition.first,
-          type: "panel"
-        },
-        second: {
-          ...this.definition.second,
-          type: "panel"
-        }
-      }
+      return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
     }
-    return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
   }
 
   firstUpdated() {
     this.resizeObserver.observe(this as Element)
   }
 
-  protected changed(e: ValueChangedEvent<any>) {
-    this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+  protected changed(e: FieldChangeEvent<any>) {
+    this.dispatchEvent(new FieldChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
   }
 
   private resize(width: number) {
@@ -72,7 +75,7 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
 getLibrary("native").registerComponent("responsivePanel", {
   importPath: "@formsey/fields-native/ResponsivePanelField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
-    return html`<formsey-responsive-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-responsive-panel>`
+    return html`<formsey-responsive-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-responsive-panel>`
   },
   nestedFields: (definition: ResponsivePanelFieldDefinition, value: any) => {
     const fields = []

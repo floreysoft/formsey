@@ -1,4 +1,5 @@
-import { createField, LabeledField, ValueChangedEvent } from '@formsey/core';
+import { createField, LabeledField } from '@formsey/core';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
@@ -18,18 +19,20 @@ options.sort((a, b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
 @customElement("formsey-locale")
 export class LocaleField extends LabeledField<FieldDefinition, string> {
   protected renderField() {
-    return createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (e: CustomEvent) => this.changed(e) })
+    if (this.definition) {
+      return createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (e: CustomEvent) => this.changed(e) })
+    }
   }
 
   protected changed(e: CustomEvent) {
     this.value = e.detail.value
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 }
 
 getLibrary("native").registerComponent("locale", {
   importPath: "@formsey/fields-native/LocaleField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
-    return html`<formsey-locale id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-locale>`
+    return html`<formsey-locale id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-locale>`
   }
 })

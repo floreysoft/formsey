@@ -229,6 +229,7 @@ export interface SplitPanelDefinition extends FieldDefinition {
 }
 
 export interface Records {
+  search?: { [key: string] : string}
   sortedBy?: string
   sortDirection?: "ascending" | "descending"
   dataSource?: {
@@ -239,5 +240,5 @@ export interface Records {
   }
   pageStart?: number
   selections?: number[]
-  data: Object[]
+  data: { [key: string] : any}[]
 }

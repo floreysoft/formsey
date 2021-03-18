@@ -1,10 +1,9 @@
 import { LabeledField, UploadFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
-
 
 interface FileObject {
   name: string
@@ -26,7 +25,7 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
   public static formAssociated = true;
 
   @property({ type: Object })
-  value: FileObject[]
+  value: FileObject[] = []
 
   @property({ type: Object })
   messages: Messages = {
@@ -34,68 +33,69 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
   }
 
   @query("label")
-  label: HTMLElement
+  label: HTMLElement | undefined
 
   @query("input")
-  input: HTMLInputElement
+  input: HTMLInputElement | undefined
 
   protected renderField() {
-    if (!this.value) {
-      this.value = []
-    }
-    return html`<div class="input">${!this.definition.multiple && this.value.length > 0 ? undefined : html`<label @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input tabindex="0" aria-labelledby="${this.elementId}" type="file" ?multiple="${this.definition.multiple}" capture="${ifDefined(this.definition.capture)}" accept="${this.definition.accept ? this.definition.accept.join(',') : ''}" @change="${(e: Event) => this.handleFiles(Array.from(this.input.files))}" @focus="${this.focused}" @blur="${this.blurred}" id="file"><div class="prompt"><span>${this.messages.prompt}</span>${ICON_UPLOAD}</div></label>`}
+    if (this.definition) {
+      return html`<div class="input">${!this.definition.multiple && this.value.length > 0 ? undefined : html`<label @dragover="${this.dragOver}" @dragenter="${this.dragEnter}" @dragleave="${this.dragLeave}" @drop="${this.drop}"><input tabindex="0" aria-labelledby="${this.elementId}" type="file" ?multiple="${this.definition.multiple}" capture="${ifDefined(this.definition.capture)}" accept="${this.definition.accept ? this.definition.accept.join(',') : ''}" @change="${(e: Event) => this.handleFiles(Array.from(this.input!.files!))}" @focus="${this.focused}" @blur="${this.blurred}" id="file"><div class="prompt"><span>${this.messages.prompt}</span>${ICON_UPLOAD}</div></label>`}
     ${this.value.length > 0 ? html`<div class="files">
     ${this.value.map((file: FileObject) => {
-      const aMultiples = ["kb", "mb", "gb", "tb"];
-      let niceSize: string
-      for (let nMultiple = 0, nApprox = file.size / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
-        niceSize = nApprox.toFixed(3) + " " + aMultiples[nMultiple]
+        const aMultiples = ["kb", "mb", "gb", "tb"];
+        let niceSize
+        for (let nMultiple = 0, nApprox = file.size / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
+          niceSize = nApprox.toFixed(3) + " " + aMultiples[nMultiple]
+        }
+        let preview: TemplateResult
+        file.type.startsWith("image/") ? preview = html`<img class="preview" src="${file['data']}">` : preview = ICON_FILE
+        return html`${preview}<div class="filename" title="${file.name}">${file.name}</div><div>${niceSize}</div><div tabindex="0" class="remove" @click="${(e: Event) => { this.removeFile(file.name) }}">${ICON_REMOVE}</div>`
       }
-      let preview: TemplateResult
-      file.type.startsWith("image/") ? preview = html`<img class="preview" src="${file['data']}">` : preview = ICON_FILE
-      return html`${preview}<div class="filename" title="${file.name}">${file.name}</div><div>${niceSize}</div><div tabindex="0" class="remove" @click="${ ( e: Event) => { this.removeFile(file.name) }}">${ICON_REMOVE}</div>`
-    }
-    )}
+      )}
     </div>` : undefined}</div>`
+    }
   }
 
   public focusField(path: string) {
-    if ( this.input ) {
+    if (this.input) {
       this.input.focus()
       return true
     }
     return false
- }
+  }
 
   private dragOver(e: DragEvent) {
     e.preventDefault()
     e.stopPropagation()
   }
 
-  private dragEnter(e) {
+  private dragEnter(e: DragEvent) {
     e.preventDefault()
     e.stopPropagation()
-    this.label.classList.add("over")
+    this.label!.classList.add("over")
   }
 
-  private dragLeave(e) {
+  private dragLeave(e: DragEvent) {
     e.preventDefault()
     e.stopPropagation()
-    this.label.classList.remove("over")
+    this.label!.classList.remove("over")
   }
 
-  private drop(e) {
+  private drop(e: DragEvent) {
     e.preventDefault()
     e.stopPropagation()
     let dt = e.dataTransfer
-    let files = [...dt.files]
-    this.handleFiles(files)
+    if (dt?.files) {
+      let files = [...dt.files]
+      this.handleFiles(files)
+    }
   }
 
   private removeFile(name: string) {
-    this.value = this.value.filter( ( file : FileObject ) => file.name != name)
+    this.value = this.value.filter((file: FileObject) => file.name != name)
     this.requestUpdate()
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   private handleFiles(files: File[]) {
@@ -103,12 +103,12 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
       let reader = new FileReader();
       reader.addEventListener("load", () => {
         this.value.push({
-          data: reader.result,
+          data: reader.result || "",
           name: file.name,
           type: file.type,
           size: file.size
         })
-        this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
         this.requestUpdate()
       }, false);
       reader.readAsDataURL(file)
@@ -119,6 +119,6 @@ export class UploadField extends LabeledField<UploadFieldDefinition, FileObject[
 getLibrary("native").registerComponent("upload", {
   importPath: "@formsey/fields-native/UploadField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<UploadFieldDefinition, FileObject[]>) => {
-    return html`<formsey-upload id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-upload>`
+    return html`<formsey-upload id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-upload>`
   }
 })

@@ -1,6 +1,6 @@
 import { LabeledField, SignatureFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
@@ -75,12 +75,12 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
   protected clear(e: Event) {
     this.signaturePad.clear();
     this.value = "";
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new FieldChangeEvent("inputChange", this.definition.name, this.value));
   }
 
   protected onStrokeEnd(e: MouseEvent | Touch) {
     this.value = this.signaturePad.toDataURL();
-    this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+    this.dispatchEvent(new FieldChangeEvent("inputChange", this.definition.name, this.value));
   }
 }
 

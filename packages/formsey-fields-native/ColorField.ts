@@ -11,7 +11,7 @@ export const ICON_COLOR_FIELD = html`<svg viewBox="2 2 20 20"><title>Color</titl
 @customElement("formsey-color")
 export class ColorField extends StringField {
   @query("input[type='color']")
-  color: HTMLInputElement
+  color: HTMLInputElement | undefined
 
   protected renderField() {
     const style = this.value ? "background-color:" + this.value : undefined
@@ -23,9 +23,9 @@ export class ColorField extends StringField {
   }
 
   private keyDown(e: KeyboardEvent) {
-    if (e.keyCode == 13) {
+    if (e.key == "RETURN") {
       e.stopPropagation()
-      this.color.click()
+      this.color?.click()
     }
   }
 }
@@ -33,6 +33,6 @@ export class ColorField extends StringField {
 getLibrary("native").registerComponent("color", {
   importPath: "@formsey/fields-native/ColorField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<StringFieldDefinition, string>) => {
-    return html`<formsey-color id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-color>`
+    return html`<formsey-color id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-color>`
   }
 })

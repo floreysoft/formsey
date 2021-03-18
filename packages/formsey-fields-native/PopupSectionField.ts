@@ -1,29 +1,25 @@
 import { createField, Field, LabeledField } from '@formsey/core';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { ButtonFieldDefinition, FormDefinition, PopupSectionFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
-import { ValueChangedEvent } from '@formsey/core/ValueChangedEvent';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
-import { styleMap } from 'lit/directives/style-map';
 
 
 @customElement("formsey-popup-section")
-export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition, Object> {
-  @property({ converter: Object })
-  value: Object
-
+export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition, { [key: string]: any }> {
   @property({ converter: Boolean })
-  visible: boolean
+  visible: boolean = true
 
   @query("#form")
-  form: HTMLElement
+  form: HTMLElement | undefined
 
   @query("#glass")
-  glass: HTMLElement
+  glass: HTMLElement | undefined
 
   private untouched: boolean = true
   private left: string | undefined
@@ -32,7 +28,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   private bottom: string | undefined
   private maxWidth: string | undefined
   private maxHeight: string | undefined
-  private layoutController: LayoutController
+  private layoutController: LayoutController | undefined
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -40,18 +36,20 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined" && this.untouched) {
       this.value = this.definition.default
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+        this.dispatchEvent(new FieldChangeEvent(this.definition.name, this.value));
       }
     }
     return true
   }
 
   renderField() {
-    const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
-    const style = `left:${this.left || "auto"};right:${this.right || "auto"};top:${this.top || "auto"};bottom:${this.bottom || "auto"};position:fixed;width:${this.definition.width || "auto"};max-height:${this.maxHeight || "auto"};max-width:${this.maxWidth || "auto"};${formatter ? `${formatter.outerBoxStyle(this.layoutController?.layout)};${formatter.innerBoxStyle(this.layoutController?.layout)};${formatter.backgroundStyle(this.layoutController?.layout)}` : ""}`
-    return html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
+    if (this.definition) {
+      const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
+      const style = `left:${this.left || "auto"};right:${this.right || "auto"};top:${this.top || "auto"};bottom:${this.bottom || "auto"};position:fixed;width:${this.definition.width || "auto"};max-height:${this.maxHeight || "auto"};max-width:${this.maxWidth || "auto"};${formatter ? `${formatter.outerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.innerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.backgroundStyle?.(this.layoutController?.layout) || ""}` : ""}`
+      return html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
-    <div id="form" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", deferLayout: true, fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: ValueChangedEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
+    <div id="form" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", deferLayout: true, fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
+    }
   }
 
   open(e: CustomEvent) {
@@ -95,7 +93,9 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     e.preventDefault()
     e.stopPropagation()
     this.visible = false;
-    this.removeController(this.layoutController)
+    if (this.layoutController) {
+      this.removeController(this.layoutController)
+    }
   }
 
   public focusField(path: string) {
@@ -105,7 +105,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
       return (<any>child).focusField(path)
     } else if (this.form) {
       let child = this.form.firstElementChild as Field<any, any>
-      if (child && path.startsWith(child.path()) && typeof child['focusField'] == "function") {
+      if (child && path.startsWith(child.path()) && typeof (<any>child)['focusField'] == "function") {
         return (<any>child).focusField(path)
       }
     }
@@ -129,19 +129,19 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     this.dispatchEvent(new InvalidEvent(e.detail))
   }
 
-  protected changed(e: ValueChangedEvent<any>) {
+  protected changed(e: FieldChangeEvent<any>) {
     e.stopPropagation()
-    if (e.detail?.name) {
+    if (this.definition && e.detail?.name) {
       if (!this.definition.name) {
         // If this is an unnamed form, just pass event to parent
-        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+        this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
       } else {
         let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
         if (!this.value) {
           this.value = {}
         }
         this.value[name] = e.detail.value;
-        this.dispatchEvent(new ValueChangedEvent(e.type as "input" | "change" | "inputChange", e.detail.name, this.value));
+        this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value));
       }
     }
   }
@@ -150,7 +150,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
 getLibrary("native").registerComponent("popupSection", {
   importPath: "@formsey/fields-native/PopupSectionField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PopupSectionFieldDefinition, Object>) => {
-    return html`<formsey-popup-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
+    return html`<formsey-popup-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields

@@ -1,4 +1,5 @@
 import { CheckboxesFieldDefinition, Option, ValueChangedEvent } from '@formsey/core';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox";
 import "@material/mwc-checkbox/mwc-checkbox.js";
@@ -80,7 +81,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     this.value = values
     this.requestUpdate()
     if (this.definition.name) {
-      this.dispatchEvent(new ValueChangedEvent("inputChange", this.definition.name, this.value));
+      this.dispatchEvent(new FieldChangeEvent(this.definition.name, this.value));
     }
     if ((<Checkbox>e.target).value == "__other" && other) {
       this.updateComplete.then(() => {
@@ -103,6 +104,6 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
 getLibrary("material").registerComponent("checkboxes", {
   importPath: "@formsey/fields-material/CheckboxesField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
-    return html`<formsey-checkboxes-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-material>`
+    return html`<formsey-checkboxes-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-material>`
   }
 })
