@@ -96,7 +96,7 @@ export class Form extends Field<FieldDefinition, any> {
   anonymous: boolean | undefined
 
   @query(':first-child')
-  form: FormField | undefined
+  form: FormField<FormDefinition, any> | undefined
 
   @query('form')
   nativeForm: HTMLFormElement | undefined

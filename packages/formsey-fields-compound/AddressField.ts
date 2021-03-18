@@ -1,10 +1,10 @@
 import { CompoundField } from '@formsey/core';
 import { createField } from '@formsey/core/Field';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
-import { customElement, property } from "lit/decorators";
+import { customElement } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 
 
@@ -24,10 +24,8 @@ export interface AddressFieldDefinition extends FieldDefinition {
 }
 @customElement("formsey-address")
 export class AddressField extends CompoundField<AddressFieldDefinition, Object> {
-  @property({ converter: Object })
-  value: Object;
-
   renderField() {
+    if (!this.definition) return
     let fields: FieldDefinition[] = [];
     this.includeOptionalField(fields, this.definition.includeAddressLine1, "string", "addressLine1", this.definition.labelAddressLine1, "address-line1");
     this.includeOptionalField(fields, this.definition.includeAddressLine2, "string", "addressLine2", this.definition.labelAddressLine2, "address-line2");
@@ -49,6 +47,6 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
 getLibrary("native").registerComponent("address", {
   importPath: "@formsey/fields-compound/AddessField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<AddressFieldDefinition, Object>) => {
-    return html`<formsey-address id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-address>`
+    return html`<formsey-address id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-address>`
   }
 })

@@ -10,19 +10,17 @@ import { ifDefined } from 'lit/directives/if-defined';
 
 
 export interface CreditCardFieldDefinition extends FieldDefinition {
-  enabledAutofill : boolean
+  enabledAutofill: boolean
 }
 @customElement("formsey-creditcard")
 export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Object> {
-  @property({ converter: Object})
-  value: Object;
-
   renderField() {
+    if (!this.definition) return
     let fields: FieldDefinition[] = [];
     this.includeOptionalField(fields, true, "string", "cardnumber", "Card Number", this.definition.enabledAutofill ? "cc-number" : "off");
-    this.includeOptionalField(fields, true, "string", "cvc", "CVC",this.definition.enabledAutofill ? "cc-csc" : "off");
-    this.includeOptionalField(fields, true, "string", "cardholder", "Card Holder",this.definition.enabledAutofill ? "cc-name" : "off");
-    this.includeOptionalField(fields, true, "string", "expiry", "Expiry Date",this.definition.enabledAutofill ? "cc-exp" : "off");
+    this.includeOptionalField(fields, true, "string", "cvc", "CVC", this.definition.enabledAutofill ? "cc-csc" : "off");
+    this.includeOptionalField(fields, true, "string", "cardholder", "Card Holder", this.definition.enabledAutofill ? "cc-name" : "off");
+    this.includeOptionalField(fields, true, "string", "expiry", "Expiry Date", this.definition.enabledAutofill ? "cc-exp" : "off");
     let form = {
       type: "form",
       name: this.definition.name,
@@ -36,7 +34,7 @@ export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Ob
 
 getLibrary("native").registerComponent("creditCard", {
   importPath: "@formsey/fields-compound/CreditCardField",
-    template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id } : Resources<CreditCardFieldDefinition, Object> ) => {
-    return html`<formsey-creditcard id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-creditcard>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CreditCardFieldDefinition, Object>) => {
+    return html`<formsey-creditcard id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-creditcard>`
   }
 })

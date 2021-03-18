@@ -1,10 +1,10 @@
 import { CompoundField } from '@formsey/core';
 import { createField } from '@formsey/core/Field';
+import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { html } from "lit";
-import { customElement, property } from "lit/decorators";
+import { customElement } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 
 export interface NameFieldDefinition extends FieldDefinition {
@@ -14,10 +14,8 @@ export interface NameFieldDefinition extends FieldDefinition {
 }
 @customElement("formsey-name")
 export class NameField extends CompoundField<NameFieldDefinition, Object> {
-  @property({ converter: Object })
-  value: Object;
-
   renderField() {
+    if (!this.definition) return
     let fields: FieldDefinition[] = [];
     this.includeOptionalField(fields, this.definition.includePrefix, "string", "prefix", "Prefix", "honorific-prefix");
     this.includeOptionalField(fields, true, "string", "givenName", "Given name", "given-name");
@@ -39,6 +37,6 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
 getLibrary("native").registerComponent("name", {
   importPath: "@formsey/fields-compound/NameField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<NameFieldDefinition, Object>) => {
-    return html`<formsey-name id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-name>`
+    return html`<formsey-name id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-name>`
   }
 })

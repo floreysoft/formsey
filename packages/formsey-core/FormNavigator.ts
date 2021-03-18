@@ -1,11 +1,11 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { classMap } from 'lit/directives/class-map';
+import { ifDefined } from 'lit/directives/if-defined';
 import { FieldDefinition, FormDefinition, InputFieldDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
 import { get } from "./Form";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";
 import { Components } from "./Registry";
-
 interface FieldInfo {
   filled: boolean
   required: boolean
@@ -16,10 +16,10 @@ interface FieldInfo {
 @customElement("formsey-form-navigator")
 export class FormNavigator extends LitElement {
   @property({ converter: Object })
-  components: Components
+  components: Components<FieldDefinition, any> | undefined
 
   @property({ type: Object })
-  definition: FieldDefinition
+  definition: FieldDefinition | undefined
 
   @property({ type: Object, hasChanged(newVal, oldVal) { return true } })
   value: any
@@ -32,25 +32,25 @@ export class FormNavigator extends LitElement {
   }
 
   @property()
-  focusedPath: string
+  focusedPath: string | undefined
 
   @query("#prev")
-  previousError: HTMLButtonElement
+  previousError: HTMLButtonElement | undefined
 
   @query("#next")
-  nextError: HTMLButtonElement
+  nextError: HTMLButtonElement | undefined
 
   @query("#prevRequired")
-  previousRequired: HTMLButtonElement
+  previousRequired: HTMLButtonElement | undefined
 
   @query("#nextRequired")
-  nextRequired: HTMLButtonElement
+  nextRequired: HTMLButtonElement | undefined
 
   @query(".focused")
-  focused: HTMLElement
+  focused: HTMLElement | undefined
 
-  private _errors: InvalidErrors
-  private _errorsArray: [string, InvalidError][]
+  private _errors: InvalidErrors = new InvalidErrors()
+  private _errorsArray: [string, InvalidError][] = []
   private _allFields: FieldInfo[] = []
   private _requiredFields: FieldInfo[] = []
   private focusedError: number = -1
@@ -139,9 +139,9 @@ export class FormNavigator extends LitElement {
       requiredFilled += fieldInfo.required && fieldInfo.filled ? 1 : 0;
       totalFilled += fieldInfo.filled ? 1 : 0;
     })
-    let nav = html`<div class="allFields">${totalFilled} / ${this._allFields.length}</div><div class="requiredFields">${requiredFilled} / ${this._requiredFields.length} <button id="prevRequired" @click="${e => { this.focusRequired(this.focusedRequired - 1) }}"></button><button id="nextRequired" @click="${e => { this.focusRequired(this.focusedRequired + 1) }}">></button></div>`
+    let nav = html`<div class="allFields">${totalFilled} / ${this._allFields.length}</div><div class="requiredFields">${requiredFilled} / ${this._requiredFields.length} <button id="prevRequired" @click="${(e: Event) => { this.focusRequired(this.focusedRequired - 1) }}"></button><button id="nextRequired" @click="${(e: Event) => { this.focusRequired(this.focusedRequired + 1) }}">></button></div>`
     let errors = this._errorsArray ?
-      html`${this._errorsArray.length} errors <button id="prev" disabled @click="${e => { this.focusError(this.focusedError - 1) }}">Prev</button><button id="next" @click="${e => { this.focusError(this.focusedError + 1) }}">Next</button>` :
+      html`${this._errorsArray.length} errors <button id="prev" disabled @click="${(e: Event) => { this.focusError(this.focusedError - 1) }}">Prev</button><button id="next" @click="${(e: Event) => { this.focusError(this.focusedError + 1) }}">Next</button>` :
       html`No errors`
     return html`<div class="dots">${dots}</div><div class="nav">${nav}${errors}</div>`
   }
@@ -150,8 +150,8 @@ export class FormNavigator extends LitElement {
     this.focusedRequired = index
     this._requiredFields.forEach((fieldInfo, required) => {
       if (required == index) {
-        this.previousRequired.disabled = index == 0
-        this.nextRequired.disabled = index == this._requiredFields.length - 1
+        this.previousRequired!.disabled = index == 0
+        this.nextRequired!.disabled = index == this._requiredFields.length - 1
         this.dispatchEvent(new CustomEvent('focusField', { detail: fieldInfo.path }))
       }
     })
@@ -159,54 +159,56 @@ export class FormNavigator extends LitElement {
 
   focusError(index: number) {
     this.focusedError = index
-    this.previousError.disabled = index == 0
-    this.nextError.disabled = index == this._errorsArray.length - 1
+    this.previousError!.disabled = index == 0
+    this.nextError!.disabled = index == this._errorsArray.length - 1
     this.dispatchEvent(new CustomEvent('focusField', { detail: this._errorsArray[index][0] }))
   }
 
   private addFields(fields: FieldInfo[], dots: TemplateResult[], fieldDefinition: FieldDefinition, path?: string) {
     path = path ? path + (fieldDefinition.name ? "." + fieldDefinition.name : '') : fieldDefinition.name
-    let nestedDots: TemplateResult[] = []
-    if (fieldDefinition.type == "repeatingSection") {
-      fieldDefinition = (<FormDefinition>fieldDefinition)
-      const sections = get(this.value, path)
-      if (sections) {
-        for (let i = 0; i < sections.length; i++) {
-           this.addFields(fields, dots, fieldDefinition, path + "[" + i + "]")
+    if (path) {
+      let nestedDots: TemplateResult[] = []
+      if (fieldDefinition.type == "repeatingSection") {
+        fieldDefinition = (<FormDefinition>fieldDefinition)
+        const sections = get(this.value, path)
+        if (sections) {
+          for (let i = 0; i < sections.length; i++) {
+            this.addFields(fields, dots, fieldDefinition, path + "[" + i + "]")
+          }
         }
-      }
-    } else if (fieldDefinition.type == "optionalSection") {
-      const checked = get(this.value, path)
-      if (checked) {
-        this.addField(fields, nestedDots, fieldDefinition, path)
-        for (let field of (<OptionalSectionFieldDefinition>fieldDefinition).fields) {
-          this.addFields(fields, nestedDots, field, path)
+      } else if (fieldDefinition.type == "optionalSection") {
+        const checked = get(this.value, path)
+        if (checked) {
+          this.addField(fields, nestedDots, fieldDefinition, path)
+          for (let field of (<OptionalSectionFieldDefinition>fieldDefinition).fields) {
+            this.addFields(fields, nestedDots, field, path)
+          }
+          dots.push(html`<div class="fieldset">${nestedDots}</div>`)
+        } else {
+          this.addField(fields, dots, fieldDefinition, path)
         }
-      dots.push(html`<div class="fieldset">${nestedDots}</div>`)
-      } else {
-        this.addField(fields, dots, fieldDefinition, path)
-      }
-    } else if (fieldDefinition.type == "selectableSection") {
-      this.addField(fields, nestedDots, fieldDefinition, path + ".selection")
-      let values = (<SelectableSectionFieldDefinition>fieldDefinition).selections.map(selection => (selection.value ? selection.value : selection.label));
-      let index = values.indexOf(get(this.value, path + ".selection"));
-      const selection = (<SelectableSectionFieldDefinition>fieldDefinition).selections[index]
-      if (selection) {
-        for (let field of selection.fields) {
-          this.addFields(fields, nestedDots, field, path + ".value")
-        }
-      }
-      dots.push(html`<div class="fieldset">${nestedDots}</div>`)
-    } else {
-      if (fieldDefinition.hasOwnProperty('fields')) {
-        for (let field of (<FormDefinition>fieldDefinition).fields) {
-          this.addFields(fields, nestedDots, field, path)
+      } else if (fieldDefinition.type == "selectableSection") {
+        this.addField(fields, nestedDots, fieldDefinition, path + ".selection")
+        let values = (<SelectableSectionFieldDefinition>fieldDefinition).selections.map(selection => (selection.value ? selection.value : selection.label));
+        let index = values.indexOf(get(this.value, path + ".selection"));
+        const selection = (<SelectableSectionFieldDefinition>fieldDefinition).selections[index]
+        if (selection) {
+          for (let field of selection.fields) {
+            this.addFields(fields, nestedDots, field, path + ".value")
+          }
         }
         dots.push(html`<div class="fieldset">${nestedDots}</div>`)
       } else {
-        const component = this.components[fieldDefinition.type]
-        if (component && component.focusable) {
-          this.addField(fields, dots, fieldDefinition, path)
+        if (fieldDefinition.hasOwnProperty('fields')) {
+          for (let field of (<FormDefinition>fieldDefinition).fields) {
+            this.addFields(fields, nestedDots, field, path)
+          }
+          dots.push(html`<div class="fieldset">${nestedDots}</div>`)
+        } else if (fieldDefinition.type) {
+          const component = this.components?.[fieldDefinition.type]
+          if (component && component.focusable) {
+            this.addField(fields, dots, fieldDefinition, path)
+          }
         }
       }
     }
@@ -215,7 +217,7 @@ export class FormNavigator extends LitElement {
   private addField(fields: FieldInfo[], dots: TemplateResult[], fieldDefinition: FieldDefinition, path: string) {
     const focused = this.focusedPath == path
     const filled = !!get(this.value, path)
-    fields.push({ filled, required: (<InputFieldDefinition>fieldDefinition).required, path, focused })
-    dots.push(html`<div class="${classMap({ dot: true, filled: filled && !this._errors, invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required, focused })}" title="${fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name}" @click="${(e: Event) => { console.log("Dot path=" + path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
+    fields.push({ filled, required: (<InputFieldDefinition>fieldDefinition).required || false, path, focused })
+    dots.push(html`<div class="${classMap({ dot: true, filled: filled && !this._errors, invalid: this._errors && !!this._errors.get(path), required: (<InputFieldDefinition>fieldDefinition).required || false, focused })}" title="${ifDefined(fieldDefinition.label ? fieldDefinition.label : fieldDefinition.name)}" @click="${(e: Event) => { console.log("Dot path=" + path); this.dispatchEvent(new CustomEvent('focusField', { detail: path })) }}"></div>`)
   }
 }
