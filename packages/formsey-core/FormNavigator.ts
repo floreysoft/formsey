@@ -16,7 +16,7 @@ interface FieldInfo {
 @customElement("formsey-form-navigator")
 export class FormNavigator extends LitElement {
   @property({ converter: Object })
-  components: Components<FieldDefinition, any> | undefined
+  components: Components | undefined
 
   @property({ type: Object })
   definition: FieldDefinition | undefined

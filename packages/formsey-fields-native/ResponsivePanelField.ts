@@ -64,7 +64,7 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
   }
 
   private resize(width: number) {
-    if (width < DEFAULT_BREAKPOINTS.s) {
+    if (width < DEFAULT_BREAKPOINTS.s!) {
       this.layout = "tabs"
     } else {
       this.layout = "split"

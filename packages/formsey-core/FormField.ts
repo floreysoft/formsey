@@ -7,7 +7,7 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
 import { LayoutController } from "./LayoutController";
-import { Breakpoints, Layout, Size } from "./Layouts";
+import { Breakpoints, Layout } from "./Layouts";
 import { Components, getFormatter, getLibrary, Resources } from './Registry';
 import { FieldChangeEvent } from './FieldChangeEvent';
 import { FieldInputEvent } from "./FieldInputEvent";
@@ -16,7 +16,7 @@ export function isFormDefinition(definition?: FieldDefinition): definition is Fo
   return (<any>definition)?.['fields'] !== undefined;
 }
 
-export function removeDeletedFields(components: Components<FormDefinition, any>, definition: FormDefinition, value: { [key: string]: any }) {
+export function removeDeletedFields(components: Components, definition: FormDefinition, value: { [key: string]: any }) {
   if (definition && definition.fields && value) {
     // Only keep fields that are defined
     let newValue = {}
@@ -27,7 +27,7 @@ export function removeDeletedFields(components: Components<FormDefinition, any>,
   }
 }
 
-function addDefinedFields(components: Components<FormDefinition, any>, fields: FieldDefinition[], value: { [key: string]: any }, newValue: { [key: string]: any }) {
+function addDefinedFields(components: Components, fields: FieldDefinition[], value: { [key: string]: any }, newValue: { [key: string]: any }) {
   for (let field of fields) {
     if (typeof field.name !== "undefined" && field.name !== "") {
       if (typeof value[field.name] !== "undefined") {
@@ -49,7 +49,7 @@ function addMemberValueIfPresent(name: string, newValue: { [key: string]: any },
   }
 }
 
-export const SUPPORTED_BREAKPOINTS: Size[] = ["xs", "s", "m", "l", "xl"]
+export const SUPPORTED_BREAKPOINTS: string[] = ["xs", "s", "m", "l", "xl"]
 
 export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xs": 320,
@@ -57,8 +57,8 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "m": 768,
   "l": 1024,
   "xl": 1366,
-
 }
+
 @customElement("formsey-form-field")
 export class FormField<D extends FormDefinition, V extends { [key: string]: any }> extends LabeledField<FormDefinition, { [key: string]: any }> {
   @property({ converter: Object })
@@ -101,7 +101,7 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     this.addController(this.layoutController)
   }
 
-  renderField() : TemplateResult | undefined {
+  renderField(): TemplateResult | undefined {
     let templates: TemplateResult[] = []
     let hidden: TemplateResult[] = []
     this.layoutController.updateLayout(this.definition?.layout)

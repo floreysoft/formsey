@@ -2,13 +2,13 @@ import { ReactiveController } from "lit";
 import { Field } from "./Field";
 import { LayoutFieldDefinition } from "./FieldDefinitions";
 import { DEFAULT_BREAKPOINTS, SUPPORTED_BREAKPOINTS } from "./FormField";
-import { Layout, ResponsiveLayout, Size } from "./Layouts";
+import { Layout, ResponsiveLayout } from "./Layouts";
 
 export class LayoutController implements ReactiveController {
   public layout: Layout | undefined
 
   private host: Field<LayoutFieldDefinition, any>
-  private size: Size | undefined
+  private size: string | undefined
   private resizeObserver: ResizeObserver
   private element: HTMLElement
 
@@ -31,7 +31,7 @@ export class LayoutController implements ReactiveController {
   }
 
   hostUpdate() {
-    this.layout = this.size && this.host.definition?.layout?.[this.size] || this.layout
+    this.layout = this.size && (<any>this.host.definition?.layout)?.[this.size] || this.layout
   }
 
   updateLayout(layout?: ResponsiveLayout) {
@@ -52,7 +52,7 @@ export class LayoutController implements ReactiveController {
     for (let size of SUPPORTED_BREAKPOINTS) {
       let breakpoint = (<any>this.host.definition?.layout?.breakpoints)?.[size]
       if (typeof breakpoint === "undefined") {
-        breakpoint = DEFAULT_BREAKPOINTS[size]
+        breakpoint = (<any>DEFAULT_BREAKPOINTS)[size]
       }
       if (breakpoint > availableWidth) {
         detectedSize = size

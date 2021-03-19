@@ -68,14 +68,14 @@ export interface Component<D extends FieldDefinition, V> {
   nestedFields?: (definition: D, value: V) => FieldDefinition[]
 }
 
-export interface Components<D extends FieldDefinition, V> {
-  [index: string]: Component<D, V>
+export interface Components {
+  [index: string]: Component<any, any>
 }
 
-export type Settings = { [key: string] : any }
+export type Settings = { [key: string]: any }
 
 export class Library {
-  components: Components<any, any> = {}
+  components: Components = {}
   icon?: TemplateResult
   displayName?: string
   settingsEditor?: FieldDefinition
