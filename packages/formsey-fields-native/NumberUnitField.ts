@@ -53,7 +53,7 @@ export class NumberUnitField extends LabeledField<NumberUnitFieldDefinition, str
 
 getLibrary("native").registerComponent("numberUnit", {
   importPath: "@formsey/fields-native/NumberUnitField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
     return html`<formsey-numberunit id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></formsey-numberunit>`
   }
 })

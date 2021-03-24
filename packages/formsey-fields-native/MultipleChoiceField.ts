@@ -83,7 +83,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
 
 getLibrary("native").registerComponent("multipleChoice", {
   importPath: "@formsey/fields-native/MultipleChoiceField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string>) => {
-    return html`<formsey-multiple-choice id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${<string>value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-multiple-choice>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string>) => {
+    return html`<formsey-multiple-choice id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${<string>value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-multiple-choice>`
   }
 })

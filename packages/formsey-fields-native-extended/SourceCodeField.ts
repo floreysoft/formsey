@@ -67,7 +67,7 @@ export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, str
 
 getLibrary("native").registerComponent("sourceCode", {
   importPath: "@formsey/fields-native-extended/SourceCodeField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SourceCodeFieldDefinition, string>) => {
-    return html`<formsey-sourcecode id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-sourcecode>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<SourceCodeFieldDefinition, string>) => {
+    return html`<formsey-sourcecode id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-sourcecode>`
   }
 })

@@ -105,7 +105,7 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
 
 getLibrary("native").registerComponent("combobox", {
   importPath: "@formsey/fields-native/ComboboxField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
     return html`<formsey-combobox id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></formsey-combobox>`
   }
 })

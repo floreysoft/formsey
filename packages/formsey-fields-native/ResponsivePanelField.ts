@@ -60,7 +60,7 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 
   private resize(width: number) {
@@ -74,8 +74,8 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
 
 getLibrary("native").registerComponent("responsivePanel", {
   importPath: "@formsey/fields-native/ResponsivePanelField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
-    return html`<formsey-responsive-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-responsive-panel>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
+    return html`<formsey-responsive-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-responsive-panel>`
   },
   nestedFields: (definition: ResponsivePanelFieldDefinition, value: any) => {
     const fields = []

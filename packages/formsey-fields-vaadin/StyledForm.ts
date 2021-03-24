@@ -57,7 +57,7 @@ export class StyledForm extends Form {
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.type as "change" | "input" | "inputChange", e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 
   protected invalid(e: InvalidEvent) {
@@ -67,7 +67,7 @@ export class StyledForm extends Form {
 
 getLibrary("vaadin").registerComponent("styledForm", {
   importPath: "@formsey/fields-vaadin/StyledForm",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
-    return html`<formsey-styled-form-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form-vaadin>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
+    return html`<formsey-styled-form-vaadin id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-styled-form-vaadin>`
   }
 })

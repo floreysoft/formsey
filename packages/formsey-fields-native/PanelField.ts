@@ -31,14 +31,14 @@ export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 }
 
 getLibrary("native").registerComponent("panel", {
   importPath: "@formsey/fields-native/PanelField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<PanelFieldDefinition, Object>) => {
-    return html`<formsey-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-panel>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<PanelFieldDefinition, Object>) => {
+    return html`<formsey-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-panel>`
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields

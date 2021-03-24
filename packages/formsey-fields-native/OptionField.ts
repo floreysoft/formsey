@@ -62,7 +62,7 @@ export class OptionField extends Field<Option, boolean> {
 
 getLibrary("native").registerComponent("option", {
   importPath: "@formsey/fields-native/OptionField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler }: Resources<Option, boolean>) => {
-    return html`<formsey-option .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-option>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler }: Resources<Option, boolean>) => {
+    return html`<formsey-option .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-option>`
   }
 })

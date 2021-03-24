@@ -101,7 +101,7 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
 
 getLibrary("material").registerComponent("checkboxes", {
   importPath: "@formsey/fields-material/CheckboxesField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
     return html`<formsey-checkboxes-material id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes-material>`
   }
 })

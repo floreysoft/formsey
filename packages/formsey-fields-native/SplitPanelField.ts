@@ -13,7 +13,7 @@ export class SplitPanelField extends Field<SplitPanelDefinition, any> {
   value: any | undefined
 
   render() {
-    if ( !this.definition ) return
+    if (!this.definition) return
     return html`<fs-splitter direction=${this.definition.direction}>
     <div id="first">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...this.definition.first, type: this.definition.first.type || "form" }, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
     <div id="second">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...this.definition.second, type: this.definition.second.type || "form" }, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>
@@ -21,14 +21,14 @@ export class SplitPanelField extends Field<SplitPanelDefinition, any> {
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 }
 
 getLibrary("native").registerComponent("horizontalSplitPanel", {
   importPath: "@formsey/fields-native/SplitPanel",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
-    return html`<formsey-split-panel id="${ifDefined(id)}" .library=${library} .context=${context} .settings=${settings} .definition=${{ ...definition, direction: "horizontal" } as any} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-split-panel>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
+    return html`<formsey-split-panel id="${ifDefined(id)}" .library=${library} .context=${context} .settings=${settings} .definition=${{ ...definition, direction: "horizontal" } as any} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-split-panel>`
   },
   nestedFields: (definition: SplitPanelDefinition, value: any) => {
     const fields = []
@@ -40,8 +40,8 @@ getLibrary("native").registerComponent("horizontalSplitPanel", {
 
 getLibrary("native").registerComponent("verticalSplitPanel", {
   importPath: "@formsey/fields-native/SplitPanel",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
-    return html`<formsey-split-panel id="${ifDefined(id)}" .library=${library} .context=${context} .settings=${settings} .definition=${{ ...definition, direction: "vertical" } as any} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-split-panel>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<SplitPanelDefinition, any>) => {
+    return html`<formsey-split-panel id="${ifDefined(id)}" .library=${library} .context=${context} .settings=${settings} .definition=${{ ...definition, direction: "vertical" } as any} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-split-panel>`
   },
   nestedFields: (definition: SplitPanelDefinition, value: any) => {
     const fields = []

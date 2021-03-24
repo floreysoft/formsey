@@ -136,8 +136,8 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
 
 getLibrary("native").registerComponent("repeatingSection", {
   importPath: "@formsey/fields-native/RepeatingSectionField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<RepeatingFieldDefinition, Object[]>) => {
-    return html`<formsey-repeating-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-repeating-section>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<RepeatingFieldDefinition, Object[]>) => {
+    return html`<formsey-repeating-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-repeating-section>`
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields

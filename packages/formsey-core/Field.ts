@@ -1,13 +1,13 @@
 import { LitElement, TemplateResult } from "lit";
 import { property } from "lit/decorators";
 import { FieldBlurEvent } from './FieldBlurEvent';
+import { FieldChangeEvent } from './FieldChangeEvent';
 import { FieldClickEvent } from './FieldClickEvent';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { FieldFocusEvent } from './FieldFocusEvent';
+import { FieldInputEvent } from "./FieldInputEvent";
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { getDefaultLibrary, getLibraries, Library, Resources, Settings } from './Registry';
-import { FieldChangeEvent } from './FieldChangeEvent';
-import { FieldInputEvent } from "./FieldInputEvent";
 
 export const createField = (resources: Resources<FieldDefinition, any>): TemplateResult | undefined => {
   if (!resources.definition?.type) {
@@ -125,34 +125,36 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     return true
   }
 
-  protected changed(e: any) {
+  protected changed(e: Event) {
+    this.consumeEvent(e)
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+  }
+
+  protected inputted(e: Event) {
+    this.consumeEvent(e)
+    this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
+  }
+
+  protected consumeEvent(e: Event) {
     e.stopPropagation()
-    if (this.value !== e.currentTarget?.value) {
-      this.value = e.currentTarget.value;
-      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    const value = (<HTMLInputElement>e.currentTarget)?.value as any
+    if (value && this.value !== value) {
+      this.value = value;
     }
   }
 
-  protected inputted(e: any) {
-    e.stopPropagation()
-    if (this.value !== e.currentTarget?.value) {
-      this.value = e.currentTarget.value;
-      this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
-    }
-  }
-
-  protected clicked(e: any) {
+  protected clicked(e: CustomEvent) {
     e.stopPropagation()
     this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value));
   }
 
-  protected focused(e: any) {
+  protected focused(e: Event) {
     e.stopPropagation()
     e.preventDefault()
     this.dispatchEvent(new FieldFocusEvent(this.path()));
   }
 
-  protected blurred(e: any) {
+  protected blurred(e: Event) {
     e.stopPropagation()
     e.preventDefault()
     this.dispatchEvent(new FieldBlurEvent(this.path()));

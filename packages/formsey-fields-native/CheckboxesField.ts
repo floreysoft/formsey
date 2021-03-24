@@ -86,7 +86,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
 
 getLibrary("native").registerComponent("checkboxes", {
   importPath: "@formsey/fields-native/CheckboxesField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<CheckboxesFieldDefinition, string[]>) => {
     return html`<formsey-checkboxes id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-checkboxes>`
   }
 })

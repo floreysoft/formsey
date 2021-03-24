@@ -28,7 +28,7 @@ export class CurrencyField extends LabeledField<FieldDefinition, string> {
 
 getLibrary("native").registerComponent("currency", {
   importPath: "@formsey/fields-native/CurrencyField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
     return html`<formsey-currency id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-currency>`
   }
 })

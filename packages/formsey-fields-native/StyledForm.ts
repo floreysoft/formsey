@@ -1,6 +1,7 @@
 import { createField } from '@formsey/core/Field';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
 import { Form } from '@formsey/core/Form';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -75,7 +76,7 @@ export class StyledForm extends Form {
   render() {
     if (!this.definition) return
     let field = undefined
-    field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
+    field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), inputHandler: (event: FieldChangeEvent<any>) => this.inputted(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined((<any>this.definition)?.['action'])}" method="${ifDefined((<any>this.definition)?.['method'])}" target="${ifDefined((<any>this.definition)?.['target'])}">${field}<slot></slot></form>`
     const classes = `themed ${this.settings['mode'] || ""}`
     return html`<div class=${classes} style=${this._style}>${form}</div>`
@@ -97,8 +98,12 @@ export class StyledForm extends Form {
     return this.parentPath || ""
   }
 
+  protected inputted(e: FieldInputEvent<any>) {
+    this.dispatchEvent(new FieldInputEvent<any>(e.detail?.name, e.detail?.value));
+  }
+
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.type as "change" | "input" | "inputChange", e.detail?.name, e.detail?.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail?.name, e.detail?.value));
   }
 
   protected invalid(e: InvalidEvent) {
@@ -108,7 +113,7 @@ export class StyledForm extends Form {
 
 getLibrary("native").registerComponent("styledForm", {
   importPath: "@formsey/fields-native/StyledForm",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
-    return html`<formsey-styled-form id="${ifDefined(id)}" .library=${library} .settings=${settings as any} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-styled-form>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
+    return html`<formsey-styled-form id="${ifDefined(id)}" .library=${library} .settings=${settings as any} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-styled-form>`
   }
 })

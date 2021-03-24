@@ -46,7 +46,7 @@ export class AddressField extends CompoundField<AddressFieldDefinition, Object> 
 
 getLibrary("native").registerComponent("address", {
   importPath: "@formsey/fields-compound/AddessField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<AddressFieldDefinition, Object>) => {
-    return html`<formsey-address id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-address>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<AddressFieldDefinition, Object>) => {
+    return html`<formsey-address id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-address>`
   }
 })

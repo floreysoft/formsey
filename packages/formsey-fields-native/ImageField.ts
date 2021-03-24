@@ -30,7 +30,7 @@ export class ImageField extends LabeledField<ImageFieldDefinition, string> {
 
 getLibrary("native").registerComponent("image", {
   importPath: "@formsey/fields-native/ImageField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<ImageFieldDefinition, string>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ImageFieldDefinition, string>) => {
     return html`<formsey-image id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @invalid=${invalidHandler}></formsey-image>`
   }
 })

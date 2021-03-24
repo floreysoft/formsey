@@ -32,7 +32,7 @@ export class LocaleField extends LabeledField<FieldDefinition, string> {
 
 getLibrary("native").registerComponent("locale", {
   importPath: "@formsey/fields-native/LocaleField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<FieldDefinition, string>) => {
     return html`<formsey-locale id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @invalid=${invalidHandler}></formsey-locale>`
   }
 })

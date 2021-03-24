@@ -1,4 +1,4 @@
-import { InputFieldDefinition, LabeledField, StringFieldDefinition } from '@formsey/core';
+import { FieldChangeEvent, FieldInputEvent, InputFieldDefinition, LabeledField, StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html } from "lit";
 import { property, query } from "lit/decorators";

@@ -49,7 +49,7 @@ export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.type as "input" | "change" | "inputChange", e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 
   private select(index: number, value: string) {
@@ -86,8 +86,8 @@ export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }
 
 getLibrary("native").registerComponent("tabs", {
   importPath: "@formsey/fields-native/TabsField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<TabsFieldDefinition, Object>) => {
-    return html`<formsey-tabs id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @click=${clickHandler} @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-tabs>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<TabsFieldDefinition, Object>) => {
+    return html`<formsey-tabs id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @click=${clickHandler} @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-tabs>`
   },
   nestedFields: (definition: TabsFieldDefinition, value: any) => {
     const fields: FieldDefinition[] = []

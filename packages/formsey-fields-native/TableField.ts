@@ -256,9 +256,9 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
 
 getLibrary("native").registerComponent("table", {
   importPath: "@formsey/fields-native/TableField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
     // value = { ...value, "data": DUMMY_DATA }
-    return html`<formsey-table id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-table>`
+    return html`<formsey-table id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-table>`
   },
   nestedFields: (definition: TableFieldDefinition, value: any) => {
     return definition.fields

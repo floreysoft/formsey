@@ -36,7 +36,7 @@ export class NameField extends CompoundField<NameFieldDefinition, Object> {
 
 getLibrary("native").registerComponent("name", {
   importPath: "@formsey/fields-compound/NameField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<NameFieldDefinition, Object>) => {
-    return html`<formsey-name id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @inputChange="${changeHandler}" @invalid=${invalidHandler}></formsey-name>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<NameFieldDefinition, Object>) => {
+    return html`<formsey-name id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-name>`
   }
 })

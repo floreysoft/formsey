@@ -22,7 +22,7 @@ export class LabelField extends LabeledField<LabelFieldDefinition, any> {
 }
 getLibrary("native").registerComponent("label", {
   importPath: "@formsey/fields-native/LabelField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, invalidHandler, id }: Resources<LabelFieldDefinition, any>) => {
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<LabelFieldDefinition, any>) => {
     return html`<formsey-label id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath}></formsey-label>`
   }
 })
