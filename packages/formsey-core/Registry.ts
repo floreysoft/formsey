@@ -55,7 +55,7 @@ export interface Resources<D extends FieldDefinition, V> {
   errors?: InvalidErrors
   inputHandler?: (e: FieldInputEvent<any>) => void
   changeHandler?: (e: FieldChangeEvent<any>) => void
-  clickHandler?: (e: FieldClickEvent<any>) => void
+  clickHandler?: (e: FieldClickEvent) => void
   invalidHandler?: (e: InvalidEvent) => void
 }
 
@@ -91,7 +91,7 @@ export interface Libraries {
   [index: string]: Library
 }
 
-export interface Editor extends FieldDefinition {
+export interface Editor extends FormDefinition {
   title: string
   icon: TemplateResult
   interaction?: string

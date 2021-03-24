@@ -7,7 +7,7 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
 import { LayoutController } from "./LayoutController";
-import { Breakpoints, Layout } from "./Layouts";
+import { Breakpoints, Layout, Size } from "./Layouts";
 import { Components, getFormatter, getLibrary, Resources } from './Registry';
 import { FieldChangeEvent } from './FieldChangeEvent';
 import { FieldInputEvent } from "./FieldInputEvent";
@@ -49,14 +49,14 @@ function addMemberValueIfPresent(name: string, newValue: { [key: string]: any },
   }
 }
 
-export const SUPPORTED_BREAKPOINTS: string[] = ["xs", "s", "m", "l", "xl"]
+export const SUPPORTED_BREAKPOINTS: Size[] = ["xs", "s", "m", "l", "xl"]
 
 export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xs": 320,
   "s": 568,
   "m": 768,
   "l": 1024,
-  "xl": 1366,
+  "xl": 1366
 }
 
 @customElement("formsey-form-field")
@@ -109,7 +109,7 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     if (this.definition?.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         const value = this.value && field.name ? this.value[field.name] : this.value
-        let fieldTemplate = createField({ library: this.library, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), clickHandler: (event: FieldClickEvent<any>) => this.clicked(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+        let fieldTemplate = createField({ library: this.library, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), clickHandler: (event: FieldClickEvent) => this.clicked(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
         if (fieldTemplate) {
           if (field.type == "hidden") {
             hidden.push(fieldTemplate)

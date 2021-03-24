@@ -1,19 +1,11 @@
-export interface Breakpoints {
-  "xs"?: number
-  "s"?: number
-  "m"?: number
-  "l"?: number
-  "xl"?: number
-}
 
-export interface ResponsiveLayout {
+export type Size = "xs" | "s" | "m" | "l" | "xl"
+export const SIZES = ["xs", "s", "m", "l", "xl"] as Size[]
+
+export type Breakpoints = Partial<Record<Size, number>>
+export type ResponsiveLayout = {
   breakpoints?: Breakpoints
-  "xs"?: Layout
-  "s"?: Layout
-  "m"?: Layout
-  "l"?: Layout
-  "xl"?: Layout
-}
+} & Partial<Record<Size, Layout>>
 
 export interface Layout {
   formatter: string
@@ -61,9 +53,26 @@ export interface AreasLayout extends BoxLayout {
   areas: string[]
   alignments: {
     area: string,
-    horizontal: string,
-    vertical: string
+    horizontal?: string,
+    vertical?: string
   }[]
+}
+
+export type Column = {
+  field: string
+  visible?: boolean
+  searchable?: boolean
+  sortable?: boolean
+  horizontal?: "left" | "center" | "right",
+  width?: {
+    selection: "auto" | "minmax"
+    value?: {
+      minWidth?: number
+      minWidthUnit?: "em" | "px"
+      maxWidth?: number
+      maxWidthUnit?: "em" | "px"
+    }
+  }
 }
 
 export interface TableLayout extends BoxLayout {
@@ -72,20 +81,5 @@ export interface TableLayout extends BoxLayout {
   rowHeight?: "s" | "m" | "l" | "xl"
   fill?: "grow" | "shrink"
   fixedColumns?: number
-  columns: {
-    field: string
-    visible?: boolean
-    searchable?: boolean
-    sortable?: boolean
-    horizontal?: "left" | "center" | "right",
-    width?: {
-      selection: "auto" | "minmax"
-      value?: {
-        minWidth?: number
-        minWidthUnit?: "em" | "px"
-        maxWidth?: number
-        maxWidthUnit?: "em" | "px"
-      }
-    }
-  }[]
+  columns: Column[]
 }

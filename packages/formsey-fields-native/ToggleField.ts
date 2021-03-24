@@ -8,26 +8,33 @@ import { customElement, property } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { ifDefined } from 'lit/directives/if-defined';
 
+function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
+  if (val === undefined || val === null) {
+    throw new Error(
+      `Expected 'val' to be defined, but received ${val}`
+    );
+  }
+}
+
 @customElement("formsey-toggle")
 export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
   @property({ converter: String })
   value: string | undefined
 
   renderField() {
-    if (this.definition) {
-      const buttons = []
-      for (let i = 0; i < this.definition.buttons?.length; i++) {
-        const button = this.definition.buttons[i]
-        const icon = typeof button.icon == "string" ? getIcon(button.icon as string) : button.icon
-        const text = button.text ? html`<span>${button.text}</span>` : undefined
-        let color
-        if (button.color) {
-          color = `background-color:${button.color}`
-        }
-        buttons.push(html`<button type="button" class=${classMap({ left: button?.align == "left" })} style=${ifDefined(color)} ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}${text}</button>`)
+    assertIsDefined(this.definition)
+    const buttons = []
+    for (let i = 0; i < this.definition.buttons?.length; i++) {
+      const button = this.definition.buttons[i]
+      const icon = typeof button.icon == "string" ? getIcon(button.icon as string) : button.icon
+      const text = button.text ? html`<span>${button.text}</span>` : undefined
+      let color
+      if (button.color) {
+        color = `background-color:${button.color}`
       }
-      return html`<div @select=${this.select}>${buttons}</div>`
+      buttons.push(html`<button type="button" class=${classMap({ left: button?.align == "left" })} style=${ifDefined(color)} ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}${text}</button>`)
     }
+    return html`<div @select=${this.select}>${buttons}</div>`
   }
 
   private select(e: Event, value?: string) {
