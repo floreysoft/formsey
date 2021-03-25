@@ -34,8 +34,8 @@ export class NumberUnitField extends LabeledField<NumberUnitFieldDefinition, str
 
   renderField() {
     if (this.definition) {
-      const number = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "number", name: "value", min: this.definition.min, max: this.definition.max, step: this.definition.step } as NumberFieldDefinition, value: this._value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.valueChanged(event) })
-      const toggle = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "toggle", name: "unit", buttons: this.definition.buttons } as ToggleFieldDefinition, value: this._unit, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.unitChanged(event) })
+      const number = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "number", name: "value", min: this.definition.min, max: this.definition.max, step: this.definition.step } as NumberFieldDefinition, value: this._value, parentPath: this.path(), errors: this.errors, changeHandler: this.valueChanged })
+      const toggle = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "toggle", name: "unit", buttons: this.definition.buttons } as ToggleFieldDefinition, value: this._unit, parentPath: this.path(), errors: this.errors, changeHandler: this.unitChanged })
       return html`<div class="nu">${number}${toggle}</div>`
     }
   }
@@ -54,6 +54,6 @@ export class NumberUnitField extends LabeledField<NumberUnitFieldDefinition, str
 getLibrary("native").registerComponent("numberUnit", {
   importPath: "@formsey/fields-native/NumberUnitField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
-    return html`<formsey-numberunit id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></formsey-numberunit>`
+    return html`<formsey-numberunit id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-numberunit>`
   }
 })

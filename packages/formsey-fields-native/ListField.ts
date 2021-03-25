@@ -20,7 +20,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
 
   renderField() {
     if (this.definition) {
-      const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, inputHandler: (event: FieldChangeEvent<any>) => this.search(event) })}</div>` : undefined
+      const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, inputHandler: this.search })}</div>` : undefined
       let visible = 0
       this.firstMatchingOption = undefined
       return html`${search}<div class="options">${this.definition.options?.map((option) => {
@@ -117,6 +117,6 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
 getLibrary("native").registerComponent("list", {
   importPath: "@formsey/fields-native/ListField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ListFieldDefinition, string | string[]>) => {
-    return html`<formsey-list id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-list>`
+    return html`<formsey-list id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change=${changeHandler} @input=${inputHandler} @invalid=${invalidHandler}></formsey-list>`
   }
 })

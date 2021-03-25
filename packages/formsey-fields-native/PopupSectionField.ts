@@ -1,4 +1,4 @@
-import { createField, Field, LabeledField } from '@formsey/core';
+import { createField, Field, FieldInputEvent, LabeledField } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { ButtonFieldDefinition, FormDefinition, PopupSectionFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
@@ -46,9 +46,9 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     if (this.definition) {
       const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
       const style = `left:${this.left || "auto"};right:${this.right || "auto"};top:${this.top || "auto"};bottom:${this.bottom || "auto"};position:fixed;width:${this.definition.width || "auto"};max-height:${this.maxHeight || "auto"};max-width:${this.maxWidth || "auto"};${formatter ? `${formatter.outerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.innerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.backgroundStyle?.(this.layoutController?.layout) || ""}` : ""}`
-      return html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.open(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}
+      return html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: this.open, invalidHandler: this.invalid })}
     ${this.visible ? html`<div id="glass" @click="${this.close}"></div>
-    <div id="form" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", deferLayout: true, fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`
+    <div id="form" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", deferLayout: true, fields: this.definition.fields, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.changed, invalidHandler: this.invalid })}</div>` : undefined}`
     }
   }
 
@@ -141,7 +141,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
           this.value = {}
         }
         this.value[name] = e.detail.value;
-        this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value));
+        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
       }
     }
   }
@@ -150,7 +150,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
 getLibrary("native").registerComponent("popupSection", {
   importPath: "@formsey/fields-native/PopupSectionField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<PopupSectionFieldDefinition, Object>) => {
-    return html`<formsey-popup-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
+    return html`<formsey-popup-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-popup-section>`
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields

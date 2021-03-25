@@ -65,7 +65,6 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   public path(): string {
     return typeof this.definition?.name !== "undefined" && this.definition.name !== "" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
-    // return typeof this.definition?.name !== "undefined" ? (this.parentPath ? (this.parentPath + "." + this.definition.name) : this.definition.name) : this.parentPath || ""
   }
 
   public clearCustomValidity() {
@@ -126,17 +125,18 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
   }
 
   protected changed(e: Event) {
-    this.consumeEvent(e)
+    e.stopPropagation()
+    this.applyEvent(e)
     this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   protected inputted(e: Event) {
-    this.consumeEvent(e)
+    e.stopPropagation()
+    this.applyEvent(e)
     this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
   }
 
-  protected consumeEvent(e: Event) {
-    e.stopPropagation()
+  protected applyEvent(e: Event) {
     const value = (<HTMLInputElement>e.currentTarget)?.value as any
     if (value && this.value !== value) {
       this.value = value;

@@ -18,7 +18,7 @@ export class SelectField extends ComboboxField {
     const formatter = getFormatter("flex")
     const layout = { elevation: 1, border: "soft" } as BoxLayout
     const style = `${formatter?.outerBoxStyle?.(layout)};${formatter?.innerBoxStyle?.(layout)};visibility:${this.popupVisible ? "visible" : "hidden"};top:${this.top};width:${this.width}`
-    const list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options: this.definition.options, hideCheckmark: typeof this.value === "undefined", searchThreshold: this.definition.searchThreshold } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.optionSelected(event) })}</div>`
+    const list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options: this.definition.options, hideCheckmark: typeof this.value === "undefined", searchThreshold: this.definition.searchThreshold } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.optionSelected })}</div>`
     return html`<div class="trigger">${button}</div>${list}`
   }
 

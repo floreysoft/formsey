@@ -94,7 +94,7 @@ const options = [
 export class TimezoneField extends LabeledField<FieldDefinition, string> {
   protected renderField() {
     if (this.definition) {
-      return createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (e: CustomEvent) => this.changed(e) })
+      return createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "select", name: this.definition.name, searchThreshold: 10, options } as ListFieldDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed })
     }
   }
 

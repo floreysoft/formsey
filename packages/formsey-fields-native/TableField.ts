@@ -11,7 +11,6 @@ import { customElement } from "lit/decorators";
 import { classMap } from 'lit/directives/class-map';
 import { ifDefined } from 'lit/directives/if-defined';
 
-
 @customElement("formsey-table")
 export class TableField extends FormField<TableFieldDefinition, Records> {
   renderField() {

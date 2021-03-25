@@ -1,4 +1,4 @@
-import { createField, DEFAULT_BREAKPOINTS, Field, InvalidEvent } from '@formsey/core';
+import { createField, DEFAULT_BREAKPOINTS, Field, FieldInputEvent, InvalidEvent } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { ResponsivePanelFieldDefinition, SplitPanelDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
@@ -51,12 +51,16 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
           }
         } as SplitPanelDefinition
       }
-      return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+      return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.inputted, invalidHandler: this.invalid })}`
     }
   }
 
   firstUpdated() {
     this.resizeObserver.observe(this as Element)
+  }
+
+  protected inputted(e: FieldChangeEvent<any>) {
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value));
   }
 
   protected changed(e: FieldChangeEvent<any>) {

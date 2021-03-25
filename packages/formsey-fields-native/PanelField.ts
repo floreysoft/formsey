@@ -26,7 +26,7 @@ export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any
       const outerStyle = formatter ? `${formatter.outerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.backgroundStyle?.(this.layoutController?.layout) || ""}` : ""
       const innerStyle = formatter?.innerBoxStyle?.(this.layoutController?.layout) || ""
       return html`<div style=${outerStyle}><header>${icon}${this.definition.label}</header>
-    <div class="panel" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", name: this.definition.name, fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div></div>`
+    <div class="panel" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", name: this.definition.name, fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, invalidHandler: this.invalid })}</div></div>`
     }
   }
 

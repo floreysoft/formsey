@@ -1,5 +1,5 @@
 import { KEYCODE } from '@floreysoft/utils';
-import { createField, Field, FieldClickEvent } from '@formsey/core';
+import { createField, Field, FieldClickEvent, FieldInputEvent } from '@formsey/core';
 import { FieldDefinition, FormDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
@@ -41,11 +41,15 @@ export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }
         const innerStyle = `${formatter?.innerBoxStyle?.(this.layoutController?.layout) || ""};${backgroundStyle}`
         tabs.push(html`<button tabIndex="0" type="button" style=${backgroundStyle} @keydown=${(e: KeyboardEvent) => this.keyDown(e, index)} @click=${(e: Event) => { this.select(index, selection.value || selection.name || selection.label) }} class="${classMap({ tab: true, selected: index == this.selectedIndex, expand: !!this.definition?.expand })}">${icon}${selection.label}</button>`)
         if (index == this.selectedIndex) {
-          content = html`<div class="content" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout, name: selection.name, deferLayout: true } as FormDefinition, value: selection.name ? this.value?.[selection.name] : this.value, parentPath: this.path(), errors: this.errors, clickHandler: (event: FieldChangeEvent<string>) => this.clicked(event), changeHandler: (event: FieldChangeEvent<string>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`
+          content = html`<div class="content" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout, name: selection.name, deferLayout: true } as FormDefinition, value: selection.name ? this.value?.[selection.name] : this.value, parentPath: this.path(), errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.inputted, invalidHandler: this.invalid })}</div>`
         }
       })
       return html`<div class="container">${this.definition.location == "bottom" ? html`${content}<div class="tabs bottom">${tabs}</div>` : html`<div part="tabs" class="tabs top">${tabs}</div>${content}`}</div>`
     }
+  }
+
+  protected inputted(e: FieldChangeEvent<any>) {
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value));
   }
 
   protected changed(e: FieldChangeEvent<any>) {
@@ -54,7 +58,7 @@ export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }
 
   private select(index: number, value: string) {
     this.selectedIndex = index
-    this.dispatchEvent(new FieldClickEvent(`${this.path()}.${value}`));
+    this.dispatchEvent(new FieldClickEvent(this.path() ? this.path() + "." + value : value));
   }
 
   private keyDown(event: KeyboardEvent, index: number) {
@@ -87,7 +91,7 @@ export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }
 getLibrary("native").registerComponent("tabs", {
   importPath: "@formsey/fields-native/TabsField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<TabsFieldDefinition, Object>) => {
-    return html`<formsey-tabs id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @click=${clickHandler} @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-tabs>`
+    return html`<formsey-tabs id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @input=${inputHandler}  @change=${changeHandler} @click=${clickHandler} @invalid=${invalidHandler}></formsey-tabs>`
   },
   nestedFields: (definition: TabsFieldDefinition, value: any) => {
     const fields: FieldDefinition[] = []

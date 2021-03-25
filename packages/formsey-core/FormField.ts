@@ -216,7 +216,7 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
 getLibrary("native").registerComponent("form", {
   importPath: "@formsey/core/FormField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<FormDefinition, any>) => {
-    return html`<formsey-form-field id=${ifDefined(id)} .library=${library} .settings=${settings} .definition=${definition as any} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-form-field>`
+    return html`<formsey-form-field id=${ifDefined(id)} .library=${library} .settings=${settings} .definition=${definition as any} .context=${{ ...context, enclosingForm: value }} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change=${changeHandler} @input=${inputHandler} @invalid=${invalidHandler}></formsey-form-field>`
   },
   nestedFields: (definition: FieldDefinition, value: any) => {
     return (<FormDefinition>definition).fields

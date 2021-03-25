@@ -33,7 +33,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
     if (this.definition?.other) {
       let other = this.value.filter(value => this.definition?.options.filter(option => value == (option.value ? option.value : option.label)).length == 0)
       let checked = other.length > 0
-      templates.push(html`<div class="other">${createField({ library: this.library, context: this.context, definition: { type: "checkbox", name: "__other", controlLabel: "Other" } as CheckboxFieldDefinition, value: checked, parentPath: this.path(), changeHandler: this.changed })}${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? other[0] : "", parentPath: this.path(), changeHandler: (e) => this.changed(e) })}</div>`);
+      templates.push(html`<div class="other">${createField({ library: this.library, context: this.context, definition: { type: "checkbox", name: "__other", controlLabel: "Other" } as CheckboxFieldDefinition, value: checked, parentPath: this.path(), changeHandler: this.changed })}${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? other[0] : "", parentPath: this.path(), changeHandler: this.changed })}</div>`);
     }
     return html`<div class=${this.definition?.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
   }

@@ -1,4 +1,4 @@
-import { createField, Field, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
+import { createField, Field, FieldInputEvent, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -13,7 +13,7 @@ import { ifDefined } from 'lit/directives/if-defined';
 export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, { [key: string]: any }[]> {
   @queryAll(".form")
   protected _fields: HTMLElement[] | undefined
-  protected layoutController : LayoutController = new LayoutController(this)
+  protected layoutController: LayoutController = new LayoutController(this)
 
   constructor() {
     super()
@@ -44,7 +44,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
           const value = this.value[i];
           const template = html`<div class="form" draggable="true" @drop="${(e: DragEvent) => this.drop(e, i)}" @dragover="${(e: DragEvent) => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
         ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${getIcon('Minus')}</button></div>` : undefined}
-        ${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout, deferLayout: true } as FormDefinition, value: value, parentPath: this.path() + "[" + i + "]", errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`;
+        ${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout, deferLayout: true } as FormDefinition, value: value, parentPath: this.path() + "[" + i + "]", errors: this.errors, changeHandler: this.changed, inputHandler: this.changed, invalidHandler: this.invalid })}</div>`;
           itemTemplates.push(template);
         }
       }
@@ -118,7 +118,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
     */
   }
 
-  protected changed(e: FieldChangeEvent<any>) {
+  protected changed(e: CustomEvent<any>) {
     if (e.detail.name.startsWith(this.path())) {
       let path = e.detail.name.substring(this.path().length + 1)
       let index = path.substring(0, path.indexOf("]"))
@@ -129,7 +129,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         this.value[+index] = {}
       }
       this.value[+index][name] = e.detail.value;
-      this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value));
+      this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
     }
   }
 }

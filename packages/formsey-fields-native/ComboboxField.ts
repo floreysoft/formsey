@@ -32,7 +32,7 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
 
   renderField() {
     if (this.definition) {
-      const trigger = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: "value" } as StringFieldDefinition, value: this.query, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.search(event) })
+      const trigger = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: "value" } as StringFieldDefinition, value: this.query, parentPath: this.path(), errors: this.errors, changeHandler: this.search })
       let list = undefined
       this.firstMatch = undefined
       const options = this.definition.options?.filter(option => this.value && option.label.toLowerCase().startsWith(this.query.toLowerCase()))
@@ -41,7 +41,7 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
         const formatter = getFormatter("flex")
         const layout = { elevation: 1, border: "soft" } as BoxLayout
         const style = `${formatter?.outerBoxStyle?.(layout)};${formatter?.innerBoxStyle?.(layout)};;top:${this.top};width:${this.width}`
-        list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options, hideCheckmark: true, query: this.value } as ListFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.optionSelected(event) })}</div>`
+        list = html`<div class="popup" style=${style}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "list", name: "options", options, hideCheckmark: true, query: this.value } as ListFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: this.optionSelected })}</div>`
       }
       return html`<div class="trigger">${trigger}</div>${list}`
     }
@@ -106,6 +106,6 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
 getLibrary("native").registerComponent("combobox", {
   importPath: "@formsey/fields-native/ComboboxField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ListFieldDefinition, string>) => {
-    return html`<formsey-combobox id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${changeHandler}" @invalid=${invalidHandler}></formsey-combobox>`
+    return html`<formsey-combobox id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-combobox>`
   }
 })

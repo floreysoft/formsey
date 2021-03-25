@@ -33,7 +33,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
       }
       if (this.definition.other) {
         let checked = this.definition.options.filter(option => this.value == (option.value ? option.value : option.label)).length == 0
-        templates.push(html`<div class="other"><label><input class="hid" type="radio" .checked="${checked}" name="${this.path()}" value="__other" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}"><span class="rb"><span class="r"></span></span><span class="rl">Other</span></label>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? this.value : "", parentPath: this.path(), changeHandler: (e: CustomEvent) => this.otherChanged(e) })}</div>`);
+        templates.push(html`<div class="other"><label><input class="hid" type="radio" .checked="${checked}" name="${this.path()}" value="__other" @change="${this.changed}" @focus="${this.focused}" @blur="${this.blurred}"><span class="rb"><span class="r"></span></span><span class="rl">Other</span></label>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", "name": "other", disabled: this.definition.disabled || !checked } as StringFieldDefinition, value: checked ? this.value : "", parentPath: this.path(), changeHandler: this.otherChanged })}</div>`);
       }
       return html`<div class=${this.definition.layout == "horizontal" ? "options horizontal" : "options vertical"}>${templates}</div>`;
     }

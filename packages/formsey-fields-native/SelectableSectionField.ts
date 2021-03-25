@@ -1,4 +1,4 @@
-import { createField, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition } from '@formsey/core';
+import { createField, FieldInputEvent, LabeledField, ListFieldDefinition, SelectableSectionFieldDefinition } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/FieldFocusEvent';
@@ -68,7 +68,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         }
       }
       if (selection) {
-        form = html`${selection?.fields ? html`<div class="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, clickHandler: (event: FieldChangeEvent<string>) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>` : undefined}`;
+        form = html`${selection?.fields ? html`<div class="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout } as FormDefinition, value: this.value?.value, parentPath: this.path() + ".value", errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.changed, invalidHandler: this.invalid })}</div>` : undefined}`;
       }
     }
     this.layoutController.updateLayout(this.definition.layout)
@@ -79,7 +79,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 
   renderField() {
     let options = this.definition?.selections?.map(selection => { return { label: selection.label, value: selection.value } });
-    return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<string>) => this.selectionChanged(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}`
+    return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control || "select", name: "selection", options } as ListFieldDefinition, value: this.selectedValue, parentPath: this.path(), errors: this.errors, changeHandler: this.selectionChanged, invalidHandler: this.invalid })}`
   }
 
   public focusField(path: string) {
@@ -115,7 +115,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       } else {
         this.value.value = e.detail.value
       }
-      this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value));
+      this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
     }
   }
 }
@@ -123,7 +123,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
 getLibrary("native").registerComponent("selectableSection", {
   importPath: "@formsey/fields-native/SelectableSectionField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<SelectableSectionFieldDefinition, SelectableSectionValue>) => {
-    return html`<formsey-selectable-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-selectable-section>`
+    return html`<formsey-selectable-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change=${changeHandler} @input=${inputHandler}  @invalid=${invalidHandler}></formsey-selectable-section>`
   },
   nestedFields: (definition: SelectableSectionFieldDefinition, value: any) => {
     const fields: FieldDefinition[] = []

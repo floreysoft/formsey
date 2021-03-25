@@ -62,7 +62,7 @@ export function set(data: { [key: string]: any }, path: string, value: any): any
 
 @customElement("formsey-form")
 export class Form extends Field<FieldDefinition, any> {
-  value: any
+  value: any | undefined
 
   async fetchDefinition(url: string) {
     try {
@@ -123,7 +123,7 @@ export class Form extends Field<FieldDefinition, any> {
     if (!this.errors) {
       this.errors = new InvalidErrors()
     }
-    return this.library?.components?.["styledForm"]?.template({ library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), inputHandler: (event: FieldInputEvent<any>) => this.inputted(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+    return this.library?.components?.["styledForm"]?.template({ library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.parentPath, errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.inputted, invalidHandler: this.invalid })
   }
 
   updated() {
@@ -210,6 +210,7 @@ export class Form extends Field<FieldDefinition, any> {
   protected applyEvent(e: CustomEvent) {
     if (!this.anonymous && e.detail.name) {
       const name = e.detail.name.split(".")[0].split("[")[0]
+      this.value = this.value || {}
       this.value[name] = e.detail.value;
     } else {
       this.value = e.detail.value
