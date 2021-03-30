@@ -32,7 +32,7 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
 
   renderField() {
     if (this.definition) {
-      const trigger = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: "value" } as StringFieldDefinition, value: this.query, parentPath: this.path(), errors: this.errors, changeHandler: this.search })
+      const trigger = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: "value" } as StringFieldDefinition, value: this.query, parentPath: this.path(), errors: this.errors, inputHandler: this.search })
       let list = undefined
       this.firstMatch = undefined
       const options = this.definition.options?.filter(option => this.value && option.label.toLowerCase().startsWith(this.query.toLowerCase()))

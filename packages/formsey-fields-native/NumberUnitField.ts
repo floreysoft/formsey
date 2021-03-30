@@ -34,15 +34,14 @@ export class NumberUnitField extends LabeledField<NumberUnitFieldDefinition, str
 
   renderField() {
     if (this.definition) {
-      const number = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "number", name: "value", min: this.definition.min, max: this.definition.max, step: this.definition.step } as NumberFieldDefinition, value: this._value, parentPath: this.path(), errors: this.errors, changeHandler: this.valueChanged })
+      const number = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "number", name: "value", min: this.definition.min, max: this.definition.max, step: this.definition.step } as NumberFieldDefinition, value: this._value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.inputted })
       const toggle = createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "toggle", name: "unit", buttons: this.definition.buttons } as ToggleFieldDefinition, value: this._unit, parentPath: this.path(), errors: this.errors, changeHandler: this.unitChanged })
       return html`<div class="nu">${number}${toggle}</div>`
     }
   }
 
-  private valueChanged(e: CustomEvent) {
+  protected applyEvent(e: CustomEvent) {
     this._value = e.detail.value
-    this.dispatchEvent(new FieldInputEvent(this.path(), this.value))
   }
 
   private unitChanged(e: CustomEvent) {

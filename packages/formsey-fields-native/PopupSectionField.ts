@@ -13,7 +13,7 @@ import { ifDefined } from 'lit/directives/if-defined';
 @customElement("formsey-popup-section")
 export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition, { [key: string]: any }> {
   @property({ converter: Boolean })
-  visible: boolean = true
+  visible?: boolean
 
   @query("#form")
   form: HTMLElement | undefined

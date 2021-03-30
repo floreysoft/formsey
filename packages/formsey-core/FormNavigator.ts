@@ -139,9 +139,9 @@ export class FormNavigator extends LitElement {
       requiredFilled += fieldInfo.required && fieldInfo.filled ? 1 : 0;
       totalFilled += fieldInfo.filled ? 1 : 0;
     })
-    let nav = html`<div class="allFields">${totalFilled} / ${this._allFields.length}</div><div class="requiredFields">${requiredFilled} / ${this._requiredFields.length} <button id="prevRequired" @click="${(e: Event) => { this.focusRequired(this.focusedRequired - 1) }}"></button><button id="nextRequired" @click="${(e: Event) => { this.focusRequired(this.focusedRequired + 1) }}">></button></div>`
+    let nav = html`<div class="allFields">${totalFilled} / ${this._allFields.length}</div><div class="requiredFields">${requiredFilled} / ${this._requiredFields.length} <button type="button" id="prevRequired" @click="${(e: Event) => { this.focusRequired(this.focusedRequired - 1) }}"></button><button type="button" id="nextRequired" @click="${(e: Event) => { this.focusRequired(this.focusedRequired + 1) }}">></button></div>`
     let errors = this._errorsArray ?
-      html`${this._errorsArray.length} errors <button id="prev" disabled @click="${(e: Event) => { this.focusError(this.focusedError - 1) }}">Prev</button><button id="next" @click="${(e: Event) => { this.focusError(this.focusedError + 1) }}">Next</button>` :
+      html`${this._errorsArray.length} errors <button id="prev" disabled @click="${(e: Event) => { this.focusError(this.focusedError - 1) }}">Prev</button><button type="button" id="next" @click="${(e: Event) => { this.focusError(this.focusedError + 1) }}">Next</button>` :
       html`No errors`
     return html`<div class="dots">${dots}</div><div class="nav">${nav}${errors}</div>`
   }

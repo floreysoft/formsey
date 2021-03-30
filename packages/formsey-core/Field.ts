@@ -138,7 +138,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected applyEvent(e: Event) {
     const value = (<HTMLInputElement>e.currentTarget)?.value as any
-    if (value && this.value !== value) {
+    if (this.value !== value) {
       this.value = value;
     }
   }

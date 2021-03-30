@@ -1,4 +1,4 @@
-import { createField, Field } from '@formsey/core';
+import { createField, Field, FieldInputEvent } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
 import { FormDefinition, PanelFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -26,8 +26,12 @@ export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any
       const outerStyle = formatter ? `${formatter.outerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.backgroundStyle?.(this.layoutController?.layout) || ""}` : ""
       const innerStyle = formatter?.innerBoxStyle?.(this.layoutController?.layout) || ""
       return html`<div style=${outerStyle}><header>${icon}${this.definition.label}</header>
-    <div class="panel" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", name: this.definition.name, fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, invalidHandler: this.invalid })}</div></div>`
+    <div class="panel" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", name: this.definition.name, fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, inputHandler: this.inputted, changeHandler: this.changed, invalidHandler: this.invalid })}</div></div>`
     }
+  }
+
+  protected inputted(e: FieldChangeEvent<any>) {
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value));
   }
 
   protected changed(e: FieldChangeEvent<any>) {

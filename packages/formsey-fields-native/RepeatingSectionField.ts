@@ -43,12 +43,12 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         for (let i: number = 0; i < this.value.length; i++) {
           const value = this.value[i];
           const template = html`<div class="form" draggable="true" @drop="${(e: DragEvent) => this.drop(e, i)}" @dragover="${(e: DragEvent) => this.allowDrop(e, i)}" @dragstart="${(e: DragEvent) => this.drag(e, i)}">
-        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${getIcon('Minus')}</button></div>` : undefined}
+        ${this.value.length > this.definition.min ? html`<div class="fs-remove-wrapper"><button type="button" class="fs-remove" tabindex="0" @click="${(e: Event) => this.removeForm(e, i)}">${getIcon('Minus')}</button></div>` : undefined}
         ${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout, deferLayout: true } as FormDefinition, value: value, parentPath: this.path() + "[" + i + "]", errors: this.errors, changeHandler: this.changed, inputHandler: this.changed, invalidHandler: this.invalid })}</div>`;
           itemTemplates.push(template);
         }
       }
-      const addButton = this.value.length < this.definition.max ? html`<button @click="${this.addForm}" class="fs-add" tabindex="0">${getIcon('Plus')}</button>` : undefined
+      const addButton = this.value.length < this.definition.max ? html`<button type="button" @click="${this.addForm}" class="fs-add" tabindex="0">${getIcon('Plus')}</button>` : undefined
       return html`<div>${itemTemplates}</div>${addButton}`;
     }
   }
