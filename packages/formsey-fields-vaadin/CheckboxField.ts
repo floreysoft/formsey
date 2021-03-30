@@ -1,5 +1,5 @@
 import { Field } from '@formsey/core/Field';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { CheckboxFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';

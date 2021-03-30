@@ -1,11 +1,11 @@
 import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
 import { customElement, property, query, queryAll } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { StringField } from './StringField';
-import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
+import { FieldInputEvent } from '@formsey/core/Events';
 
 
 @customElement("formsey-multiple-choice")

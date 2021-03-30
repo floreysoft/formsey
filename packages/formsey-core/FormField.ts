@@ -2,15 +2,15 @@ import { html, TemplateResult } from "lit";
 import { customElement, property, queryAll } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { createField, Field } from './Field';
-import { FieldClickEvent } from "./FieldClickEvent";
+import { FieldClickEvent } from "./Events";
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { LabeledField } from "./LabeledField";
 import { LayoutController } from "./LayoutController";
 import { Breakpoints, Layout, Size } from "./Layouts";
 import { Components, getFormatter, getLibrary, Resources } from './Registry';
-import { FieldChangeEvent } from './FieldChangeEvent';
-import { FieldInputEvent } from "./FieldInputEvent";
+import { FieldChangeEvent } from './Events';
+import { FieldInputEvent } from "./Events";
 
 export function isFormDefinition(definition?: FieldDefinition): definition is FormDefinition {
   return (<any>definition)?.['fields'] !== undefined;

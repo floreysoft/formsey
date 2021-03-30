@@ -1,6 +1,6 @@
 import { LabeledField, SignatureFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, PropertyValues } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';

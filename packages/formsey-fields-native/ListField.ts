@@ -1,8 +1,8 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { createField, Field, LabeledField } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { FieldDefinition, ListFieldDefinition, StringFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
+import { FieldInputEvent } from '@formsey/core/Events';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators";

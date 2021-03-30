@@ -1,5 +1,5 @@
 import { createField, DEFAULT_BREAKPOINTS, Field, FieldInputEvent, InvalidEvent } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { ResponsivePanelFieldDefinition, SplitPanelDefinition, TabsFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";

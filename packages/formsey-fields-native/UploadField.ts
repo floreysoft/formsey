@@ -1,6 +1,6 @@
 import { LabeledField, UploadFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';

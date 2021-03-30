@@ -1,11 +1,11 @@
 import { createField, Field } from '@formsey/core/Field';
-import { FieldClickEvent } from '@formsey/core/FieldClickEvent';
+import { FieldClickEvent } from '@formsey/core/Events';
 import { ButtonFieldDefinition, CheckboxFieldDefinition, FieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { FlexLayout, TableLayout } from '@formsey/core/Layouts';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
 import { customElement } from "lit/decorators";
 import { classMap } from 'lit/directives/class-map';

@@ -1,5 +1,5 @@
 import { Field } from '@formsey/core/Field';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";

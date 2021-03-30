@@ -2,11 +2,11 @@ import { createField, LabeledField } from '@formsey/core';
 import { ListFieldDefinition, StringFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { BoxLayout } from '@formsey/core/Layouts';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { html } from "lit";
 import { customElement, query, state } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
-import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
+import { FieldInputEvent } from '@formsey/core/Events';
 
 
 @customElement("formsey-combobox")

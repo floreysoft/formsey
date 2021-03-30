@@ -1,6 +1,6 @@
 import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { ImagesFieldDefinition, LabeledField } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query, queryAll } from "lit/decorators";

@@ -1,6 +1,6 @@
 import { CompoundField } from '@formsey/core';
 import { createField } from '@formsey/core/Field';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";

@@ -1,8 +1,8 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { createField, Field, FieldClickEvent, LabeledField } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { ButtonFieldDefinition, DialogSectionFieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
-import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
+import { FieldInputEvent } from '@formsey/core/Events';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';

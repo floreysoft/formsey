@@ -1,11 +1,11 @@
 import { LitElement, TemplateResult } from "lit";
 import { property } from "lit/decorators";
-import { FieldBlurEvent } from './FieldBlurEvent';
-import { FieldChangeEvent } from './FieldChangeEvent';
-import { FieldClickEvent } from './FieldClickEvent';
+import { FieldBlurEvent } from './Events';
+import { FieldChangeEvent } from './Events';
+import { FieldClickEvent } from './Events';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
-import { FieldFocusEvent } from './FieldFocusEvent';
-import { FieldInputEvent } from "./FieldInputEvent";
+import { FieldFocusEvent } from './Events';
+import { FieldInputEvent } from "./Events";
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { getDefaultLibrary, getLibraries, Library, Resources, Settings } from './Registry';
 

@@ -1,6 +1,6 @@
 import { KEYCODE } from '@floreysoft/utils';
 import { Field } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { Option } from '@formsey/core/FieldDefinitions';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";

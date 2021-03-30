@@ -1,6 +1,6 @@
 import '@floreysoft/splitter';
 import { createField, Field, FieldInputEvent } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { SplitPanelDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";

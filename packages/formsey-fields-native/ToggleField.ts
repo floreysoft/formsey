@@ -2,7 +2,7 @@ import { KEYCODE, walkAndFocus } from "@floreysoft/utils";
 import { LabeledField } from '@formsey/core';
 import { ToggleFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";

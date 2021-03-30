@@ -1,9 +1,9 @@
 import { customElement, property, query } from "lit/decorators";
 import { Field } from './Field';
-import { FieldChangeEvent } from './FieldChangeEvent';
-import { FieldClickEvent } from "./FieldClickEvent";
+import { FieldChangeEvent } from './Events';
+import { FieldClickEvent } from "./Events";
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
-import { FieldInputEvent } from "./FieldInputEvent";
+import { FieldInputEvent } from "./Events";
 import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 

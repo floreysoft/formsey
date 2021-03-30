@@ -1,8 +1,8 @@
 import { TemplateResult } from 'lit';
-import { FieldChangeEvent } from './FieldChangeEvent';
-import { FieldClickEvent } from './FieldClickEvent';
+import { FieldChangeEvent } from './Events';
+import { FieldClickEvent } from './Events';
 import { FieldDefinition, FormDefinition } from './FieldDefinitions';
-import { FieldInputEvent } from './FieldInputEvent';
+import { FieldInputEvent } from './Events';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { Layout } from './Layouts';
 

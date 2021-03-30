@@ -4,7 +4,7 @@ import { FieldDefinition, FormDefinition, TabsFieldDefinition } from '@formsey/c
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { classMap } from 'lit/directives/class-map';

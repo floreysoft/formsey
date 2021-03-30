@@ -1,5 +1,5 @@
 import { createField } from '@formsey/core/Field';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { Form } from '@formsey/core/Form';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';

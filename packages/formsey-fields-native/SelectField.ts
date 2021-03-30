@@ -1,5 +1,5 @@
 import { createField, ListFieldDefinition, StringFieldDefinition } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { BoxLayout } from '@formsey/core/Layouts';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";

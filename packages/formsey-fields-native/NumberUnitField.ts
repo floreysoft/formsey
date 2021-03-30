@@ -1,7 +1,7 @@
 import { createField, LabeledField } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { ListFieldDefinition, NumberFieldDefinition, NumberUnitFieldDefinition, ToggleFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { FieldInputEvent } from '@formsey/core/FieldInputEvent';
+import { FieldInputEvent } from '@formsey/core/Events';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement } from "lit/decorators";

@@ -1,5 +1,5 @@
 import { createField, Field, FieldInputEvent, LabeledField, RepeatingFieldDefinition } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/FieldChangeEvent';
+import { FieldChangeEvent } from '@formsey/core/Events';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
