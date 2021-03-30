@@ -49,10 +49,10 @@ export interface ColumnsLayout extends BoxLayout {
 
 export interface AreasLayout extends BoxLayout {
   formatter: "areas"
-  gaps?: "none" | "narrow" | "wide"
   columns: number[]
   areas: string[]
-  alignments: {
+  gaps?: "none" | "narrow" | "wide"
+  alignments?: {
     area: string,
     horizontal?: string,
     vertical?: string
