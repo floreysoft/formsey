@@ -109,7 +109,7 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     if (this.definition?.fields) {
       for (const [index, field] of this.definition.fields.entries()) {
         const value = this.value && field.name ? this.value[field.name] : this.value
-        let fieldTemplate = createField({ library: this.library, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), inputHandler: (event: FieldChangeEvent<any>) => this.changed(event), clickHandler: (event: FieldClickEvent) => this.clicked(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })
+        let fieldTemplate = createField({ library: this.library, context: this.context, settings: this.settings, definition: field, value: value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.changed, clickHandler: this.clicked, invalidHandler: this.invalid })
         if (fieldTemplate) {
           if (field.type == "hidden") {
             hidden.push(fieldTemplate)
