@@ -1,6 +1,7 @@
 
-export type Size = "xs" | "s" | "m" | "l" | "xl"
 export const SIZES = ["xs", "s", "m", "l", "xl"] as Size[]
+
+export type Size = "xs" | "s" | "m" | "l" | "xl"
 
 export type Breakpoints = Partial<Record<Size, number>>
 export type ResponsiveLayout = {
