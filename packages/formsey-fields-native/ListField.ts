@@ -17,9 +17,11 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
   firstOption: Field<FieldDefinition, string> | undefined
 
   private firstMatchingOption: string | undefined
+  private query: string | undefined
 
   renderField() {
     if (this.definition) {
+      this.query = this.query || this.definition.query
       const search = typeof this.definition.searchThreshold !== "undefined" && (this.definition.options?.length || 0) > this.definition.searchThreshold ? html`<div class="search" @keydown=${this.searchKeyDown}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "search", name: "search", placeholder: "Search" } as StringFieldDefinition, parentPath: this.path(), errors: this.errors, inputHandler: this.search })}</div>` : undefined
       let visible = 0
       this.firstMatchingOption = undefined
@@ -34,7 +36,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
           } else {
             checked = this.value == value;
           }
-          if ((!this.definition.query || label.toLowerCase().startsWith(this.definition.query.toLowerCase()))) {
+          if (label.toLowerCase().startsWith(this.query?.toLowerCase() || "")) {
             if (this.definition.query && !this.firstMatchingOption) {
               this.firstMatchingOption = value
             }
@@ -74,7 +76,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
 
   private search(e: CustomEvent) {
     if (this.definition) {
-      this.definition.query = e.detail.value
+      this.query = e.detail.value
       this.requestUpdate()
     }
   }
