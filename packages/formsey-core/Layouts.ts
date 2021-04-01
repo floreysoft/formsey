@@ -41,10 +41,7 @@ export interface FlexLayout extends BoxLayout {
 export interface ColumnsLayout extends BoxLayout {
   formatter: "columns"
   gaps?: "none" | "narrow" | "wide"
-  columns: {
-    width: number
-    horizontal?: string
-  }[]
+  columns: any
 }
 
 export interface AreasLayout extends BoxLayout {
