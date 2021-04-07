@@ -127,7 +127,7 @@ export const FORM_STYLES = css`
   button {
     display: flex;
     flex-direction: row;
-    gap: var(--formsey-space-wide);
+    gap: var(--formsey-space-narrow);
     height: var(--formsey-input-height, 2em);
     padding: var(--formsey-space-narrow);
     box-sizing: border-box;
@@ -145,9 +145,11 @@ export const FORM_STYLES = css`
   button.left {
     justify-content: flex-start;
   }
+  /*
   button fs-icon + span {
     margin-left: .25em;
   }
+  */
   button .photo {
     width: 1.5em;
     border-radius: 50%;

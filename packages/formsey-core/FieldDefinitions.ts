@@ -187,7 +187,8 @@ export interface ToggleFieldDefinition extends InputFieldDefinition {
 
 export interface TableFieldDefinition extends FormDefinition {
   selectable?: boolean,
-  actions?: ButtonFieldDefinition[]
+  actions?: (ButtonFieldDefinition | DialogSectionFieldDefinition)[]
+  selections?: ButtonFieldDefinition[]
   pageLength?: number
   key?: string
   dataSource?: boolean
@@ -203,8 +204,7 @@ export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
 export interface PopupSectionFieldDefinition extends FormDefinition, InteractiveFieldDefinition {
   icon?: string | TemplateResult
   text?: string
-  width?: string
-  widthUnit?: "em" | "px",
+  width?: string,
   focus?: string
 }
 

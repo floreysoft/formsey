@@ -1,6 +1,6 @@
 import { createField, Field } from '@formsey/core/Field';
 import { FieldClickEvent } from '@formsey/core/Events';
-import { ButtonFieldDefinition, CheckboxFieldDefinition, FieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { ButtonFieldDefinition, CheckboxFieldDefinition, DialogSectionFieldDefinition, FieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { FlexLayout, TableLayout } from '@formsey/core/Layouts';
@@ -77,7 +77,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                 last: row == lastRow,
                 selected
               }
-              templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: selected, parentPath: this.path() + ".data[" + key + "]", errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
+              templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: selected, parentPath: this.path() + ".data[" + key + "]", errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.inputted, invalidHandler: this.invalid })}</div>`);
             }
             (<TableLayout>this.layoutController.layout).columns.forEach((column, index) => {
               if (column.visible) {
@@ -91,7 +91,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                     last: row == lastRow,
                     selected
                   }
-                  templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout, field))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + row + "]", errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`);
+                  templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout, field))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + row + "]", errors: this.errors, clickHandler: this.clicked, inputHandler: this.inputted, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`);
                 }
               }
             })
@@ -100,16 +100,20 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       }
       let pager = undefined
       if (this.definition?.pageLength || 0 < this.value?.data?.length || this.definition?.dataSource) {
+        let fields: (ButtonFieldDefinition | DialogSectionFieldDefinition)[] = []
+        this.definition?.actions?.forEach(action => {
+          fields.push(action)
+        })
         const disable = (this.value?.selections?.length || 0) == 0
-        let fields: ButtonFieldDefinition[] = this.definition?.actions ? this.definition?.actions?.map(action => {
-          return {
+        this.definition?.selections?.forEach(action => {
+          fields.push({
             type: "button",
             icon: action.icon,
             name: action.name,
             text: action.label,
             disabled: disable
-          }
-        }) : []
+          })
+        })
         fields = [...fields,
         {
           type: "button",
