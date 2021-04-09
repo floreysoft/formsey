@@ -23,6 +23,10 @@ export function removeDeletedFields(components: Components, definition: FormDefi
     addDefinedFields(components, definition.fields, value, newValue)
     addMemberValueIfPresent("type", newValue, value)
     addMemberValueIfPresent("data", newValue, value)
+    addMemberValueIfPresent("sortDirection", newValue, value)
+    addMemberValueIfPresent("dataSource", newValue, value)
+    addMemberValueIfPresent("sortedBy", newValue, value)
+
     return newValue
   }
 }
@@ -92,7 +96,7 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
   protected _value: V | undefined
   protected _definition: D | undefined
 
-  @queryAll(".fff")
+  @queryAll(":scope>.lfw>section>.ffg>.fff")
   protected _fields: HTMLElement[] | undefined
   protected layoutController = new LayoutController(this)
 
@@ -127,11 +131,15 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
   }
 
   public focusField(path: string): boolean {
-    if (this._fields) {
-      for (let field of this._fields) {
-        let child = field.firstElementChild as Field<any, any>
-        if (child && typeof (<any>child)['focusField'] == "function" && path?.startsWith(child.path())) {
-          return (<any>child).focusField(path)
+    if (path.startsWith(this.path())) {
+      if (this._fields) {
+        for (let field of this._fields) {
+          let child = field.firstElementChild as Field<any, any>
+          if (child && typeof (<any>child)['focusField'] == "function" && path?.startsWith(child.path())) {
+            if ((<any>child).focusField(path)) {
+              return true
+            }
+          }
         }
       }
     }

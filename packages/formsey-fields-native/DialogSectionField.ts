@@ -1,18 +1,19 @@
 import { KEYCODE } from '@floreysoft/utils';
-import { createField, Field, FieldClickEvent, LabeledField } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/Events';
+import { createField, Field, FieldClickEvent, FormField, LabeledField } from '@formsey/core';
+import { FieldChangeEvent, FieldInputEvent } from '@formsey/core/Events';
 import { ButtonFieldDefinition, DialogSectionFieldDefinition, FormDefinition } from '@formsey/core/FieldDefinitions';
-import { FieldInputEvent } from '@formsey/core/Events';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query, state } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { ButtonField } from './ButtonField';
 
 @customElement("formsey-dialog-section")
 export class DialogSectionField extends LabeledField<DialogSectionFieldDefinition, { [key: string]: any }> {
+  @state() visible = false
+
   @query("#form")
   form: HTMLElement | undefined
 
@@ -27,7 +28,6 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
   private keyHandler = (e: KeyboardEvent) => this.keyDown(e)
   private cancelValue = undefined
   private layoutController: LayoutController | undefined
-  private visible: boolean | undefined = undefined
 
   protected shouldUpdate(): boolean {
     if (typeof this.definition === "undefined") {
@@ -40,21 +40,18 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
 
   renderField() {
     if (this.definition) {
-      if (this.definition.visible) {
-        this.visible = true
-      }
       const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
       const style = `left:${this.left || "auto"};top:${this.top || "auto"};position:${this.left ? "fixed" : "relative"};width:${this.definition.width || "auto"};max-height:${this.definition.height || "auto"};${formatter ? `${formatter.outerBoxStyle?.(this.layoutController?.layout)};${formatter.backgroundStyle?.(this.layoutController?.layout)}` : ""}`
       return html`
-    ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: this.open, invalidHandler: this.invalid }) : undefined}
+    ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: this.triggered, invalidHandler: this.invalid }) : undefined}
     ${this.visible ? html`
     <div class="dialogWrapper" @mouseup=${this.endDrag} @mousemove=${this.drag}>
       <focus-trap>
         <div class="dialog" style=${style}>
           ${this.definition.header ? html`<header @mousedown=${this.startDrag} @mouseup=${this.endDrag} @mousemove=${this.drag}>${this.definition.header}</header>` : undefined}
-          <div id="form" style="overflow-y:auto;flex-grow:1;${formatter ? formatter.innerBoxStyle?.(this.layoutController?.layout) : ""}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.inputted, clickHandler: this.clicked, invalidHandler: this.invalid })}</div>
+          <div id="form" style="overflow-y:auto;flex-grow:1;${formatter ? formatter.innerBoxStyle?.(this.layoutController?.layout) : ""}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.changed, clickHandler: this.clicked, invalidHandler: this.invalid })}</div>
           <footer>
-            ${this.definition.actions?.map((action: ButtonFieldDefinition) => html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", name: action.name, buttonType: "button", text: action.text, icon: action.icon } as ButtonFieldDefinition, parentPath: this.path(), clickHandler: this.buttonClicked })}`)}
+            ${this.definition.actions?.map((action: ButtonFieldDefinition) => html`${createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", name: action.name, text: action.text, icon: action.icon, theme: action.theme } as ButtonFieldDefinition, parentPath: this.path(), clickHandler: this.buttonClicked })}`)}
           </footer>
         </div>
       </focus-trap>
@@ -63,32 +60,17 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
     }
   }
 
-  open(e: Event) {
-    e.stopPropagation()
-    if (this.definition) {
-      this.cancelValue = JSON.parse(JSON.stringify(this.value || {}))
-      this.visible = true
-      document.addEventListener('keydown', this.keyHandler)
-      this.requestUpdate()
-      this.updateComplete.then(() => {
-        this.layoutController = new LayoutController(this, this._dialog)
-        this.addController(this.layoutController)
-        setTimeout(() => {
-          if (this.definition) {
-            this.focusField(this.path() + "." + (this.definition.focus || this.definition.fields[0].name))
-            this.dispatchEvent(new FieldClickEvent(this.path()))
-          }
-        }, 1)
-      })
-    }
-  }
-
   public focusField(path: string) {
-    let child = this.form?.firstElementChild as Field<any, any>
-    if (child && typeof (<any>child)['focusField'] == "function") {
-      return (<any>child).focusField(path)
+    if (path == this.path()) {
+      this.open()
+      return true
+    } else {
+      let child = this.form?.firstElementChild as Field<any, any>
+      if (child && typeof (<any>child)['focusField'] == "function") {
+        return (<any>child).focusField(path)
+      }
+      return false
     }
-    return false
   }
 
   public validate(report: boolean) {
@@ -116,7 +98,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
         this.value = {}
       }
       this.value[name] = e.detail.value;
-      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+      this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
     }
   }
 
@@ -148,43 +130,75 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
   }
 
   private buttonClicked(e: CustomEvent) {
-    this.dispatchEvent(new FieldClickEvent(e.detail.name, this.value))
-    if (e.detail.name == "cancel") {
+    if (e.detail.name?.endsWith("cancel")) {
       this.cancel()
     }
+    this.dispatchEvent(new FieldClickEvent(e.detail.name, this.value))
     this.close(e)
   }
 
   private keyDown(e: KeyboardEvent) {
     switch (e.keyCode) {
       case KEYCODE.RETURN:
+        // Send primary button
+        if (this.form) {
+          let child = this.form.firstElementChild as FormField<FormDefinition, any>
+          this.value = child.value
+        }
+        const primaryAction = this.definition?.actions?.filter((action: ButtonFieldDefinition) => typeof action.name != "undefined" && action.theme == "primary")?.[0]
+        if (primaryAction) {
+          this.dispatchEvent(new FieldClickEvent(this.path() + "." + primaryAction.name, this.value))
+        }
         this.close(e)
         break;
       case KEYCODE.ESCAPE:
+        // Send cancel
         this.cancel()
         this.close(e)
+        this.dispatchEvent(new FieldClickEvent(this.path() + ".cancel", this.value))
         break;
+    }
+  }
+
+  private triggered(e: Event) {
+    e.stopPropagation()
+    this.open()
+  }
+
+  private open() {
+    this.layoutController = new LayoutController(this, this._dialog)
+    this.addController(this.layoutController)
+    this.visible = true
+    this.cancelValue = JSON.parse(JSON.stringify(this.value || {}))
+    document.addEventListener('keydown', this.keyHandler)
+    setTimeout(() => {
+      if (this.definition) {
+        this.focusField(this.path() + "." + (this.definition.focus || this.definition.fields[0].name))
+      }
+    }, 1)
+  }
+
+  private async close(e: Event) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.top = undefined
+    this.left = undefined
+    document.removeEventListener('keydown', this.keyHandler)
+    const trigger = this.renderRoot.querySelector('formsey-button') as ButtonField
+    if (trigger) {
+      trigger.focusField()
+    }
+    this.visible = false;
+    await this.updateComplete;
+    if (this.layoutController) {
+      this.removeController(this.layoutController)
+      this.layoutController = undefined
     }
   }
 
   private cancel() {
     this.value = this.cancelValue
     this.dispatchEvent(new FieldChangeEvent(this.path(), this.value))
-  }
-
-  private close(e: Event) {
-    e.preventDefault()
-    e.stopPropagation()
-    if (this.layoutController) {
-      this.removeController(this.layoutController)
-    }
-    this.top = undefined
-    this.left = undefined
-    this.visible = false;
-    document.removeEventListener('keydown', this.keyHandler)
-    const trigger = this.renderRoot.querySelector('formsey-button') as ButtonField
-    trigger.focusField()
-    this.requestUpdate()
   }
 }
 

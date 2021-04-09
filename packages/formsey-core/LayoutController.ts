@@ -20,6 +20,7 @@ export class LayoutController implements ReactiveController {
         this.resize(entry.contentRect.width)
       }
     });
+    this.updateLayout(host.definition?.layout)
   }
 
   hostConnected() {

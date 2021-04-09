@@ -15,7 +15,7 @@ export class ButtonField extends LabeledField<ButtonFieldDefinition, void> {
   renderField() {
     if (this.definition) {
       const icon = typeof this.definition.icon == "string" ? getIcon(this.definition.icon) : this.definition.icon
-      return html`<button class=${classMap({ left: this.definition.align == "left" })} type="${this.definition.buttonType || "button"}" @click=${this.clicked} @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}" title=${ifDefined(this.definition.tooltip)} @keydown=${this.keyDown}>${icon}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
+      return html`<button class=${classMap({ left: this.definition.align == "left", primary: this.definition.theme == "primary" })} type="${this.definition.buttonType || "button"}" @click=${this.clicked} @focus="${this.focused}" @blur="${this.blurred}" ?disabled="${this.definition.disabled}" title=${ifDefined(this.definition.tooltip)} @keydown=${this.keyDown}>${icon}${this.definition.text ? html`<span>${this.definition.text}</span>` : undefined}</button>`;
     }
   }
 

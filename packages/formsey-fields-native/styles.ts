@@ -145,6 +145,10 @@ export const FORM_STYLES = css`
   button.left {
     justify-content: flex-start;
   }
+  button.primary {
+    background-color: var(--formsey-accent-color);
+    color: var(--formsey-accent-contrast);
+  }
   /*
   button fs-icon + span {
     margin-left: .25em;

@@ -210,7 +210,6 @@ export interface PopupSectionFieldDefinition extends FormDefinition, Interactive
 
 export interface DialogSectionFieldDefinition extends PopupSectionFieldDefinition {
   header?: string
-  visible?: boolean
   heightUnit?: "em" | "px"
   actions?: ButtonFieldDefinition[],
   height?: string
