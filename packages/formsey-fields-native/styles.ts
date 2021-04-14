@@ -1105,12 +1105,11 @@ formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
     position: relative;
     margin: .25em 0 .25em 1em;
     padding: 0.25em 0px 0.25em 1em;
-    border-left: 2px solid var(--formsey-surface, #E2DDDB);
-    font-size: var(--formsey-repeating-section-icon-size, inherit);
+    border-left: 1px solid var(--formsey-surface);
     transition: all 0.12s ease-out;
   }
   formsey-repeating-section>section>.lfw>div>.form:hover {
-    border-left: 2px solid var(--formsey-surface, #CAC4C2);
+    border-left: 1px solid var(--formsey-color);
   }
   formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper {
     position: absolute;
@@ -1128,22 +1127,21 @@ formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
     display: flex;
     width: 1.4em;
     height: 1.4em;
-    font-size: var(--formsey-repeating-section-icon-size, inherit);
     border-radius: 50%;
-    background-color: var(--formsey-repeating-section-icon-background-color, var(--formsey-surface, #E2DDDB));
-    transition: background-color 0.12s ease-out;
-    border: var(--formsey-input-border, 1px solid transparent);
+    background-color: var(--formsey-background);
+    transition: all 0.12s ease-out;
+    border: 1px solid var(--formsey-border);
     padding: 0.15em;
   }
   formsey-repeating-section>section>.lfw>div>.form>.fs-remove-wrapper>button:focus, formsey-repeating-section>section>.lfw>.fs-add:focus {
     outline: none;
-    border: 1px solid var(--formsey-accent-color, #020b2f);
+    border: 1px solid var(--formsey-accent-color);
   }
   formsey-repeating-section>section>.lfw>div>.form:hover>.fs-remove-wrapper {
     opacity: 1;
   }
-  formsey-repeating-section>section>.lfw>div>.form:hover>.fs-remove-wrapper>.fs-remove, formsey-repeating-section>section>.lfw>.fs-add:hover {
-    background-color: var(--formsey-repeating-section-icon-hover-background-color, var(--formsey-surface, #CAC4C2));
+  formsey-repeating-section>section>.lfw>div>.form:hover>.fs-remove-wrapper>button, formsey-repeating-section>section>.lfw>.fs-add:hover {
+    border-color: var(--formsey-color);
   }
   formsey-repeating-section>section>.lfw>.fs-add {
     margin: .25em 0.4em;
