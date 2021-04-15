@@ -40,9 +40,9 @@ export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
   icon?: string | TemplateResult
   tooltip?: string
   buttonType?: "button" | "submit" | "reset" | "menu"
-  color?: string
-  theme?: "default" | "primary",
   align?: "left" | "center"
+  theme?: "default" | "primary",
+  classes?: string
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {
@@ -202,8 +202,7 @@ export interface OptionalSectionFieldDefinition extends InputFieldDefinition {
 }
 
 export interface PopupSectionFieldDefinition extends FormDefinition, InteractiveFieldDefinition {
-  icon?: string | TemplateResult
-  text?: string
+  trigger?: ButtonFieldDefinition
   width?: string,
   focus?: string
 }

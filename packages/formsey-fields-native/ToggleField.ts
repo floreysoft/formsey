@@ -28,11 +28,7 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
       const button = this.definition.buttons[i]
       const icon = typeof button.icon == "string" ? getIcon(button.icon as string) : button.icon
       const text = button.text ? html`<span>${button.text}</span>` : undefined
-      let color
-      if (button.color) {
-        color = `background-color:${button.color}`
-      }
-      buttons.push(html`<button type="button" class=${classMap({ left: button?.align == "left" })} style=${ifDefined(color)} ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}${text}</button>`)
+      buttons.push(html`<button type="button" class=${classMap({ left: button?.align == "left" })} ?selected=${button.name == this.value} ?disabled=${this.definition.disabled} @click=${(e: Event) => this.select(e, button.name)} @keydown=${this.keyDown}>${icon}${text}</button>`)
     }
     return html`<div @select=${this.select}>${buttons}</div>`
   }

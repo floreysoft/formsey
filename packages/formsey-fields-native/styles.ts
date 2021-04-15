@@ -149,11 +149,6 @@ export const FORM_STYLES = css`
     background-color: var(--formsey-accent-color);
     color: var(--formsey-accent-contrast);
   }
-  /*
-  button fs-icon + span {
-    margin-left: .25em;
-  }
-  */
   button .photo {
     width: 1.5em;
     border-radius: 50%;
@@ -194,6 +189,21 @@ export const FORM_STYLES = css`
     opacity: 0;
     width: 0;
     height: 0;
+  }
+  .sidebarButton {
+      border-radius: 50%;
+      width: 2.5em;
+      height: 2.5em;
+      margin: .65em;
+  }
+  .sidebarButton fs-icon {
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .sidebarButton .photo {
+    width: 2.5em;
+    height: 2.5em;
+    margin-right:0;
   }
   /* Panel */
   formsey-panel {

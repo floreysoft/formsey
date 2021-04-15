@@ -42,8 +42,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
     if (this.definition) {
       const formatter = this.layoutController?.layout?.formatter ? getFormatter(this.layoutController.layout.formatter) : undefined
       const style = `left:${this.left || "auto"};top:${this.top || "auto"};position:${this.left ? "fixed" : "relative"};width:${this.definition.width || "auto"};max-height:${this.definition.height || "auto"};${formatter ? `${formatter.outerBoxStyle?.(this.layoutController?.layout)};${formatter.backgroundStyle?.(this.layoutController?.layout)}` : ""}`
-      return html`
-    ${this.definition.icon || this.definition.text ? createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: { type: "button", buttonType: "button", icon: this.definition.icon, text: this.definition.text, disabled: this.definition.disabled } as ButtonFieldDefinition, parentPath: this.path(), errors: this.errors, clickHandler: this.triggered, invalidHandler: this.invalid }) : undefined}
+      return html`${this.definition.trigger ? createField({ id: this.elementId, library: this.library, context: this.context, settings: this.settings, definition: this.definition.trigger, parentPath: this.path(), errors: this.errors, clickHandler: this.triggered, invalidHandler: this.invalid }) : undefined}
     ${this.visible ? html`
     <div class="dialogWrapper" @mouseup=${this.endDrag} @mousemove=${this.drag}>
       <focus-trap>

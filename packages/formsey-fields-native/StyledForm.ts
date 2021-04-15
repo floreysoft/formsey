@@ -11,7 +11,6 @@ import { customElement, query } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { FORM_STYLES } from './styles';
 
-
 @customElement("formsey-styled-form")
 export class StyledForm extends Form {
   static shadowDom = true
@@ -28,7 +27,7 @@ export class StyledForm extends Form {
 
     .themed {
       color: var(--formsey-color, inherit);
-      background: var(--formsey-background, inherit);
+      background: var(--styled-form-background, var(--formsey-background, inherit));
     }
   `]
   }
