@@ -85,6 +85,27 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
     return valid
   }
 
+  public async close(e?: Event) {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    this.top = undefined
+    this.left = undefined
+    document.removeEventListener('keydown', this.keyHandler)
+    const trigger = this.renderRoot.querySelector('formsey-button') as ButtonField
+    if (trigger) {
+      trigger.focusField()
+    }
+    this.visible = false;
+    // Await is required to avoid reopening the dialog on render
+    await this.updateComplete;
+    if (this.layoutController) {
+      this.removeController(this.layoutController)
+      this.layoutController = undefined
+    }
+  }
+
   protected invalid(e: InvalidEvent) {
     this.dispatchEvent(new InvalidEvent(e.detail))
   }
@@ -175,24 +196,6 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
         this.focusField(this.path() + "." + (this.definition.focus || this.definition.fields[0].name))
       }
     }, 1)
-  }
-
-  private async close(e: Event) {
-    e.preventDefault()
-    e.stopPropagation()
-    this.top = undefined
-    this.left = undefined
-    document.removeEventListener('keydown', this.keyHandler)
-    const trigger = this.renderRoot.querySelector('formsey-button') as ButtonField
-    if (trigger) {
-      trigger.focusField()
-    }
-    this.visible = false;
-    await this.updateComplete;
-    if (this.layoutController) {
-      this.removeController(this.layoutController)
-      this.layoutController = undefined
-    }
   }
 
   private cancel() {
