@@ -25,9 +25,11 @@ export function removeDeletedFields(components: Components, definition: FormDefi
     addMemberValueIfPresent("data", newValue, value)
     addMemberValueIfPresent("sortDirection", newValue, value)
     addMemberValueIfPresent("dataSource", newValue, value)
+    addMemberValueIfPresent("selections", newValue, value)
     addMemberValueIfPresent("sortedBy", newValue, value)
-
     return newValue
+  } else {
+    return value
   }
 }
 
@@ -66,6 +68,7 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
 @customElement("formsey-form-field")
 export class FormField<D extends FormDefinition, V extends { [key: string]: any }> extends LabeledField<FormDefinition, { [key: string]: any }> {
   @property({ converter: Object })
+
   // @ts-ignore()
   set value(value: V) {
     this._value = value
@@ -81,7 +84,6 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     return this._value
   }
 
-  @property({ converter: Object })
   // @ts-ignore()
   set definition(definition) {
     this._definition = definition;

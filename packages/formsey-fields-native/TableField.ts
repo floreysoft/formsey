@@ -1,11 +1,9 @@
-import { createField, Field } from '@formsey/core/Field';
-import { FieldClickEvent } from '@formsey/core/Events';
-import { ButtonFieldDefinition, CheckboxFieldDefinition, DialogSectionFieldDefinition, FieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
+import { FieldChangeEvent, FieldClickEvent, FieldInputEvent } from '@formsey/core/Events';
+import { createField } from '@formsey/core/Field';
+import { ButtonFieldDefinition, CheckboxFieldDefinition, DialogSectionFieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { FlexLayout, TableLayout } from '@formsey/core/Layouts';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
-import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
 import { customElement } from "lit/decorators";
 import { classMap } from 'lit/directives/class-map';
@@ -27,7 +25,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         hasSearchableColumns = (<TableLayout>this.layoutController.layout).columns?.filter(column => column.searchable).length > 0
         if (this.definition.selectable) {
           const templates = fixedColumns > 0 ? fixed : scrollable
-          templates.push(html`<div class="td th">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
+          templates.push(html`<div class="td th">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "selectAll", indeterminate: true } as CheckboxFieldDefinition, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`)
           if (hasSearchableColumns) {
             const search = fixedColumns > 0 ? searchFixed : searchScrollable
             search.push(html`<div class="td ts"></div>`)
@@ -52,7 +50,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
               if (hasSearchableColumns) {
                 const search = index < fixedColumns ? searchFixed : searchScrollable
                 if (column.searchable) {
-                  search.push(html`<div class="td ts">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: field.name } as StringFieldDefinition, parentPath: this.path() + ".search", errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) })}</div>`)
+                  search.push(html`<div class="td ts">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: field.name } as StringFieldDefinition, parentPath: this.path() + ".search", errors: this.errors, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`)
                 } else {
                   search.push(html`<div class="td ts"></div>`)
                 }
@@ -67,7 +65,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           for (let row: number = 0; (row + (this.value.pageStart || 0)) < this.value.data.length && row < (this.definition.pageLength || this.value.data.length); row++) {
             const value = { ...this.value.data[row + (this.value.pageStart || 0)] }
             const key = this.definition.key ? value[this.definition.key] : row
-            const selected = !!(this.definition.selectable && this.value.selections?.includes(key.toString()))
+            const selected = !!(this.definition.selectable && this.value.selections?.includes(key))
             if (this.definition.selectable) {
               const templates = fixedColumns > 0 ? fixed : scrollable
               const classes = {
@@ -77,7 +75,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                 last: row == lastRow,
                 selected
               }
-              templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: selected, parentPath: this.path() + ".data[" + key + "]", errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.inputted, invalidHandler: this.invalid })}</div>`);
+              templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "checkbox", name: "__s" }, value: selected, parentPath: this.path() + ".data[" + key + "]", errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.changed, invalidHandler: this.invalid })}</div>`);
             }
             (<TableLayout>this.layoutController.layout).columns.forEach((column, index) => {
               if (column.visible) {
@@ -91,7 +89,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                     last: row == lastRow,
                     selected
                   }
-                  templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout, field))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + row + "]", errors: this.errors, clickHandler: this.clicked, inputHandler: this.inputted, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`);
+                  templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout, field))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + row + "]", errors: this.errors, clickHandler: this.clicked, inputHandler: this.changed, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`);
                 }
               }
             })
@@ -224,7 +222,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       let name = path.substring(path.indexOf("]") + 2).split('.')[0]
       if (name == "__s") {
         if (e.detail.value) {
-          this.value.selections = this.value.selections ? [...this.value.selections, index] : [index]
+          this.value.selections = this.value.selections ? this.value.selections.includes(index) ? this.value.selections : [...this.value.selections, index] : [index]
         } else {
           let found = this.value.selections?.indexOf(index);
           if (typeof found !== "undefined" && found !== -1) {
@@ -252,7 +250,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       this.value['search'] = { ...this.value['search'] }
       this.value['search'][field] = e.detail.value
     }
-    this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value));
+    this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
     this.requestUpdate()
   }
 }

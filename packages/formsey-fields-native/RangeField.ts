@@ -5,7 +5,6 @@ import { customElement } from "lit/decorators";
 import { ifDefined } from 'lit/directives/if-defined';
 import { NumberField } from './NumberField';
 
-
 @customElement("formsey-range")
 export class RangeField extends NumberField {
   protected get type() : "range" {
@@ -20,6 +19,6 @@ export class RangeField extends NumberField {
 getLibrary("native").registerComponent("range", {
   importPath: "@formsey/fields-native/RangeField",
   template: ( { library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id } : Resources<NumberFieldDefinition, number>) => {
-    return html`<formsey-range id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-range>`
+    return html`<formsey-range id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-range>`
   }
 })

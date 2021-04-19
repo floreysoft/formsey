@@ -7,7 +7,6 @@ import { FieldInputEvent } from "./Events";
 import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 
-
 export function get(data: { [key: string]: any }, path: string): any {
   if (!data || !path) {
     return undefined
@@ -219,7 +218,6 @@ export class Form extends Field<FieldDefinition, any> {
       this.value = removeDeletedFields(this.library.components, this.definition, this.value)
     }
   }
-
 
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()

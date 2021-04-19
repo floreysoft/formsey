@@ -54,39 +54,37 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
 
   open(e: CustomEvent) {
     e.stopPropagation()
-    if (e.detail['name'] == this.path()) {
-      this.visible = true
-      // Calculate available popup size / position
-      const cx = window.innerWidth / 2
-      const cy = window.innerHeight / 2
-      const rect = (<HTMLElement>e.currentTarget).getBoundingClientRect()
-      if ((rect.left + rect.width / 2 <= cx)) {
-        // Show on the right
-        this.left = rect.left + "px"
-        this.right = undefined
-        this.maxWidth = `${window.innerWidth - rect.left}px`
-      } else {
-        // Show on the left
-        this.left = undefined
-        this.right = window.innerWidth - rect.right + "px"
-        this.maxWidth = `${rect.right}px`
-      }
-      if ((rect.top + rect.height / 2 <= cy)) {
-        // Show below
-        this.top = rect.top + rect.height + "px"
-        this.bottom = undefined
-        this.maxHeight = `${window.innerHeight - (rect.top + rect.height)}px`
-      } else {
-        // Show above
-        this.top = undefined
-        this.bottom = window.innerHeight - rect.top + "px"
-        this.maxHeight = `${window.innerHeight - rect.top}px`
-      }
-      this.updateComplete.then(() => {
-        this.layoutController = new LayoutController(this, this.form)
-        this.addController(this.layoutController)
-      })
+    this.visible = true
+    // Calculate available popup size / position
+    const cx = window.innerWidth / 2
+    const cy = window.innerHeight / 2
+    const rect = (<HTMLElement>e.currentTarget).getBoundingClientRect()
+    if ((rect.left + rect.width / 2 <= cx)) {
+      // Show on the right
+      this.left = rect.left + "px"
+      this.right = undefined
+      this.maxWidth = `${window.innerWidth - rect.left}px`
+    } else {
+      // Show on the left
+      this.left = undefined
+      this.right = window.innerWidth - rect.right + "px"
+      this.maxWidth = `${rect.right}px`
     }
+    if ((rect.top + rect.height / 2 <= cy)) {
+      // Show below
+      this.top = rect.top + rect.height + "px"
+      this.bottom = undefined
+      this.maxHeight = `${window.innerHeight - (rect.top + rect.height)}px`
+    } else {
+      // Show above
+      this.top = undefined
+      this.bottom = window.innerHeight - rect.top + "px"
+      this.maxHeight = `${window.innerHeight - rect.top}px`
+    }
+    this.updateComplete.then(() => {
+      this.layoutController = new LayoutController(this, this.form)
+      this.addController(this.layoutController)
+    })
   }
 
   close(e: Event) {
