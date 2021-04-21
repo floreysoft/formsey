@@ -1242,7 +1242,7 @@ formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
     margin: var(--formsey-space-wide) 0;
   }
   formsey-markdown em {
-    font-style: italic;
+    font-weight: bolder;
   }
   formsey-markdown p, formsey-markdown ul {
     margin: var(--formsey-space-narrow) 0;
