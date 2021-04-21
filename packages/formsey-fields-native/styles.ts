@@ -554,7 +554,6 @@ export const FORM_STYLES = css`
   formsey-tabs .content {
       flex-grow: 1;
       display: flex;
-      background-color: var(--formsey-surface);
   }
 
   /* Stats View */
