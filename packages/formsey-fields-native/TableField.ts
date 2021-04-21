@@ -97,7 +97,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         }
       }
       let pager = undefined
-      if (this.definition?.pageLength || 0 < this.value?.data?.length || this.definition?.dataSource) {
+      if ((this.definition?.pageLength || 0) < this.value?.data?.length || this.definition?.dataSource) {
         let fields: (ButtonFieldDefinition | DialogSectionFieldDefinition)[] = []
         this.definition?.actions?.forEach(action => {
           fields.push(action)
