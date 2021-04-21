@@ -141,5 +141,6 @@ getLibrary("native").registerComponent("repeatingSection", {
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields
-  }
+  },
+  renderer: "repeatingSectionRenderer"
 })

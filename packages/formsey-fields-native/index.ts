@@ -26,6 +26,7 @@ export { PhoneField } from './PhoneField';
 export { PopupSectionField } from './PopupSectionField';
 export { RangeField } from './RangeField';
 export { RepeatingSectionField } from './RepeatingSectionField';
+export { RepeatingSectionRenderer } from './RepeatingSectionRenderer';
 export { ResponsivePanelField } from './ResponsivePanelField';
 export { SearchField } from './SearchField';
 export { SelectableSectionField } from './SelectableSectionField';
