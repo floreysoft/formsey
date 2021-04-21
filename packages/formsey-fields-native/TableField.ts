@@ -118,28 +118,28 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           name: "start",
           icon: "Start",
           buttonType: "button",
-          disabled: !this.value?.dataSource?.canFirst || false
+          disabled: this.value?.dataSource?.canFirst === false
         } as ButtonFieldDefinition,
         {
           type: "button",
           name: "prev",
           icon: "Previous",
           buttonType: "button",
-          disabled: !this.value?.dataSource?.canPrevious || this.value.pageStart == 0
+          disabled: (this.value?.dataSource?.canPrevious === false) || (this.value.pageStart || 0) == 0
         } as ButtonFieldDefinition,
         {
           type: "button",
           name: "next",
           icon: "Next",
           buttonType: "button",
-          disabled: !this.value?.dataSource?.canNext || ((this.value.pageStart || 0) + (this.definition?.pageLength || 0)) > this.value.data.length
+          disabled: (this.value?.dataSource?.canNext === false) || ((this.value.pageStart || 0) + (this.definition?.pageLength || 0)) > this.value.data.length
         } as ButtonFieldDefinition,
         {
           type: "button",
           name: "end",
           icon: "Start",
           buttonType: "button",
-          disabled: !this.value?.dataSource?.canLast
+          disabled: this.value?.dataSource?.canLast == false
         } as ButtonFieldDefinition
         ]
         let pagerDefinition = {

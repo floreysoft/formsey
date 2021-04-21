@@ -27,6 +27,7 @@ export function removeDeletedFields(components: Components, definition: FormDefi
     addMemberValueIfPresent("dataSource", newValue, value)
     addMemberValueIfPresent("selections", newValue, value)
     addMemberValueIfPresent("sortedBy", newValue, value)
+    addMemberValueIfPresent("pageStart", newValue, value)
     return newValue
   } else {
     return value
