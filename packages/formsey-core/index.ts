@@ -1,15 +1,13 @@
+import '@floreysoft/icon';
 import { html } from "lit";
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions';
 import { AreasLayout, BoxLayout, ColumnsLayout, FlexLayout, TableLayout } from './Layouts';
 import { area, registerFormatter, registerIcon } from './Registry';
 
+export * from './Events';
+export { FieldBlurEvent, FieldChangeEvent, FieldClickEvent, FieldFocusEvent, FieldInputEvent } from './Events';
 export * from './Field';
-export { FieldBlurEvent } from './Events';
-export { FieldChangeEvent } from './Events';
-export { FieldClickEvent } from './Events';
 export * from './FieldDefinitions';
-export { FieldFocusEvent } from './Events';
-export { FieldInputEvent } from './Events';
 export * from './Form';
 export * from './FormField';
 export { FormNavigator } from './FormNavigator';
@@ -19,7 +17,6 @@ export { LabeledField } from './LabeledField';
 export { LayoutController } from './LayoutController';
 export { SIZES } from './Layouts';
 export * from './Registry';
-export * from './Events'
 
 registerIcon("Cut", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M9.309 0l-.538 1.04c-.185.359-.215.965 .245 2.758.29 1.133.755 2.641 1.381 4.483.79 2.325 1.736 4.881 2.579 7.073l1.911-3.918-5.578-11.435zM27.86 27.231l-.096-1.095-.074.035c-.399-1.56-1.443-3.068-3.006-4.316-1.584-1.265-3.457-2.051-4.888-2.051-.283 0-.544.031-.782.092l-.982-2.013c1.009-2.526 2.447-6.299 3.57-9.603.626-1.841 1.09-3.35 1.381-4.482.46-1.793.43-2.4.245-2.758l-.538-1.04-9.705 19.896c-.238-.061-.499-.092-.782-.092-1.431 0-3.304.786-4.888 2.051-1.827 1.459-2.947 3.275-3.152 5.113l-.023.263c-.163 2.278.852 4.146 2.526 4.649.265 .079.567 .12.898 .12 1.7 0 3.824-1.038 4.738-3.356.127-.302.267-.669.428-1.094.518-1.359 1.301-3.414 2.118-4.265.299-.311.531-.537.717-.719.167-.163.308-.3.434-.439.127 .139.267 .276.434 .439.186 .182.418 .407.717 .719.818 .851 1.6 2.905 2.118 4.264.162 .425.302 .792.429 1.094.914 2.318 3.038 3.356 4.738 3.356 0 0 0 0 0 0 .331 0 .634-.04.898-.12 1.673-.503 2.688-2.371 2.525-4.649zM10.314 27.559c-1.176 2.147-2.227 2.468-2.749 2.468-.711 0-1.243-.577-1.347-1.136-.068-.368-.081-.745-.037-1.122.176-1.51 1.201-2.807 2.03-3.628 1.139-1.129 2.416-1.879 3.235-2.206.082-.029.132-.033.155-.033.012 0 .019.001 .02.001 0 0 0 0 0 0 .241.159 .526 1.972-1.306 5.656zM25.8 28.892c-.105.558-.64 1.136-1.356 1.136-.526 0-1.583-.321-2.766-2.468-1.844-3.685-1.556-5.499-1.316-5.655 0 0 .006-.002.022-.002.023 0 .073.004 .156.033 .825.327 2.109 1.077 3.255 2.206.834 .822 1.865 2.118 2.042 3.628.044 .378.032 .756-.037 1.123z"></path></svg></fs-icon>`)
 registerIcon("Copy", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M25.531 3.969h-3.51v-1.938c0-1.1-.9-2-2-2h-8c-1.1 0-2 .9-2 2v1.938h-3.552c-1.378 0-2.5 1.122-2.5 2.5v23.063c0 1.378 1.122 2.5 2.5 2.5l13.479-.011 8.063-8v-1.113l.021-.001v-16.437c0-1.378-1.122-2.5-2.5-2.5zM12.021 2.035c.001-.001.002-.002.004-.004h7.993c.001.001 .003.002 .004.004v1.934h-8v-1.934zM26.031 20.031v1.989h-8.021v8.011h-11.542c-.274 0-.5-.228-.5-.5v-23.063c0-.272.226-.5.5-.5 0 0 .054 0 1.5 0v2.063h16v-2.063c1.457 0 1.563 0 1.563 0 .272 0 .5.228 .5.5v13.563z"></path></svg></fs-icon>`)
