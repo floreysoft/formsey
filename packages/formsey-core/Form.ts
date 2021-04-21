@@ -129,7 +129,7 @@ export class Form extends Field<FieldDefinition, any> {
   updated() {
     if (!this._loaded && this.definition) {
       this._loaded = true;
-      this.dispatchEvent(new CustomEvent('load', { detail: { definition: this.definition, value: this.value, theme: this.library } }))
+      this.dispatchEvent(new CustomEvent('load', { detail: { definition: this.definition, value: this.value, library: this.library, settings: this.settings } }))
     }
   }
 
