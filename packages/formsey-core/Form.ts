@@ -6,6 +6,7 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { FieldInputEvent } from "./Events";
 import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
+import { getLibrary } from "./Registry";
 
 export function get(data: { [key: string]: any }, path: string): any {
   if (!data || !path) {
@@ -67,9 +68,9 @@ export class Form extends Field<FieldDefinition, any> {
     try {
       let response = await fetch(url);
       let data = await response.json();
+      this.library = this.library || getLibrary(data.library)
       this.definition = this.definition || data.definition
       this.value = this.value || data.value
-      this.library = this.library || data.library
       this.settings = this.settings || data.settings
       this.requestUpdate();
     } catch (reason) {
