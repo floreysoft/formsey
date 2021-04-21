@@ -241,6 +241,7 @@ export const FORM_STYLES = css`
     min-height: var(--formsey-input-height, 2em);
     box-sizing: border-box;
     width: initial;
+    padding: 0 var(--formsey-space-narrow);
   }
 
   formsey-label .l span {
@@ -1059,6 +1060,9 @@ export const FORM_STYLES = css`
     box-sizing: border-box;
     overflow: hidden;
   }
+  formsey-table .cell formsey-label .l {
+    padding: 0;
+  }
 
   /* Toggles */
 formsey-toggle>.lfw>div {
@@ -1236,6 +1240,9 @@ formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
   }
   formsey-markdown pre {
     margin: var(--formsey-space-wide) 0;
+  }
+  formsey-markdown em {
+    font-style: italic;
   }
   formsey-markdown p, formsey-markdown ul {
     margin: var(--formsey-space-narrow) 0;
