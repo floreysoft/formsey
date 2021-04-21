@@ -26,7 +26,7 @@ export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any
       const outerStyle = formatter ? `${formatter.outerBoxStyle?.(this.layoutController?.layout) || ""};${formatter.backgroundStyle?.(this.layoutController?.layout) || ""}` : ""
       const innerStyle = formatter?.innerBoxStyle?.(this.layoutController?.layout) || ""
       return html`<div style=${outerStyle}><header>${icon}${this.definition.label}</header>
-    <div class="panel" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", name: this.definition.name, fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, inputHandler: this.inputted, changeHandler: this.changed, invalidHandler: this.invalid })}</div></div>`
+    <div class="panel" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", name: this.definition.name, fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, inputHandler: this.inputted, changeHandler: this.changed, clickHandler: this.clicked, invalidHandler: this.invalid })}</div></div>`
     }
   }
 
@@ -41,8 +41,8 @@ export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any
 
 getLibrary("native").registerComponent("panel", {
   importPath: "@formsey/fields-native/PanelField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<PanelFieldDefinition, Object>) => {
-    return html`<formsey-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-panel>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<PanelFieldDefinition, Object>) => {
+    return html`<formsey-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change=${changeHandler} @input=${inputHandler} @click=${clickHandler} @invalid=${invalidHandler}></formsey-panel>`
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields

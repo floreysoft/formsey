@@ -1,11 +1,7 @@
 import { LitElement, TemplateResult } from "lit";
 import { property } from "lit/decorators";
-import { FieldBlurEvent } from './Events';
-import { FieldChangeEvent } from './Events';
-import { FieldClickEvent } from './Events';
+import { FieldBlurEvent, FieldChangeEvent, FieldClickEvent, FieldFocusEvent, FieldInputEvent } from './Events';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
-import { FieldFocusEvent } from './Events';
-import { FieldInputEvent } from "./Events";
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { getDefaultLibrary, getLibraries, Library, Resources, Settings } from './Registry';
 

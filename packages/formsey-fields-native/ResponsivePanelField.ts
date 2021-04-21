@@ -51,7 +51,7 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
           }
         } as SplitPanelDefinition
       }
-      return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.inputted, invalidHandler: this.invalid })}`
+      return html`${createField({ library: this.library, context: this.context, settings: this.settings, definition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.inputted, clickHandler: this.clicked, invalidHandler: this.invalid })}`
     }
   }
 
@@ -78,8 +78,8 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
 
 getLibrary("native").registerComponent("responsivePanel", {
   importPath: "@formsey/fields-native/ResponsivePanelField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
-    return html`<formsey-responsive-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-responsive-panel>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<ResponsivePanelFieldDefinition, Object>) => {
+    return html`<formsey-responsive-panel id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}"  @click="${clickHandler}" @invalid=${invalidHandler}></formsey-responsive-panel>`
   },
   nestedFields: (definition: ResponsivePanelFieldDefinition, value: any) => {
     const fields = []
