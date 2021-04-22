@@ -16,7 +16,7 @@
     "@floreysoft/utils": "^0.4",
     "@formsey/fields-native": "^0.4.34",
     "@ts-stack/markdown": ">0",
-    "highlight.js": "^10.1.1",
+    "highlight.js": "^11",
     "lit": "^2.0.0-rc.1",
     "signature_pad": "^3.0.0-beta.3"
   },
