@@ -5,8 +5,8 @@ import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map";
-import { ifDefined } from 'lit/directives/if-defined';
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   if (val === undefined || val === null) {

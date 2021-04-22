@@ -3,8 +3,8 @@ import { ButtonFieldDefinition, FieldClickEvent, LabeledField } from '@formsey/c
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { classMap } from 'lit/directives/class-map';
-import { ifDefined } from 'lit/directives/if-defined';
+import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 @customElement("formsey-button")

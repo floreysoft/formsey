@@ -5,7 +5,7 @@ import "@material/mwc-textarea/mwc-textarea.js";
 import { TextArea } from "@material/mwc-textarea/mwc-textarea.js";
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 @customElement("formsey-text-material")

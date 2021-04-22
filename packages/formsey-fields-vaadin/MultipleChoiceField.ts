@@ -11,7 +11,7 @@ import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-grou
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { css, html, TemplateResult } from "lit";
 import { customElement, query } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 @customElement("formsey-multiple-choice-vaadin")

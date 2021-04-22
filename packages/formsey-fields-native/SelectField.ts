@@ -4,7 +4,7 @@ import { BoxLayout } from '@formsey/core/Layouts';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { ComboboxField } from './ComboboxField';
 
 @customElement("formsey-select")

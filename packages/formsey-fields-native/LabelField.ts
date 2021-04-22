@@ -3,8 +3,8 @@ import { LabeledField } from "@formsey/core/LabeledField";
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { classMap } from 'lit/directives/class-map';
-import { ifDefined } from 'lit/directives/if-defined';
+import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 @customElement("formsey-label")
 export class LabelField extends LabeledField<LabelFieldDefinition, any> {

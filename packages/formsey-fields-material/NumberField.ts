@@ -4,7 +4,7 @@ import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField, TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
 @customElement("formsey-number-material")

@@ -3,7 +3,7 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
 import { customElement, property, query, queryAll } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 import { FieldInputEvent } from '@formsey/core/Events';
 

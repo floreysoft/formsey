@@ -8,7 +8,7 @@ import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 

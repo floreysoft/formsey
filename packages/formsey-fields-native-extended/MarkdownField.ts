@@ -8,7 +8,7 @@ import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html';
 hljs.registerLanguage('javascript', javascript);
 @customElement("formsey-markdown")

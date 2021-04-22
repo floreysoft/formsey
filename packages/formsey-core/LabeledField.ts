@@ -1,5 +1,5 @@
 import { html, TemplateResult } from "lit";
-import { classMap } from 'lit/directives/class-map';
+import { classMap } from 'lit/directives/class-map.js';
 import { Field } from './Field';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { getUniqueElementId } from './Registry';

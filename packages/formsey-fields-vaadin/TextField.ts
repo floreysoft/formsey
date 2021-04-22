@@ -8,7 +8,7 @@ import { TextAreaElement } from '@vaadin/vaadin-text-field/vaadin-text-area';
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 @customElement("formsey-text-vaadin")
 export class TextField extends Field<TextFieldDefinition, string> {

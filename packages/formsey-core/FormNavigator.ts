@@ -1,7 +1,7 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { classMap } from 'lit/directives/class-map';
-import { ifDefined } from 'lit/directives/if-defined';
+import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { FieldDefinition, FormDefinition, InputFieldDefinition, OptionalSectionFieldDefinition, SelectableSectionFieldDefinition } from "./FieldDefinitions";
 import { get } from "./Form";
 import { InvalidError, InvalidErrors } from "./InvalidEvent";

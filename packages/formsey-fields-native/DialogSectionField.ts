@@ -7,7 +7,7 @@ import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonField } from './ButtonField';
 
 @customElement("formsey-dialog-section")

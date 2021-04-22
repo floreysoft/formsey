@@ -3,7 +3,7 @@ import { FieldDefinition, ListFieldDefinition } from '@formsey/core/FieldDefinit
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 const options = [
   { "label": "(GMT-12:00) International Date Line West", "value": "Etc/GMT+12" },

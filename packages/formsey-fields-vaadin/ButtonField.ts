@@ -3,7 +3,7 @@ import { LabeledField } from '@formsey/core/LabeledField';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 @customElement("formsey-button-vaadin")

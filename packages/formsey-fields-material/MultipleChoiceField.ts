@@ -7,7 +7,7 @@ import "@material/mwc-textfield/mwc-textfield";
 import { TextField } from "@material/mwc-textfield/mwc-textfield";
 import { html, TemplateResult } from "lit";
 import { customElement, property, query, queryAll } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
 @customElement("formsey-multiple-choice-material")

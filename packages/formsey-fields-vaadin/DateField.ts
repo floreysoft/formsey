@@ -7,7 +7,7 @@ import '@vaadin/vaadin-date-picker';
 import { DatePickerElement } from "@vaadin/vaadin-date-picker";
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
 @customElement("formsey-date-vaadin")
