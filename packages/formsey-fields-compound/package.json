@@ -12,7 +12,7 @@
   "dependencies": {
     "@formsey/core": "^0.4.31",
     "@formsey/fields-native": "^0.4.31",
-    "lit": "^2.0.0-pre.1"
+    "lit": "^2.0.0-rc.1"
   },
   "scripts": {
     "tsc": "tsc",

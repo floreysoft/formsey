@@ -512,18 +512,18 @@ export const FORM_STYLES = css`
   }
 
   /* Tabs panel */
-  formsey-tabs .container {
+  formsey-tabs>.container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     overflow: hidden;
   }
-  formsey-tabs .tabs {
+  formsey-tabs>.container>.tabs {
     display: flex;
     flex-wrap: wrap;
     position: relative;
   }
-  formsey-tabs .tab {
+  formsey-tabs>.container>.tabs>.tab {
     border-color: transparent;
   }
   formsey-tabs .top  .tab {
@@ -552,7 +552,7 @@ export const FORM_STYLES = css`
     height: 2px;
     background-color: var(--formsey-accent-color);
   }
-  formsey-tabs .content {
+  formsey-tabs>.container>.content {
       flex-grow: 1;
       display: flex;
   }

@@ -1,7 +1,6 @@
 {
-  "name": "@formsey/core",
+  "name": "formsey",
   "version": "0.4.31",
-  "module": "/esm/formsey-core.min.js",
   "files": [
     "/esm/*",
     "/*.js.map",
@@ -10,10 +9,10 @@
     "/*.d.ts",
     "!/test/"
   ],
-  "description": "Formsey core components",
+  "description": "Formsey including all native fields types",
   "dependencies": {
-    "@floreysoft/icon": "^0.5.0",
-    "lit": "^2.0.0-rc.1"
+    "@formsey/fields-native": "^0.4",
+    "@formsey/fields-native-extended": "^0.4"
   },
   "scripts": {
     "tsc": "tsc",
