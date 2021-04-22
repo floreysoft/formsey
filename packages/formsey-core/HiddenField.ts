@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { customElement } from "lit/decorators";
+import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { Field } from './Field';
 import { FieldDefinition } from "./FieldDefinitions";

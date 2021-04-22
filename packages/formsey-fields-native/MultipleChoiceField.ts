@@ -2,7 +2,7 @@ import { CheckboxesFieldDefinition, createField, LabeledField, StringFieldDefini
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
-import { customElement, property, query, queryAll } from "lit/decorators";
+import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { StringField } from './StringField';
 import { FieldInputEvent } from '@formsey/core/Events';

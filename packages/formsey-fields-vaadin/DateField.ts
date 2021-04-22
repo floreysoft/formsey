@@ -6,7 +6,7 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-date-picker';
 import { DatePickerElement } from "@vaadin/vaadin-date-picker";
 import { html } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
 

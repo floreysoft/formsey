@@ -3,7 +3,7 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-text-field/vaadin-password-field";
 import { PasswordFieldElement } from '@vaadin/vaadin-text-field/vaadin-password-field';
 import { html } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
 

@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult } from "lit";
-import { property } from "lit/decorators";
+import { property } from "lit/decorators.js";
 import { FieldBlurEvent, FieldChangeEvent, FieldClickEvent, FieldFocusEvent, FieldInputEvent } from './Events';
 import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';

@@ -3,7 +3,7 @@ import { LabeledField, StringFieldDefinition, TextFieldDefinition } from '@forms
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 @customElement("formsey-text")

@@ -7,7 +7,7 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { html } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 

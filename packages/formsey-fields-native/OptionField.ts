@@ -4,7 +4,7 @@ import { FieldChangeEvent } from '@formsey/core/Events';
 import { Option } from '@formsey/core/FieldDefinitions';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map';
 
 

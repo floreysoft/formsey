@@ -10,7 +10,7 @@ import '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { css, html, TemplateResult } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 

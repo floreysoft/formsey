@@ -5,7 +5,7 @@ import { FormField } from '@formsey/core/FormField';
 import { FlexLayout, TableLayout } from '@formsey/core/Layouts';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html, TemplateResult } from "lit";
-import { customElement } from "lit/decorators";
+import { customElement } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map';
 import { ifDefined } from 'lit/directives/if-defined';
 

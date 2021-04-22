@@ -9,7 +9,7 @@ import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import { TextFieldElement } from '@vaadin/vaadin-text-field';
 import { css, html, TemplateResult } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 @customElement("formsey-checkboxes-vaadin")

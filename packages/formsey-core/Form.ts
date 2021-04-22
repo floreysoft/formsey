@@ -1,4 +1,4 @@
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { Field } from './Field';
 import { FieldChangeEvent } from './Events';
 import { FieldClickEvent } from "./Events";

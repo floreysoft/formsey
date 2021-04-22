@@ -7,7 +7,7 @@ import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { css, html } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { FORM_STYLES } from './styles';
 

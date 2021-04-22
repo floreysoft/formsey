@@ -5,7 +5,7 @@ import { FieldDefinition, ListFieldDefinition, StringFieldDefinition } from '@fo
 import { FieldInputEvent } from '@formsey/core/Events';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 @customElement("formsey-list")

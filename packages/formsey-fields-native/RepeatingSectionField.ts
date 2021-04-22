@@ -5,7 +5,7 @@ import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html, TemplateResult } from "lit";
-import { customElement, queryAll } from "lit/decorators";
+import { customElement, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 

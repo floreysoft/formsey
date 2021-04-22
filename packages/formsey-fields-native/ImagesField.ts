@@ -3,7 +3,7 @@ import { ImagesFieldDefinition, LabeledField } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html, LitElement, TemplateResult } from "lit";
-import { customElement, property, query, queryAll } from "lit/decorators";
+import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 

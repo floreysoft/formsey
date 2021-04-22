@@ -4,7 +4,7 @@ import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/Invalid
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TemplateResult } from 'lit';
-import { query } from "lit/decorators";
+import { query } from "lit/decorators.js";
 
 
 export abstract class InputField<D extends InputFieldDefinition, V extends string> extends Field<D, V> {

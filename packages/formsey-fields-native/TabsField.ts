@@ -6,7 +6,7 @@ import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { html, TemplateResult } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map';
 import { ifDefined } from 'lit/directives/if-defined';
 

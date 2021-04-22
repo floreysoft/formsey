@@ -1,7 +1,7 @@
 import { CheckboxFieldDefinition } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { CheckboxField } from './CheckboxField';
 

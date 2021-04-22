@@ -5,7 +5,7 @@ import "@material/mwc-checkbox/mwc-checkbox.js";
 import { Checkbox } from "@material/mwc-checkbox/mwc-checkbox.js";
 import "@material/mwc-formfield/mwc-formfield.js";
 import { html } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { MaterialField } from './MaterialField';
 

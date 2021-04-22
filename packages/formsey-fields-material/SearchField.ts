@@ -3,7 +3,7 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextFieldType } from "@material/mwc-textfield/mwc-textfield.js";
 import { html } from "lit";
-import { customElement } from "lit/decorators";
+import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { StringField } from './StringField';
 

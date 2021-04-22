@@ -5,7 +5,7 @@ import { Form } from '@formsey/core/Form';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { adoptStyles, css, html, ReactiveElement } from "lit";
-import { customElement, query } from "lit/decorators";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { FORM_STYLES } from './styles';
 

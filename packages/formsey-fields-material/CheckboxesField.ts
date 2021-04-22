@@ -7,7 +7,7 @@ import "@material/mwc-formfield/mwc-formfield.js";
 import "@material/mwc-textfield/mwc-textfield.js";
 import { TextField } from "@material/mwc-textfield/mwc-textfield.js";
 import { css, html, TemplateResult } from "lit";
-import { customElement, query, queryAll } from "lit/decorators";
+import { customElement, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { MaterialField } from './MaterialField';
 

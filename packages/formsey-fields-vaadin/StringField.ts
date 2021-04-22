@@ -3,7 +3,7 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { html } from "lit";
-import { customElement, property } from "lit/decorators";
+import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { InputField } from './InputField';
 

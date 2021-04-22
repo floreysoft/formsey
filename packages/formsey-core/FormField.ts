@@ -1,5 +1,5 @@
 import { html, TemplateResult } from "lit";
-import { customElement, property, queryAll } from "lit/decorators";
+import { customElement, property, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { FieldChangeEvent, FieldInputEvent } from './Events';
 import { createField, Field } from './Field';

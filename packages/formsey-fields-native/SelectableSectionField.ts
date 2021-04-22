@@ -7,7 +7,7 @@ import { LayoutController } from '@formsey/core/LayoutController';
 import { Layout } from '@formsey/core/Layouts';
 import { Formatter, getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 

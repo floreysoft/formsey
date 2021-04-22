@@ -3,7 +3,7 @@ import { LabelFieldDefinition, RepeatingFieldDefinition } from '@formsey/core/Fi
 import { LabeledField } from "@formsey/core/LabeledField";
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement } from "lit/decorators";
+import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 @customElement("formsey-repeating-section-renderer")

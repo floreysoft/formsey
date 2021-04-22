@@ -2,7 +2,7 @@ import { LabeledField } from '@formsey/core';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement, property } from "lit/decorators";
+import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 
 

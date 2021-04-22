@@ -4,7 +4,7 @@ import { ToggleFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { html } from "lit";
-import { customElement, property } from "lit/decorators";
+import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map";
 import { ifDefined } from 'lit/directives/if-defined';
 

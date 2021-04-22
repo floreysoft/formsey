@@ -6,7 +6,7 @@ import "@material/mwc-formfield/mwc-formfield";
 import "@material/mwc-switch/mwc-switch";
 import { Switch } from "@material/mwc-switch/mwc-switch";
 import { html } from "lit";
-import { customElement, property, query } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined';
 import { MaterialField } from './MaterialField';
 
