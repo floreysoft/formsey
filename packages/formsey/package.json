@@ -11,8 +11,7 @@
   ],
   "description": "Formsey including all native fields types",
   "dependencies": {
-    "@formsey/fields-native": "^0.4",
-    "@formsey/fields-native-extended": "^0.4"
+    "@formsey/fields-native": "^0.4"
   },
   "scripts": {
     "tsc": "tsc",
