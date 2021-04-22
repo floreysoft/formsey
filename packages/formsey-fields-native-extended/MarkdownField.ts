@@ -6,7 +6,7 @@ import { Marked, Renderer } from '@ts-stack/markdown';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 @customElement("formsey-markdown")
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })
