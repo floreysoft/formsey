@@ -17,7 +17,8 @@
     "@formsey/fields-native": "^0.4.34",
     "@ts-stack/markdown": ">0",
     "lit": "^2.0.0-rc.1",
-    "signature_pad": "^3.0.0-beta.3"
+    "signature_pad": "^3.0.0-beta.3",
+    "highlight.js": "^11"
   },
   "scripts": {
     "tsc": "tsc",
@@ -32,6 +33,5 @@
   },
   "gitHead": "6386b603b4eb5c531fb4b7597e4cbe76cb054c76",
   "devDependencies": {
-    "@types/highlight.js": "^10.1.0"
   }
 }

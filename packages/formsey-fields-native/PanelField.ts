@@ -1,7 +1,6 @@
 import { createField, Field, FieldInputEvent } from '@formsey/core';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { FormDefinition, PanelFieldDefinition } from '@formsey/core/FieldDefinitions';
-import { InvalidEvent } from '@formsey/core/InvalidEvent';
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";

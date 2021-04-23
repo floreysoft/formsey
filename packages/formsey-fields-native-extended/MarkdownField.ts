@@ -1,12 +1,16 @@
+// Wait for highlight.js to fix https://github.com/highlightjs/highlight.js/issues/2682
+/// <reference path="../../node_modules/highlight.js/types/index.d.ts" />
 import { LabeledField } from '@formsey/core';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Marked, Renderer } from '@ts-stack/markdown';
-
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html';
+hljs.registerLanguage('javascript', javascript);
 @customElement("formsey-markdown")
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })
@@ -41,7 +45,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
       sanitize: false,
       smartLists: true,
       smartypants: false,
-      // highlight: (code, lang) => hljs.highlightAuto(code).value
+      highlight: (code, lang) => hljs.highlightAuto(code).value
     });
   }
 
