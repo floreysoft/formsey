@@ -33,8 +33,12 @@ export class InputField<T extends InputFieldDefinition, V> extends LabeledField<
   }
 
   validate(report: boolean) {
-    this.input?.setCustomValidity("")
-    return this.input?.checkValidity() || true
+    if (this.input) {
+      this.input.setCustomValidity("")
+      return this.input.checkValidity()
+    } else {
+      return true
+    }
   }
 
   invalid(e: Event) {

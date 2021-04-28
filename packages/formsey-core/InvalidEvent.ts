@@ -21,8 +21,8 @@ export class InvalidErrors extends Map<string, InvalidError> {
 }
 
 export class InvalidEvent extends CustomEvent<InvalidErrors> {
-    constructor(errors: InvalidErrors) {
-        super("invalid", { bubbles: true, detail: errors });
+    constructor(errors: InvalidErrors, composed?: boolean) {
+        super("invalid", { bubbles: true, composed, detail: errors });
     }
 
     public addError(path: string, error: InvalidError) {

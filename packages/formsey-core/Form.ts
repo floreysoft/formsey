@@ -177,10 +177,14 @@ export class Form extends Field<FieldDefinition, any> {
 
   public validate(report: boolean, path?: string) {
     this.errors?.clear()
-    if (report) {
-      return this.form?.reportValidity(path) || false
+    if (this.form) {
+      if (report) {
+        return this.form.reportValidity(path)
+      } else {
+        return this.form.checkValidity(path)
+      }
     } else {
-      return this.form?.checkValidity(path) || false
+      return true
     }
   }
 
@@ -227,7 +231,7 @@ export class Form extends Field<FieldDefinition, any> {
     }
     this._invalidTimer = <any>setTimeout(() => {
       this.errors = new InvalidErrors(e.detail)
-      this.dispatchEvent(new InvalidEvent(e.detail))
+      this.dispatchEvent(new InvalidEvent(e.detail, true))
     }, 1)
   }
 
