@@ -81,6 +81,8 @@ export class Library {
   settingsEditor?: FieldDefinition
   defaultSettings?: Settings
   onSettingsChanged?: (settings: Settings) => Settings
+  themeColor?: (settings: Settings) => string
+  backgroundColor?: (settings: Settings) => string
 
   registerComponent<D extends FieldDefinition, V>(type: string, component: Component<D, V>) {
     this.components[type] = { focusable: true, ...component }
