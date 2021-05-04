@@ -73,8 +73,8 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   public reportValidity(path?: string): boolean {
     this.report = true
-    if (this.errors?.get(this.path())) {
-      this.dispatchEvent(new InvalidEvent(this.errors))
+    if (this.customErrors?.get(this.path())) {
+      this.dispatchEvent(new InvalidEvent(this.customErrors))
       this.valid = false
     } else {
       this.valid = this.validate(true, path)
@@ -84,8 +84,8 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   public checkValidity(path?: string): boolean {
     this.report = false
-    if (this.errors?.get(this.path())) {
-      this.dispatchEvent(new InvalidEvent(this.errors))
+    if (this.customErrors?.get(this.path())) {
+      this.dispatchEvent(new InvalidEvent(this.customErrors))
       this.valid = false
     } else {
       this.valid = this.validate(false, path)

@@ -12,7 +12,8 @@ export default {
     {
       resolveId(id) {
         if (id.startsWith('lit')) {
-          return { id: `https://cdn.skypack.dev/${id}`, external: true };
+          return { id: `https://unpkg.com/@floreysoft/lit?module`, external: true };
+          //          return { id: `https://cdn.skypack.dev/${id}`, external: true };
         }
         if (id.startsWith('@formsey/core')) {
           return { id: `https://unpkg.com/@formsey/core?module`, external: true };

@@ -632,10 +632,7 @@ export const FORM_STYLES = css`
 
   .lfi {
     background: var(--formsey-error-background, #FF000022);
-    border-radius: var(--formsey-border-radius, 0.3em);
-    padding: var(--formsey-space-narrow);
-    padding-top: 0;
-    padding-bottom: 0;
+    border-radius: var(--formsey-border-radius);
   }
 
   .lfr {

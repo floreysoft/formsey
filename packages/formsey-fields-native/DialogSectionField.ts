@@ -152,9 +152,11 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
   private buttonClicked(e: CustomEvent) {
     if (e.detail.name?.endsWith("cancel")) {
       this.cancel()
+      this.close(e)
+    } else if (this.validate(true)) {
+      this.dispatchEvent(new FieldClickEvent(e.detail.name, this.value))
+      this.close(e)
     }
-    this.dispatchEvent(new FieldClickEvent(e.detail.name, this.value))
-    this.close(e)
   }
 
   private keyDown(e: KeyboardEvent) {

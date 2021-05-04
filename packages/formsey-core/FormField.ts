@@ -169,7 +169,6 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
   }
 
   public validate(report: boolean, path?: string) {
-    console.log(`Validate ${path}`)
     let validity = true;
     if (this._fields) {
       for (let field of this._fields) {

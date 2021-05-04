@@ -97,62 +97,64 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         }
       }
       let pager = undefined
+      let fields: (ButtonFieldDefinition | DialogSectionFieldDefinition)[] = []
+      this.definition?.actions?.forEach(action => {
+        fields.push(action)
+      })
       if ((this.definition?.pageLength || 0) < this.value?.data?.length || this.definition?.dataSource) {
-        let fields: (ButtonFieldDefinition | DialogSectionFieldDefinition)[] = []
-        this.definition?.actions?.forEach(action => {
-          fields.push(action)
-        })
-        const disable = (this.value?.selections?.length || 0) == 0
+        const disableFirst = this.value?.dataSource?.canFirst === false
+        const disablePrevious = (this.value?.dataSource?.canPrevious === false) || (!this.value?.dataSource && (this.value?.pageStart || 0) == 0)
+        const disasbleNext = (this.value?.dataSource?.canNext === false) || (!this.value?.dataSource && ((this.value?.pageStart || 0) + (this.definition?.pageLength || 0)) > this.value?.data.length)
+        const disableLast = this.value?.dataSource?.canLast == false
+        const disabled = (this.value?.selections?.length || 0) == 0
         this.definition?.selections?.forEach(action => {
-          fields.push({
-            type: "button",
-            icon: action.icon,
-            name: action.name,
-            text: action.label,
-            disabled: disable
-          })
+          fields.push({ ...action, disabled })
         })
-        fields = [...fields,
-        {
-          type: "button",
-          name: "start",
-          icon: "Start",
-          buttonType: "button",
-          disabled: this.value?.dataSource?.canFirst === false
-        } as ButtonFieldDefinition,
-        {
-          type: "button",
-          name: "prev",
-          icon: "Previous",
-          buttonType: "button",
-          disabled: (this.value?.dataSource?.canPrevious === false) || (this.value.pageStart || 0) == 0
-        } as ButtonFieldDefinition,
-        {
-          type: "button",
-          name: "next",
-          icon: "Next",
-          buttonType: "button",
-          disabled: (this.value?.dataSource?.canNext === false) || ((this.value.pageStart || 0) + (this.definition?.pageLength || 0)) > this.value.data.length
-        } as ButtonFieldDefinition,
-        {
-          type: "button",
-          name: "end",
-          icon: "Start",
-          buttonType: "button",
-          disabled: this.value?.dataSource?.canLast == false
-        } as ButtonFieldDefinition
-        ]
-        let pagerDefinition = {
-          type: "form",
-          fields,
-          layout: {
-            xs: {
-              formatter: "flex",
-              horizontal: "right"
-            } as FlexLayout
-          }
+        if (!(disableFirst && disablePrevious && disasbleNext && disableLast)) {
+          fields = [...fields,
+          {
+            type: "button",
+            name: "start",
+            icon: "Start",
+            buttonType: "button",
+            disabled: disableFirst
+          } as ButtonFieldDefinition,
+          {
+            type: "button",
+            name: "prev",
+            icon: "Previous",
+            buttonType: "button",
+            disabled: disablePrevious
+          } as ButtonFieldDefinition,
+          {
+            type: "button",
+            name: "next",
+            icon: "Next",
+            buttonType: "button",
+            disabled: disasbleNext
+          } as ButtonFieldDefinition,
+          {
+            type: "button",
+            name: "end",
+            icon: "Start",
+            buttonType: "button",
+            disabled: disableLast
+          } as ButtonFieldDefinition
+          ]
         }
-        pager = html`<formsey-form-field .components=${this.library} .settings=${this.settings} .definition=${pagerDefinition as any} @click=${this.page}></formsey-form-field>`
+        if (fields.length > 0) {
+          let pagerDefinition = {
+            type: "form",
+            fields,
+            layout: {
+              xs: {
+                formatter: "flex",
+                horizontal: "right"
+              } as FlexLayout
+            }
+          }
+          pager = html`<formsey-form-field .components=${this.library} .settings=${this.settings} .definition=${pagerDefinition as any} @click=${this.page}></formsey-form-field>`
+        }
       }
       return html`<section>
       <div class="ffg">
@@ -259,7 +261,7 @@ getLibrary("native").registerComponent("table", {
   importPath: "@formsey/fields-native/TableField",
   template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, clickHandler, invalidHandler, id }: Resources<TableFieldDefinition, Records>) => {
     // value = { ...value, "data": DUMMY_DATA }
-    return html`<formsey-table id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change="${changeHandler}" @input="${inputHandler}"  @invalid=${invalidHandler}></formsey-table>`
+    return html`<formsey-table id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value} .parentPath=${parentPath} .errors=${errors} @click=${clickHandler} @change=${changeHandler} @input=${inputHandler}  @invalid=${invalidHandler}></formsey-table>`
   },
   nestedFields: (definition: TableFieldDefinition, value: any) => {
     return definition.fields
