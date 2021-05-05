@@ -43,6 +43,8 @@ export interface ButtonFieldDefinition extends InteractiveFieldDefinition {
   align?: "left" | "center"
   theme?: "default" | "primary",
   classes?: string
+  confirm?: boolean
+  confirmationMessage?: string
 }
 
 export interface ImageFieldDefinition extends FieldDefinition {
@@ -237,6 +239,6 @@ export interface Records {
     canLast?: boolean
   }
   pageStart?: number
-  selections?: number[]
+  selections?: string[]
   data: { [key: string] : any}[]
 }

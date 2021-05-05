@@ -220,7 +220,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
   protected changed(e: FieldChangeEvent<any>) {
     if (e.detail.name.startsWith(this.path() + ".data")) {
       let path = e.detail.name.substring(this.path().length + 6)
-      let index = +path.substring(0, path.indexOf("]"))
+      let index = path.substring(0, path.indexOf("]"))
       let name = path.substring(path.indexOf("]") + 2).split('.')[0]
       if (name == "__s") {
         if (e.detail.value) {
