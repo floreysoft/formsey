@@ -21,7 +21,7 @@
     "@formsey/core": "^0.4.38",
     "@popperjs/core": "^2.6.0",
     "intl-messageformat": "^9.4.6",
-    "lit": "^2.0.0-rc.1"
+    "lit": "^2.0.0"
   },
   "scripts": {
     "tsc": "tsc",

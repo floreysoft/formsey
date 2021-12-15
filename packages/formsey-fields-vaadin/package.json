@@ -19,7 +19,7 @@
     "@vaadin/vaadin-rich-text-editor": "^1.0.1",
     "@vaadin/vaadin-text-field": "^2.8.0",
     "@vaadin/vaadin-upload": "^4.2.1",
-    "lit": "^2.0.0-rc.1"
+    "lit": "^2.0.0"
   },
   "main": "./index.js",
   "scripts": {
