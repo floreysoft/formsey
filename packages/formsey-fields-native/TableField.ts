@@ -108,7 +108,11 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
         const disableLast = this.value?.dataSource?.canLast == false
         const disabled = (this.value?.selections?.length || 0) == 0
         this.definition?.selections?.forEach(action => {
-          fields.push({ ...action, disabled })
+          if (action.trigger) {
+            action.trigger.disabled = disabled
+            action.fields[0].default = `Do you really want to perform the selected action *${action.trigger.tooltip}* on *${this.value?.selections?.length || 0} records*?`
+          }
+          fields.push({ ...action })
         })
         if (!(disableFirst && disablePrevious && disasbleNext && disableLast)) {
           fields = [...fields,

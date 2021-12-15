@@ -148,13 +148,21 @@ export class Form extends Field<FieldDefinition, any> {
 
   public getField(path: string): any {
     if (this.definition) {
-      return get(this.definition, path);
+      if ( (<FormDefinition>this.definition).fields ) {
+        return get((<FormDefinition>this.definition).fields, path);
+      } else {
+        return get(this.definition, path);
+      }
     }
   }
 
   public setField(path: string, value: any): any {
     if (this.definition) {
-      set(this.definition, path, value);
+      if ( (<FormDefinition>this.definition).fields ) {
+        set((<FormDefinition>this.definition).fields, path, value);
+      } else {
+        set(this.definition, path, value);
+      }
       this.definition = { ...this.definition }
     }
   }

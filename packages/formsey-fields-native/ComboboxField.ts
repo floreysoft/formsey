@@ -71,7 +71,7 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
     const rect = this.trigger?.firstElementChild?.getBoundingClientRect()
     if (rect) {
       this.top = `${rect.top + (this.over ? 0 : rect.height)}px`
-      this.width = `${rect.width}px`
+      this.width = `${rect.width+35}px`
       this.popupVisible = true
       document.addEventListener('click', this.closeHandler)
     }

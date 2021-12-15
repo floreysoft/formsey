@@ -1241,6 +1241,9 @@ formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
   formsey-markdown em {
     font-weight: bolder;
   }
+  formsey-markdown strong {
+    font-weight: bold;
+  }
   formsey-markdown p, formsey-markdown ul {
     margin: var(--formsey-space-narrow) 0;
   }
