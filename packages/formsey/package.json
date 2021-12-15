@@ -1,6 +1,6 @@
 {
   "name": "formsey",
-  "version": "0.4.38",
+  "version": "0.4.39",
   "files": [
     "/esm/*",
     "/*.js.map",
@@ -11,8 +11,8 @@
   ],
   "description": "Formsey including all native fields types",
   "dependencies": {
-    "@formsey/fields-native": "^0.4.38",
-    "@formsey/fields-native-extended": "^0.4.38"
+    "@formsey/fields-native": "^0.4.39",
+    "@formsey/fields-native-extended": "^0.4.39"
   },
   "scripts": {
     "tsc": "tsc",
