@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-vaadin",
-  "version": "0.4.39",
+  "version": "0.4.40",
   "description": "Vaadin fields",
   "module": "/esm/formsey-fields-vaadin.min.js",
   "files": [
@@ -10,19 +10,19 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.4.39",
+    "@formsey/core": "^0.4.40",
     "@vaadin/checkbox": ">22.0.0",
     "@vaadin/checkbox-group": ">22.0.0",
     "@vaadin/combo-box": ">22.0.0",
     "@vaadin/date-picker": ">22.0.0",
+    "@vaadin/email-field": ">22.0.0",
     "@vaadin/icons": ">22.0.0",
+    "@vaadin/number-field": ">22.0.0",
+    "@vaadin/password-field": ">22.0.0",
     "@vaadin/radio-group": ">22.0.0",
     "@vaadin/rich-text-editor": ">22.0.0",
-    "@vaadin/text-field": ">22.0.0",
-    "@vaadin/number-field": ">22.0.0",
-    "@vaadin/email-field": ">22.0.0",
-    "@vaadin/password-field": ">22.0.0",
     "@vaadin/text-area": ">22.0.0",
+    "@vaadin/text-field": ">22.0.0",
     "@vaadin/upload": ">22.0.0",
     "lit": "^2.0.0"
   },
