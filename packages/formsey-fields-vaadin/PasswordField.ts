@@ -1,7 +1,7 @@
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import "@vaadin/vaadin-text-field/vaadin-password-field";
-import { PasswordFieldElement } from '@vaadin/vaadin-text-field/vaadin-password-field';
+import "@vaadin/password-field";
+import { PasswordField as VaadinPasswordField } from '@vaadin/password-field';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -11,7 +11,7 @@ import { InputField } from './InputField';
 @customElement("formsey-password-vaadin")
 export class PasswordField extends InputField<StringFieldDefinition, string> {
   @query("vaadin-password-field")
-  vaadinField: PasswordFieldElement | undefined
+  vaadinField: VaadinPasswordField | undefined
 
   renderField(customValidity: string) {
     if (!this.definition) return

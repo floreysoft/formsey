@@ -1,9 +1,7 @@
 import { NumberFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import "@vaadin/vaadin-text-field/vaadin-number-field";
-import { NumberFieldElement } from '@vaadin/vaadin-text-field/vaadin-number-field';
+import "@vaadin/number-field";
+import { NumberField as VaadinNumberField } from '@vaadin/number-field';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -12,7 +10,7 @@ import { InputField } from './InputField';
 @customElement("formsey-number-vaadin")
 export class NumberField extends InputField<NumberFieldDefinition, string> {
   @query("vaadin-number-field")
-  vaadinField: NumberFieldElement | undefined
+  vaadinField: VaadinNumberField | undefined
 
   renderField(customValidity : string) {
     if ( !this.definition ) return

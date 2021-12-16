@@ -3,12 +3,11 @@ import { FieldChangeEvent } from '@formsey/core/Events';
 import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import '@vaadin/vaadin-radio-button/vaadin-radio-button';
-import '@vaadin/vaadin-radio-button/vaadin-radio-group';
-import { RadioGroupElement } from '@vaadin/vaadin-radio-button/vaadin-radio-group';
-import { TextFieldElement } from '@vaadin/vaadin-text-field';
+import "@vaadin/checkbox-group";
+import "@vaadin/checkbox";
+import '@vaadin/radio-group';
+import { RadioGroup } from '@vaadin/radio-group';
+import { TextField } from '@vaadin/text-field';
 import { css, html, TemplateResult } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -17,10 +16,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 @customElement("formsey-multiple-choice-vaadin")
 export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String> {
   @query("vaadin-radio-group")
-  private vaadinRadioGroup: RadioGroupElement | undefined
+  private vaadinRadioGroup: RadioGroup | undefined
 
   @query("vaadin-text-field")
-  otherTextField: TextFieldElement | undefined
+  otherTextField: TextField | undefined
 
   static get styles() {
     return [css`

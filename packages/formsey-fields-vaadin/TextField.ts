@@ -4,7 +4,7 @@ import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/Invalid
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { TextAreaElement } from '@vaadin/vaadin-text-field/vaadin-text-area';
+import { TextArea } from '@vaadin/text-area'
 import "@vaadin/vaadin-text-field/vaadin-text-area.js";
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
@@ -16,7 +16,7 @@ export class TextField extends Field<TextFieldDefinition, string> {
   value: string | undefined
 
   @query("vaadin-text-area")
-  vaadinTextArea: TextAreaElement | undefined
+  vaadinTextArea: TextArea | undefined
 
   render() {
     if (!this.definition) return

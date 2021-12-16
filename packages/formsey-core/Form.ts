@@ -73,7 +73,7 @@ export class Form extends Field<FieldDefinition, any> {
       this.value = this.value || data.value
       this.settings = this.settings || data.settings
       this.requestUpdate();
-    } catch (reason) {
+    } catch (reason: any) {
       console.error(reason.message)
     }
   }

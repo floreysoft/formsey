@@ -12,8 +12,8 @@
     "/esm/*"
   ],
   "dependencies": {
-    "@floreysoft/ace": "^0.4.0",
-    "@floreysoft/utils": "^0.4",
+    "@floreysoft/ace": ">0.4.0",
+    "@floreysoft/utils": ">0.4.0",
     "@formsey/fields-native": "^0.4.39",
     "@ts-stack/markdown": ">0",
     "highlight.js": "^10.1.1",

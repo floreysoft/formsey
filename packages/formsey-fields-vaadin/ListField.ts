@@ -2,10 +2,8 @@ import { Field } from '@formsey/core/Field';
 import { FieldChangeEvent } from '@formsey/core/Events';
 import { ListFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box';
-import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
+import { ComboBox } from '@vaadin/combo-box';
+import '@vaadin/combo-box';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -15,7 +13,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 @customElement("formsey-list-vaadin")
 export class ListField extends Field<ListFieldDefinition, string> {
   @query("vaadin-combo-box")
-  comboBox: ComboBoxElement | undefined
+  comboBox: ComboBox | undefined
 
   render() {
     if (this.definition) {

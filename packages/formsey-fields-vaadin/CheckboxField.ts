@@ -3,9 +3,9 @@ import { FieldChangeEvent } from '@formsey/core/Events';
 import { CheckboxFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { CheckboxElement } from "@vaadin/vaadin-checkbox";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
+import { Checkbox } from "@vaadin/checkbox";
+import "@vaadin/checkbox";
+import "@vaadin/checkbox-group";
 import { css, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -17,7 +17,7 @@ export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
   value: boolean | undefined
 
   @query("vaadin-checkbox")
-  private vaadinCheckbox: CheckboxElement | undefined
+  private vaadinCheckbox: Checkbox | undefined
 
   static get styles() {
     return [css`

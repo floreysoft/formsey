@@ -30,7 +30,7 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
   }
 
   public validate(report: boolean) {
-    let valid = !this.definition?.required || this.materialSwitch!.checked
+    let valid = !this.definition?.required || this.materialSwitch!.selected
     if (!valid) {
       let errors: InvalidErrors = new InvalidErrors()
       errors.set(this.path(), {
@@ -45,7 +45,7 @@ export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
 
   protected changed(e: Event) {
     e.stopPropagation()
-    this.value = this.materialSwitch!.checked
+    this.value = this.materialSwitch!.selected
     this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 }

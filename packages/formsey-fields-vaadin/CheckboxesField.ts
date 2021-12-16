@@ -3,11 +3,12 @@ import { FieldChangeEvent } from '@formsey/core/Events';
 import { CheckboxesFieldDefinition, Option } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import { CheckboxGroupElement } from '@vaadin/vaadin-checkbox/vaadin-checkbox-group';
+import { Checkbox } from '@vaadin/checkbox';
+import { CheckboxGroup } from '@vaadin/checkbox-group';
 import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
 import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { TextFieldElement } from '@vaadin/vaadin-text-field';
+import { TextField } from '@vaadin/text-field';
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -18,10 +19,10 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
   value: string[] = []
 
   @query("vaadin-checkbox-group")
-  private vaadinCheckboxGroup: CheckboxGroupElement | undefined
+  private vaadinCheckboxGroup: CheckboxGroup | undefined
 
   @query("vaadin-text-field")
-  otherTextField: TextFieldElement | undefined
+  otherTextField: TextField | undefined
 
   static get styles() {
     return [css`

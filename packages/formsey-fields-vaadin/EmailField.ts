@@ -1,7 +1,7 @@
 import { StringFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import "@vaadin/vaadin-text-field/vaadin-email-field";
-import { EmailFieldElement } from '@vaadin/vaadin-text-field/vaadin-email-field';
+import "@vaadin/email-field";
+import { EmailField as VaadinEmailField } from '@vaadin/email-field';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -10,7 +10,7 @@ import { InputField } from './InputField';
 @customElement("formsey-email-vaadin")
 export class EmailField extends InputField<StringFieldDefinition, string> {
   @query("vaadin-email-field")
-  vaadinField: EmailFieldElement | undefined
+  vaadinField: VaadinEmailField | undefined
 
   renderField(customValidity: string) {
     if (this.definition) {
