@@ -11,7 +11,6 @@ import { customElement, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
-
 @customElement("formsey-checkboxes-material")
 export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, string[]> {
   @query("mwc-textfield")

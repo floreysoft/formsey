@@ -1,8 +1,6 @@
 import { Field } from '@formsey/core/Field';
 import { InputFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TemplateResult } from 'lit';
 import { query } from "lit/decorators.js";
 
@@ -18,7 +16,7 @@ export abstract class InputField<D extends InputFieldDefinition, V extends strin
     }
   }
 
-  abstract renderField(customValidity?: string) : TemplateResult | undefined
+  abstract renderField(customValidity?: string): TemplateResult | undefined
 
   focusField(path: string) {
     if (path == this.definition?.name) {
@@ -35,7 +33,7 @@ export abstract class InputField<D extends InputFieldDefinition, V extends strin
   }
 
   invalid() {
-    let validityState : {[key: string] : string}= {}
+    let validityState: { [key: string]: string } = {}
     const validity = (this.vaadinField.focusElement as any).validity
     for (let key in validity) {
       if (validity[key]) {

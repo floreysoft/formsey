@@ -2,10 +2,8 @@ import { Field } from '@formsey/core/Field';
 import { TextFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { getLibrary, Resources } from '@formsey/core/Registry';
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
 import { TextArea } from '@vaadin/text-area'
-import "@vaadin/vaadin-text-field/vaadin-text-area.js";
+import "@vaadin/text-area";
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';

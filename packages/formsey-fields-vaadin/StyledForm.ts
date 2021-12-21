@@ -20,6 +20,8 @@ export class StyledForm extends Form {
       .themed {
         color: var(--lumo-body-text-color);
         background-color: var(--lumo-base-color);
+        --formsey-space-narrow: var(--lumo-space-s);
+        --formsey-space-wide: var(--lumo-space-m);
       }
     `]
   }

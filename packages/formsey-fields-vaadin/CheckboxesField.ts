@@ -5,9 +5,8 @@ import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/Invalid
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Checkbox } from '@vaadin/checkbox';
 import { CheckboxGroup } from '@vaadin/checkbox-group';
-import "@vaadin/vaadin-checkbox/vaadin-checkbox-group.js";
-import "@vaadin/vaadin-checkbox/vaadin-checkbox.js";
-import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
+import "@vaadin/checkbox";
+import "@vaadin/checkbox-group";
 import { TextField } from '@vaadin/text-field';
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";

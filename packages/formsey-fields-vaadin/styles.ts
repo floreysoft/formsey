@@ -5,6 +5,29 @@ export const FORM_STYLES = css`
     box-shadow: 0 0 2px var(--lumo-primary-color-50pct);
   }
 
+  .light {
+    --formsey-elevation-1-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --formsey-elevation-2-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --formsey-elevation-3-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    --formsey-elevation-opacity: 0;
+    --formsey-elevation-margin: 0;
+    --formsey-elevation-0-opacity: 0%;
+    --formsey-elevation-1-opacity: 5%;
+    --formsey-elevation-2-opacity: 5%;
+    --formsey-elevation-3-opacity: 5%;
+
+  }
+
+  .dark {
+    position: relative;
+    --formsey-elevation-opacity: 0;
+    --formsey-elevation-margin: 0;
+    --formsey-elevation-0-opacity: 0;
+    --formsey-elevation-1-opacity: 4%;
+    --formsey-elevation-2-opacity: 8%;
+    --formsey-elevation-3-opacity: 10%;
+  }
+
   .ffg {
     display: inline-grid;
     grid-gap: 5px 5px;
