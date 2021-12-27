@@ -16,13 +16,13 @@ export class FieldChangeEvent<T> extends CustomEvent<{ name: string, value: T }>
   }
 }
 
-export class FieldClickEvent extends CustomEvent<any> {
+export class FieldClickEvent extends CustomEvent<{ name?: string, value: any}> {
   constructor(name: string | undefined, value?: any, bubbles?: boolean) {
       super("click", { bubbles, composed: bubbles, detail: { name, value } });
   }
 }
 
-export class FieldFocusEvent extends CustomEvent<any> {
+export class FieldFocusEvent extends CustomEvent<{ name?: string}> {
   constructor(name: string | undefined) {
       super("focus", { bubbles : true, composed: true, detail : { name } });
   }
