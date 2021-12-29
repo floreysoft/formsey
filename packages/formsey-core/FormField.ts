@@ -19,12 +19,14 @@ export function removeDeletedFields(components: Components, definition: FormDefi
     // Only keep fields that are defined
     let newValue = {}
     addDefinedFields(components, definition.fields, value, newValue)
+    // This is very dangerous! Add all fields that are required for complex fields to work properly!!
     addMemberValueIfPresent("type", newValue, value)
     addMemberValueIfPresent("data", newValue, value)
     addMemberValueIfPresent("sortDirection", newValue, value)
     addMemberValueIfPresent("dataSource", newValue, value)
     addMemberValueIfPresent("selections", newValue, value)
     addMemberValueIfPresent("sortedBy", newValue, value)
+    addMemberValueIfPresent("search", newValue, value)
     addMemberValueIfPresent("pageStart", newValue, value)
     return newValue
   } else {

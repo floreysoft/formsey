@@ -12,7 +12,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 @customElement("formsey-table")
 export class TableField extends FormField<TableFieldDefinition, Records> {
   renderField() {
-    if (this.definition) {
+    if (this.definition && this.value ) {
       let fixed: TemplateResult[] = [];
       let scrollable: TemplateResult[] = [];
       const searchFixed: TemplateResult[] = [];
@@ -50,7 +50,8 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
               if (hasSearchableColumns) {
                 const search = index < fixedColumns ? searchFixed : searchScrollable
                 if (column.searchable) {
-                  search.push(html`<div class="td ts">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "string", name: field.name } as StringFieldDefinition, parentPath: this.path() + ".search", errors: this.errors, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`)
+                  const value = this.value?.search?.[field!.name!] || "";
+                  search.push(html`<div class="td ts">${createField({ library: this.library, context: this.context, settings: this.settings, value: value, definition: { type: "string", name: field.name } as StringFieldDefinition, parentPath: this.path() + ".search", errors: this.errors, inputHandler: this.changed, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`)
                 } else {
                   search.push(html`<div class="td ts"></div>`)
                 }

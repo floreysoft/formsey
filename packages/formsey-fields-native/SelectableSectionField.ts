@@ -98,6 +98,9 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
       this.value = this.value || new SelectableSectionValue()
       this.value.selection = selection.value || selection.label
       this.value.value = selection.default && JSON.parse(JSON.stringify(selection.default))
+      if ( typeof this.value.value == "undefined" ) {
+        this.value.value = {}
+      }
       this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
       this.requestUpdate()
     }
