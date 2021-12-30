@@ -76,6 +76,8 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
         this.otherTextField.definition.disabled = true
         this.otherTextField.requestUpdate()
       }
+    } else {
+      this.value = value
     }
     this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
