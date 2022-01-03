@@ -139,9 +139,9 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     }
   }
 
-  protected clicked(e: CustomEvent) {
+  protected clicked(e: FieldClickEvent) {
     e.stopPropagation()
-    this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value, e.bubbles, e.closeable));
   }
 
   protected focused(e: Event) {

@@ -1,5 +1,5 @@
 import { createField, Field, FieldInputEvent, LabeledField } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/Events';
+import { FieldChangeEvent, FieldClickEvent } from '@formsey/core/Events';
 import { ButtonFieldDefinition, FormDefinition, PopupSectionFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/Events';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -8,10 +8,11 @@ import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { Closeable } from '@formsey/core/Closeable';
 
 
 @customElement("formsey-popup-section")
-export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition, { [key: string]: any }> {
+export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition, { [key: string]: any }> implements Closeable {
   @property({ converter: Boolean })
   visible?: boolean
 
@@ -125,6 +126,11 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
 
   protected invalid(e: InvalidEvent) {
     this.dispatchEvent(new InvalidEvent(e.detail))
+  }
+
+  protected clicked(e: FieldClickEvent) {
+    console.log("Closeable set")
+    this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value, e.bubbles, this))
   }
 
   protected changed(e: FieldChangeEvent<any>) {

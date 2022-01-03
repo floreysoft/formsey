@@ -10,6 +10,7 @@ export * from './Field';
 export * from './FieldDefinitions';
 export * from './Form';
 export * from './FormField';
+export * from './Closeable';
 export { FormNavigator } from './FormNavigator';
 export { HiddenField } from './HiddenField';
 export * from './InvalidEvent';

@@ -202,10 +202,10 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
-  protected clicked(e: CustomEvent) {
+  protected clicked(e: FieldClickEvent) {
     e.stopPropagation()
     if (e.detail.name) {
-      this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value, true));
+      this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value, true, e.closeable));
     }
   }
 

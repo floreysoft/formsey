@@ -1,3 +1,5 @@
+import { Closeable } from './Closeable'
+
 export class FieldActionEvent<T> extends CustomEvent<any> {
   constructor(action: string, name: string | undefined, value?: any) {
       super("action", { bubbles: true, composed: true, detail: { action, name, value } });
@@ -16,9 +18,12 @@ export class FieldChangeEvent<T> extends CustomEvent<{ name: string, value: T }>
   }
 }
 
-export class FieldClickEvent extends CustomEvent<{ name?: string, value: any}> {
-  constructor(name: string | undefined, value?: any, bubbles?: boolean) {
+export class FieldClickEvent extends CustomEvent<{ name?: string, value: any, closeable? : Closeable}> {
+  closeable?: Closeable;
+
+  constructor(name: string | undefined, value?: any, bubbles?: boolean, closeable?: Closeable) {
       super("click", { bubbles, composed: bubbles, detail: { name, value } });
+      this.closeable = closeable
   }
 }
 
