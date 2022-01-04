@@ -5,9 +5,10 @@ import { FieldInputEvent } from '@formsey/core/Events';
 import { Form } from '@formsey/core/Form';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
+import { Theme } from '@floreysoft/theme';
 import { getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { css, html } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FORM_STYLES } from './styles';
 
@@ -36,7 +37,12 @@ export class StyledForm extends Form {
   set settings(settings: Settings) {
     if (settings != this._settings) {
       this._settings = settings
-      this._style = this.concatProperties(settings?.['theme']?.['value']?.['colors']?.[settings?.['mode']]) + this.concatProperties(this.settings?.['theme']?.['value']?.['fonts']) + this.concatProperties(this.settings?.['theme']?.['value']?.['spacing'])
+      this.themes = new Map([["light", {
+        style: html`<style>* {${this.constructStyle(settings, "light")}}</style>`
+      }],
+      ["dark", {
+        style: html`<style>* {${this.constructStyle(settings, "dark")}}</style>`
+      }]]);
       const webFont = settings?.['theme']?.['value']?.['fonts']?.['loadWebfont']?.['url']
       if (webFont) {
         let hash = 0, i, chr;
@@ -63,34 +69,29 @@ export class StyledForm extends Form {
     return this._settings
   }
 
-  @query(".themed")
-  themed: HTMLElement | undefined
+  @property()
+  mode?: string
+
+  @query("fs-theme")
+  theme?: Theme
 
   @query('#field')
   form: FormField<FormDefinition, Object> | undefined
 
   private _settings: Settings | undefined
-  private _style: string = ""
+  private themes?: any
 
   render() {
     if (!this.definition) return
-    let field = undefined
-    field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), inputHandler: (event: FieldChangeEvent<any>) => this.inputted(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
+    let mode = this.settings?.['mode'];
+    let field = createField({ id: 'field', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.path(), errors: this.errors, clickHandler: (event: CustomEvent) => this.clicked(event), changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), inputHandler: (event: FieldChangeEvent<any>) => this.inputted(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
     const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined((<any>this.definition)?.['action'])}" method="${ifDefined((<any>this.definition)?.['method'])}" target="${ifDefined((<any>this.definition)?.['target'])}">${field}<slot></slot></form>`
-    const classes = `themed ${this.settings['mode'] || ""}`
-    return html`<div class=${classes} style=${this._style}>${form}</div>`
+    const classes = `themed ${this.mode || ""}`
+    return html`<fs-theme .mode=${mode} .themes=${this.themes} @modeSwitched=${this.updateMode}><div class=${classes}>${form}</div></fs-theme>`
   }
 
-  private concatProperties(properties?: Object): string {
-    let style = ""
-    if (properties) {
-      Object.entries(properties).forEach(([key, value]) => {
-        if (key.startsWith("--")) {
-          style += `${key}:${value};`
-        }
-      })
-    }
-    return style
+  protected firstUpdated(): void {
+    this.mode = this.theme?.mode
   }
 
   public path(): string {
@@ -107,6 +108,27 @@ export class StyledForm extends Form {
 
   protected invalid(e: InvalidEvent) {
     this.dispatchEvent(new InvalidEvent(e.detail));
+  }
+
+  protected updateMode(e: CustomEvent) {
+    this.mode = e.detail
+  }
+
+  private constructStyle(settings: Settings, mode: string) {
+    const style = this.concatProperties(settings?.['theme']?.['value']?.['colors']?.[mode]) + this.concatProperties(settings?.['theme']?.['value']?.['fonts']) + this.concatProperties(settings?.['theme']?.['value']?.['spacing'])
+    return style
+  }
+
+  private concatProperties(properties?: Object): string {
+    let style = ""
+    if (properties) {
+      Object.entries(properties).forEach(([key, value]) => {
+        if (key.startsWith("--")) {
+          style += `${key}:${value};`
+        }
+      })
+    }
+    return style
   }
 }
 
