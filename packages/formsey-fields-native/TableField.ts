@@ -161,8 +161,9 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           pager = html`<formsey-form-field .components=${this.library} .settings=${this.settings} .definition=${pagerDefinition as any} @click=${this.page}></formsey-form-field>`
         }
       }
+      const style = formatter ? `${formatter.innerBoxStyle?.(this.layoutController?.layout)};${formatter.outerBoxStyle?.(this.layoutController?.layout)};${formatter.backgroundStyle?.(this.layoutController?.layout)}` : ""
       return html`<section>
-      <div class="ffg">
+      <div class="ffg"  style="${style}">
         <div class="tw">
            <div class="vscroll">
             <div class="tb" style="${ifDefined((<TableLayout>this.layoutController.layout)?.fill == "grow" ? "align-self:stretch" : undefined)}">
