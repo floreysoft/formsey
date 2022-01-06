@@ -2,11 +2,14 @@ import { LabeledField } from '@formsey/core';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Marked, Renderer } from '@ts-stack/markdown';
-import { highlight } from 'highlight.js';
+/// <reference path="../node_modules/highlight.js/types/index.d.ts" />
+import hljs from 'highlight.js/lib/core';
+import typescript from 'highlight.js/lib/languages/typescript';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html';
+
 @customElement("formsey-markdown")
 export class MarkdownField extends LabeledField<FieldDefinition, string> {
   @property({ converter: Object })
@@ -26,6 +29,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
 
   constructor() {
     super()
+    hljs.registerLanguage('typescript', typescript);
     const renderer = new Renderer();
     const linkRenderer = renderer.link;
     renderer.link = (href, title, text) => {
@@ -41,7 +45,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
       sanitize: false,
       smartLists: true,
       smartypants: false,
-      highlight: (code, lang) => highlight(lang || "", code).value
+      highlight: (code, lang) => hljs.highlight(lang || "", code).value
     });
   }
 
