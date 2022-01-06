@@ -2,7 +2,7 @@ import { LabeledField } from '@formsey/core';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Marked, Renderer } from '@ts-stack/markdown';
-import * as hljs from 'highlight.js';
+import { highlight } from 'highlight.js';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -41,7 +41,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
       sanitize: false,
       smartLists: true,
       smartypants: false,
-      highlight: (code, lang) => hljs.highlightAuto(code).value
+      highlight: (code, lang) => highlight(lang || "", code).value
     });
   }
 
