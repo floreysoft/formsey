@@ -1,4 +1,5 @@
 import { FieldChangeEvent, FieldClickEvent, FieldInputEvent } from '@formsey/core/Events';
+import { get } from '@formsey/core/Form';
 import { createField } from '@formsey/core/Field';
 import { ButtonFieldDefinition, CheckboxFieldDefinition, DialogSectionFieldDefinition, Records, StringFieldDefinition, TableFieldDefinition } from '@formsey/core/FieldDefinitions';
 import { FormField } from '@formsey/core/FormField';
@@ -90,7 +91,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
                     last: row == lastRow,
                     selected
                   }
-                  templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout, field))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: value[field.name], parentPath: this.path() + ".data[" + row + "]", errors: this.errors, clickHandler: this.clicked, inputHandler: this.changed, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`);
+                  templates.push(html`<div class=${classMap(classes)} style="${ifDefined(formatter?.fieldStyle?.(this.layoutController.layout, field))}">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { ...field, label: undefined, helpText: undefined }, value: get(value, field.name), parentPath: this.path() + ".data[" + row + "]", errors: this.errors, clickHandler: this.clicked, inputHandler: this.changed, changeHandler: this.changed, invalidHandler: this.invalid })}</div>`);
                 }
               }
             })

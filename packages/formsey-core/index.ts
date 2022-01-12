@@ -2,15 +2,16 @@ import '@floreysoft/icon';
 import { html } from "lit";
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions';
 import { AreasLayout, BoxLayout, ColumnsLayout, FlexLayout, TableLayout } from './Layouts';
+import './Registry';
 import { area, registerFormatter, registerIcon } from './Registry';
 
+export * from './Closeable';
 export * from './Events';
 export { FieldBlurEvent, FieldChangeEvent, FieldClickEvent, FieldFocusEvent, FieldInputEvent } from './Events';
 export * from './Field';
 export * from './FieldDefinitions';
 export * from './Form';
 export * from './FormField';
-export * from './Closeable';
 export { FormNavigator } from './FormNavigator';
 export { HiddenField } from './HiddenField';
 export * from './InvalidEvent';

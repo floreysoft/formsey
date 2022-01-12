@@ -93,6 +93,8 @@ export interface LabelFieldDefinition extends FieldDefinition {
       unitDisplay?: string
     }
   }
+  dateStyle?: "short" | "long" | "full" | "medium"
+  timeStyle?: "short" | "long" | "full" | "medium"
   notation?: string
   signDisplay?: string
   useGrouping?: boolean
