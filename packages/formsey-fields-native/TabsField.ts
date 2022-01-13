@@ -41,19 +41,15 @@ export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }
         const innerStyle = `${formatter?.innerBoxStyle?.(this.layoutController?.layout) || ""};${backgroundStyle}`
         tabs.push(html`<button tabIndex="0" type="button" style=${backgroundStyle} @keydown=${(e: KeyboardEvent) => this.keyDown(e, index)} @click=${(e: Event) => { this.select(index, selection.value || selection.name || selection.label) }} class="${classMap({ tab: true, selected: index == this.selectedIndex, expand: !!this.definition?.expand })}">${icon}${selection.label}</button>`)
         if (index == this.selectedIndex) {
-          content = html`<div class="content" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout, name: selection.name, deferLayout: true } as FormDefinition, value: selection.name ? this.value?.[selection.name] : this.value, parentPath: this.path(), errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.inputted, invalidHandler: this.invalid })}</div>`
+          content = html`<div class="content" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: selection.fields, layout: selection.layout, name: selection.name, deferLayout: true } as FormDefinition, value: selection.name ? this.value?.[selection.name] : this.value, parentPath: this.path(), errors: this.errors, clickHandler: this.clicked, changeHandler: this.changed, inputHandler: this.changed, invalidHandler: this.invalid })}</div>`
         }
       })
       return html`<div class="container">${this.definition.location == "bottom" ? html`${content}<div class="tabs bottom">${tabs}</div>` : html`<div part="tabs" class="tabs top">${tabs}</div>${content}`}</div>`
     }
   }
 
-  protected inputted(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value));
-  }
-
-  protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
+  protected changed(e: FieldChangeEvent<any> | FieldInputEvent<any>) {
+    this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, e.detail.value) : new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 
   private select(index: number, value: string) {

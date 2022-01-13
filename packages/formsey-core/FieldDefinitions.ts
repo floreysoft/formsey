@@ -178,6 +178,7 @@ export interface Selection extends FormDefinition {
 export interface SelectableSectionFieldDefinition extends InputFieldDefinition {
   selections: Selection[]
   control?: "list" | "multipleChoice" | "select"
+  key: string,
   layout?: ResponsiveLayout
 }
 export interface TabsFieldDefinition extends InputFieldDefinition {

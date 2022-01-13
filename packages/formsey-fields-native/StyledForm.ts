@@ -43,7 +43,7 @@ export class StyledForm extends Form {
       ["dark", {
         style: html`<style>* {${this.constructStyle(settings, "dark")}}</style>`
       }]]);
-      const webFont = settings?.['theme']?.['value']?.['fonts']?.['loadWebfont']?.['url']
+      const webFont = settings?.['fonts']?.['loadWebfont']?.['url']
       if (webFont) {
         let hash = 0, i, chr;
         for (i = 0; i < webFont.length; i++) {
@@ -61,6 +61,7 @@ export class StyledForm extends Form {
           window.document.getElementsByTagName("head")[0].appendChild(link)
         }
       }
+      this.requestUpdate()
     }
   }
 
@@ -115,7 +116,7 @@ export class StyledForm extends Form {
   }
 
   private constructStyle(settings: Settings, mode: string) {
-    const style = this.concatProperties(settings?.['theme']?.['value']?.['colors']?.[mode]) + this.concatProperties(settings?.['theme']?.['value']?.['fonts']) + this.concatProperties(settings?.['theme']?.['value']?.['spacing'])
+    const style = this.concatProperties(settings?.['colors']?.[mode]) + this.concatProperties(settings?.['fonts']) + this.concatProperties(settings?.['spacing'])
     return style
   }
 
