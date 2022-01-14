@@ -181,7 +181,7 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
         } else {
           valid = child.checkValidity();
         }
-        if (!valid) {
+        if (!valid && this.reportNestedErrors() ) {
           validity = false;
         }
       }
@@ -222,6 +222,10 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
         }
       }
     }
+  }
+
+  protected reportNestedErrors() {
+    return false
   }
 }
 getLibrary("native").registerComponent("form", {
