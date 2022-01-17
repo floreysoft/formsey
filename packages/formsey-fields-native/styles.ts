@@ -616,7 +616,8 @@ export const FORM_STYLES = css`
   }
 
   .lfl {
-    display: block;
+    display: flex;
+    flex-direction: row;
     position: relative;
     font: var(--formsey-label-font, inherit);
     color: var(--formsey-label-color, inherit);
@@ -636,10 +637,11 @@ export const FORM_STYLES = css`
   }
 
   .lfr {
-    color: var(--formsey-required-color, inherit);
-    margin: var(--formsey-space-narrow);
     font: var(--formsey-required-font, inherit);
-    vertical-align: top;
+    color: var(--formsey-required-color, inherit);
+    margin: 0 var(--formsey-space-narrow);
+    padding: 0;
+    max-height: 1em;
   }
 
   .lfet, .lfht {
