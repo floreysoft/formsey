@@ -2,7 +2,6 @@ import { LabeledField } from '@formsey/core';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Marked, Renderer } from '@ts-stack/markdown';
-/// <reference path="../node_modules/highlight.js/types/index.d.ts" />
 import hljs from 'highlight.js/lib/core';
 import typescript from 'highlight.js/lib/languages/typescript';
 import { html } from "lit";
