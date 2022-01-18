@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-vaadin",
-  "version": "0.4.40",
+  "version": "0.4.41",
   "description": "Vaadin fields",
   "module": "/esm/formsey-fields-vaadin.min.js",
   "files": [
@@ -10,7 +10,7 @@
     "!/test/"
   ],
   "dependencies": {
-    "@formsey/core": "^0.4.40",
+    "@formsey/core": "^0.4.41",
     "@vaadin/checkbox": ">22.0.0",
     "@vaadin/checkbox-group": ">22.0.0",
     "@vaadin/combo-box": ">22.0.0",
