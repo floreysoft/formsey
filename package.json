@@ -20,7 +20,8 @@
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "stats": "webpack --config webpack.libs.js  --profile --json > lib-stats.json",
     "docs": "npx @appnest/readme generate",
-    "rollup": "tsc && lerna run rollup"
+    "rollup": "tsc && lerna run rollup",
+    "linkfloreysoft": "yarn link @floreysoft/ace && yarn link @floreysoft/button && yarn link @floreysoft/dialog && yarn link @floreysoft/editable-label && yarn link @floreysoft/icon && yarn link @floreysoft/icon && yarn link @floreysoft/menu && yarn link @floreysoft/panel && yarn link @floreysoft/scroller && yarn link @floreysoft/splitter && yarn link @floreysoft/switch && yarn link @floreysoft/tabs && yarn link @floreysoft/theme && yarn link @floreysoft/toggle && yarn link @floreysoft/toolbar && yarn link @floreysoft/utils"
   },
   "devDependencies": {
     "@appnest/readme": "^1.2.7",
