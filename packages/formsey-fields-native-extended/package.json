@@ -31,8 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6386b603b4eb5c531fb4b7597e4cbe76cb054c76",
-  "devDependencies": {
-    "@types/highlight.js": "^10.1.0"
-  }
+  "gitHead": "6386b603b4eb5c531fb4b7597e4cbe76cb054c76"
 }

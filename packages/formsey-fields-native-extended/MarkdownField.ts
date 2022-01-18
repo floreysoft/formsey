@@ -2,7 +2,7 @@ import { LabeledField } from '@formsey/core';
 import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Marked, Renderer } from '@ts-stack/markdown';
-import hljs from 'highlight.js/lib/core';
+import hljs from  'highlight.js';
 import typescript from 'highlight.js/lib/languages/typescript';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
