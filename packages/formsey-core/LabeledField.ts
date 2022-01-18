@@ -10,7 +10,7 @@ export abstract class LabeledField<T extends FieldDefinition, V> extends Field<T
 
   protected render() : TemplateResult | undefined {
     return html`<div class="${classMap({ lfw: true, lfi: !this.valid && this.report })}">${this.renderHeader()}${this.renderFooter()}</div>`
-  }
+  } 
 
   protected abstract renderField(): TemplateResult | undefined
 
