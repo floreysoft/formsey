@@ -1,5 +1,5 @@
 import { CheckboxFieldDefinition, createField, Field, FieldInputEvent, OptionalSectionFieldDefinition } from '@formsey/core';
-import { FieldChangeEvent } from '@formsey/core/Events';
+import { FieldChangeEvent, FieldClickEvent } from '@formsey/core/Events';
 import { FormDefinition } from '@formsey/core/FieldDefinitions';
 import { FieldFocusEvent } from '@formsey/core/Events';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
@@ -44,7 +44,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
       const style = formatter ? `${formatter.innerBoxStyle?.(this.layoutController?.layout)};${formatter.outerBoxStyle?.(this.layoutController?.layout)};${formatter.backgroundStyle?.(this.layoutController?.layout)}` : ""
       const on = this.definition.name ? typeof this.value !== "undefined" : this.on;
       return html`<section style="${style}"><div class="fbg" style=${formatter?.elevationStyle?.(this.layoutController.layout) || ""}></div>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: this.definition.control, name: "", label: this.definition.label, controlLabel: this.definition.controlLabel, helpText: this.definition.helpText, disabled: this.definition.disabled, required: this.definition.required } as CheckboxFieldDefinition, value: on, parentPath: this.path(), errors: this.errors, changeHandler:  this.selectionChanged, invalidHandler: this.invalid })}
-    ${on ? html`<div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout, deferLayout: true } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, inputHandler: this.changed, invalidHandler: this.invalid })}</div>` : undefined}</div></section>`
+    ${on ? html`<div id="form">${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", fields: this.definition.fields, layout: this.definition.layout, deferLayout: true } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, changeHandler: this.changed, clickHandler: this.clicked, inputHandler: this.changed, invalidHandler: this.invalid })}</div>` : undefined}</div></section>`
     }
   }
 
@@ -117,8 +117,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
 getLibrary("native").registerComponent("optionalSection", {
   importPath: "@formsey/fields-native/OptionalSectionField",
-  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, inputHandler, invalidHandler, id }: Resources<OptionalSectionFieldDefinition, Object>) => {
-    return html`<formsey-optional-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-optional-section>`
+  template: ({ library, context, settings, definition, value, parentPath, errors, changeHandler, clickHandler, inputHandler, invalidHandler, id }: Resources<OptionalSectionFieldDefinition, Object>) => {
+    return html`<formsey-optional-section id="${ifDefined(id)}" .library=${library} .settings=${settings} .definition=${definition as any} .context=${context} .value=${value as any} .parentPath=${parentPath} .errors=${errors} @change="${changeHandler}" @click="${clickHandler}" @input="${inputHandler}" @invalid=${invalidHandler}></formsey-optional-section>`
   },
   nestedFields: (definition: FormDefinition, value: any) => {
     return definition.fields
