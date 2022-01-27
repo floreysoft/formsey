@@ -211,12 +211,12 @@ export class Form extends Field<FieldDefinition, any> {
 
   protected inputted(e: FieldChangeEvent<any>) {
     this.applyEvent(e)
-    this.dispatchEvent(new FieldInputEvent(e.detail.name, this.value, true));
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, this.value, e.detail.modified));
   }
 
   protected changed(e: FieldChangeEvent<any>) {
     this.applyEvent(e)
-    this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value, true));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, this.value, e.detail.modified));
   }
 
   protected applyEvent(e: CustomEvent) {

@@ -6,6 +6,7 @@ import { getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map.js';
+import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-option")
@@ -40,8 +41,9 @@ export class OptionField extends Field<Option, boolean> {
 
   protected clicked(e: Event) {
     e.stopPropagation()
+    const isSame = createComparator(this.value)
     if (!this.passive) { this.value = !this.value }
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 
   private highlight(label: string) {

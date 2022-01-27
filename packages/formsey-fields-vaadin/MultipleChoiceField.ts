@@ -11,6 +11,7 @@ import { TextField } from '@vaadin/text-field';
 import { css, html, TemplateResult } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-multiple-choice-vaadin")
@@ -71,6 +72,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
     }
   }
   changed(e: Event) {
+    const isSame = createComparator(this.value)
     this.value = this.vaadinRadioGroup!.value || undefined
     let other = false
     if (this.value == "__other") {
@@ -81,7 +83,7 @@ export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String
       this.otherTextField.value = ""
     }
     this.requestUpdate()
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
     if (other) {
       this.updateComplete.then(() => {
         let that = this

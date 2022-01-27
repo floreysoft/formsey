@@ -6,6 +6,7 @@ import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 import { FieldInputEvent } from '@formsey/core/Events';
+import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-multiple-choice")
@@ -40,10 +41,11 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
   }
 
   otherChanged(e: FieldChangeEvent<string>) {
+    const isSame = createComparator(this.value)
     this.value = e.detail.value
     this.requestUpdate()
     if (this.definition?.name) {
-      this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
+      this.dispatchEvent(new FieldInputEvent(this.path(), this.value, !isSame(this.value)));
     }
   }
 
@@ -57,6 +59,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
 
   changed(e: Event) {
     e.stopPropagation();
+    const isSame = createComparator(this.value)
     let value = (<HTMLInputElement>e.target).value
     let other = false
     if (this.otherTextField?.definition) {
@@ -79,7 +82,7 @@ export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition,
     } else {
       this.value = value
     }
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 }
 

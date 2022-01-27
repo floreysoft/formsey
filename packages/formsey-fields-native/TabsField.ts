@@ -49,7 +49,7 @@ export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }
   }
 
   protected changed(e: FieldChangeEvent<any> | FieldInputEvent<any>) {
-    this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, e.detail.value) : new FieldChangeEvent(e.detail.name, e.detail.value));
+    this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, e.detail.value, e.detail.modified) : new FieldChangeEvent(e.detail.name, e.detail.value, e.detail.modified));
   }
 
   private select(index: number, value: string) {

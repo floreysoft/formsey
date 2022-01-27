@@ -9,6 +9,7 @@ import { html, TemplateResult } from "lit";
 import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
+import { createComparator } from '@formsey/fields-native';
 
 @customElement("formsey-multiple-choice-material")
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {
@@ -41,12 +42,14 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
   }
 
   otherChanged(e: Event) {
+    const isSame = createComparator(this.value)
     this.value = (<TextField>e.target).value
     this.requestUpdate()
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 
   changed(e: Event) {
+    const isSame = createComparator(this.value)
     let value = (<Radio>e.target).value
     let other = false
     if (value == "__other") {
@@ -59,7 +62,7 @@ export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition
       this.otherTextField.value = ""
     }
     this.requestUpdate()
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
     if (value == "__other" && other) {
       this.updateComplete.then(() => {
         this.otherTextField?.focus()

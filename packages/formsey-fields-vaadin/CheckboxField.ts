@@ -9,6 +9,7 @@ import "@vaadin/checkbox-group";
 import { css, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-checkbox-vaadin")
@@ -41,8 +42,9 @@ export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
 
   protected changed(e: Event) {
     e.stopPropagation()
+    const isSame = createComparator(this.value)
     this.value = this.vaadinCheckbox?.checked;
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 
   focusField(path: string) {

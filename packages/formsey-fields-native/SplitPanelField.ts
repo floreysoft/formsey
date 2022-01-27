@@ -21,11 +21,11 @@ export class SplitPanelField extends Field<SplitPanelDefinition, any> {
   }
 
   protected inputted(e: FieldInputEvent<any>) {
-    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value, e.detail.modified));
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value, e.detail.modified));
   }
 }
 

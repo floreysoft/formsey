@@ -100,11 +100,11 @@ export class StyledForm extends Form {
   }
 
   protected inputted(e: FieldInputEvent<any>) {
-    this.dispatchEvent(new FieldInputEvent<any>(e.detail?.name, e.detail?.value));
+    this.dispatchEvent(new FieldInputEvent<any>(e.detail?.name, e.detail?.value, e.detail.modified));
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.detail?.name, e.detail?.value));
+    this.dispatchEvent(new FieldChangeEvent(e.detail?.name, e.detail?.value, e.detail.modified));
   }
 
   protected invalid(e: InvalidEvent) {

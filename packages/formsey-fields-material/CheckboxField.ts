@@ -8,6 +8,7 @@ import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
+import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-checkbox-material")
@@ -43,8 +44,9 @@ export class CheckboxField extends MaterialField<CheckboxFieldDefinition, boolea
   }
 
   protected changed(e: any) {
+    const isSame = createComparator(this.value)
     this.value = this.materialCheckbox!.checked
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 }
 

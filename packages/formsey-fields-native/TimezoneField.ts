@@ -4,6 +4,7 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createComparator } from '@formsey/fields-native';
 
 const options = [
   { "label": "(GMT-12:00) International Date Line West", "value": "Etc/GMT+12" },
@@ -99,8 +100,9 @@ export class TimezoneField extends LabeledField<FieldDefinition, string> {
   }
 
   protected changed(e: CustomEvent) {
+    const isSame = createComparator(this.value)
     this.value = e.detail.value
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 }
 

@@ -7,6 +7,7 @@ import { Formatter, getFormatter, getLibrary, Resources } from '@formsey/core/Re
 import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createComparator } from '@formsey/fields-native';
 
 @customElement("formsey-selectable-section")
 export class SelectableSectionField extends LabeledField<SelectableSectionFieldDefinition, { [key: string]: any }> {
@@ -57,7 +58,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
           this.value = selection.default && JSON.parse(JSON.stringify(selection.default))
           this.value = this.value || {}
           this.value[this.getKey()] = this.selectedValue
-          this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.selectedValue));
+          this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.selectedValue, false));
         }
       }
       if (selection) {
@@ -86,6 +87,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   }
 
   protected selectionChanged(e: FieldChangeEvent<string>) {
+    const isSame = createComparator(this.value)
     let value = e.detail.value
     let selection = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label === value))[0];
     if (selection) {
@@ -93,16 +95,17 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         this.value = selection.default && JSON.parse(JSON.stringify(selection.default))
         this.value = this.value || {}
         this.value[this.getKey()] = selection.value || selection.label
-        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
       } else {
         const path = this.path()
-        this.dispatchEvent(new FieldChangeEvent(path ? path + "." + this.getKey() : this.getKey(), e.detail.value));
+        this.dispatchEvent(new FieldChangeEvent(path ? path + "." + this.getKey() : this.getKey(), e.detail.value, e.detail.modified));
       }
       this.requestUpdate()
     }
   }
 
   protected changed(e: FieldChangeEvent<any>) {
+    const isSame = createComparator(this.value)
     this.value = this.value || {}
     if (e.detail.name.startsWith(this.path())) {
       if (this.definition.name) {
@@ -110,9 +113,9 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         if (name) {
           this.value[name] = e.detail.value;
         }
-        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
+        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value, !isSame(this.value)) : new FieldChangeEvent(e.detail.name, this.value, !isSame(this.value)));
       } else {
-        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, e.detail.value) : new FieldChangeEvent(e.detail.name, e.detail.value));
+        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, e.detail.value, e.detail.modified) : new FieldChangeEvent(e.detail.name, e.detail.value, e.detail.modified));
       }
     }
   }

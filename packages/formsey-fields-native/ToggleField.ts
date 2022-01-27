@@ -7,6 +7,7 @@ import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createComparator } from '@formsey/fields-native';
 
 function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   if (val === undefined || val === null) {
@@ -35,12 +36,13 @@ export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
 
   private select(e: Event, value?: string) {
     e.stopPropagation()
+    const isSame = createComparator(this.value)
     if (!this.definition?.required && this.value == value) {
       this.value = undefined
     } else {
       this.value = value
     }
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 
   private keyDown(e: KeyboardEvent) {

@@ -9,6 +9,7 @@ import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { Closeable } from '@formsey/core/Closeable';
+import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-popup-section")
@@ -35,9 +36,10 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     if (typeof this.definition === "undefined") {
       return false
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined" && this.untouched) {
+      const isSame = createComparator(this.value)
       this.value = this.definition.default
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new FieldChangeEvent(this.definition.name, this.value));
+        this.dispatchEvent(new FieldChangeEvent(this.definition.name, this.value, !isSame(this.value)));
       }
     }
     return true
@@ -138,14 +140,14 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     if (this.definition && e.detail?.name) {
       if (!this.definition.name) {
         // If this is an unnamed form, just pass event to parent
-        this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
+        this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value, e.detail.modified));
       } else {
         let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
         if (!this.value) {
           this.value = {}
         }
         this.value[name] = e.detail.value;
-        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
+        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value, e.detail.modified) : new FieldChangeEvent(e.detail.name, this.value, e.detail.modified));
       }
     }
   }

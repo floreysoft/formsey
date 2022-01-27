@@ -7,6 +7,7 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createComparator } from '@formsey/fields-native';
 
 @customElement("formsey-list")
 export class ListField extends LabeledField<ListFieldDefinition, string | string[]> {
@@ -58,6 +59,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
   }
 
   protected changed(e: CustomEvent) {
+    const isSame = createComparator(this.value)
     const option = e.detail.name.split('.').pop()
     if (this.definition?.multiselect) {
       if (!Array.isArray(this.value)) {
@@ -71,7 +73,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
     } else {
       this.value = option
     }
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
   }
 
   private search(e: CustomEvent) {
@@ -108,8 +110,9 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
       event.preventDefault();
     } else if (event.keyCode == KEYCODE.RETURN) {
       if (this.firstMatchingOption && !this.definition?.multiselect) {
+        const isSame = createComparator(this.value)
         this.value = this.firstMatchingOption
-        this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
+        this.dispatchEvent(new FieldInputEvent(this.path(), this.value, !isSame(this.value)));
       }
       event.preventDefault();
     }
