@@ -30,11 +30,11 @@ export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any
   }
 
   protected inputted(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value, e.detail.modified));
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value));
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value, e.detail.modified));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 }
 

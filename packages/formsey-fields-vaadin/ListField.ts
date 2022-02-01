@@ -7,7 +7,6 @@ import '@vaadin/combo-box';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { createComparator } from '@formsey/fields-native';
 
 
 
@@ -42,10 +41,9 @@ export class ListField extends Field<ListFieldDefinition, string> {
   }
 
   protected changed(e: any) {
-    const isSame = createComparator(this.value)
     this.value = e.currentTarget.value;
     if (this.definition?.name) {
-      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     }
   }
 }

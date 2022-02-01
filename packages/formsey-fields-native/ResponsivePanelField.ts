@@ -60,11 +60,11 @@ export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, 
   }
 
   protected inputted(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value, e.detail.modified));
+    this.dispatchEvent(new FieldInputEvent(e.detail.name, e.detail.value));
   }
 
   protected changed(e: FieldChangeEvent<any>) {
-    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value, e.detail.modified));
+    this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
   }
 
   private resize(width: number) {

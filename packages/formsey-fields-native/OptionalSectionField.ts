@@ -8,7 +8,6 @@ import { getFormatter, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-optional-section")
@@ -32,7 +31,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined" && this.untouched) {
       this.value = this.definition.default
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new FieldChangeEvent(this.definition.name, this.value, false));
+        this.dispatchEvent(new FieldChangeEvent(this.definition.name, this.value));
       }
     }
     return true
@@ -88,9 +87,8 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
 
   protected selectionChanged(e: FieldChangeEvent<boolean>) {
     if (this.definition?.name) {
-      const isSame = createComparator(this.value)
       this.value = e.detail.value ? {} : undefined;
-      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     } else {
       this.on = !this.on
     }
@@ -103,7 +101,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
     if (this.definition && e.detail?.name) {
       if (typeof this.definition.name === "undefined" || this.definition.name === "") {
         // If this is an unnamed form, just pass event to parent
-        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, e.detail.value, e.detail.modified) : new FieldChangeEvent(e.detail.name, e.detail.value, e.detail.modified));
+        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, e.detail.value) : new FieldChangeEvent(e.detail.name, e.detail.value));
       } else {
         let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
         if (!this.value) {
@@ -111,7 +109,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
         }
         this.value[name] = e.detail.value;
         this.requestUpdate()
-        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value, e.detail.modified) : new FieldChangeEvent(e.detail.name, this.value, e.detail.modified));
+        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
       }
     }
   }

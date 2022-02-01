@@ -201,7 +201,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
             this.value.pageStart = this.value.data.length - this.definition.pageLength
           }
         }
-        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, false));
+        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
         this.requestUpdate()
       }
     }
@@ -219,7 +219,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
     } else {
       this.value.pageStart = 0
       this.value.data.sort((a, b) => ((a[name] > b[name]) ? 1 : ((b[name] > a[name]) ? -1 : 0)) * (this.value.sortDirection == "descending" ? -1 : 1))
-      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, false));
+      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     }
     this.requestUpdate()
   }
@@ -259,7 +259,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
       this.value['search'] = { ...this.value['search'] }
       this.value['search'][field] = e.detail.value
     }
-    this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value, false) : new FieldChangeEvent(e.detail.name, this.value, false));
+    this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
     this.requestUpdate()
   }
 }

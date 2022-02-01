@@ -6,7 +6,6 @@ import { customElement, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { CheckboxField } from './CheckboxField';
 import { StringField } from './StringField';
-import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-checkboxes")
@@ -40,10 +39,9 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
   }
 
   otherChanged(e: FieldChangeEvent<string[]>) {
-    const isSame = createComparator(this.value)
     this.value = e.detail.value
     this.requestUpdate()
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   focusField() {
@@ -53,7 +51,6 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
 
   changed(e: Event) {
     e.stopPropagation();
-    const isSame = createComparator(this.value)
     let values = []
     let other = false
     for (let value of this.values()) {
@@ -73,7 +70,7 @@ export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, str
       this.otherTextField.value = ""
     }
     this.value = values
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   private values(): string[] {

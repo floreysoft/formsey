@@ -7,7 +7,6 @@ import { html } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FieldInputEvent } from '@formsey/core/Events';
-import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-combobox")
@@ -86,14 +85,12 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
 
   protected optionSelected(e?: CustomEvent) {
     this.hidePopup()
-    const isSame = createComparator(this.value)
     this.value = e ? e.detail.value : this.value
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   private search(e: CustomEvent) {
     this.openPopup()
-    const isSame = createComparator(this.value)
     const options = this.definition?.options?.filter(option => option.label == e.detail.value)
     if (options && options.length == 1) {
       this.query = options[0].label
@@ -102,7 +99,7 @@ export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
       this.value = e.detail.value
       this.query = this.value || ""
     }
-    this.dispatchEvent(new FieldInputEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
   }
 }
 

@@ -7,7 +7,6 @@ import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Regi
 import { html, TemplateResult } from "lit";
 import { customElement, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-repeating-section")
@@ -83,18 +82,16 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
   protected addForm(e: Event) {
     e.preventDefault()
     e.stopPropagation()
-    const isSame = createComparator(this.value)
     this.value ? this.value.push({}) : this.value = []
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     this.requestUpdate();
   }
 
   protected removeForm(e: Event, index: number) {
     e.preventDefault()
     e.stopPropagation()
-    const isSame = createComparator(this.value)
     this.value ? this.value.splice(index, 1) : this.value = []
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     this.requestUpdate();
   }
 
@@ -132,7 +129,7 @@ export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition
         this.value[+index] = {}
       }
       this.value[+index][name] = e.detail.value;
-      this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value, e.detail.modified) : new FieldChangeEvent(e.detail.name, this.value, e.detail.modified));
+      this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
     }
   }
 }

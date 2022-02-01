@@ -5,7 +5,6 @@ import { getLibrary, Resources } from '@formsey/core/Registry';
 import { html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { createComparator } from '@formsey/fields-native';
 
 
 @customElement("formsey-image-checkbox")
@@ -57,9 +56,8 @@ export class ImageCheckbox extends LitElement {
 
   changed(e: Event) {
     e.stopPropagation()
-    const isSame = createComparator(this.checked)
     this.checked = (<HTMLInputElement>e.target).checked;
-    this.dispatchEvent(new FieldChangeEvent(this.id, this.checkbox?.checked || false, !isSame(this.checked)));
+    this.dispatchEvent(new FieldChangeEvent(this.id, this.checkbox?.checked || false));
   }
 
   private keyDown(e: KeyboardEvent) {
@@ -150,7 +148,6 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
 
   changed(e: CustomEvent) {
     if (e.detail) {
-      const isSame = createComparator(this.value)
       if (this.definition.multiple) {
         let value: string[] = []
         this.checkboxes.forEach(checkbox => {
@@ -162,7 +159,7 @@ export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | 
       } else {
         this.value = e.detail.value ? this.extractValue(e.detail.name) : undefined
       }
-      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+      this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     }
   }
 

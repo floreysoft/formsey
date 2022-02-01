@@ -9,7 +9,6 @@ import { html } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonField } from './ButtonField';
-import { createComparator } from '@formsey/fields-native';
 
 @customElement("formsey-dialog-section")
 export class DialogSectionField extends LabeledField<DialogSectionFieldDefinition, { [key: string]: any }> {
@@ -119,7 +118,7 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
         this.value = {}
       }
       this.value[name] = e.detail.value;
-      this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value, e.detail.modified) : new FieldChangeEvent(e.detail.name, this.value, e.detail.modified));
+      this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
     }
   }
 
@@ -202,9 +201,8 @@ export class DialogSectionField extends LabeledField<DialogSectionFieldDefinitio
   }
 
   private cancel() {
-    const isSame = createComparator(this.value)
     this.value = this.cancelValue
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)))
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value))
   }
 }
 

@@ -11,7 +11,6 @@ import { TextField } from '@vaadin/text-field';
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { createComparator } from '@formsey/fields-native';
 
 @customElement("formsey-checkboxes-vaadin")
 export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> {
@@ -77,7 +76,6 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
   }
 
   changed(e: Event) {
-    const isSame = createComparator(this.value)
     let values = []
     let other = false
     for (let value of this.vaadinCheckboxGroup!.value) {
@@ -93,7 +91,7 @@ export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> 
     }
     this.value = values
     this.requestUpdate()
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
     if (other) {
       this.updateComplete.then(() => {
         this.otherTextField?.focus()

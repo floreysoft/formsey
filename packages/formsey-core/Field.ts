@@ -5,13 +5,6 @@ import { FieldDefinition, InputFieldDefinition } from './FieldDefinitions';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { getDefaultLibrary, getLibraries, Library, Resources, Settings } from './Registry';
 
-export function createComparator (objA : any) {
-  var json = JSON.stringify(objA)
-  return (objB : any) => {
-    return json == JSON.stringify(objB)
-  }
-}
-
 export const createField = (resources: Resources<FieldDefinition, any>): TemplateResult | undefined => {
   if (!resources.definition?.type) {
     throw Error("Cannot create field as type is undefined")
@@ -114,7 +107,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, false));
+        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
       }
     }
     if (!this.library) {
@@ -129,16 +122,14 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
 
   protected changed(e: Event) {
     e.stopPropagation()
-    const isSame = createComparator(this.value)
     this.applyEvent(e)
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
   protected inputted(e: Event) {
     e.stopPropagation()
-    const isSame = createComparator(this.value)
     this.applyEvent(e)
-    this.dispatchEvent(new FieldInputEvent(this.path(), this.value, !isSame(this.value)));
+    this.dispatchEvent(new FieldInputEvent(this.path(), this.value));
   }
 
   protected applyEvent(e: Event) {

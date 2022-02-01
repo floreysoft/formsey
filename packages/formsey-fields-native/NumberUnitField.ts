@@ -46,7 +46,7 @@ export class NumberUnitField extends LabeledField<NumberUnitFieldDefinition, str
 
   private unitChanged(e: CustomEvent) {
     this._unit = e.detail.value
-    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value, true))
+    this.dispatchEvent(new FieldChangeEvent(this.path(), this.value))
   }
 }
 

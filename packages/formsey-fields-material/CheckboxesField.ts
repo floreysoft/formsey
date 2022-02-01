@@ -10,7 +10,6 @@ import { css, html, TemplateResult } from "lit";
 import { customElement, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
-import { createComparator } from '@formsey/fields-native';
 
 @customElement("formsey-checkboxes-material")
 export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, string[]> {
@@ -76,11 +75,10 @@ export class CheckboxesField extends MaterialField<CheckboxesFieldDefinition, st
     if (!other && this.otherTextField) {
       this.otherTextField.value = ""
     }
-    const isSame = createComparator(this.value)
     this.value = values
     this.requestUpdate()
     if (this.definition!.name) {
-      this.dispatchEvent(new FieldChangeEvent(this.definition!.name, this.value, !isSame(this.value)));
+      this.dispatchEvent(new FieldChangeEvent(this.definition!.name, this.value));
     }
     if ((<Checkbox>e.target).value == "__other" && other) {
       this.updateComplete.then(() => {

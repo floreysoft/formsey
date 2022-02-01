@@ -12,9 +12,9 @@ export class FieldBlurEvent extends CustomEvent<any> {
   }
 }
 
-export class FieldChangeEvent<T> extends CustomEvent<{ name: string, value: T, modified: boolean }> {
-  constructor(name: string, value: T, modified: boolean, bubbles?: boolean) {
-      super('change', { bubbles, composed: bubbles, detail: { name, value, modified } });
+export class FieldChangeEvent<T> extends CustomEvent<{ name: string, value: T }> {
+  constructor(name: string, value: T, bubbles?: boolean) {
+      super('change', { bubbles, composed: bubbles, detail: { name, value } });
   }
 }
 
@@ -33,8 +33,8 @@ export class FieldFocusEvent extends CustomEvent<{ name?: string}> {
   }
 }
 
-export class FieldInputEvent<T> extends CustomEvent<{ name: string, value: T, modified: boolean }> {
-  constructor(name: string, value: T, modified : boolean, bubbles?: boolean) {
-      super('input', { bubbles, composed: bubbles, detail: { name, value, modified } });
+export class FieldInputEvent<T> extends CustomEvent<{ name: string, value: T }> {
+  constructor(name: string, value: T, bubbles?: boolean) {
+      super('input', { bubbles, composed: bubbles, detail: { name, value } });
   }
 }
