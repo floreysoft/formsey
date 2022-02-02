@@ -4,13 +4,16 @@ import { FormDefinition, PanelFieldDefinition } from '@formsey/core/FieldDefinit
 import { LayoutController } from '@formsey/core/LayoutController';
 import { getFormatter, getIcon, getLibrary, Resources } from '@formsey/core/Registry';
 import { html } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 @customElement("formsey-panel")
 export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any }> {
   protected layoutController: LayoutController = new LayoutController(this)
+
+  @query(".panel")
+  private panel: HTMLElement | undefined
 
   constructor() {
     super()
@@ -26,6 +29,15 @@ export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any
       const innerStyle = formatter?.innerBoxStyle?.(this.layoutController?.layout) || ""
       return html`<div style=${outerStyle}><header>${icon}${this.definition.label}</header>
     <div class="panel" style=${innerStyle}>${createField({ library: this.library, context: this.context, settings: this.settings, definition: { type: "form", name: this.definition.name, fields: this.definition.fields, deferLayout: true, layout: this.definition.layout } as FormDefinition, value: this.value, parentPath: this.path(), errors: this.errors, inputHandler: this.inputted, changeHandler: this.changed, clickHandler: this.clicked, invalidHandler: this.invalid })}</div></div>`
+    }
+  }
+
+  public validate(report: boolean, path?: string) {
+    let child = this.panel!.firstElementChild as Field<any, any>
+    if (report) {
+      return child.reportValidity();
+    } else {
+      return child.checkValidity();
     }
   }
 

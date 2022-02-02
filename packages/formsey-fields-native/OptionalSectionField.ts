@@ -15,6 +15,9 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   @query("#form")
   form: HTMLElement | undefined
 
+  @query("section>div:first-child")
+  switch: HTMLElement | undefined
+
   private untouched: boolean = true
   private on: boolean = false
 
@@ -63,7 +66,7 @@ export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, 
   }
 
   public validate(report: boolean) {
-    let checkbox = this.renderRoot.firstElementChild as Field<any, any>
+    let checkbox = this.switch!.nextElementSibling as Field<any, any>
     let valid = true
     if (report) {
       valid = checkbox.reportValidity();
