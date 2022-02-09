@@ -3,7 +3,10 @@ import { FieldDefinition } from '@formsey/core/FieldDefinitions';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { Marked, Renderer } from '@ts-stack/markdown';
 import hljs from  'highlight.js';
-import typescript from 'highlight.js/lib/languages/typescript';
+import langTypescript from 'highlight.js/lib/languages/typescript';
+import langJavascript from 'highlight.js/lib/languages/javascript';
+import langShell from 'highlight.js/lib/languages/shell';
+import langXML from 'highlight.js/lib/languages/xml';
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -28,7 +31,10 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
 
   constructor() {
     super()
-    hljs.registerLanguage('typescript', typescript);
+    hljs.registerLanguage('typescript', langTypescript);
+    hljs.registerLanguage('javascript', langJavascript);
+    hljs.registerLanguage('shell', langShell);
+    hljs.registerLanguage('html', langXML);
     const renderer = new Renderer();
     const linkRenderer = renderer.link;
     renderer.link = (href, title, text) => {
@@ -44,7 +50,7 @@ export class MarkdownField extends LabeledField<FieldDefinition, string> {
       sanitize: false,
       smartLists: true,
       smartypants: false,
-      highlight: (code, lang) => hljs.highlight(lang || "", code).value
+      highlight: (code, language) => language ? hljs.highlight(code, { language }).value : hljs.highlightAuto(code).value
     });
   }
 

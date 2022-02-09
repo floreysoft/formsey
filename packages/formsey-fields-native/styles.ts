@@ -48,10 +48,15 @@ export const FORM_STYLES = css`
   * {
     font: var(--formsey-font, inherit);
   }
-
+  code {
+    font-family: monospace;
+  }
   @media (pointer: coarse) {
     * {
       font: var(--formsey-font-coarse, inherit);
+    }
+    code {
+      font-family: monospace;
     }
   }
 
@@ -1268,7 +1273,7 @@ formsey-toggle>.lfw>div>button[selected]:not([disabled])::before {
   .hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta-keyword,.hljs-name,.hljs-selector-tag{
     color:var(--formsey-palette-5)
   }
-  .hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{
+  .hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-tag,.hljs-template-tag,.hljs-type{
       color:var(--formsey-palette-1)
   }
   .hljs-section,.hljs-title{
