@@ -57,7 +57,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
           this.value = selection.default && JSON.parse(JSON.stringify(selection.default))
           this.value = this.value || {}
           this.value[this.getKey()] = this.selectedValue
-          this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.selectedValue));
+          this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.value));
         }
       }
       if (selection) {
@@ -86,6 +86,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   }
 
   protected selectionChanged(e: FieldChangeEvent<string>) {
+    e.stopPropagation()
     let value = e.detail.value
     let selection = this.definition.selections.filter(selection => (selection.value ? selection.value === value : selection.label === value))[0];
     if (selection) {
@@ -103,6 +104,7 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
   }
 
   protected changed(e: FieldChangeEvent<any>) {
+    e.stopPropagation()
     this.value = this.value || {}
     if (e.detail.name.startsWith(this.path())) {
       if (this.definition.name) {
@@ -134,8 +136,8 @@ getLibrary("native").registerComponent("selectableSection", {
     if (selection) {
       if (selection.name) {
         fields.push({ ...selection, type: "form" })
-      } else if ( selection?.fields ) {
-        fields = [...selection.fields]
+      } else {
+        fields = [...selection?.fields]
       }
     }
     fields.push({ name: definition.key || "selected", type: "string" })
