@@ -28,14 +28,62 @@ export const FORM_STYLES = css`
     --formsey-elevation-3-opacity: 10%;
   }
 
+
+  /* Form Field */
+  formsey-form-field fieldset {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    min-width: 0;
+  }
   .ffg {
-    display: inline-grid;
-    grid-gap: 5px 5px;
-    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
+    gap: var(--formsey-space-narrow);
+    overflow: hidden;
+  }
+  .fbg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-color: currentColor;
+    opacity: 0;
   }
   .fff {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    --formsey-elevation-opacity: 0;
+    --formsey-elevation-margin: 0;
+  }
+
+  /* Panel */
+  formsey-panel {
+    overflow: hidden;
+  }
+  formsey-panel header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--formsey-space-wide);
+    gap: var(--formsey-space-wide);
+    background: var(--formsey-surface);
+  }
+  formsey-panel .panel {
+    display: flex;
+    flex-grow: 1;
+    overflow: auto;
+  }
+
+  /* Expand various items */
+  formsey-toggle,formsey-list,formsey-option,formsey-panel,formsey-panel>div,formsey-table,formsey-responsive-panel,formsey-split-panel,formsey-tabs,formsey-grid-view,formsey-stats-view,formsey-text,formsey-sourcecode,formsey-signature,formsey-table>.lfw>section,formsey-form-field,formsey-form-field-designer,formsey-form-field-designer>.lfw>section,formsey-form-field>.lfw>section, formsey-optional-section>section, formsey-selectable-section>section, formsey-repeating-section>section {
+    display: flex;
+    position:relative;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
   }
 
   .lfw {

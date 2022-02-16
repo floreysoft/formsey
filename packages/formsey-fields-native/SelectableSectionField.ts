@@ -134,7 +134,7 @@ getLibrary("native").registerComponent("selectableSection", {
     if (selection) {
       if (selection.name) {
         fields.push({ ...selection, type: "form" })
-      } else {
+      } else if ( selection?.fields ) {
         fields = [...selection.fields]
       }
     }
