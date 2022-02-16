@@ -36,7 +36,7 @@ export class ListField extends LabeledField<ListFieldDefinition, string | string
           } else {
             checked = this.value == value;
           }
-          if (label.toLowerCase().startsWith(this.query?.toLowerCase() || "")) {
+          if (label?.toLowerCase().startsWith(this.query?.toLowerCase() || "")) {
             if (this.definition.query && !this.firstMatchingOption) {
               this.firstMatchingOption = value
             }
