@@ -134,7 +134,8 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
   }
 
   public focusField(path: string): boolean {
-    if (path.startsWith(this.path())) {
+    const myPath = this.path();
+    if (path.startsWith(myPath)) {
       if (this._fields) {
         for (let field of this._fields) {
           let child = field.firstElementChild as Field<any, any>

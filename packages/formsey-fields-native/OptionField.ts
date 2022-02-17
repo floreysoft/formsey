@@ -14,7 +14,7 @@ export class OptionField extends Field<Option, boolean> {
   hideCheckmark: boolean = false
 
   @property({ type: Boolean })
-  passive: boolean = true
+  passive: boolean = false
 
   @property()
   query: string = ""
@@ -32,7 +32,6 @@ export class OptionField extends Field<Option, boolean> {
     </button>`;
     }
   }
-
 
   protected focusField(path?: string) {
     this.button?.focus()
