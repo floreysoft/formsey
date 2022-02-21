@@ -1,22 +1,25 @@
 export * from '@formsey/core';
+export { LabelField } from './LabelField';
 export { ButtonField } from './ButtonField';
 export { CheckboxesField } from './CheckboxesField';
 export { CheckboxField } from './CheckboxField';
 export { ColorField, ICON_COLOR_FIELD } from './ColorField';
 export { ComboboxField } from './ComboboxField';
 export { CurrencyField } from './CurrencyField';
+export { CurrencyFormatField } from './CurrencyFormatField';
 export { DateField } from './DateField';
+export { DateFormatField } from './DateFormatField';
 export { DateTimeField } from './DateTimeField';
 export { DialogSectionField } from './DialogSectionField';
 export { EmailField } from './EmailField';
 export { ImageField } from './ImageField';
 export { ImagesField } from './ImagesField';
-export { LabelField } from './LabelField';
 export { ListField } from './ListField';
 export { LocaleField } from './LocaleField';
 export { MonthField } from './MonthField';
 export { MultipleChoiceField } from './MultipleChoiceField';
 export { NumberField } from './NumberField';
+export { NumberFormatField } from './NumberFormatField';
 export { NumberUnitField } from './NumberUnitField';
 export { OptionalSectionField } from './OptionalSectionField';
 export { OptionField } from './OptionField';
@@ -47,3 +50,4 @@ export { ICON_FILE, ICON_REMOVE, ICON_UPLOAD, UploadField } from './UploadField'
 export { URLField } from './URLField';
 export { WeekField } from './WeekField';
 export { YouTubeField } from './YouTubeField';
+

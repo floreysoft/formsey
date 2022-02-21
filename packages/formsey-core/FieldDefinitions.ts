@@ -82,27 +82,31 @@ export interface StringFieldDefinition extends InputFieldDefinition {
 
 export interface LabelFieldDefinition extends FieldDefinition {
   locale?: string
-  format?: string
-  style?: {
-    selection?: string
-    value?: {
-      currency?: string
-      currencyDisplay?: string
-      currencySign?: string
-      unit?: string
-      unitDisplay?: string
-    }
-  }
-  dateStyle?: "short" | "long" | "full" | "medium"
-  timeStyle?: "short" | "long" | "full" | "medium"
-  notation?: string
-  signDisplay?: string
-  useGrouping?: boolean
-  unit?: string
-  unitDisplay?: string
   wrap?: "wrap" | "nowrap"
 }
 
+export interface NumberFormatFieldDefinition extends LabelFieldDefinition {
+  locale?: string
+  style?: string
+  notation?: string
+  signDisplay?: "auto" | "never" | "always" | undefined
+  useGrouping?: boolean
+}
+
+export interface CurrencyFormatFieldDefinition extends NumberFormatFieldDefinition {
+  locale?: string
+  style?: string
+  currency?: string
+  currencyDisplay?: string
+  currencySign?: string
+}
+export interface DateFormatFieldDefinition extends LabelFieldDefinition {
+  locale?: string
+  style?: string
+  dateStyle?: "short" | "long" | "full" | "medium"
+  timeStyle?: "short" | "long" | "full" | "medium"
+  notation?: string
+}
 export interface UploadFieldDefinition extends InputFieldDefinition {
   multiple: boolean
   accept?: string[]

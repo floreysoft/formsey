@@ -207,7 +207,9 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
         if (!this.value) {
           this.value = {} as V
         }
-        (<any>this.value)[name] = e.detail.value;
+        if ( name ) {
+          (<any>this.value)[name] = e.detail.value;
+        }
         this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
       }
     }

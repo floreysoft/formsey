@@ -55,10 +55,10 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
         this.selectedValue = selection.value || selection.label
         if (this.selectedValue != previousValue) {
           this.value = selection.default && JSON.parse(JSON.stringify(selection.default))
-          this.value = this.value || {}
-          this.value[this.getKey()] = this.selectedValue
-          this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
-          // this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.value));
+            this.value = this.value || {}
+            this.value[this.getKey()] = this.selectedValue
+            this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+            // this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.value));
         }
       }
       if (selection) {
