@@ -66,6 +66,8 @@ export interface Component<D extends FieldDefinition, V> {
   module?: string,
   focusable?: boolean
   nestedFields?: (definition: D, value: V) => FieldDefinition[]
+  migrateDefinition?(from: number, definition: D) : D
+  migrateValue?(from: number, value: V) : V
 }
 
 export interface Components {

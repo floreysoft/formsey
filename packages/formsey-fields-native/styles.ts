@@ -74,6 +74,60 @@ export const FORM_STYLES = css`
       }
   }
 
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 25rem;
+    border: none;
+  }
+
+  input[type="range"]:focus {
+    outline: none;
+    border: none;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    background-color: var(--formsey-surface);
+    border-radius: 0.5rem;
+    height: 0.5rem;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -4px;
+    background-color: var(--formsey-accent-color);
+    border-radius: 0.5rem;
+    height: 1rem;
+    width: 1rem;
+  }
+
+  input[type="range"]:focus::-webkit-slider-thumb {
+    outline: 1px solid var(--formsey-accent-color);
+    outline-offset: 0.125rem;
+  }
+
+  input[type="range"]::-moz-range-track {
+    background-color: var(--formsey-surface);
+    border-radius: 0.5rem;
+    height: 0.5rem;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    background-color: var(--formsey-accent-color);
+    border: none; 
+    border-radius: 0.5rem;
+    height: 1rem;
+    width: 1rem;
+  }
+
+  input[type="range"]:focus::-moz-range-thumb{
+    outline: 1px solid var(--formsey-accent-color);
+    outline-offset: 0.125rem;
+  }
+
   input[type="checkbox"], input[type="radio"] {
     margin: var(--formsey-space-narrow);
     font: inherit;
@@ -118,11 +172,6 @@ export const FORM_STYLES = css`
     -webkit-text-fill-color: var(--formsey-color);
     -webkit-box-shadow: 0 0 0px 1000px var(--formsey-shade, #80808040) inset;
     transition: background-color 5000s ease-in-out 0s;
-  }
-
-  .input.range {
-    padding: 0;
-    margin: 0;
   }
 
   .input:focus-within {

@@ -18,7 +18,7 @@ export class StyledForm extends Form {
 
   static get styles() {
     return [FORM_STYLES, css`
-    :host, .themed, form {
+    :host, .themed, form, fs-theme {
       display: flex;
       flex-grow: 1;
       flex-direction: column;
