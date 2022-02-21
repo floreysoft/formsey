@@ -57,7 +57,8 @@ export class SelectableSectionField extends LabeledField<SelectableSectionFieldD
           this.value = selection.default && JSON.parse(JSON.stringify(selection.default))
           this.value = this.value || {}
           this.value[this.getKey()] = this.selectedValue
-          this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.value));
+          this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+          // this.dispatchEvent(new FieldChangeEvent(this.path() + "." + this.getKey(), this.value));
         }
       }
       if (selection) {
@@ -136,8 +137,8 @@ getLibrary("native").registerComponent("selectableSection", {
     if (selection) {
       if (selection.name) {
         fields.push({ ...selection, type: "form" })
-      } else {
-        fields = [...selection?.fields]
+      } else if ( selection?.fields ) {
+        fields = [...selection.fields]
       }
     }
     fields.push({ name: definition.key || "selected", type: "string" })
