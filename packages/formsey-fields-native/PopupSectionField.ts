@@ -129,7 +129,6 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
   }
 
   protected clicked(e: FieldClickEvent) {
-    console.log("Closeable set")
     this.dispatchEvent(new FieldClickEvent(e.detail.name, e.detail.value, e.bubbles, this))
   }
 
@@ -141,11 +140,13 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
         this.dispatchEvent(new FieldChangeEvent(e.detail.name, e.detail.value));
       } else {
         let name = e.detail.name.substring(this.path().length + 1).split('.')[0].split('[')[0]
-        if (!this.value) {
-          this.value = {}
+        if (name) {
+          if (!this.value) {
+            this.value = {}
+          }
+          this.value[name] = e.detail.value;
+          this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
         }
-        this.value[name] = e.detail.value;
-        this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
       }
     }
   }

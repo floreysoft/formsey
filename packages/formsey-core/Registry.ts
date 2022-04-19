@@ -216,15 +216,15 @@ export function registerEditor(name: string, editor: Editor | ((context: any) =>
   register("editors", name, editor)
 }
 
-export function getRendererEditors(): { [key: string]: string | undefined } {
+export function getRendererEditors(): { [key: string]: Editor | undefined } {
   return getRegistry("rendererEditors")
 }
 
-export function getRendererEditor(name: string): string | undefined {
+export function getRendererEditor(name: string): Editor | undefined {
   return get("rendererEditors", name)
 }
 
-export function registerRendererEditor(name: string, rendererEditor: string) {
+export function registerRendererEditor(name: string, rendererEditor: Editor) {
   register("rendererEditors", name, rendererEditor)
 }
 
