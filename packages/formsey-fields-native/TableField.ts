@@ -142,7 +142,7 @@ export class TableField extends FormField<TableFieldDefinition, Records> {
           {
             type: "button",
             name: "end",
-            icon: "Start",
+            icon: "End",
             buttonType: "button",
             disabled: disableLast
           } as ButtonFieldDefinition

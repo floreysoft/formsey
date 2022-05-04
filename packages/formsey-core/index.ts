@@ -31,6 +31,7 @@ registerIcon("Sort ascending", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M
 registerIcon("Sort descending", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></svg></fs-icon>`)
 
 registerIcon("Start", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M8 28v-24h4v11l10-10v22l-10-10v11z"></path></svg></fs-icon>`)
+registerIcon("End", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M24 4v24h-4v-11l-10 10v-22l10 10v-11z"></path></svg></fs-icon>`)
 registerIcon("Previous", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M18 5v10l10-10v22l-10-10v10l-11-11z"></path></svg></fs-icon>`)
 registerIcon("Next", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M16 27v-10l-10 10v-22l10 10v-10l11 11z"></path></svg></fs-icon>`)
 
