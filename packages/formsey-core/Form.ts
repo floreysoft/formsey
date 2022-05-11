@@ -87,8 +87,8 @@ export class Form extends Field<FieldDefinition, any> {
   target: "_blank" | "_parent" | "_self" | "_top" | undefined
 
   @property()
-  action: string | undefined
 
+  action: string | undefined
   @property()
   method: "GET" | "POST" | undefined
 

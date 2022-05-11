@@ -5,6 +5,7 @@ import { FieldDefinition, FormDefinition } from './FieldDefinitions';
 import { FieldInputEvent } from './Events';
 import { InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { Layout } from './Layouts';
+import { Form } from './Form';
 
 let customElementRegistry = window.customElements;
 // @ts-ignore
@@ -95,13 +96,14 @@ export interface Libraries {
   [index: string]: Library
 }
 
-export interface Editor extends FormDefinition {
+export interface Editor extends FormDefinition  {
   title: string
   icon: TemplateResult
   interaction?: string
   summary?: (definition: FieldDefinition) => TemplateResult
   prepareFieldsForLayout?: (context: any) => FieldDefinition[]
   prepareDefaultLayout?: (context: any) => Layout
+  buttonClicked?: (event: FieldClickEvent, value: any, context: any) => any
 }
 
 export interface FormEditor extends Editor, FormDefinition { }
