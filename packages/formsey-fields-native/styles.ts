@@ -117,7 +117,7 @@ export const FORM_STYLES = css`
 
   input[type="range"]::-moz-range-thumb {
     background-color: var(--formsey-accent-color);
-    border: none; 
+    border: none;
     border-radius: 0.5rem;
     height: 1rem;
     width: 1rem;
@@ -388,6 +388,7 @@ export const FORM_STYLES = css`
     position: relative;
     box-sizing: border-box;
     width: 1.5em;
+    min-width: 1.5em;
     height: 1.5em;
     align-items: center;
     justify-content: center;
