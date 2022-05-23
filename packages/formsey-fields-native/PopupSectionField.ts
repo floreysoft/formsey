@@ -95,6 +95,7 @@ export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition,
     if (this.layoutController) {
       this.removeController(this.layoutController)
     }
+    this.dispatchEvent(new FieldClickEvent(this.path(), "closed"));
   }
 
   public focusField(path: string) {

@@ -96,10 +96,14 @@ export interface Libraries {
   [index: string]: Library
 }
 
+export type EditValueTransformer = (value: any, context: any) => any
+
 export interface Editor extends FormDefinition  {
   title: string
   icon: TemplateResult
   interaction?: string
+  transformIn?: EditValueTransformer
+  transformOut?: EditValueTransformer
   summary?: (definition: FieldDefinition) => TemplateResult
   prepareFieldsForLayout?: (context: any) => FieldDefinition[]
   prepareDefaultLayout?: (context: any) => Layout
