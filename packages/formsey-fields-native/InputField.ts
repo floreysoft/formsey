@@ -1,9 +1,8 @@
-import { FieldChangeEvent, FieldInputEvent, InputFieldDefinition, LabeledField, StringFieldDefinition } from '@formsey/core';
+import { InputFieldDefinition, LabeledField, StringFieldDefinition } from '@formsey/core';
 import { InvalidError, InvalidErrors, InvalidEvent } from '@formsey/core/InvalidEvent';
 import { html } from "lit";
 import { property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
-
 
 export class InputField<T extends InputFieldDefinition, V> extends LabeledField<T, V> {
   @property({ type: String })

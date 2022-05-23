@@ -13,7 +13,6 @@ export * from './FieldDefinitions';
 export * from './Form';
 export * from './FormField';
 export { FormNavigator } from './FormNavigator';
-export { HiddenField } from './HiddenField';
 export * from './InvalidEvent';
 export { LabeledField } from './LabeledField';
 export { LayoutController } from './LayoutController';

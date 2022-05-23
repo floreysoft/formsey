@@ -107,7 +107,7 @@ export class Field<T extends FieldDefinition, V> extends LitElement {
     } else if (typeof this.value === "undefined" && typeof this.definition.default != "undefined") {
       this.value = this.definition.default as V;
       if (this.value && this.definition.name) {
-        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
+        this.dispatchEvent(new FieldChangeEvent(this.path(), this.value))
       }
     }
     if (!this.library) {

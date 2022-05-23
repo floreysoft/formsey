@@ -50,4 +50,5 @@ export { ICON_FILE, ICON_REMOVE, ICON_UPLOAD, UploadField } from './UploadField'
 export { URLField } from './URLField';
 export { WeekField } from './WeekField';
 export { YouTubeField } from './YouTubeField';
+export { HiddenField } from './HiddenField';
 

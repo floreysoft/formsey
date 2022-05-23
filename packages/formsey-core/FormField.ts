@@ -76,7 +76,6 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     if (this.library && this._definition) {
       this._value = removeDeletedFields(this.library.components, this._definition, value) as V
     }
-    this.applyHiddenFields()
     this.requestUpdate()
   }
 
@@ -88,7 +87,6 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
   // @ts-ignore()
   set definition(definition) {
     this._definition = definition;
-    this.applyHiddenFields();
     this.requestUpdate();
   }
 
@@ -211,18 +209,6 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
           (<any>this.value)[name] = e.detail.value;
         }
         this.dispatchEvent(e.type == "input" ? new FieldInputEvent(e.detail.name, this.value) : new FieldChangeEvent(e.detail.name, this.value));
-      }
-    }
-  }
-
-  protected applyHiddenFields() {
-    if (this._definition && this._definition.fields && this._value) {
-      for (let field of this._definition.fields) {
-        if (field.type == "hidden") {
-          if (field.name && field.default) {
-            (<any>this._value)[field.name] = field.default;
-          }
-        }
       }
     }
   }
