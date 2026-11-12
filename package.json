@@ -20,8 +20,7 @@
     "rollup": "tsc && npm run compile:components && npm run rollup --workspaces --if-present",
     "test": "web-test-runner",
     "test:watch": "web-test-runner --watch",
-    "pub": "npm login --scope=@formsey && npm run rollup && lerna publish",
-    "forcePub": "npm run rollup && lerna publish --force-publish"
+    "release": "npm run rollup && node scripts/publish.mjs"
   },
   "devDependencies": {
     "@lit-labs/rollup-plugin-minify-html-literals": "^0.2.0",

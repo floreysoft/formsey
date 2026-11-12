@@ -260,6 +260,24 @@ icons (`registerIcon`), layout formatters (`registerFormatter`), translations
   in `floreysoft-components`. Publish it on Lit 3 before publishing new Formsey
   bundles, the version currently on npm still contains Lit 2.
 
+## Publishing
+
+Publish `floreysoft-components` first if it changed: Formsey depends on its
+packages, and the CDN bundles load Lit from `@floreysoft/lit`.
+
+Set the new version in every `package.json` and in `lerna.json`, commit, then
+
+```
+npm run release
+```
+
+compiles, builds the CDN bundles and publishes every package whose version is not on npm
+yet. It can be run again after a failure, packages that are already published
+are skipped. npm requires two-factor authentication for publishing: either
+confirm in the browser when npm asks, or pass a one-time password with
+`npm run release -- --otp=123456`. `npm run release -- --dry-run` shows what
+would be published.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).

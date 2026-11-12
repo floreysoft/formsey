@@ -1,6 +1,6 @@
 {
   "name": "@formsey/fields-native",
-  "version": "0.4.41",
+  "version": "0.5.0",
   "type": "module",
   "description": "Native fields",
   "module": "/esm/formsey-fields-native.min.js",
@@ -15,11 +15,11 @@
   ],
   "dependencies": {
     "@a11y/focus-trap": "^1.0.5",
-    "@floreysoft/ace": "^0.5.15",
-    "@floreysoft/splitter": "^0.5.22",
-    "@floreysoft/theme": "^0.5.19",
-    "@floreysoft/utils": "^0.5.22",
-    "@formsey/core": "^0.4.41",
+    "@floreysoft/ace": "^0.6.0",
+    "@floreysoft/splitter": "^0.6.0",
+    "@floreysoft/theme": "^0.6.0",
+    "@floreysoft/utils": "^0.6.0",
+    "@formsey/core": "^0.5.0",
     "lit": "^3.3.3"
   },
   "scripts": {
