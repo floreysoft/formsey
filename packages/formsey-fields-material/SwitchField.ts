@@ -11,6 +11,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
 
+/**
+ * `<formsey-switch-material>`, field type `switch`: A switch rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-switch-material")
 export class SwitchField extends MaterialField<SwitchFieldDefinition, boolean> {
   @property({ type: Boolean })

@@ -4,7 +4,16 @@ import { LayoutFieldDefinition } from "./FieldDefinitions";
 import { DEFAULT_BREAKPOINTS, SUPPORTED_BREAKPOINTS } from "./FormField";
 import { Layout, ResponsiveLayout } from "./Layouts";
 
+/**
+ * Reactive controller that makes a field responsive.
+ *
+ * It observes the width of the host element, maps it to a size ("xs" to "xl")
+ * using the breakpoints of the definition and exposes the matching layout as
+ * {@link LayoutController.layout}. The host is re-rendered whenever the size
+ * changes.
+ */
 export class LayoutController implements ReactiveController {
+  /** The layout to use for the current width of the host. */
   public layout: Layout | undefined
 
   private host: Field<LayoutFieldDefinition, any>
@@ -35,6 +44,10 @@ export class LayoutController implements ReactiveController {
     this.layout = this.size && (<any>this.host.definition?.layout)?.[this.size] || this.layout
   }
 
+  /**
+   * Selects the layout for the current size: the layout defined for that size
+   * or, if there is none, the layout of the closest smaller size.
+   */
   updateLayout(layout?: ResponsiveLayout) {
     this.layout = undefined
     let sizeFound = false
@@ -47,6 +60,7 @@ export class LayoutController implements ReactiveController {
     }
   }
 
+  /** Determines the size for the available width and updates the host if it changed. */
   protected resize(availableWidth: number) {
     // If available with larger than larges breakpoint, default to the largest
     let detectedSize = SUPPORTED_BREAKPOINTS[SUPPORTED_BREAKPOINTS.length - 1]
@@ -68,5 +82,6 @@ export class LayoutController implements ReactiveController {
     }
   }
 
+  /** Hook for subclasses, called when the host crosses a breakpoint. */
   protected sizeChanged(host: Field<LayoutFieldDefinition, any>, size: string) { }
 }

@@ -7,6 +7,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
+/**
+ * `<formsey-number-material>`, field type `number`: A number field rendered
+ * with Material Web Components (MWC).
+ */
 @customElement("formsey-number-material")
 export class NumberField extends InputField<NumberFieldDefinition, number> {
   @property({ type: Number })

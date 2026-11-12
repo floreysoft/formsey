@@ -1,6 +1,6 @@
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
-import minifyHTML from 'rollup-plugin-minify-html-literals';
+import minifyHTML from '@lit-labs/rollup-plugin-minify-html-literals';
 
 export default {
   input: './index.js',

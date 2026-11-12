@@ -22,6 +22,10 @@ export interface AddressFieldDefinition extends FieldDefinition {
   labelPostalCode: string
   labelCountry: string
 }
+/**
+ * `<formsey-address>`, field type `address`: An address made of optional
+ * lines, city, state, postal code and country.
+ */
 @customElement("formsey-address")
 export class AddressField extends CompoundField<AddressFieldDefinition, Object> {
   renderField() {

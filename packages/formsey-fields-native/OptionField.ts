@@ -8,6 +8,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map.js';
 
 
+/**
+ * `<formsey-option>`, field type `option`: A single entry of a list,
+ * highlighted while it matches the search query.
+ */
 @customElement("formsey-option")
 export class OptionField extends Field<Option, boolean> {
   @property({ type: Boolean })

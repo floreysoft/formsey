@@ -11,6 +11,10 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-tabs>`, field type `tabs`: Shows one of several nested forms,
+ * selected by tabs.
+ */
 @customElement("formsey-tabs")
 export class TabsField extends Field<TabsFieldDefinition, { [key: string]: any }> {
   @property({ converter: Object })

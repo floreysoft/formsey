@@ -7,6 +7,10 @@ import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
+/**
+ * `<formsey-number-vaadin>`, field type `number`: A number field rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-number-vaadin")
 export class NumberField extends InputField<NumberFieldDefinition, string> {
   @query("vaadin-number-field")

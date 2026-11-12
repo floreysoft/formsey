@@ -5,6 +5,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { LabelField } from '.';
 
+/**
+ * `<formsey-currencyformat>`, field type `currencyFormat`: Read only: displays
+ * the value as an amount of money.
+ */
 @customElement("formsey-currencyformat")
 export class CurrencyFormatField extends LabelField<CurrencyFormatFieldDefinition> {
   protected format(value: any) {

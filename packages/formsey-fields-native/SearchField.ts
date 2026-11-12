@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/** `<formsey-search>`, field type `search`: Text field with `type="search"`. */
 @customElement("formsey-search")
 export class SearchField extends StringField {
   protected get type(): "search" {

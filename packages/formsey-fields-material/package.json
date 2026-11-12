@@ -1,6 +1,7 @@
 {
   "name": "@formsey/fields-material",
   "version": "0.4.41",
+  "type": "module",
   "description": "Material design fields",
   "module": "/esm/formsey-fields-material.min.js",
   "files": [
@@ -13,22 +14,22 @@
   ],
   "dependencies": {
     "@formsey/fields-native": "^0.4.41",
-    "@material/mwc-checkbox": "^0.25.3",
-    "@material/mwc-formfield": "^0.25.3",
-    "@material/mwc-line-ripple": "^0.25.3",
-    "@material/mwc-list": "^0.25.3",
-    "@material/mwc-radio": "^0.25.3",
-    "@material/mwc-ripple": "^0.25.3",
-    "@material/mwc-select": "^0.25.3",
-    "@material/mwc-switch": "^0.25.3",
-    "@material/mwc-textarea": "^0.25.3",
-    "@material/mwc-textfield": "^0.25.3",
-    "lit": "^2.0.0"
+    "@material/mwc-checkbox": "^0.27.0",
+    "@material/mwc-formfield": "^0.27.0",
+    "@material/mwc-line-ripple": "^0.27.0",
+    "@material/mwc-list": "^0.27.0",
+    "@material/mwc-radio": "^0.27.0",
+    "@material/mwc-ripple": "^0.27.0",
+    "@material/mwc-select": "^0.27.0",
+    "@material/mwc-switch": "^0.27.0",
+    "@material/mwc-textarea": "^0.27.0",
+    "@material/mwc-textfield": "^0.27.0",
+    "lit": "^3.3.3"
   },
   "scripts": {
     "tsc": "tsc",
-    "link": "yarn link",
-    "unlink": "yarn unlink",
+    "link": "npm link",
+    "unlink": "npm unlink",
     "pub:check": "npm publish --dry-run",
     "rollup": "rollup --config"
   },

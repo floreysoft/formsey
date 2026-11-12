@@ -7,6 +7,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DateField } from "./DateField";
 
+/**
+ * `<formsey-month-material>`, field type `month`: A month field rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-month-material")
 export class MonthField extends DateField {
   protected get type(): TextFieldType {

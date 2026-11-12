@@ -1,6 +1,7 @@
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
-import minifyHTML from 'rollup-plugin-minify-html-literals';
+import minifyHTML from '@lit-labs/rollup-plugin-minify-html-literals';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default {
   input: './index.js',
@@ -17,6 +18,10 @@ export default {
       }
     },
     resolve(),
+    // ace-builds (pulled in by the source code field) ships CommonJS only
+    commonjs({
+      transformMixedEsModules: true
+    }),
     minifyHTML(),
     terser({
       format: {

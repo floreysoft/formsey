@@ -12,6 +12,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 export interface CreditCardFieldDefinition extends FieldDefinition {
   enabledAutofill: boolean
 }
+/**
+ * `<formsey-creditcard>`, field type `creditCard`: Card number, security
+ * code, card holder and expiry date.
+ */
 @customElement("formsey-creditcard")
 export class CreditCardField extends CompoundField<CreditCardFieldDefinition, Object> {
   renderField() {

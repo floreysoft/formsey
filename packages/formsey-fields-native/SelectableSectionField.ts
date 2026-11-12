@@ -8,6 +8,10 @@ import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-selectable-section>`, field type `selectableSection`: A selection
+ * control that switches between several nested forms.
+ */
 @customElement("formsey-selectable-section")
 export class SelectableSectionField extends LabeledField<SelectableSectionFieldDefinition, { [key: string]: any }> {
   @property({ converter: Object })

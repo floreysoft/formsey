@@ -16,6 +16,10 @@ function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   }
 }
 
+/**
+ * `<formsey-toggle>`, field type `toggle`: A group of buttons of which one is
+ * selected.
+ */
 @customElement("formsey-toggle")
 export class ToggleField extends LabeledField<ToggleFieldDefinition, string> {
   @property({ converter: String })

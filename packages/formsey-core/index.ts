@@ -1,3 +1,10 @@
+/**
+ * Entry point of @formsey/core.
+ *
+ * Exports the public API and registers what every field library relies on:
+ * the default icons and the formatters for the built-in layouts ("columns",
+ * "table", "areas" and "flex").
+ */
 import '@floreysoft/icon';
 import { html } from "lit";
 import { FieldDefinition, TableFieldDefinition } from './FieldDefinitions';
@@ -40,6 +47,7 @@ registerIcon("Cancel", html`<fs-icon><svg viewBox="0 0 32 32"><path d="M31.708 2
 registerIcon("Dark mode", html`<fs-icon><svg viewBox="0 0 24 24"><path d="M12 18q2.484 0 4.242-1.758t1.758-4.242-1.758-4.242-4.242-1.758-4.242 1.758-1.758 4.242 1.758 4.242 4.242 1.758zM20.016 15.328v4.688h-4.688l-3.328 3.281-3.328-3.281h-4.688v-4.688l-3.281-3.328 3.281-3.328v-4.688h4.688l3.328-3.281 3.328 3.281h4.688v4.688l3.281 3.328z"></path></svg></fs-icon>`)
 registerIcon("Light mode", html`<fs-icon><svg viewBox="0 0 24 24"><path d="M12 8.016q1.641 0 2.813 1.172t1.172 2.813-1.172 2.813-2.813 1.172-2.813-1.172-1.172-2.813 1.172-2.813 2.813-1.172zM12 18q2.484 0 4.242-1.758t1.758-4.242-1.758-4.242-4.242-1.758-4.242 1.758-1.758 4.242 1.758 4.242 4.242 1.758zM20.016 8.672l3.281 3.328-3.281 3.328v4.688h-4.688l-3.328 3.281-3.328-3.281h-4.688v-4.688l-3.281-3.328 3.281-3.328v-4.688h4.688l3.328-3.281 3.328 3.281h4.688v4.688z"></path></svg></fs-icon>`)
 
+/** Opacity of the overlay that tints elevated boxes (see `.fbg`). */
 function elevationStyle(layout: BoxLayout): string {
   const opacity = layout.elevation == 1 ? "var(--formsey-elevation-1-opacity, 0)" : layout.elevation == 2 ? "var(--formsey-elevation-2-opacity, 0)" : layout.elevation == 3 ? "var(--formsey-elevation-3-opacity, 0)" : "var(--formsey-elevation-0-opacity, 0)"
   return `opacity:${opacity}`
@@ -47,12 +55,14 @@ function elevationStyle(layout: BoxLayout): string {
 function backgroundStyle(layout: BoxLayout): string {
   return layout.backgroundColor ? `--formsey-background:var(--formsey-bg-${layout.backgroundColor});background:var(--formsey-background)` : ""
 }
+/** Margin, shadow and border radius of a box. */
 function outerBoxStyle(layout: BoxLayout): string {
   const margin = layout.margin == "narrow" ? "var(--formsey-space-narrow)" : layout.margin == "wide" ? "var(--formsey-space-wide)" : "0"
   const shadow = layout.elevation == 1 ? "var(--formsey-elevation-1-shadow, none)" : layout.elevation == 2 ? "var(--formsey-elevation-2-shadow, none)" : layout.elevation == 3 ? "var(--formsey-elevation-3-shadow, none)" : "none"
   const borderRadius = layout.border == 'soft' ? "var(--formsey-border-radius)" : "0"
   return `margin:${margin};box-shadow:${shadow};border-radius:${borderRadius}`
 }
+/** Padding and font size of a box. */
 function innerBoxStyle(layout: BoxLayout): string {
   const padding = layout.padding == "narrow" ? "var(--formsey-space-narrow)" : layout.padding == "wide" ? "var(--formsey-space-wide)" : "0"
   const fontSize = layout.fontSize ? `font-size:${layout.fontSize};` : ""

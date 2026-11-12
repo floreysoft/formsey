@@ -12,6 +12,10 @@ export interface NameFieldDefinition extends FieldDefinition {
   includeAdditionalName: boolean
   includeSuffix: boolean
 }
+/**
+ * `<formsey-name>`, field type `name`: A personal name made of given and
+ * family name plus optional prefix, additional name and suffix.
+ */
 @customElement("formsey-name")
 export class NameField extends CompoundField<NameFieldDefinition, Object> {
   renderField() {

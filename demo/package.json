@@ -1,0 +1,22 @@
+{
+  "name": "@formsey/demo",
+  "version": "0.4.41",
+  "private": true,
+  "type": "module",
+  "description": "Local playground for developing and testing Formsey",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@formsey/core": "^0.4.41",
+    "@formsey/fields-compound": "^0.4.41",
+    "@formsey/fields-material": "^0.4.41",
+    "@formsey/fields-native": "^0.4.41",
+    "@formsey/fields-native-extended": "^0.4.41",
+    "@formsey/fields-vaadin": "^0.4.41",
+    "@vaadin/vaadin-lumo-styles": "^25.3.5",
+    "lit": "^3.3.3"
+  }
+}

@@ -6,6 +6,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
 
+/**
+ * `<formsey-url-vaadin>`, field type `url`: A URL field rendered with Vaadin
+ * web components.
+ */
 @customElement("formsey-url-vaadin")
 export class URLField extends StringField {
   protected get type(): "url" {

@@ -90,6 +90,7 @@ const options = [
   { "label": "(GMT+13:00) Nuku'alofa", "value": "Pacific/Tongatapu" }
 ]
 
+/** `<formsey-timezone>`, field type `timezone`: Selects an IANA time zone. */
 @customElement("formsey-timezone")
 export class TimezoneField extends LabeledField<FieldDefinition, string> {
   protected renderField() {

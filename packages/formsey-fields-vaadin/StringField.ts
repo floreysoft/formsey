@@ -6,6 +6,10 @@ import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
+/**
+ * `<formsey-string-vaadin>`, field type `string`: A single line text field
+ * rendered with Vaadin web components.
+ */
 @customElement("formsey-string-vaadin")
 export class StringField extends InputField<StringFieldDefinition, string> {
   protected get type() : "text" | "search" | "tel" | "url" | "email" | "password" | "time" | "datetime-local" | "week" | "month" | "color" {

@@ -7,6 +7,7 @@ import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/** `<formsey-image-checkbox>`: a selectable image, used by the images field. */
 @customElement("formsey-image-checkbox")
 export class ImageCheckbox extends LitElement {
   @property({ type: Boolean })
@@ -40,7 +41,7 @@ export class ImageCheckbox extends LitElement {
     return html`<input class="hid" id="${this.path}.${this.id}.cb" tabindex="${this.tabIndex}" type="checkbox" @keydown="${this.keyDown}" @change="${this.changed}" @focus="${(e: Event) => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('focus')) }}"  @blur="${(e: Event) => { e.stopPropagation(); this.dispatchEvent(new CustomEvent('blur')) }}" ?checked="${this.checked}" ?disabled="${this.disabled}" ?required="${this.required}"><label for="${this.path}.${this.id}.cb"><img src="${this.src}" alt="${this.alt}"/>${ifDefined(this.label)}</label>`;
   }
 
-  protected createRenderRoot(): Element | ShadowRoot {
+  protected createRenderRoot(): HTMLElement | DocumentFragment {
     return this;
   }
 
@@ -71,6 +72,10 @@ export class ImageCheckbox extends LitElement {
     }
   }
 }
+/**
+ * `<formsey-images>`, field type `images`: Selects one or several images from
+ * a responsive grid.
+ */
 @customElement("formsey-images")
 export class ImagesField extends LabeledField<ImagesFieldDefinition, string[] | string> {
   @property({ type: Object })

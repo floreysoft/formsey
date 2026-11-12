@@ -10,6 +10,10 @@ import { customElement } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-table>`, field type `table`: Displays records in a grid with fixed
+ * columns, sorting, searching, row selection and paging.
+ */
 @customElement("formsey-table")
 export class TableField extends FormField<TableFieldDefinition, Records> {
   renderField() {

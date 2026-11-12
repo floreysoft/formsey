@@ -8,6 +8,10 @@ import { CheckboxField } from './CheckboxField';
 import { StringField } from './StringField';
 
 
+/**
+ * `<formsey-checkboxes>`, field type `checkboxes`: A group of checkboxes. The
+ * value is the list of the selected option values.
+ */
 @customElement("formsey-checkboxes")
 export class CheckboxesField extends LabeledField<CheckboxesFieldDefinition, string[]> {
   @query("formsey-string")

@@ -7,6 +7,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-password-material>`, field type `password`: A password field
+ * rendered with Material Web Components (MWC).
+ */
 @customElement("formsey-password-material")
 export class PasswordField extends StringField {
   protected get type(): TextFieldType {

@@ -12,6 +12,10 @@ import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-checkboxes-vaadin>`, field type `checkboxes`: A group of
+ * checkboxes rendered with Vaadin web components.
+ */
 @customElement("formsey-checkboxes-vaadin")
 export class CheckboxesField extends Field<CheckboxesFieldDefinition, string[]> {
   @property({ converter: Object })

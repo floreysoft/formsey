@@ -7,6 +7,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-url-material>`, field type `url`: A URL field rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-url-material")
 export class URLField extends StringField {
   protected get type(): TextFieldType {

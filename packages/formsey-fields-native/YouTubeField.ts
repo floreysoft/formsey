@@ -11,6 +11,10 @@ interface YouTubeFieldDefinition extends FieldDefinition {
 	width: string
 	align: string
 }
+/**
+ * `<formsey-youtube>`, field type `youtube`: Embeds a YouTube video. Has no
+ * value.
+ */
 @customElement("formsey-youtube")
 export class YouTubeField extends LabeledField<YouTubeFieldDefinition, string> {
 	private readonly WATCH_PARAMETER = "watch?v=";

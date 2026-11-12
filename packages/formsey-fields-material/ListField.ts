@@ -8,6 +8,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
+/**
+ * `<formsey-list-material>`, field type `list`: A dropdown rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-list-material")
 export class ListField extends InputField<ListFieldDefinition, string> {
   @property({ type: String })

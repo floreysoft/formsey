@@ -8,6 +8,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
 
+/**
+ * `<formsey-date-material>`, field type `date`: A date field rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-date-material")
 export class DateField extends InputField<DateFieldDefinition, string> {
   @property({ type: String })

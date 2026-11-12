@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DateField } from './DateField';
 
+/** `<formsey-week>`, field type `week`: Native week input. */
 @customElement("formsey-week")
 export class WeekField extends DateField {
   protected get type(): "week" {

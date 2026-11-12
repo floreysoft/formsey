@@ -11,6 +11,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { Closeable } from '@formsey/core/Closeable';
 
 
+/**
+ * `<formsey-popup-section>`, field type `popupSection`: A trigger button that
+ * opens a nested form in a popup next to it.
+ */
 @customElement("formsey-popup-section")
 export class PopupSectionField extends LabeledField<PopupSectionFieldDefinition, { [key: string]: any }> implements Closeable {
   @property({ converter: Boolean })

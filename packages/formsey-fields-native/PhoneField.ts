@@ -5,6 +5,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-phone>`, field type `phone`: Text field for a phone number
+ * (`type="tel"`).
+ */
 @customElement("formsey-phone")
 export class PhoneField extends StringField {
   protected get type() : "tel" {

@@ -7,6 +7,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-phone-material>`, field type `phone`: A phone number field
+ * rendered with Material Web Components (MWC).
+ */
 @customElement("formsey-phone-material")
 export class PhoneField extends StringField {
   protected get type(): TextFieldType {

@@ -6,6 +6,10 @@ import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-hiddens>`, field type `hidden`: Not visible. Always contributes
+ * the `default` of its definition as value.
+ */
 @customElement("formsey-hiddens")
 export class HiddenField extends Field<FieldDefinition, any> {
   render() {

@@ -8,6 +8,10 @@ import { StringField } from './StringField';
 import { FieldInputEvent } from '@formsey/core/Events';
 
 
+/**
+ * `<formsey-multiple-choice>`, field type `multipleChoice`: A group of radio
+ * buttons. The value is the selected option value.
+ */
 @customElement("formsey-multiple-choice")
 export class MultipleChoiceField extends LabeledField<CheckboxesFieldDefinition, string> {
   @property({ type: String })

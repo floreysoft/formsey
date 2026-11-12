@@ -10,6 +10,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
 
+/**
+ * `<formsey-checkbox-material>`, field type `checkbox`: A checkbox rendered
+ * with Material Web Components (MWC).
+ */
 @customElement("formsey-checkbox-material")
 export class CheckboxField extends MaterialField<CheckboxFieldDefinition, boolean> {
   @property({ type: Boolean })

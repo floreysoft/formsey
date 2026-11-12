@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Formsey playground</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/demo.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Formsey playground</h1>
+      <nav id="examples" aria-label="Examples"></nav>
+      <span class="spacer"></span>
+      <a href="/libraries.html">Material / Vaadin</a>
+      <button id="validate" type="button">Validate</button>
+      <button id="mode" type="button">Dark mode</button>
+    </header>
+    <main>
+      <section class="form">
+        <formsey-form id="form"></formsey-form>
+      </section>
+      <aside>
+        <details open>
+          <summary>Value</summary>
+          <pre id="value"></pre>
+        </details>
+        <details open>
+          <summary>Events</summary>
+          <pre id="events"></pre>
+        </details>
+        <details>
+          <summary>Definition</summary>
+          <pre id="definition"></pre>
+        </details>
+      </aside>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

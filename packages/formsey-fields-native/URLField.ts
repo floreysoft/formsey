@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/** `<formsey-url>`, field type `url`: Text field that validates a URL. */
 @customElement("formsey-url")
 export class URLField extends StringField {
   protected get type(): "url" {

@@ -13,6 +13,17 @@ interface FieldInfo {
   focused: boolean
 }
 
+/**
+ * `<formsey-form-navigator>`: shows one dot per focusable field of a form
+ * (filled, required, invalid, focused) plus buttons to jump to the previous or
+ * next error and required field.
+ *
+ * It is not connected to a form automatically. Pass `components`,
+ * `definition`, `value`, `errors` and `focusedPath` from the events of the
+ * form (see index.html in the repository root).
+ *
+ * @fires focusField - `detail` is the path of the field that should receive the focus
+ */
 @customElement("formsey-form-navigator")
 export class FormNavigator extends LitElement {
   @property({ converter: Object })
@@ -29,6 +40,10 @@ export class FormNavigator extends LitElement {
     this._errors = errors
     this._errorsArray = [...errors]
     this.requestUpdate()
+  }
+
+  get errors(): InvalidErrors {
+    return this._errors
   }
 
   @property()

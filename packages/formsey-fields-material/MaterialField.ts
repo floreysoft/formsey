@@ -2,6 +2,7 @@ import { FieldDefinition, InputFieldDefinition, LabeledField } from '@formsey/co
 import { html, TemplateResult } from "lit";
 
 
+/** Base class of the material fields that render their own label. */
 export abstract class MaterialField<T extends FieldDefinition, V> extends LabeledField<T, V> {
   render() {
     if (!this.definition) return

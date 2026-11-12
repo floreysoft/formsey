@@ -8,6 +8,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-numberunit>`, field type `numberUnit`: A number field with a unit
+ * toggle. The value is the number followed by the unit, e.g. `12px`.
+ */
 @customElement("formsey-numberunit")
 export class NumberUnitField extends LabeledField<NumberUnitFieldDefinition, string> {
   /* @ts-ignore */

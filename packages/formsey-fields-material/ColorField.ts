@@ -6,6 +6,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-color-material>`, field type `color`: A color field rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-color-material")
 export class ColorField extends StringField {
   protected get type(): TextFieldType {

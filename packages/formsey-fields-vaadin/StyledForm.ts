@@ -10,6 +10,11 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { FORM_STYLES } from './styles';
 
 
+/**
+ * `<formsey-styled-form-vaadin>`, field type `styledForm`: The root element of
+ * a form rendered with the vaadin library: provides the shadow root, the
+ * stylesheet and the theme for all vaadin fields.
+ */
 @customElement("formsey-styled-form-vaadin")
 export class StyledForm extends Form {
   @query(".themed")
@@ -30,15 +35,11 @@ export class StyledForm extends Form {
     if (!this.definition) return
     let field = undefined
     field = createField({ id: 'form', library: this.library, context: this.context, settings: this.settings, definition: this.definition, value: this.value, parentPath: this.definition?.name, errors: this.errors, changeHandler: (event: FieldChangeEvent<any>) => this.changed(event), invalidHandler: (event: InvalidEvent) => this.invalid(event) });
-    const form = html`
-    <custom-style>
-      <style include="lumo-color lumo-typography"></style>
-    </custom-style>
-    <slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
+    const form = html`<slot name="top"></slot><form novalidate @submit="${this.submit}" action="${ifDefined(this.action)}" method="${ifDefined(this.method)}" target="${ifDefined(this.target)}">${field}<slot></slot></form>`
     return this.settings ? html`<div class="themed" theme="${ifDefined((<any>this.settings)['theme'])}">${form}</div>` : form
   }
 
-  protected createRenderRoot(): Element | ShadowRoot {
+  protected createRenderRoot(): HTMLElement | DocumentFragment {
     const renderRoot = this.shadowRoot ?? this.attachShadow((this.constructor as typeof ReactiveElement).shadowRootOptions);
     adoptStyles(renderRoot, (this.constructor as typeof ReactiveElement).elementStyles!);
     return renderRoot;

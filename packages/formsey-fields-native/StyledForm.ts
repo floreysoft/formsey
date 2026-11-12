@@ -5,13 +5,23 @@ import { FieldInputEvent } from '@formsey/core/Events';
 import { Form } from '@formsey/core/Form';
 import { FormField } from '@formsey/core/FormField';
 import { InvalidEvent } from '@formsey/core/InvalidEvent';
-import { Theme } from '@floreysoft/theme';
+// The side effect import registers <fs-theme>. The named import below is only
+// used as a type and is therefore removed by the compiler.
+import '@floreysoft/theme';
+import type { Theme } from '@floreysoft/theme';
 import { getLibrary, Resources, Settings } from '@formsey/core/Registry';
 import { css, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { FORM_STYLES } from './styles';
 
+/**
+ * `<formsey-styled-form>`, field type `styledForm`: The root element of a form
+ * rendered with the native library. Provides the shadow root with the
+ * stylesheet for all native fields, applies the theme from the settings
+ * (colors per light/dark mode, fonts, spacing) and wraps the fields in a
+ * native `<form>`.
+ */
 @customElement("formsey-styled-form")
 export class StyledForm extends Form {
   static shadowDom = true

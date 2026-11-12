@@ -6,6 +6,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
 
+/**
+ * `<formsey-time-vaadin>`, field type `time`: A time field rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-time-vaadin")
 export class TimeField extends StringField {
   protected get type(): "time" {

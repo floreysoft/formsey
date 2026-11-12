@@ -8,6 +8,10 @@ import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
+/**
+ * `<formsey-date-vaadin>`, field type `date`: A date field rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-date-vaadin")
 export class DateField extends InputField<DateFieldDefinition, string> {
   @query("vaadin-date-picker")

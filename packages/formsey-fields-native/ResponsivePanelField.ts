@@ -7,6 +7,10 @@ import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-responsive-panel>`, field type `responsivePanel`: Shows two panels
+ * side by side or, when there is not enough room, as tabs.
+ */
 @customElement("formsey-responsive-panel")
 export class ResponsivePanelField extends Field<ResponsivePanelFieldDefinition, Object> {
   @property({ converter: Object })

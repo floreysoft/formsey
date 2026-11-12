@@ -5,6 +5,10 @@ import { TemplateResult } from 'lit';
 import { query } from "lit/decorators.js";
 
 
+/**
+ * Base class of the vaadin fields that wrap a text field component: forwards
+ * value, validation and focus.
+ */
 export abstract class InputField<D extends InputFieldDefinition, V extends string> extends Field<D, V> {
   @query("vaadin-text-field")
   vaadinField: any

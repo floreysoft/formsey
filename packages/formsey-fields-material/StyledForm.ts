@@ -46,8 +46,16 @@ const themes = new Map([
   }]
 ])
 
+/**
+ * `<formsey-styled-form-material>`, field type `styledForm`: The root element
+ * of a form rendered with the material library: provides the shadow root, the
+ * stylesheet and the theme for all material fields.
+ */
 @customElement("formsey-styled-form-material")
 export class StyledForm extends Form {
+  // Render into a shadow root created by Lit, so that `styles` get adopted
+  static shadowDom = true
+
   static get styles() {
     return [FORM_STYLES, css`
     .themed {
@@ -81,10 +89,6 @@ export class StyledForm extends Form {
         }
       }
     }
-  }
-
-  protected createRenderRoot(): Element | ShadowRoot {
-    return this.attachShadow({ mode: 'open' });
   }
 
   protected changed(e: FieldChangeEvent<any>) {

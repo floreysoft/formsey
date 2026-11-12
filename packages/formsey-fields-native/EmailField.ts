@@ -5,6 +5,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-email>`, field type `email`: Text field that validates an email
+ * address.
+ */
 @customElement("formsey-email")
 export class EmailField extends StringField {
   protected get type(): "email" {

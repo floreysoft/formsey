@@ -1,32 +1,31 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "es2015",
-      "moduleResolution": "node",
-      "lib": ["es2020", "dom", "dom.iterable"],
-      "declaration": true,
-      "declarationMap": true,
-      "sourceMap": true,
-      "inlineSources": true,
-      "strict": true,
-      "experimentalDecorators": true,
-      "allowSyntheticDefaultImports": true,
-      "pretty": true,
-      "useDefineForClassFields": false,
-      "skipLibCheck": true
-    },
-    "include": [
-      "custom_typings/**/*.ts",
-      "**/*.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "**/*.d.ts",
-        "**/*.spec.ts"
-    ],
-    "plugins": [
-      {
-          "name": "typescript-lit-html-plugin"
-      }
-    ]
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "customConditions": ["@floreysoft/source"],
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "types": ["vite/client"],
+    "pretty": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "packages/**/*.ts",
+    "demo/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/node_modules",
+    "**/*.d.ts",
+    "**/*.spec.ts"
+  ]
 }

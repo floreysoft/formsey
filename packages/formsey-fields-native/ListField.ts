@@ -7,6 +7,10 @@ import { html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-list>`, field type `list`: A list of options with keyboard
+ * navigation, optional search box and multi selection.
+ */
 @customElement("formsey-list")
 export class ListField extends LabeledField<ListFieldDefinition, string | string[]> {
   @query(".search")

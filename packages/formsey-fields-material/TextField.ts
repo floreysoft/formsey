@@ -8,6 +8,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-text-material>`, field type `text`: A multi line text field
+ * rendered with Material Web Components (MWC).
+ */
 @customElement("formsey-text-material")
 export class TextField extends Field<StringFieldDefinition, string> {
   @property({ type: String })

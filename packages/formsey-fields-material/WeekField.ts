@@ -7,6 +7,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DateField } from "./DateField";
 
+/**
+ * `<formsey-week-material>`, field type `week`: A week field rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-week-material")
 export class WeekField extends DateField {
   protected get type(): TextFieldType {

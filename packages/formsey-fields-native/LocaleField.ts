@@ -16,6 +16,10 @@ const options = locales.map(locale => {
 })
 options.sort((a, b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
 
+/**
+ * `<formsey-locale>`, field type `locale`: Selects a locale. The value is the
+ * language tag, e.g. `en-US`.
+ */
 @customElement("formsey-locale")
 export class LocaleField extends LabeledField<FieldDefinition, string> {
   protected renderField() {

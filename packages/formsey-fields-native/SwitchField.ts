@@ -5,6 +5,7 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { CheckboxField } from './CheckboxField';
 
+/** `<formsey-switch>`, field type `switch`: A checkbox displayed as a switch. */
 @customElement("formsey-switch")
 export class SwitchField extends CheckboxField {
   renderField() {

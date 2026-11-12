@@ -4,6 +4,11 @@ import { html } from "lit";
 import { property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * Base class for all fields that wrap a native `<input>` element. Subclasses
+ * choose the input type by overriding `type` and inherit validation, focus
+ * handling and the event translation.
+ */
 export class InputField<T extends InputFieldDefinition, V> extends LabeledField<T, V> {
   @property({ type: String })
   value: any;

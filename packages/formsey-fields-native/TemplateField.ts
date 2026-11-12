@@ -6,6 +6,10 @@ import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-template>`, field type `template`: Renders the `default` of its
+ * definition, which may be a lit template.
+ */
 @customElement("formsey-template")
 export class TemplateField extends LabeledField<FieldDefinition, string> {
   renderField() {

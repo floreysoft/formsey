@@ -1,6 +1,7 @@
 {
   "name": "formsey",
   "version": "0.4.41",
+  "type": "module",
   "files": [
     "/esm/*",
     "/*.js.map",
@@ -16,8 +17,8 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "link": "yarn link",
-    "unlink": "yarn unlink",
+    "link": "npm link",
+    "unlink": "npm unlink",
     "pub:check": "npm publish --dry-run",
     "rollup": "rollup --config"
   },

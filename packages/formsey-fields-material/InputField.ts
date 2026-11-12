@@ -7,6 +7,10 @@ import { TextField } from '@material/mwc-textfield/mwc-textfield.js';
 import { TemplateResult } from "lit";
 
 
+/**
+ * Base class of the material fields that wrap a text field component: forwards
+ * value, validation and focus.
+ */
 export abstract class InputField<T extends InputFieldDefinition, V> extends Field<T, V> {
   value: V | undefined
 

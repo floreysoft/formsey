@@ -5,6 +5,10 @@ import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-title>`, field type `title`: A heading with an optional
+ * description. Has no value.
+ */
 @customElement("formsey-title")
 export class TitleField extends Field<FieldDefinition, void> {
   render() {

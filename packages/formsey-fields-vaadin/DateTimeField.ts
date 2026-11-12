@@ -6,6 +6,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
 
+/**
+ * `<formsey-datetime-vaadin>`, field type `datetime`: A field for date and
+ * time rendered with Vaadin web components.
+ */
 @customElement("formsey-datetime-vaadin")
 export class DateTimeField extends StringField {
   protected get type() : "datetime-local" {

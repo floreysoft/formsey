@@ -5,6 +5,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DateField } from './DateField';
 
+/**
+ * `<formsey-datetime>`, field type `datetime`: Native input for date and time
+ * (`datetime-local`).
+ */
 @customElement("formsey-datetime")
 export class DateTimeField extends DateField {
   protected get type(): "datetime-local" {

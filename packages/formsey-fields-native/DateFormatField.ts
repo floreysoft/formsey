@@ -5,6 +5,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { LabelField } from '.';
 
+/**
+ * `<formsey-dateformat>`, field type `dateFormat`: Read only: displays the
+ * value as a formatted date.
+ */
 @customElement("formsey-dateformat")
 export class DateFormatField extends LabelField<DateFormatFieldDefinition> {
   protected format(value: any) {

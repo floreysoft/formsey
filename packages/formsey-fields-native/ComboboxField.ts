@@ -9,6 +9,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { FieldInputEvent } from '@formsey/core/Events';
 
 
+/**
+ * `<formsey-combobox>`, field type `combobox`: A text field with a popup list
+ * of matching options.
+ */
 @customElement("formsey-combobox")
 export class ComboboxField extends LabeledField<ListFieldDefinition, string> {
   @query(".popup")

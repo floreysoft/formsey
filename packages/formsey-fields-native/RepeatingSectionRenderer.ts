@@ -6,6 +6,11 @@ import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-repeating-section-renderer>`, field type
+ * `repeatingSectionRenderer`: Read only rendering of the value of a repeating
+ * section, used inside tables.
+ */
 @customElement("formsey-repeating-section-renderer")
 export class RepeatingSectionRenderer extends LabeledField<RepeatingFieldDefinition, { [key: string]: any }[]> {
   protected renderField() {

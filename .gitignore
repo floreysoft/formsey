@@ -16,5 +16,8 @@ yarn-error.log
 !publishLibs.js
 !packages/**/rollup.config.js
 !webpack*.js
-!karma.conf.js
+!scripts/*.mjs
 !rollup*.js
+
+# demo build output
+demo/dist

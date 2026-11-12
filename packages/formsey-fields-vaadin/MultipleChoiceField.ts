@@ -13,6 +13,10 @@ import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-multiple-choice-vaadin>`, field type `multipleChoice`: A group of
+ * radio buttons rendered with Vaadin web components.
+ */
 @customElement("formsey-multiple-choice-vaadin")
 export class MultipleChoiceField extends Field<CheckboxesFieldDefinition, String> {
   @query("vaadin-radio-group")

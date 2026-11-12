@@ -6,6 +6,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-button-vaadin>`, field type `button`: A button rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-button-vaadin")
 export class ButtonField extends LabeledField<ButtonFieldDefinition, void> {
   @query("button")

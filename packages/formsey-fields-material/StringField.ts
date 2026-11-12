@@ -7,6 +7,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
+/**
+ * `<formsey-string-material>`, field type `string`: A single line text field
+ * rendered with Material Web Components (MWC).
+ */
 @customElement("formsey-string-material")
 export class StringField extends InputField<StringFieldDefinition, string> {
   @property({ type: String })

@@ -10,6 +10,11 @@ import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-optional-section>`, field type `optionalSection`: A checkbox or
+ * switch that reveals a nested form. The section only has a value while it is
+ * switched on.
+ */
 @customElement("formsey-optional-section")
 export class OptionalSectionField extends Field<OptionalSectionFieldDefinition, { [key: string]: any }> {
   @query("#form")

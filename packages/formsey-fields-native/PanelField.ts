@@ -8,6 +8,10 @@ import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-panel>`, field type `panel`: A nested form with a header showing
+ * an icon and the label.
+ */
 @customElement("formsey-panel")
 export class PanelField extends Field<PanelFieldDefinition, { [key: string]: any }> {
   protected layoutController: LayoutController = new LayoutController(this)

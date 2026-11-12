@@ -7,6 +7,10 @@ import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
+/**
+ * `<formsey-email-vaadin>`, field type `email`: An email field rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-email-vaadin")
 export class EmailField extends InputField<StringFieldDefinition, string> {
   @query("vaadin-email-field")

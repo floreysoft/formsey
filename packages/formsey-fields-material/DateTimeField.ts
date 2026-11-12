@@ -6,6 +6,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DateField } from "./DateField";
 
+/**
+ * `<formsey-datetime-material>`, field type `datetime`: A field for date and
+ * time rendered with Material Web Components (MWC).
+ */
 @customElement("formsey-datetime-material")
 export class DateTimeField extends DateField {
  protected get type() : TextFieldType {

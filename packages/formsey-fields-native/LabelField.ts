@@ -6,6 +6,10 @@ import { customElement } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-label>`, field type `label`: Read only: displays the value as
+ * text. Base class of the format fields, which override `format()`.
+ */
 @customElement("formsey-label")
 export class LabelField<T extends LabelFieldDefinition> extends LabeledField<T, any> {
   protected renderField() {

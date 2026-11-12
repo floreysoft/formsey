@@ -10,6 +10,10 @@ import { customElement, property, query, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MaterialField } from './MaterialField';
 
+/**
+ * `<formsey-multiple-choice-material>`, field type `multipleChoice`: A group
+ * of radio buttons rendered with Material Web Components (MWC).
+ */
 @customElement("formsey-multiple-choice-material")
 export class MultipleChoiceField extends MaterialField<CheckboxesFieldDefinition, string> {
   @property({ type: String })

@@ -1,4 +1,7 @@
-import { Ace } from '@floreysoft/ace';
+// The side effect import registers <fs-ace>. The named import below is only
+// used as a type and is therefore removed by the compiler.
+import '@floreysoft/ace';
+import type { Ace } from '@floreysoft/ace';
 import { FieldInputEvent, InputFieldDefinition, LabeledField } from '@formsey/core';
 import { getLibrary, Resources } from '@formsey/core/Registry';
 import { FieldChangeEvent } from '@formsey/core/Events';
@@ -13,6 +16,10 @@ export interface SourceCodeFieldDefinition extends InputFieldDefinition {
   gutter?: boolean
   height?: number
 }
+/**
+ * `<formsey-sourcecode>`, field type `sourceCode`: A code editor based on Ace.
+ * Ace loads its modes and themes from `/ace`, see the README.
+ */
 @customElement("formsey-sourcecode")
 export class SourceCodeField extends LabeledField<SourceCodeFieldDefinition, string> {
   @property({ type: String })

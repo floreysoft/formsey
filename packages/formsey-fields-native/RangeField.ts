@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { NumberField } from './NumberField';
 
+/** `<formsey-range>`, field type `range`: Native range slider. */
 @customElement("formsey-range")
 export class RangeField extends NumberField {
   protected get type() : "range" {

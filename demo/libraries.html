@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Formsey field libraries</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/demo.css" />
+    <style>
+      main { grid-template-columns: minmax(0, 1fr); }
+      h2 { font-size: 14px; margin: 0; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Formsey field libraries</h1>
+      <a href="/">Back to the playground</a>
+    </header>
+    <!-- The same definition rendered by each alternative field library -->
+    <main>
+      <section class="form"><h2>Material (@formsey/fields-material)</h2><formsey-form id="material"></formsey-form></section>
+      <section class="form"><h2>Vaadin (@formsey/fields-vaadin)</h2><formsey-form id="vaadin"></formsey-form></section>
+    </main>
+    <script type="module" src="/src/libraries.ts"></script>
+  </body>
+</html>

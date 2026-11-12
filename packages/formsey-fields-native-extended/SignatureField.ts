@@ -6,6 +6,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import SignaturePad from 'signature_pad';
 
+/**
+ * `<formsey-signature>`, field type `signature`: A canvas to draw a signature.
+ * The value is a PNG data URL.
+ */
 @customElement("formsey-signature")
 export class SignatureField extends LabeledField<SignatureFieldDefinition, string> {
   @property({ type: String })
@@ -44,7 +48,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     if (this.canvas) {
       this.signaturePad = new SignaturePad(this.canvas);
       this.signaturePad.on();
-      this.signaturePad.onEnd = (event: MouseEvent | Touch) => this.onStrokeEnd(event);
+      this.signaturePad.addEventListener("endStroke", () => this.onStrokeEnd());
       this.resizeObserver.observe(this.canvas)
     }
   }
@@ -80,7 +84,7 @@ export class SignatureField extends LabeledField<SignatureFieldDefinition, strin
     this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }
 
-  protected onStrokeEnd(e: MouseEvent | Touch) {
+  protected onStrokeEnd() {
     this.value = this.signaturePad?.toDataURL();
     this.dispatchEvent(new FieldChangeEvent(this.path(), this.value));
   }

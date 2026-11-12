@@ -1,6 +1,7 @@
 {
   "name": "@formsey/fields-vaadin",
   "version": "0.4.41",
+  "type": "module",
   "description": "Vaadin fields",
   "module": "/esm/formsey-fields-vaadin.min.js",
   "files": [
@@ -11,26 +12,24 @@
   ],
   "dependencies": {
     "@formsey/core": "^0.4.41",
-    "@vaadin/checkbox": ">22.0.0",
-    "@vaadin/checkbox-group": ">22.0.0",
-    "@vaadin/combo-box": ">22.0.0",
-    "@vaadin/date-picker": ">22.0.0",
-    "@vaadin/email-field": ">22.0.0",
-    "@vaadin/icons": ">22.0.0",
-    "@vaadin/number-field": ">22.0.0",
-    "@vaadin/password-field": ">22.0.0",
-    "@vaadin/radio-group": ">22.0.0",
-    "@vaadin/rich-text-editor": ">22.0.0",
-    "@vaadin/text-area": ">22.0.0",
-    "@vaadin/text-field": ">22.0.0",
-    "@vaadin/upload": ">22.0.0",
-    "lit": "^2.0.0"
+    "@vaadin/checkbox": "^25.3.5",
+    "@vaadin/checkbox-group": "^25.3.5",
+    "@vaadin/combo-box": "^25.3.5",
+    "@vaadin/date-picker": "^25.3.5",
+    "@vaadin/email-field": "^25.3.5",
+    "@vaadin/number-field": "^25.3.5",
+    "@vaadin/password-field": "^25.3.5",
+    "@vaadin/radio-group": "^25.3.5",
+    "@vaadin/text-area": "^25.3.5",
+    "@vaadin/text-field": "^25.3.5",
+    "@vaadin/vaadin-lumo-styles": "^25.3.5",
+    "lit": "^3.3.3"
   },
   "main": "./index.js",
   "scripts": {
     "tsc": "tsc",
-    "link": "yarn link",
-    "unlink": "yarn unlink",
+    "link": "npm link",
+    "unlink": "npm unlink",
     "rollup": "rollup --config"
   },
   "license": "Apache-2.0",

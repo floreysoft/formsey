@@ -5,6 +5,7 @@ import { customElement, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/** `<formsey-image>`, field type `image`: Displays an image. Has no value. */
 @customElement("formsey-image")
 export class ImageField extends LabeledField<ImageFieldDefinition, string> {
   @query("img")

@@ -6,6 +6,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
 
+/**
+ * `<formsey-month-vaadin>`, field type `month`: A month field rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-month-vaadin")
 export class MonthField extends StringField {
   protected get type() : "month" {

@@ -6,6 +6,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
 
+/**
+ * `<formsey-search-vaadin>`, field type `search`: A search field rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-search-vaadin")
 export class SearchField extends StringField {
   protected get type(): "search" {

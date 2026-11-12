@@ -14,6 +14,10 @@ const options = currencyCodes.map(locale => {
   return { "label": `${currencyNames.of(locale)}`, "value": locale }
 })
 
+/**
+ * `<formsey-currency>`, field type `currency`: Selects a currency. The value
+ * is the ISO 4217 code.
+ */
 @customElement("formsey-currency")
 export class CurrencyField extends LabeledField<FieldDefinition, string> {
   protected renderField() {

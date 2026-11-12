@@ -6,6 +6,10 @@ import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-text>`, field type `text`: Multi line text field that grows with
+ * its content.
+ */
 @customElement("formsey-text")
 export class TextField extends LabeledField<TextFieldDefinition, string> {
   @property({ type: String })

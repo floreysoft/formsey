@@ -8,6 +8,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { PopupSectionField } from './PopupSectionField';
 
 
+/**
+ * `<formsey-button>`, field type `button`: A button. Fires a click event with
+ * its path, or submits/resets the form depending on `buttonType`.
+ */
 @customElement("formsey-button")
 export class ButtonField extends LabeledField<ButtonFieldDefinition, void> {
   @query("button")

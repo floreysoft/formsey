@@ -6,6 +6,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
 
+/**
+ * `<formsey-number>`, field type `number`: Native number input. The value is a
+ * number.
+ */
 @customElement("formsey-number")
 export class NumberField extends InputField<NumberFieldDefinition, number> {
 

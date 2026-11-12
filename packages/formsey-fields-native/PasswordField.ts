@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/** `<formsey-password>`, field type `password`: Text field with hidden input. */
 @customElement("formsey-password")
 export class PasswordField extends StringField {
   protected get type(): "password" {

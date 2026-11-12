@@ -7,6 +7,10 @@ import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-split-panel>`, field type `horizontalSplitPanel /
+ * verticalSplitPanel`: Two nested forms separated by a draggable splitter.
+ */
 @customElement("formsey-split-panel")
 export class SplitPanelField extends Field<SplitPanelDefinition, any> {
   @property({ converter: Object })

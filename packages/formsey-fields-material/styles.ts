@@ -6,13 +6,29 @@ export const FORM_STYLES = css`
     box-shadow: 0 0 2px var(--lumo-primary-color-50pct);
   }
 
+  /* Layout containers: the same rules as in the native and vaadin libraries,
+     the actual grid/flex layout is applied inline by the layout formatters */
   .ffg {
-    display: inline-grid;
-    grid-gap: 5px 5px;
-    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
+    gap: var(--formsey-space-narrow, 8px);
+  }
+  .fbg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-color: currentColor;
+    opacity: 0;
   }
   .fff {
+    display: flex;
+    flex-direction: column;
+    --formsey-elevation-opacity: 0;
+    --formsey-elevation-margin: 0;
+  }
+  .fff mwc-textfield, .fff mwc-textarea, .fff mwc-select {
     width: 100%;
   }
 

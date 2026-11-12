@@ -6,6 +6,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-email-material>`, field type `email`: An email field rendered with
+ * Material Web Components (MWC).
+ */
 @customElement("formsey-email-material")
 export class EmailField extends StringField {
   protected get type(): TextFieldType {

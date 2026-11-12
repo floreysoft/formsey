@@ -11,6 +11,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-checkbox-vaadin>`, field type `checkbox`: A checkbox rendered with
+ * Vaadin web components.
+ */
 @customElement("formsey-checkbox-vaadin")
 export class CheckboxField extends Field<CheckboxFieldDefinition, boolean> {
   @property({ type: Boolean })

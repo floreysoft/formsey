@@ -6,6 +6,10 @@ import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-checkbox>`, field type `checkbox`: A single checkbox with a
+ * boolean value.
+ */
 @customElement("formsey-checkbox")
 export class CheckboxField extends LabeledField<CheckboxFieldDefinition, boolean> {
   @property({ type: Boolean })

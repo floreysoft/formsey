@@ -10,6 +10,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 
+/**
+ * `<formsey-list-vaadin>`, field type `list`: A dropdown rendered with Vaadin
+ * web components.
+ */
 @customElement("formsey-list-vaadin")
 export class ListField extends Field<ListFieldDefinition, string> {
   @query("vaadin-combo-box")

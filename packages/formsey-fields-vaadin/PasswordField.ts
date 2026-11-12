@@ -8,6 +8,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { InputField } from './InputField';
 
 
+/**
+ * `<formsey-password-vaadin>`, field type `password`: A password field
+ * rendered with Vaadin web components.
+ */
 @customElement("formsey-password-vaadin")
 export class PasswordField extends InputField<StringFieldDefinition, string> {
   @query("vaadin-password-field")

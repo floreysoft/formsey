@@ -8,6 +8,10 @@ import { html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+/**
+ * `<formsey-text-vaadin>`, field type `text`: A multi line text field rendered
+ * with Vaadin web components.
+ */
 @customElement("formsey-text-vaadin")
 export class TextField extends Field<TextFieldDefinition, string> {
   @property({ type: String })

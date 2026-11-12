@@ -6,6 +6,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
 
+/**
+ * `<formsey-phone-vaadin>`, field type `phone`: A phone number field rendered
+ * with Vaadin web components.
+ */
 @customElement("formsey-phone-vaadin")
 export class PhoneField extends StringField {
   protected get type() : "tel" {

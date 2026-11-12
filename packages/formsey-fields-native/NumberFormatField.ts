@@ -5,6 +5,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { LabelField } from '.';
 
+/**
+ * `<formsey-numberformat>`, field type `numberFormat`: Read only: displays the
+ * value as a formatted number.
+ */
 @customElement("formsey-numberformat")
 export class NumberFormatField extends LabelField<NumberFormatFieldDefinition> {
   protected format(value: any) {

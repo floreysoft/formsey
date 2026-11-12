@@ -1,6 +1,7 @@
 {
   "name": "@formsey/fields-native-extended",
   "version": "0.4.41",
+  "type": "module",
   "description": "Heavy-weight fields",
   "module": "/esm/formsey-fields-native-extended.min.js",
   "files": [
@@ -12,18 +13,18 @@
     "/esm/*"
   ],
   "dependencies": {
-    "@floreysoft/ace": ">0.4.0",
-    "@floreysoft/utils": ">0.4.0",
+    "@floreysoft/ace": "^0.5.15",
+    "@floreysoft/utils": "^0.5.22",
     "@formsey/fields-native": "^0.4.41",
-    "@ts-stack/markdown": ">0",
-    "highlight.js": "^11.3.1",
-    "lit": "^2.0.0",
-    "signature_pad": "^3.0.0-beta.3"
+    "@ts-stack/markdown": "^1.5.0",
+    "highlight.js": "^11.12.0",
+    "lit": "^3.3.3",
+    "signature_pad": "^5.1.4"
   },
   "scripts": {
     "tsc": "tsc",
-    "link": "yarn link",
-    "unlink": "yarn unlink",
+    "link": "npm link",
+    "unlink": "npm unlink",
     "pub:check": "npm publish --dry-run",
     "rollup": "rollup --config"
   },

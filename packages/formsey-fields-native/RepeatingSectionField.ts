@@ -9,6 +9,11 @@ import { customElement, queryAll } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 
+/**
+ * `<formsey-repeating-section>`, field type `repeatingSection`: A nested form
+ * that can be added, removed and reordered by drag and drop. The value is an
+ * array.
+ */
 @customElement("formsey-repeating-section")
 export class RepeatingSectionField extends LabeledField<RepeatingFieldDefinition, { [key: string]: any }[]> {
   @queryAll(".form")

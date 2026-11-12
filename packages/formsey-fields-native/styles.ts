@@ -928,7 +928,7 @@ export const FORM_STYLES = css`
 
   formsey-upload .over {
     border: 1px dashed var(--formsey-accent-color, #999);
-    color: var(--formsey-accent-constrast, #999);
+    color: var(--formsey-accent-contrast, #999);
   }
 
   formsey-upload .filename {

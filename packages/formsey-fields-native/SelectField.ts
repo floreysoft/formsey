@@ -7,6 +7,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ComboboxField } from './ComboboxField';
 
+/**
+ * `<formsey-select>`, field type `select`: A dropdown: a button showing the
+ * selected option that opens the list of options.
+ */
 @customElement("formsey-select")
 export class SelectField extends ComboboxField {
   over = true

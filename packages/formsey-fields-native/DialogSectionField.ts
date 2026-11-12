@@ -1,3 +1,5 @@
+// Registers <focus-trap>, which keeps keyboard focus inside the open dialog
+import '@a11y/focus-trap';
 import { KEYCODE } from '@floreysoft/utils';
 import { createField, Field, FieldClickEvent, FormField, LabeledField } from '@formsey/core';
 import { FieldChangeEvent, FieldInputEvent } from '@formsey/core/Events';
@@ -10,6 +12,10 @@ import { customElement, query, state } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonField } from './ButtonField';
 
+/**
+ * `<formsey-dialog-section>`, field type `dialogSection`: A trigger button
+ * that opens a nested form in a modal dialog.
+ */
 @customElement("formsey-dialog-section")
 export class DialogSectionField extends LabeledField<DialogSectionFieldDefinition, { [key: string]: any }> {
   @state() visible = false

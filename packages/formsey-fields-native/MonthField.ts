@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { DateField } from './DateField';
 
+/** `<formsey-month>`, field type `month`: Native month input. */
 @customElement("formsey-month")
 export class MonthField extends DateField {
   protected get type() : "month" {

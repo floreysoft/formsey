@@ -7,6 +7,10 @@ import { customElement } from "lit/decorators.js";
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { StringField } from './StringField';
 
+/**
+ * `<formsey-search-material>`, field type `search`: A search field rendered
+ * with Material Web Components (MWC).
+ */
 @customElement("formsey-search-material")
 export class SearchField extends StringField {
   protected get type(): TextFieldType {

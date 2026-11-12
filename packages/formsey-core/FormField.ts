@@ -10,10 +10,15 @@ import { LayoutController } from "./LayoutController";
 import { Breakpoints, Layout, Size } from "./Layouts";
 import { Components, getFormatter, getLibrary, Resources } from './Registry';
 
+/** Type guard: true if the definition contains nested fields. */
 export function isFormDefinition(definition?: FieldDefinition): definition is FormDefinition {
   return (<any>definition)?.['fields'] !== undefined;
 }
 
+/**
+ * Returns a copy of the value that only contains entries for fields that exist
+ * in the definition, so values of removed fields do not linger.
+ */
 export function removeDeletedFields(components: Components, definition: FormDefinition, value: { [key: string]: any }) {
   if (definition && definition.fields && value) {
     // Only keep fields that are defined
@@ -56,8 +61,10 @@ function addMemberValueIfPresent(name: string, newValue: { [key: string]: any },
   }
 }
 
+/** Sizes a responsive layout can be defined for, from the smallest to the largest. */
 export const SUPPORTED_BREAKPOINTS: Size[] = ["xs", "s", "m", "l", "xl"]
 
+/** A field has a size as long as it is narrower than the breakpoint of that size (in pixels). */
 export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xs": 320,
   "s": 568,
@@ -66,6 +73,15 @@ export const DEFAULT_BREAKPOINTS: Breakpoints = {
   "xl": 1366
 }
 
+/**
+ * `<formsey-form-field>`: a container that renders a list of fields using a
+ * responsive layout. Its value is an object with one entry per named field.
+ * A form without a name does not add a level to the value, its fields are
+ * "lifted" into the value of the parent.
+ *
+ * CSS classes used in the markup: `ffg` grid container, `fff` field wrapper,
+ * `fbg` background/elevation layer.
+ */
 @customElement("formsey-form-field")
 export class FormField<D extends FormDefinition, V extends { [key: string]: any }> extends LabeledField<FormDefinition, { [key: string]: any }> {
   @property({ converter: Object })
@@ -131,6 +147,7 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     </section>`
   }
 
+  /** Moves the focus to the nested field with the given path. */
   public focusField(path: string): boolean {
     const myPath = this.path();
     if (path.startsWith(myPath)) {
@@ -188,12 +205,14 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     return validity;
   }
 
+  /** Notifies the parent about a layout change if the parent applies the box layout (`deferLayout`). */
   public layoutChanged(layout: Layout) {
     if (this.definition?.deferLayout) {
       this.dispatchEvent(new CustomEvent('layoutChanged', { bubbles: true, composed: true, detail: layout }))
     }
   }
 
+  /** Merges the change of a nested field into the value and passes the event on. */
   protected changed(e: FieldChangeEvent<any> | FieldInputEvent<any>) {
     e.stopPropagation()
     if (this.definition && e.detail?.name) {
@@ -213,6 +232,10 @@ export class FormField<D extends FormDefinition, V extends { [key: string]: any 
     }
   }
 
+  /**
+   * Whether invalid nested fields make this form invalid as well. By default
+   * only the nested fields display their errors.
+   */
   protected reportNestedErrors() {
     return false
   }

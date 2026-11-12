@@ -8,6 +8,7 @@ import { FormField, isFormDefinition, removeDeletedFields } from './FormField';
 import { InvalidError, InvalidErrors, InvalidEvent } from './InvalidEvent';
 import { getLibrary } from "./Registry";
 
+/** Reads a value from nested data using a path like `"a.b[0].c"`. */
 export function get(data: { [key: string]: any }, path: string): any {
   if (!data || !path) {
     return undefined
@@ -32,6 +33,7 @@ export function get(data: { [key: string]: any }, path: string): any {
   }
 }
 
+/** Writes a value into nested data using a path like `"a.b[0].c"`. Intermediate objects must exist. */
 export function set(data: { [key: string]: any }, path: string, value: any): any {
   if (!data || !path) {
     return
@@ -60,10 +62,33 @@ export function set(data: { [key: string]: any }, path: string, value: any): any
   }
 }
 
+/**
+ * `<formsey-form>`: the entry point for applications.
+ *
+ * Renders a {@link FormDefinition} using the `styledForm` component of the
+ * library, which provides the theme and the native `<form>` element.
+ *
+ * ```html
+ * <formsey-form></formsey-form>
+ * <script type="module">
+ *   import '@formsey/fields-native'
+ *   const form = document.querySelector('formsey-form')
+ *   form.definition = { type: "form", fields: [{ type: "string", name: "name", label: "Name" }] }
+ *   form.addEventListener('change', e => console.log(e.detail.name, form.value))
+ * </script>
+ * ```
+ *
+ * @fires load - once the definition has been rendered for the first time
+ * @fires change - {@link FieldChangeEvent}; `detail.name` is the path of the changed field, `detail.value` the value of the form
+ * @fires input - {@link FieldInputEvent}, while the user is editing
+ * @fires click - {@link FieldClickEvent} when a named button has been clicked
+ * @fires invalid - {@link InvalidEvent} with all errors found by a validation
+ */
 @customElement("formsey-form")
 export class Form extends Field<FieldDefinition, any> {
   value: any | undefined
 
+  /** Loads `{ library, definition, value, settings }` as JSON. Properties that are already set win. */
   async fetchDefinition(url: string) {
     try {
       let response = await fetch(url);
@@ -78,20 +103,35 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
+  /** URL to load the definition (and optionally library, value and settings) from. */
   @property()
-  set src(url: string) {
-    this.fetchDefinition(url);
+  set src(url: string | undefined) {
+    this._src = url
+    if (url) {
+      this.fetchDefinition(url);
+    }
   }
 
+  get src(): string | undefined {
+    return this._src
+  }
+
+  /** Target of the native form submit. */
   @property()
   target: "_blank" | "_parent" | "_self" | "_top" | undefined
 
   @property()
 
+  /** URL the native form is submitted to. */
   action: string | undefined
+  /** HTTP method of the native form submit. */
   @property()
   method: "GET" | "POST" | undefined
 
+  /**
+   * If set, the value of the root field becomes the value of the form as is,
+   * instead of being stored under the name of the field.
+   */
   @property({ type: Boolean })
   anonymous: boolean | undefined
 
@@ -101,6 +141,7 @@ export class Form extends Field<FieldDefinition, any> {
   @query('form')
   nativeForm: HTMLFormElement | undefined
 
+  private _src: string | undefined
   private _loaded: boolean = false
 
   // Batch invalid events
@@ -137,15 +178,18 @@ export class Form extends Field<FieldDefinition, any> {
     return
   }
 
+  /** Reads a part of the value, e.g. `getValue("address.city")`. */
   public getValue(path: string): any {
     return get(this.value, path);
   }
 
+  /** Changes a part of the value and re-renders the form. */
   public setValue(path: string, value: any): any {
     set(this.value, path, value);
     this.value = { ...this.value }
   }
 
+  /** Returns a part of the definition, e.g. `getField("0.label")` for the label of the first field. */
   public getField(path: string): any {
     if (this.definition) {
       if ( (<FormDefinition>this.definition).fields ) {
@@ -156,6 +200,7 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
+  /** Changes a part of the definition and re-renders the form. */
   public setField(path: string, value: any): any {
     if (this.definition) {
       if ( (<FormDefinition>this.definition).fields ) {
@@ -167,6 +212,10 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
+  /**
+   * Moves the focus to the field with the given path.
+   * @returns true if the field has been found and focused
+   */
   public focusField(path: string): boolean {
     if (this.form && typeof this.form['focusField'] === "function") {
       return this.form.focusField(path)
@@ -196,6 +245,7 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
+  /** Cancels the native submit if the form is invalid. */
   protected submit(e: Event) {
     if (!this.reportValidity()) {
       e.preventDefault()
@@ -232,6 +282,7 @@ export class Form extends Field<FieldDefinition, any> {
     }
   }
 
+  /** Collects the invalid events of all fields of one validation run into a single event. */
   protected invalid(e: InvalidEvent) {
     e.stopPropagation()
     if (this._invalidTimer) {
